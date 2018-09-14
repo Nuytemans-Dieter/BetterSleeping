@@ -1,0 +1,10 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Images #
+*.jpg
+*.png
+*.pdn
