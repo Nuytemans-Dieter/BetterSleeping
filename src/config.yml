@@ -1,0 +1,7 @@
+# ################ #
+#  BetterSleeping  #
+# ################ #
+
+# Set the percentage of online players that needs to be sleeping in order to skip the night/storm.
+# This should never be bigger than 100 as unexpected behavior might occur!
+percentage_needed: 30
