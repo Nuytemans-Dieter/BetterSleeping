@@ -4,7 +4,5 @@
 # Log file
 *.log
 
-# Images #
-*.jpg
-*.png
-*.pdn
+# Images folder with banners etc#
++images
