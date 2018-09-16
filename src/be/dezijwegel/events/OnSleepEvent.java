@@ -32,6 +32,8 @@ public class OnSleepEvent implements Listener, Reloadable {
         
         this.playersSleeping = 0;
         playersNeeded = configFile.getInt("percentage_needed");
+        if (playersNeeded > 100) playersNeeded = 100;
+        else if (playersNeeded < 1) playersNeeded = 1;
         
         prefix = langFile.getString("prefix");
         enough_sleeping = langFile.getString("enough_sleeping");
@@ -42,7 +44,7 @@ public class OnSleepEvent implements Listener, Reloadable {
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
         playersSleeping++;
-        int numNeeded = playersNeeded();
+        float numNeeded = playersNeeded();
         
         if (playersSleeping >= numNeeded)
         {
@@ -55,18 +57,16 @@ public class OnSleepEvent implements Listener, Reloadable {
             {
                 p.sendMessage(prefix + enough_sleeping);
             }
-        }
-        
-        if (playersSleeping < numNeeded)
-        {
-            int numLeft = numNeeded - playersSleeping;
-            if (numLeft >0 ) {
-                String msg;
-                if (amount_left.contains("<amount>")) 
-                    msg = amount_left.replaceAll("<amount>", Integer.toString(numLeft));
-                else
-                    msg = amount_left;
-                e.getPlayer().sendMessage(prefix + msg);
+        } else {
+            float numLeft = numNeeded - playersSleeping;
+            if (numLeft > 0 ) {
+                
+                String msg = amount_left.replaceAll("<amount>", Float.toString(Math.round(numLeft)));
+                
+                for (Player p : Bukkit.getOnlinePlayers())
+                {
+                    p.sendMessage(prefix + msg);
+                }
             }
         }
     }
@@ -75,31 +75,27 @@ public class OnSleepEvent implements Listener, Reloadable {
     public void onPlayerLeaveBed(PlayerBedLeaveEvent e)
     {
         playersSleeping--;
-        /*
-        int numLeft = playersNeeded() - playersSleeping;
-        
-        for (Player p : Bukkit.getOnlinePlayers())
-        {
-            if (numLeft > 0 ) {
-                String msg;
-                if (amount_left.contains("<amount>")) 
-                    msg = amount_left.replaceAll("<amount>", Integer.toString(numLeft));
-                else msg = amount_left;
-                e.getPlayer().sendMessage(prefix + msg);
-            }
-        }
-    */
     }
     
-    public int playersNeeded()
+    /**
+     * Calculate the amount of players needed according to the settings and current online players
+     * @return float
+     */
+    public float playersNeeded()
     {
         int numOnline = Bukkit.getOnlinePlayers().size();
-        return (playersNeeded * numOnline / 100);
+        return (playersNeeded * numOnline / 100.0f);
     }
 
+    /**
+     * Reload all config settings from the confg files into this object
+     */
     @Override
     public void reload() {
         playersNeeded = configFile.getInt("percentage_needed");
+        if (playersNeeded > 100) playersNeeded = 100;
+        else if (playersNeeded < 1) playersNeeded = 1;
+        
         prefix = langFile.getString("prefix");
         enough_sleeping = langFile.getString("enough_sleeping");
         amount_left = langFile.getString("amount_left");
