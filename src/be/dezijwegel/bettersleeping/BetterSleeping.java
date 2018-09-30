@@ -29,14 +29,14 @@ public class BetterSleeping extends JavaPlugin{
        configFile.saveDefaultConfig();
        langFile.saveDefaultConfig();
        
-       LinkedList<FileManagement> files = new LinkedList();
+       LinkedList<FileManagement> files = new LinkedList<>();
        files.add(configFile);
        files.add(langFile);
 
-       onSleepEvent = new OnSleepEvent(configFile, langFile);
+       onSleepEvent = new OnSleepEvent(configFile, langFile, this);
        getServer().getPluginManager().registerEvents(onSleepEvent, this);
        
-       LinkedList<Reloadable> reloadables = new LinkedList();
+       LinkedList<Reloadable> reloadables = new LinkedList<>();
        reloadables.add(onSleepEvent);
        
        reload = new Reload(files, reloadables, langFile);

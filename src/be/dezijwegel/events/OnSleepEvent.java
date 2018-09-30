@@ -1,5 +1,6 @@
 package be.dezijwegel.events;
 
+import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Reloadable;
 import be.dezijwegel.files.FileManagement;
 import org.bukkit.Bukkit;
@@ -16,6 +17,8 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
  */
 public class OnSleepEvent implements Listener, Reloadable {
     
+    private BetterSleeping plugin;
+    
     private int playersNeeded;
     private int playersSleeping;
     private FileManagement configFile;
@@ -25,8 +28,10 @@ public class OnSleepEvent implements Listener, Reloadable {
     private String enough_sleeping;
     private String amount_left;
     
-    public OnSleepEvent(FileManagement configFile, FileManagement langFile)
+    public OnSleepEvent(FileManagement configFile, FileManagement langFile, BetterSleeping plugin)
     {
+        this.plugin = plugin;
+        
         this.configFile = configFile;
         this.langFile = langFile;
         
@@ -48,20 +53,23 @@ public class OnSleepEvent implements Listener, Reloadable {
         
         if (playersSleeping >= numNeeded)
         {
-            for(World world : Bukkit.getWorlds()) { 
+            Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                for(World world : Bukkit.getWorlds()) {
                     world.setStorm(false);
                     world.setTime(1000);
-            }
-            
-            for (Player p : Bukkit.getOnlinePlayers()) 
-            {
-                p.sendMessage(prefix + enough_sleeping);
-            }
+                }
+                
+                for (Player p : Bukkit.getOnlinePlayers())
+                {
+                    p.sendMessage(prefix + enough_sleeping);
+                }
+            }, 40L);
+                    
         } else {
             float numLeft = numNeeded - playersSleeping;
             if (numLeft > 0 ) {
                 
-                String msg = amount_left.replaceAll("<amount>", Float.toString(Math.round(numLeft)));
+                String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
                 
                 for (Player p : Bukkit.getOnlinePlayers())
                 {

@@ -3,5 +3,5 @@
 # ################ #
 
 # Set the percentage of online players that needs to be sleeping in order to skip the night/storm.
-# This should never be bigger than 100 as unexpected behavior might occur!
+# A number bigger than 100 will be treated as if it were equal to 100
 percentage_needed: 30
