@@ -78,6 +78,16 @@ public class FileManagement {
     }
     
     /**
+     * Get a long from a file
+     * @param path
+     * @return 
+     */
+    public long getLong(String path)
+    {
+        return configuration.getLong(path);
+    }
+    
+    /**
      * Reload the config file
      */
     public void reloadFile() {

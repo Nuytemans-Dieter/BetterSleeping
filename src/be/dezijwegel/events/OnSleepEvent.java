@@ -21,6 +21,7 @@ public class OnSleepEvent implements Listener, Reloadable {
     
     private int playersNeeded;
     private int playersSleeping;
+    private long sleepDelay;
     private FileManagement configFile;
     private FileManagement langFile;
     
@@ -37,8 +38,10 @@ public class OnSleepEvent implements Listener, Reloadable {
         
         this.playersSleeping = 0;
         playersNeeded = configFile.getInt("percentage_needed");
+        
         if (playersNeeded > 100) playersNeeded = 100;
         else if (playersNeeded < 1) playersNeeded = 1;
+        
         
         prefix = langFile.getString("prefix");
         enough_sleeping = langFile.getString("enough_sleeping");
@@ -54,14 +57,16 @@ public class OnSleepEvent implements Listener, Reloadable {
         if (playersSleeping >= numNeeded)
         {
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                for(World world : Bukkit.getWorlds()) {
-                    world.setStorm(false);
-                    world.setTime(1000);
-                }
-                
-                for (Player p : Bukkit.getOnlinePlayers())
-                {
-                    p.sendMessage(prefix + enough_sleeping);
+                if (playersSleeping >= numNeeded) {
+                    for(World world : Bukkit.getWorlds()) {
+                        world.setStorm(false);
+                        world.setTime(1000);
+                    }
+
+                    for (Player p : Bukkit.getOnlinePlayers())
+                    {
+                        p.sendMessage(prefix + enough_sleeping);
+                    }
                 }
             }, 40L);
                     
