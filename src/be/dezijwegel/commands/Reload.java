@@ -37,9 +37,17 @@ public class Reload implements CommandExecutor {
         this.reloadables = reloadables;
         this.langFile = langFile;
         
-        prefix = langFile.getString("prefix");
-        message_reloaded = langFile.getString("message_reloaded");
-        no_permission = langFile.getString("no_permission");
+        if (langFile.contains("prefix"))
+            prefix = langFile.getString("prefix");
+        else prefix = "§6[BetterSleeping] §3";
+        
+        if (langFile.contains("message_reloaded"))
+            message_reloaded = langFile.getString("message_reloaded");
+        else message_reloaded = "Reload complete!";
+        
+        if (langFile.contains("no_permission"))
+            no_permission = langFile.getString("no_permission");
+        else no_permission = "§4You don't have permission to execute that command!";
     }
     
     /**
@@ -60,9 +68,17 @@ public class Reload implements CommandExecutor {
             });
         }
         
-        prefix = langFile.getString("prefix");
-        message_reloaded = langFile.getString("message_reloaded");
-        no_permission = langFile.getString("no_permission");
+        if (langFile.contains("prefix"))
+            prefix = langFile.getString("prefix");
+        else prefix = "§6[BetterSleeping] §3";
+        
+        if (langFile.contains("message_reloaded"))
+            message_reloaded = langFile.getString("message_reloaded");
+        else message_reloaded = "Reload complete!";
+        
+        if (langFile.contains("no_permission"))
+            no_permission = langFile.getString("no_permission");
+        else no_permission = "§4You don't have permission to execute that command!";
     }
 
     @Override

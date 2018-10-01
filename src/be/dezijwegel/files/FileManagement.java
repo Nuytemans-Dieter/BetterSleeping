@@ -88,6 +88,32 @@ public class FileManagement {
     }
     
     /**
+     * Check if the file contains a specific path
+     * @param path
+     * @return 
+     */
+    public boolean contains(String path)
+    {
+        return configuration.contains(path);
+    }
+    
+    /**
+     * This method will force the file back to its default
+     * This is helpful when new options are added and comments are needed
+     */
+    public void forceDefaultConfig()
+    {
+       switch (type) {
+            case CONFIG:
+                plugin.saveResource("config.yml", true);
+                break;
+            case LANG:
+                plugin.saveResource("lang.yml", true);
+                break;
+        }
+    }
+    
+    /**
      * Reload the config file
      */
     public void reloadFile() {

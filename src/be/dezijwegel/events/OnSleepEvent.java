@@ -3,8 +3,11 @@ package be.dezijwegel.events;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Reloadable;
 import be.dezijwegel.files.FileManagement;
+import java.util.logging.Level;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,16 +39,7 @@ public class OnSleepEvent implements Listener, Reloadable {
         this.configFile = configFile;
         this.langFile = langFile;
         
-        this.playersSleeping = 0;
-        playersNeeded = configFile.getInt("percentage_needed");
-        
-        if (playersNeeded > 100) playersNeeded = 100;
-        else if (playersNeeded < 1) playersNeeded = 1;
-        
-        
-        prefix = langFile.getString("prefix");
-        enough_sleeping = langFile.getString("enough_sleeping");
-        amount_left = langFile.getString("amount_left");
+        reload();
     }
     
     @EventHandler
@@ -68,7 +62,7 @@ public class OnSleepEvent implements Listener, Reloadable {
                         p.sendMessage(prefix + enough_sleeping);
                     }
                 }
-            }, 40L);
+            }, sleepDelay);
                     
         } else {
             float numLeft = numNeeded - playersSleeping;
@@ -105,12 +99,35 @@ public class OnSleepEvent implements Listener, Reloadable {
      */
     @Override
     public void reload() {
-        playersNeeded = configFile.getInt("percentage_needed");
-        if (playersNeeded > 100) playersNeeded = 100;
-        else if (playersNeeded < 1) playersNeeded = 1;
+        if (configFile.contains("sleep_delay"))
+            sleepDelay = configFile.getLong("sleep_delay");
+        else {
+            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+            console.sendMessage("[BetterSleeping]" + ChatColor.GREEN + "New configuration option(s) found!");
+            console.sendMessage("[BetterSleeping]" + ChatColor.RED + "Resetting the config file..");
+            sleepDelay = 40;
+            configFile.forceDefaultConfig();
+        }
         
-        prefix = langFile.getString("prefix");
-        enough_sleeping = langFile.getString("enough_sleeping");
-        amount_left = langFile.getString("amount_left");
+        if (configFile.contains("percentage_needed")) {
+            
+            playersNeeded = configFile.getInt("percentage_needed");
+        
+            if (playersNeeded > 100) playersNeeded = 100;
+            else if (playersNeeded < 1) playersNeeded = 1;
+            
+        } else playersNeeded = 30;
+        
+        if (langFile.contains("prefix"))
+            prefix = langFile.getString("prefix");
+        else prefix = "§6[BetterSleeping] §3";
+        
+        if (langFile.contains("enough_sleeping"))
+            enough_sleeping = langFile.getString("enough_sleeping");
+        else enough_sleeping = "Enough people are sleeping now!";
+        
+        if (langFile.contains("amount_left"))
+            amount_left = langFile.getString("amount_left");
+        else amount_left = "There are <amount> more people needed to skip the night/storm!";
     }
 }

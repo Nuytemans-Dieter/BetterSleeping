@@ -2,8 +2,11 @@
 #  BetterSleeping  #
 # ################ #
 
-# Set the percentage of online players that needs to be sleeping in order to skip the night/storm.
-# A number bigger than 100 will be treated as if it were equal to 100
+# Set the percentage of online players that needs to be sleeping 
+# in order to skip the night/storm.
 percentage_needed: 30
 
-# Set the time that players will have to remain in their beds after 
+# Set the time (in ticks) that players will have to remain in their beds 
+# as soon as enough people are sleeping.
+# A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds
+sleep_delay: 40
