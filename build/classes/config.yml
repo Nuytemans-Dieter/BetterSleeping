@@ -2,11 +2,28 @@
 #  BetterSleeping  #
 # ################ #
 
-# Set the percentage of online players that needs to be sleeping 
+# Set the percentage of online players that need to be sleeping 
 # in order to skip the night/storm.
+# Default: 30
 percentage_needed: 30
 
 # Set the time (in ticks) that players will have to remain in their beds 
 # as soon as enough people are sleeping.
 # A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds
+# Default: 40
 sleep_delay: 40
+
+# Choose whether BetterSleeping should treat every world seperate from eachother (true)
+#       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
+#                           If this condition is met, the night/storm will ONLY be skipped in that same world
+#           Example:        There are 100 online players, 90 in the End and 10 in the Overworld.
+#                           3 people are sleeping in the Overworld and since 30% of people in that world are sleeping
+#                           The night will be skipped, but ONLY in the Overworld
+# Or if it should count the global number of sleeping players and skip the night/storm in all worlds (false)
+#       percentage_needed:  30 would mean that 30% of all ONLINE players should be sleeping
+#                           If this condition is met, the night/storm will be skipped in EVERY world
+#           Example:        There are 100 online players, 90 in the End and 10 in the Overworld.
+#                           30 people (of all worlds combined) must be sleeping in order to skip the night/storm.
+#                           The night/storm will be skipped in EVERY world!!
+# Default: false
+world_specific_behavior: false

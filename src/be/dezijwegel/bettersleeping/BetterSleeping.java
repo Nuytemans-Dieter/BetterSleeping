@@ -2,6 +2,8 @@ package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.commands.Reload;
 import be.dezijwegel.events.OnSleepEvent;
+import be.dezijwegel.events.OnSleepEventGlobal;
+import be.dezijwegel.events.OnSleepEventLocal;
 import be.dezijwegel.files.FileManagement;
 import java.util.LinkedList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,8 +34,15 @@ public class BetterSleeping extends JavaPlugin{
        LinkedList<FileManagement> files = new LinkedList<>();
        files.add(configFile);
        files.add(langFile);
-
-       onSleepEvent = new OnSleepEvent(configFile, langFile, this);
+       
+       if (configFile.contains("world_specific_behavior") && configFile.getBoolean("world_specific_behavior"))
+       {
+           onSleepEvent = new OnSleepEventLocal(configFile, langFile, this);
+       } else {
+           onSleepEvent = new OnSleepEventGlobal(configFile, langFile, this);
+           
+       }       
+       
        getServer().getPluginManager().registerEvents(onSleepEvent, this);
        
        LinkedList<Reloadable> reloadables = new LinkedList<>();

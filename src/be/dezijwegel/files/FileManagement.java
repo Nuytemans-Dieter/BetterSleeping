@@ -78,6 +78,16 @@ public class FileManagement {
     }
     
     /**
+     * Get a boolean from a file
+     * @param path
+     * @return boolean
+     */
+    public boolean getBoolean(String path)
+    {
+        return configuration.getBoolean(path);
+    }
+    
+    /**
      * Get a long from a file
      * @param path
      * @return 
@@ -95,6 +105,17 @@ public class FileManagement {
     public boolean contains(String path)
     {
         return configuration.contains(path);
+    }
+
+    /**
+     * Check if the file contains a specific path
+     * And choose to ignore the default file
+     * @param path
+     * @return 
+     */
+    public boolean containsIgnoreDefault(String path)
+    {
+        return configuration.contains(path, true);
     }
     
     /**

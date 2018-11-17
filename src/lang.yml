@@ -10,7 +10,13 @@
 prefix: "§6[BetterSleeping] §3"
 
 # The message people get when enough people are sleeping
-enough_sleeping: "Enough people are sleeping now!"
+enough_sleeping: "Enough people are sleeping now, the night/storm will be skipped in a moment!"
+
+# The message people receive after the night/storm has been skipped
+good_morning: "Good morning!"
+
+# Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
+cancelled: "Someone left their bed so the night/storm won't be skipped!"
 
 # The message which indicates how many more people need to rest
 # <amount> will be replaced by the appropriate amount
@@ -21,4 +27,3 @@ no_permission: "§4You don't have permission to execute that command!"
 
 # The message that will be sent to the command sender and console when the reload is complete
 message_reloaded: "Reload complete!"
-

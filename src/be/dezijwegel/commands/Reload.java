@@ -57,15 +57,17 @@ public class Reload implements CommandExecutor {
     {
         if (files.size() > 0)
         {
-            files.stream().forEach((file) -> {
+            for (FileManagement file : files)
+            {
                 file.reloadFile();
-            });
+            }
         }
         
         if (reloadables.size() > 0) {
-            reloadables.stream().forEach((reloadable) -> {
-                reloadable.reload();
-            });
+            for (Reloadable rel : reloadables)
+            {
+                rel.reload();
+            }
         }
         
         if (langFile.contains("prefix"))
