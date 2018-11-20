@@ -54,7 +54,8 @@ public class OnSleepEventLocal extends OnSleepEvent{
             for (Player p : Bukkit.getOnlinePlayers())
             {
                 if (p.getWorld().getName().equals(world))
-                    p.sendMessage(prefix + enough_sleeping);
+                    if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                        p.sendMessage(prefix + enough_sleeping);
             }
             
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
@@ -64,7 +65,8 @@ public class OnSleepEventLocal extends OnSleepEvent{
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
                         if (p.getWorld().getName().equals(world))
-                            p.sendMessage(prefix + good_morning);
+                            if (!good_morning.equalsIgnoreCase("ignored"))
+                                p.sendMessage(prefix + good_morning);
                     }
                 }
                 
@@ -79,7 +81,8 @@ public class OnSleepEventLocal extends OnSleepEvent{
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
                     if (p.getWorld().getName().equals(world))
-                    p.sendMessage(prefix + msg);
+                        if (!msg.equalsIgnoreCase("ignored"))
+                            p.sendMessage(prefix + msg);
                 }
             }
         }

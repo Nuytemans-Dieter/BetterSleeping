@@ -96,9 +96,13 @@ public class Reload implements CommandExecutor {
                     {
                         if (sender.isOp() || sender.hasPermission("bettersleeping.reload")) {
                             reloadFiles();
-                            sender.sendMessage(prefix + message_reloaded);
+                            if (!message_reloaded.equalsIgnoreCase("ignored"))
+                                sender.sendMessage(prefix + message_reloaded);
                             getLogger().log(Level.INFO, "[BetterSleeping] {0}", message_reloaded);
-                        } else sender.sendMessage(prefix + no_permission);       
+                        } else {
+                            if (!no_permission.equalsIgnoreCase("ignored"))
+                                sender.sendMessage(prefix + no_permission);
+                        }       
                         return true;
                     }
                 }

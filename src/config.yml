@@ -2,6 +2,10 @@
 #  BetterSleeping  #
 # ################ #
 
+# If the explanation in this file is not clear enough, please check BetterSleeping's Spigot page
+# I like hearing your opinions! Let me know in the plugin's discussion section or via a review!
+# If you have any requests, let me know and I'll look into them whenever I can.
+
 # Set the percentage of online players that need to be sleeping 
 # in order to skip the night/storm.
 # Default: 30

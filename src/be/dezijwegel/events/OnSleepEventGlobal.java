@@ -40,7 +40,8 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
         {
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                p.sendMessage(prefix + enough_sleeping);
+                if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                    p.sendMessage(prefix + enough_sleeping);
             }
             
             Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
@@ -52,12 +53,14 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
                     
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
-                        p.sendMessage(prefix + good_morning);
+                        if (!good_morning.equalsIgnoreCase("ignored"))
+                            p.sendMessage(prefix + good_morning);
                     }
                 } else {
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
-                        p.sendMessage(prefix + cancelled);
+                        if (!cancelled.equalsIgnoreCase("ignored"))
+                            p.sendMessage(prefix + cancelled);
                     }
                 }
             }, sleepDelay);
@@ -69,7 +72,8 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
                 
                 for (Player p : Bukkit.getOnlinePlayers())
                 {
-                    p.sendMessage(prefix + msg);
+                    if (!msg.equalsIgnoreCase("ignored"))
+                        p.sendMessage(prefix + msg);
                 }
             }
         }
