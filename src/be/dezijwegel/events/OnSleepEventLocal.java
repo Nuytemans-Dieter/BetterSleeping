@@ -26,7 +26,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
     private HashMap<String, Integer> playersSleeping;
     
     public OnSleepEventLocal(FileManagement configFile, FileManagement langFile, BetterSleeping plugin) {
-        super(configFile, langFile);
+        super(configFile, langFile, plugin);
         
         this.plugin = plugin;
         
@@ -41,49 +41,64 @@ public class OnSleepEventLocal extends OnSleepEvent{
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
         World worldObj = e.getPlayer().getWorld();
-        String world = worldObj.getName();
-        
-        playersSleeping.put(world, playersSleeping.get(world) + 1);
-        
-        float numNeeded = playersNeeded(world);
-        
-        int numSleeping = playersSleeping.get(world);
-        
-        if (numSleeping >= numNeeded)
-        {
-            for (Player p : Bukkit.getOnlinePlayers())
+        if (worldObj.getTime() > 12500) {
+            if (super.PlayerMaySleep(e.getPlayer().getUniqueId()))
             {
-                if (p.getWorld().getName().equals(world))
-                    if (!enough_sleeping.equalsIgnoreCase("ignored"))
-                        p.sendMessage(prefix + enough_sleeping);
-            }
-            
-            Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                if (numSleeping >= numNeeded) {
-                    worldObj.setStorm(false);
-                    worldObj.setTime(1000);
+                String world = worldObj.getName();
+
+                playersSleeping.put(world, playersSleeping.get(world) + 1);
+
+                float numNeeded = playersNeeded(world);
+
+                int numSleeping = playersSleeping.get(world);
+
+                if (numSleeping >= numNeeded)
+                {
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
                         if (p.getWorld().getName().equals(world))
-                            if (!good_morning.equalsIgnoreCase("ignored"))
-                                p.sendMessage(prefix + good_morning);
+                            if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                                p.sendMessage(prefix + enough_sleeping);
+                    }
+
+                    Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                        if (playersSleeping.get(world) >= numNeeded) {
+                            worldObj.setStorm(false);
+                            worldObj.setTime(1000);
+                            for (Player p : Bukkit.getOnlinePlayers())
+                            {
+                                if (p.getWorld().getName().equals(world))
+                                    if (!good_morning.equalsIgnoreCase("ignored"))
+                                        p.sendMessage(prefix + good_morning);
+                            }
+                        }  else {
+                            for (Player p : Bukkit.getOnlinePlayers())
+                            {
+                                if (p.getWorld().getName().equals(world))
+                                    if (!cancelled.equalsIgnoreCase("ignored"))
+                                        p.sendMessage(prefix + cancelled);
+                            }
+                        }
+
+
+                    }, sleepDelay);
+                } else {
+                    float numLeft = numNeeded - numSleeping;
+                    if (numLeft > 0 ) {
+
+                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
+
+                        for (Player p : Bukkit.getOnlinePlayers())
+                        {
+                            if (p.getWorld().getName().equals(world))
+                                if (!msg.equalsIgnoreCase("ignored"))
+                                    p.sendMessage(prefix + msg);
+                        }
                     }
                 }
-                
-                
-            }, sleepDelay);
-        } else {
-            float numLeft = numNeeded - numSleeping;
-            if (numLeft > 0 ) {
-                
-                String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
-                
-                for (Player p : Bukkit.getOnlinePlayers())
-                {
-                    if (p.getWorld().getName().equals(world))
-                        if (!msg.equalsIgnoreCase("ignored"))
-                            p.sendMessage(prefix + msg);
-                }
+            } else {
+                e.getPlayer().sendMessage(prefix + sleep_spam);
+                e.setCancelled(true);
             }
         }
     }

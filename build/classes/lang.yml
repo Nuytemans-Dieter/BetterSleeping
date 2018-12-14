@@ -41,3 +41,7 @@ no_permission: "§4You don't have permission to execute that command!"
 
 # The message that will be sent to the command sender and console when the reload is complete
 message_reloaded: "Reload complete!"
+
+
+# players that try to spam BetterSleeping messages will receive this
+sleep_spam: "You have to wait a little longer before you can sleep again!"

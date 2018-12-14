@@ -1,5 +1,6 @@
 package be.dezijwegel.commands;
 
+import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Reloadable;
 import be.dezijwegel.files.FileManagement;
 import java.util.LinkedList;
@@ -20,6 +21,7 @@ public class Reload implements CommandExecutor {
     LinkedList<Reloadable> reloadables;
     
     private FileManagement langFile;
+    private BetterSleeping plugin;
     
     private String prefix;
     private String message_reloaded;
@@ -31,11 +33,12 @@ public class Reload implements CommandExecutor {
      * @param reloadables
      * @param langFile
      */
-    public Reload (LinkedList<FileManagement> files, LinkedList<Reloadable> reloadables, FileManagement langFile)
+    public Reload (LinkedList<FileManagement> files, LinkedList<Reloadable> reloadables, FileManagement langFile, BetterSleeping plugin)
     {
         this.files = files;
         this.reloadables = reloadables;
         this.langFile = langFile;
+        this.plugin = plugin;
         
         if (langFile.contains("prefix"))
             prefix = langFile.getString("prefix");
@@ -81,6 +84,8 @@ public class Reload implements CommandExecutor {
         if (langFile.contains("no_permission"))
             no_permission = langFile.getString("no_permission");
         else no_permission = "§4You don't have permission to execute that command!";
+        
+        plugin.reloadBehavior();
     }
 
     @Override

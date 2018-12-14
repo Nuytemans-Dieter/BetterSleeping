@@ -1,0 +1,1 @@
+-To view these changelogs, either visit GitHub and check all commits or go to the Spigot plugin page!

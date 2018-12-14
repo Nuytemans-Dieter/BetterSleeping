@@ -1,0 +1,13 @@
+-Fixed a bug where BetterSleeping would throw errors when world_specific_behavior was set to true
+-Players seemed able to 'sleep' during the day and skip the night regardless of the time, spamming the chat as a result. 'Sleeping' during the day will no longer be treated as sleeping by BetterSleeping (also reducing spam to some extent).
+-Fixed an issue where one player could trick BetterSleeping into thinking that multiple players were sleeping when world_specific_behavior was set to true
+-Preventing spam: After leaving a bed, a player must wait 10 seconds (default) before they can sleep again. This delay can be set in config.yml
+-A switch from true to false (and the other way around) of world_specific_behavior will now be enforced upon /bettersleeping reload or regular reload/restart meaning the behavior can be changed on the fly!
+-Corrected the version in plugin.yml
+
+Planned features:
+-Giving players configurable temporary buffs for sleeping (Healing, filling food bar, speed)
+-Auto punishments for people that spam the chat with BetterSleeping messages (kick, ban,..)
+-Tab auto complete for /bettersleeping reload
+-Report every missing language option instead of just reporting the most important ones
+

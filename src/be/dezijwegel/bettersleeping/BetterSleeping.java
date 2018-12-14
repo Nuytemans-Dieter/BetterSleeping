@@ -6,6 +6,7 @@ import be.dezijwegel.events.OnSleepEventGlobal;
 import be.dezijwegel.events.OnSleepEventLocal;
 import be.dezijwegel.files.FileManagement;
 import java.util.LinkedList;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -40,17 +41,16 @@ public class BetterSleeping extends JavaPlugin{
            onSleepEvent = new OnSleepEventLocal(configFile, langFile, this);
        } else {
            onSleepEvent = new OnSleepEventGlobal(configFile, langFile, this);
-           
-       }       
+       }
        
        getServer().getPluginManager().registerEvents(onSleepEvent, this);
        
        LinkedList<Reloadable> reloadables = new LinkedList<>();
        reloadables.add(onSleepEvent);
        
-       reload = new Reload(files, reloadables, langFile);
+       reload = new Reload(files, reloadables, langFile, this);
        this.getCommand("bettersleeping").setExecutor(reload);
-       reload.reloadFiles();
+       //reload.reloadFiles();
    }
    
    @Override
@@ -58,5 +58,22 @@ public class BetterSleeping extends JavaPlugin{
    {
        getLogger().info("Good night!");
    }
-    
+   
+   public void reloadBehavior()
+   {
+       boolean worldSpecificBehavior;
+       if (configFile.containsIgnoreDefault("world_specific_behavior"))
+           worldSpecificBehavior = configFile.getBoolean("world_specific_behavior");
+       else worldSpecificBehavior = false;
+       
+       HandlerList.unregisterAll(onSleepEvent);
+       
+       if (worldSpecificBehavior)   
+           onSleepEvent = new OnSleepEventLocal(configFile, langFile, this);
+       else                         
+           onSleepEvent = 
+                   new OnSleepEventGlobal(configFile, langFile, this);
+       
+       getServer().getPluginManager().registerEvents(onSleepEvent, this);
+   }
 }

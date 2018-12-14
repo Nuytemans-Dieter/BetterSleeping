@@ -26,55 +26,64 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
     
     public OnSleepEventGlobal(FileManagement configFile, FileManagement langFile, BetterSleeping plugin)
     {
-        super(configFile, langFile);
+        super(configFile, langFile, plugin);
         this.plugin = plugin;
     }
     
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
-        playersSleeping++;
-        float numNeeded = playersNeeded();
-        
-        if (playersSleeping >= numNeeded)
+        if (e.getPlayer().getWorld().getTime() > 12500)
         {
-            for (Player p : Bukkit.getOnlinePlayers())
+            if (super.PlayerMaySleep(e.getPlayer().getUniqueId())) 
             {
-                if (!enough_sleeping.equalsIgnoreCase("ignored"))
-                    p.sendMessage(prefix + enough_sleeping);
-            }
-            
-            Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                if (playersSleeping >= numNeeded) {
-                    for(World world : Bukkit.getWorlds()) {
-                        world.setStorm(false);
-                        world.setTime(1000);
-                    }
-                    
-                    for (Player p : Bukkit.getOnlinePlayers())
-                    {
-                        if (!good_morning.equalsIgnoreCase("ignored"))
-                            p.sendMessage(prefix + good_morning);
-                    }
-                } else {
-                    for (Player p : Bukkit.getOnlinePlayers())
-                    {
-                        if (!cancelled.equalsIgnoreCase("ignored"))
-                            p.sendMessage(prefix + cancelled);
-                    }
-                }
-            }, sleepDelay);
-        } else {
-            float numLeft = numNeeded - playersSleeping;
-            if (numLeft > 0 ) {
-                
-                String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
-                
-                for (Player p : Bukkit.getOnlinePlayers())
+                playersSleeping++;
+                float numNeeded = playersNeeded();
+
+                if (playersSleeping >= numNeeded)
                 {
-                    if (!msg.equalsIgnoreCase("ignored"))
-                        p.sendMessage(prefix + msg);
+                    for (Player p : Bukkit.getOnlinePlayers())
+                    {
+                        if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                            p.sendMessage(prefix + enough_sleeping);
+                    }
+
+                    Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
+                        if (playersSleeping >= numNeeded) {
+                            for(World world : Bukkit.getWorlds()) {
+                                world.setStorm(false);
+                                world.setTime(1000);
+                            }
+
+                            for (Player p : Bukkit.getOnlinePlayers())
+                            {
+                                if (!good_morning.equalsIgnoreCase("ignored"))
+                                    p.sendMessage(prefix + good_morning);
+                            }
+                        } else {
+                            for (Player p : Bukkit.getOnlinePlayers())
+                            {
+                                if (!cancelled.equalsIgnoreCase("ignored"))
+                                    p.sendMessage(prefix + cancelled);
+                            }
+                        }
+                    }, sleepDelay);
+                } else {
+                    float numLeft = numNeeded - playersSleeping;
+                    if (numLeft > 0 ) {
+
+                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
+
+                        for (Player p : Bukkit.getOnlinePlayers())
+                        {
+                            if (!msg.equalsIgnoreCase("ignored"))
+                                p.sendMessage(prefix + msg);
+                        }
+                    }
                 }
+            } else {
+                e.getPlayer().sendMessage(prefix + sleep_spam);
+                e.setCancelled(true);
             }
         }
     }

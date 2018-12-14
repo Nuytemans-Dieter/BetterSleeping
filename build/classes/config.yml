@@ -5,6 +5,7 @@
 # If the explanation in this file is not clear enough, please check BetterSleeping's Spigot page
 # I like hearing your opinions! Let me know in the plugin's discussion section or via a review!
 # If you have any requests, let me know and I'll look into them whenever I can.
+# Bugs are stupid but the more information you give when reporting them, the better I'll be able to fix them!
 
 # Set the percentage of online players that need to be sleeping 
 # in order to skip the night/storm.
@@ -16,6 +17,11 @@ percentage_needed: 30
 # A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds
 # Default: 40
 sleep_delay: 40
+
+
+# Set the time (in seconds) that players have to wait before they can enter a bed again after leaving
+# Default: 10
+bed_enter_delay: 10
 
 # Choose whether BetterSleeping should treat every world seperate from eachother (true)
 #       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
