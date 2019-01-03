@@ -20,6 +20,8 @@ public class BetterSleeping extends JavaPlugin{
     
     private OnSleepEvent onSleepEvent;
     protected Reload reload;
+
+    LinkedList<Reloadable> reloadables;
     
    @Override
    public void onEnable()
@@ -28,10 +30,11 @@ public class BetterSleeping extends JavaPlugin{
        
        configFile = new FileManagement(FileManagement.FileType.CONFIG, this);
        langFile = new FileManagement(FileManagement.FileType.LANG, this);
-       
+
+
        configFile.saveDefaultConfig();
        langFile.saveDefaultConfig();
-       
+
        LinkedList<FileManagement> files = new LinkedList<>();
        files.add(configFile);
        files.add(langFile);
@@ -45,12 +48,14 @@ public class BetterSleeping extends JavaPlugin{
        
        getServer().getPluginManager().registerEvents(onSleepEvent, this);
        
-       LinkedList<Reloadable> reloadables = new LinkedList<>();
+       reloadables = new LinkedList<>();
        reloadables.add(onSleepEvent);
+       //Makes sure that all values are loaded on startup
+       onSleepEvent.reload();
        
        reload = new Reload(files, reloadables, langFile, this);
+
        this.getCommand("bettersleeping").setExecutor(reload);
-       //reload.reloadFiles();
    }
    
    @Override
@@ -58,7 +63,10 @@ public class BetterSleeping extends JavaPlugin{
    {
        getLogger().info("Good night!");
    }
-   
+
+    /**
+     * Allows the world_specific_behavior to be changed by just reloading the server
+     */
    public void reloadBehavior()
    {
        boolean worldSpecificBehavior;
@@ -67,13 +75,14 @@ public class BetterSleeping extends JavaPlugin{
        else worldSpecificBehavior = false;
        
        HandlerList.unregisterAll(onSleepEvent);
+       reloadables.remove(onSleepEvent);
        
        if (worldSpecificBehavior)   
            onSleepEvent = new OnSleepEventLocal(configFile, langFile, this);
        else                         
-           onSleepEvent = 
-                   new OnSleepEventGlobal(configFile, langFile, this);
+           onSleepEvent = new OnSleepEventGlobal(configFile, langFile, this);
        
        getServer().getPluginManager().registerEvents(onSleepEvent, this);
+       reloadables.add(onSleepEvent);
    }
 }

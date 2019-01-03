@@ -1,10 +1,7 @@
-# Compiled class file
-*.class
+.idea/
+backup/
+.gitattributes
+BetterSleeping.iml
+build.xml
 
-# Log file
-*.log
-
-# Images folder with banners etc#
-+images
-
-+nbproject
+versions/production/

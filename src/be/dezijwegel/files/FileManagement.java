@@ -1,6 +1,9 @@
 package be.dezijwegel.files;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -14,7 +17,7 @@ public class FileManagement {
 
     private FileConfiguration configuration;
     private File file;
-    private FileType type;
+    public FileType type;
     private BetterSleeping plugin;
 
     public enum FileType {
@@ -113,10 +116,7 @@ public class FileManagement {
      * @param path
      * @return 
      */
-    public boolean containsIgnoreDefault(String path)
-    {
-        return configuration.contains(path, true);
-    }
+    public boolean containsIgnoreDefault(String path) { return configuration.contains(path, true); }
     
     /**
      * This method will force the file back to its default
@@ -181,11 +181,14 @@ public class FileManagement {
             }
         }
         if (!file.exists()) {
+            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             switch (type) {
                 case CONFIG:
+                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new configuration file...");
                     plugin.saveResource("config.yml", false);
                     break;
                 case LANG:
+                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new language file...");
                     plugin.saveResource("lang.yml", false);
                     break;
             }

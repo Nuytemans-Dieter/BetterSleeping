@@ -13,7 +13,7 @@
 # plugin in the prefix
 # Note that the prefix cannot be disabled by putting "ignored"
 # To disable the prefix, it must simply be left empty (written as: "")
-prefix: "§6[BetterSleeping] §3"
+prefix: "&6[BetterSleeping] &3"
 
 
 # The message people get when enough people are sleeping
@@ -36,7 +36,7 @@ amount_left: "There are <amount> more people needed to skip the night/storm!"
 
 
 # The message a player gets when he/she doesn't have access to a command and tries to execute it
-no_permission: "§4You don't have permission to execute that command!"
+no_permission: "&4You don't have permission to execute that command!"
 
 
 # The message that will be sent to the command sender and console when the reload is complete

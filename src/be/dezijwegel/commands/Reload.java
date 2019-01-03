@@ -6,9 +6,12 @@ import be.dezijwegel.files.FileManagement;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import static org.bukkit.Bukkit.getLogger;
+
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
@@ -17,8 +20,8 @@ import org.bukkit.entity.Player;
  */
 public class Reload implements CommandExecutor {
     
-    LinkedList<FileManagement> files;
-    LinkedList<Reloadable> reloadables;
+    private LinkedList<FileManagement> files;
+    private LinkedList<Reloadable> reloadables;
     
     private FileManagement langFile;
     private BetterSleeping plugin;
@@ -62,10 +65,14 @@ public class Reload implements CommandExecutor {
         {
             for (FileManagement file : files)
             {
+                file.saveDefaultConfig();
                 file.reloadFile();
             }
         }
-        
+
+        //Reload the (no) multiworld option
+        plugin.reloadBehavior();
+
         if (reloadables.size() > 0) {
             for (Reloadable rel : reloadables)
             {
@@ -84,11 +91,8 @@ public class Reload implements CommandExecutor {
         if (langFile.contains("no_permission"))
             no_permission = langFile.getString("no_permission");
         else no_permission = "§4You don't have permission to execute that command!";
-        
-        plugin.reloadBehavior();
     }
 
-    @Override
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
         if (cs instanceof Player)
         {

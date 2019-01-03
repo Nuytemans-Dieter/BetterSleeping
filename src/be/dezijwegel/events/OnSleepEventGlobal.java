@@ -1,7 +1,3 @@
-/*
- * Geen license header toegevoegd
- * Dieter Nuytemans
- */
 package be.dezijwegel.events;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
@@ -28,12 +24,15 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
     {
         super(configFile, langFile, plugin);
         this.plugin = plugin;
+
+        playersSleeping = 0;
     }
     
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
-        if (e.getPlayer().getWorld().getTime() > 12500)
+        World worldObj = e.getPlayer().getWorld();
+        if (worldObj.getTime() > 12500 || worldObj.hasStorm() || worldObj.isThundering())
         {
             if (super.PlayerMaySleep(e.getPlayer().getUniqueId())) 
             {

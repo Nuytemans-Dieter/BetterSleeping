@@ -30,7 +30,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
         
         this.plugin = plugin;
         
-        playersSleeping = new HashMap<>();
+        playersSleeping = new HashMap<String, Integer>();
         for (World world : Bukkit.getWorlds())
         {
             playersSleeping.put(world.getName(), 0);
@@ -41,7 +41,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
         World worldObj = e.getPlayer().getWorld();
-        if (worldObj.getTime() > 12500) {
+        if (worldObj.getTime() > 12500 || worldObj.hasStorm() || worldObj.isThundering()) {
             if (super.PlayerMaySleep(e.getPlayer().getUniqueId()))
             {
                 String world = worldObj.getName();
