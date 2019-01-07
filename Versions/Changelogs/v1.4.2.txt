@@ -1,0 +1,13 @@
+-The 'cancelled'-message will no longer be sent when it shouldn't be sent in the first place
+-Fixed a console error when people sleep in different worlds with world_specific_behavior set to true. If the same issue still occurrs, BetterSleeping will try to fix its status along with sending a custom message to the console instead of an error.
+-Made sure that BetterSleeping is loaded AFTER the worlds
+-Removed Freddy Krueger
+-Enough_players_sleeping will no longer be repeated when additional players start sleeping after enough people were sleeping already
+
+Planned features (some/all may still be canceled):
+-Implement unit testing
+-Refactor the language system
+-Give players (configurable) temporary buffs for sleeping (Healing, filling food bar, speed)
+-Tab auto complete for /bettersleeping reload
+-Report every missing language option instead of just reporting the most important ones
+-Automatic punishments for people that try to spam the chat with BetterSleeping messages (kick, ban,..)

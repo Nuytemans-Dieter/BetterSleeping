@@ -7,6 +7,8 @@ package be.dezijwegel.events;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.files.FileManagement;
 import java.util.HashMap;
+
+import javafx.scene.paint.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -24,6 +26,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
     private BetterSleeping plugin;
     
     private HashMap<String, Integer> playersSleeping;
+    private HashMap<String, Long> lastSkipped;
     
     public OnSleepEventLocal(FileManagement configFile, FileManagement langFile, BetterSleeping plugin) {
         super(configFile, langFile, plugin);
@@ -31,9 +34,12 @@ public class OnSleepEventLocal extends OnSleepEvent{
         this.plugin = plugin;
         
         playersSleeping = new HashMap<String, Integer>();
+        lastSkipped = new HashMap<String, Long>();
+
         for (World world : Bukkit.getWorlds())
         {
             playersSleeping.put(world.getName(), 0);
+            lastSkipped.put(world.getName(), 1L);
         }
     }
     
@@ -44,45 +50,50 @@ public class OnSleepEventLocal extends OnSleepEvent{
         if (worldObj.getTime() > 12500 || worldObj.hasStorm() || worldObj.isThundering()) {
             if (super.PlayerMaySleep(e.getPlayer().getUniqueId()))
             {
-                String world = worldObj.getName();
+                int numSleeping;
+                if (playersSleeping.get(worldObj.getName()) != null)
+                    numSleeping = playersSleeping.get(worldObj.getName()) + 1;
+                else numSleeping = 1;
 
-                playersSleeping.put(world, playersSleeping.get(world) + 1);
+                playersSleeping.put(worldObj.getName(), numSleeping);
 
-                float numNeeded = playersNeeded(world);
+                float numNeeded = playersNeeded(worldObj.getName());
 
-                int numSleeping = playersSleeping.get(world);
-
-                if (numSleeping >= numNeeded)
+                if (numSleeping == numNeeded)
                 {
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
-                        if (p.getWorld().getName().equals(world))
+                        if (p.getWorld().getName().equals(worldObj.getName()))
                             if (!enough_sleeping.equalsIgnoreCase("ignored"))
                                 p.sendMessage(prefix + enough_sleeping);
                     }
 
                     Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                        if (playersSleeping.get(world) >= numNeeded) {
-                            worldObj.setStorm(false);
-                            worldObj.setTime(1000);
-                            for (Player p : Bukkit.getOnlinePlayers())
-                            {
-                                if (p.getWorld().getName().equals(world))
-                                    if (!good_morning.equalsIgnoreCase("ignored"))
-                                        p.sendMessage(prefix + good_morning);
-                            }
-                        }  else {
-                            for (Player p : Bukkit.getOnlinePlayers())
-                            {
-                                if (p.getWorld().getName().equals(world))
-                                    if (!cancelled.equalsIgnoreCase("ignored"))
-                                        p.sendMessage(prefix + cancelled);
+                        if (lastSkipped.get(worldObj.getName()) < System.currentTimeMillis() - 1000) {
+                            if (playersSleeping.get(worldObj.getName()) != null) {
+                                if (playersSleeping.get(worldObj.getName()) >= numNeeded) {
+                                    worldObj.setStorm(false);
+                                    worldObj.setTime(1000);
+                                    lastSkipped.put(worldObj.getName(), System.currentTimeMillis());
+
+                                    for (Player p : Bukkit.getOnlinePlayers()) {
+                                        if (p.getWorld().getName().equals(worldObj.getName()))
+                                            if (!good_morning.equalsIgnoreCase("ignored"))
+                                                p.sendMessage(prefix + good_morning);
+                                    }
+                                } else {
+                                    for (Player p : Bukkit.getOnlinePlayers()) {
+                                        if (p.getWorld().getName().equals(worldObj.getName()))
+                                            if (!cancelled.equalsIgnoreCase("ignored"))
+                                                p.sendMessage(prefix + cancelled);
+                                    }
+                                }
+                            } else {
+                                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + Color.RED + "An unexpected error has occurred, and the night will not be skipped as a result. Please let me know (vallas) on Spigot and I will look into this right away!");
                             }
                         }
-
-
                     }, sleepDelay);
-                } else {
+                } else if (numSleeping < playersNeeded(worldObj.getName())) {
                     float numLeft = numNeeded - numSleeping;
                     if (numLeft > 0 ) {
 
@@ -90,7 +101,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
 
                         for (Player p : Bukkit.getOnlinePlayers())
                         {
-                            if (p.getWorld().getName().equals(world))
+                            if (p.getWorld().getName().equals(worldObj.getName()))
                                 if (!msg.equalsIgnoreCase("ignored"))
                                     p.sendMessage(prefix + msg);
                         }
@@ -107,8 +118,27 @@ public class OnSleepEventLocal extends OnSleepEvent{
     public void onPlayerLeaveBed(PlayerBedLeaveEvent e)
     {
         String world = e.getPlayer().getWorld().getName();
-        
-        playersSleeping.put(world, playersSleeping.get(world) - 1);
+
+        if (playersSleeping.get(world) != null)
+            playersSleeping.put(world, playersSleeping.get(world) - 1);
+        else {
+            Bukkit.getServer().getConsoleSender().sendMessage("[BetterSleeping] " + Color.RED + "The amount of sleeping players got lost when a player left their bed (my fault, not yours!). Now counting sleeping players to resolve this issue.");
+
+            int count = 0;
+            for (Player p : Bukkit.getOnlinePlayers())
+            {
+                if (p.isSleeping())
+                {
+                    if (p.getWorld().getName().equals(world))
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            playersSleeping.put(world, count);
+            Bukkit.getServer().getConsoleSender().sendMessage("[BetterSleeping] " + count + " players were found sleeping in world " + world);
+        }
     }
     
     /**
@@ -123,8 +153,10 @@ public class OnSleepEventLocal extends OnSleepEvent{
         {
             if (p.getWorld().getName().equals(world)) numInWorld++;
         }
-        
-        return (playersNeeded * numInWorld / 100.0f);
+
+        float num = playersNeeded * numInWorld / 100.0f;
+        if (num < 1) num = 1;
+        return Math.round(num);
     }
     
 }

@@ -19,6 +19,7 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
     private BetterSleeping plugin;
     
     private int playersSleeping;
+    private long lastSkipped;
     
     public OnSleepEventGlobal(FileManagement configFile, FileManagement langFile, BetterSleeping plugin)
     {
@@ -26,6 +27,7 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
         this.plugin = plugin;
 
         playersSleeping = 0;
+        lastSkipped = 0;
     }
     
     @EventHandler
@@ -39,7 +41,7 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
                 playersSleeping++;
                 float numNeeded = playersNeeded();
 
-                if (playersSleeping >= numNeeded)
+                if (playersSleeping == numNeeded)
                 {
                     for (Player p : Bukkit.getOnlinePlayers())
                     {
@@ -48,26 +50,28 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
                     }
 
                     Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                        if (playersSleeping >= numNeeded) {
-                            for(World world : Bukkit.getWorlds()) {
-                                world.setStorm(false);
-                                world.setTime(1000);
-                            }
+                        if(lastSkipped < System.currentTimeMillis() - 1000) {
+                            if (playersSleeping >= numNeeded) {
+                                for (World world : Bukkit.getWorlds()) {
+                                    world.setStorm(false);
+                                    world.setTime(1000);
+                                }
 
-                            for (Player p : Bukkit.getOnlinePlayers())
-                            {
-                                if (!good_morning.equalsIgnoreCase("ignored"))
-                                    p.sendMessage(prefix + good_morning);
-                            }
-                        } else {
-                            for (Player p : Bukkit.getOnlinePlayers())
-                            {
-                                if (!cancelled.equalsIgnoreCase("ignored"))
-                                    p.sendMessage(prefix + cancelled);
+                                lastSkipped = System.currentTimeMillis();
+
+                                for (Player p : Bukkit.getOnlinePlayers()) {
+                                    if (!good_morning.equalsIgnoreCase("ignored"))
+                                        p.sendMessage(prefix + good_morning);
+                                }
+                            } else {
+                                for (Player p : Bukkit.getOnlinePlayers()) {
+                                    if (!cancelled.equalsIgnoreCase("ignored"))
+                                        p.sendMessage(prefix + cancelled);
+                                }
                             }
                         }
                     }, sleepDelay);
-                } else {
+                } else if (playersSleeping < numNeeded){
                     float numLeft = numNeeded - playersSleeping;
                     if (numLeft > 0 ) {
 
@@ -100,6 +104,8 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
     public float playersNeeded()
     {
         int numOnline = Bukkit.getOnlinePlayers().size();
-        return (playersNeeded * numOnline / 100.0f);
+        float num = playersNeeded * numOnline / 100.0f;
+        if (num < 1) num = 1;
+        return num;
     }
 }
