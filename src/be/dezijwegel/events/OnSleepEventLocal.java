@@ -97,7 +97,7 @@ public class OnSleepEventLocal extends OnSleepEvent{
                     float numLeft = numNeeded - numSleeping;
                     if (numLeft > 0 ) {
 
-                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
+                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) numLeft));
 
                         for (Player p : Bukkit.getOnlinePlayers())
                         {
@@ -155,7 +155,6 @@ public class OnSleepEventLocal extends OnSleepEvent{
         }
 
         float num = playersNeeded * numInWorld / 100.0f;
-        if (num < 1) num = 1;
         return Math.round(num);
     }
     
