@@ -15,12 +15,12 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
  * @author Dieter Nuytemans
  */
 public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
-    
+
     private BetterSleeping plugin;
-    
+
     private int playersSleeping;
     private long lastSkipped;
-    
+
     public OnSleepEventGlobal(FileManagement configFile, FileManagement langFile, BetterSleeping plugin)
     {
         super(configFile, langFile, plugin);
@@ -29,28 +29,29 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
         playersSleeping = 0;
         lastSkipped = 0;
     }
-    
+
     @EventHandler
     public void onPlayerEnterBed(PlayerBedEnterEvent e)
     {
         World worldObj = e.getPlayer().getWorld();
         if (worldObj.getTime() > 12500 || worldObj.hasStorm() || worldObj.isThundering())
         {
-            if (super.PlayerMaySleep(e.getPlayer().getUniqueId())) 
+            if (super.PlayerMaySleep(e.getPlayer().getUniqueId()))
             {
                 playersSleeping++;
                 float numNeeded = playersNeeded();
 
-                if (playersSleeping == numNeeded)
+                if (playersSleeping >= numNeeded)
                 {
-                    for (Player p : Bukkit.getOnlinePlayers())
-                    {
-                        if (!enough_sleeping.equalsIgnoreCase("ignored"))
-                            p.sendMessage(prefix + enough_sleeping);
+                    if (playersSleeping == numNeeded) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                                p.sendMessage(prefix + enough_sleeping);
+                        }
                     }
 
                     Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                        if(lastSkipped < System.currentTimeMillis() - 1000) {
+                        if(lastSkipped < System.currentTimeMillis() - 30000) {
                             if (playersSleeping >= numNeeded) {
                                 for (World world : Bukkit.getWorlds()) {
                                     world.setStorm(false);
@@ -71,11 +72,11 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
                             }
                         }
                     }, sleepDelay);
-                } else if (playersSleeping < numNeeded){
+                } else {
                     float numLeft = numNeeded - playersSleeping;
                     if (numLeft > 0 ) {
 
-                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) numLeft));
+                        String msg = amount_left.replaceAll("<amount>", Integer.toString((int) Math.round(numLeft)));
 
                         for (Player p : Bukkit.getOnlinePlayers())
                         {
@@ -90,13 +91,13 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
             }
         }
     }
-    
+
     @EventHandler
     public void onPlayerLeaveBed(PlayerBedLeaveEvent e)
     {
         playersSleeping--;
     }
-    
+
     /**
      * Calculate the amount of players needed according to the settings and current online players
      * @return float
@@ -104,7 +105,6 @@ public class OnSleepEventGlobal extends OnSleepEvent implements Listener{
     public float playersNeeded()
     {
         int numOnline = Bukkit.getOnlinePlayers().size();
-        float num = playersNeeded * numOnline / 100.0f;
-        return Math.round(num);
+        return (playersNeeded * numOnline / 100.0f);
     }
 }

@@ -59,17 +59,18 @@ public class OnSleepEventLocal extends OnSleepEvent{
 
                 float numNeeded = playersNeeded(worldObj.getName());
 
-                if (numSleeping == numNeeded)
+                if (numSleeping >= numNeeded)
                 {
-                    for (Player p : Bukkit.getOnlinePlayers())
-                    {
-                        if (p.getWorld().getName().equals(worldObj.getName()))
-                            if (!enough_sleeping.equalsIgnoreCase("ignored"))
-                                p.sendMessage(prefix + enough_sleeping);
+                    if (numSleeping == numNeeded) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (p.getWorld().getName().equals(worldObj.getName()))
+                                if (!enough_sleeping.equalsIgnoreCase("ignored"))
+                                    p.sendMessage(prefix + enough_sleeping);
+                        }
                     }
 
                     Bukkit.getServer().getScheduler().runTaskLater(plugin, () -> {
-                        if (lastSkipped.get(worldObj.getName()) < System.currentTimeMillis() - 1000) {
+                        if (lastSkipped.get(worldObj.getName()) == null || lastSkipped.get(worldObj.getName()) < System.currentTimeMillis() - 30000) {
                             if (playersSleeping.get(worldObj.getName()) != null) {
                                 if (playersSleeping.get(worldObj.getName()) >= numNeeded) {
                                     worldObj.setStorm(false);
