@@ -1,4 +1,5 @@
 .idea/
+target/
 backup/
 .gitattributes
 BetterSleeping.iml
