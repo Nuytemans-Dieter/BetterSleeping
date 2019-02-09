@@ -3,7 +3,9 @@ package be.dezijwegel.bettersleeping;
 import be.dezijwegel.files.Config;
 import be.dezijwegel.files.Lang;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,8 +30,35 @@ public class Management {
         lang.sendMessage(messagePath, receiver);
     }
 
+    /**
+     * Send a message to a receiver in the provided list and perform replacements
+     * @param messagePath
+     * @param receiver
+     * @param replacings
+     */
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings) {
         lang.sendMessage(messagePath, receiver, replacings);
+    }
+
+    /**
+     * Send a message to all receivers in the provided list
+     * @param messagePath
+     * @param receivers
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers)
+    {
+        lang.sendMessageToGroup(messagePath, receivers);
+    }
+
+    /**
+     * Send a message to all receivers in the provided list and perform replacements
+     * @param messagePath
+     * @param receivers
+     * @param replacings
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String, String> replacings)
+    {
+        lang.sendMessageToGroup(messagePath,receivers,replacings);
     }
 
     /**

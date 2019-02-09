@@ -34,6 +34,9 @@ public class ConfigAPI {
      * @param plugin
      */
     public ConfigAPI(FileType type, BetterSleeping plugin) {
+
+        saveDefaultConfig();
+
         this.plugin = plugin;
 
         switch (type) {

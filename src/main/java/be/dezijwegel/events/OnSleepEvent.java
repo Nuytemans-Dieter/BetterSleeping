@@ -29,11 +29,10 @@ public class OnSleepEvent implements Listener {
     {
         this.plugin = plugin;
         this.management = management;
+        sleepTracker = new SleepTracker(management);
 
         multiworld = management.getBooleanSetting("multiworld_support");
         bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
-
-        sleepTracker = new SleepTracker(multiworld, management.getIntegerSetting("bed_enter_delay"));
 
         pendingTasks = new LinkedList<SetTimeToDay>();
     }
@@ -42,24 +41,35 @@ public class OnSleepEvent implements Listener {
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();
-        if (playerMaySleep(player))
+        if (sleepTracker.playerMaySleep(player))
         {
-            if (multiworld)
+            World world = player.getLocation().getWorld();
+            sleepTracker.addSleepingPlayer(world);
+            int sleepersLeft = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
+
+            if (sleepersLeft == 0)
             {
-                addTask(Arrays.asList(event.getPlayer().getWorld()));
-            }
-            else
-            {
-                List<World> worlds = new LinkedList<World>();
-                for (World world : Bukkit.getWorlds())
+                if (multiworld)
                 {
-                    if (world.getEnvironment().equals(World.Environment.NORMAL))
-                        worlds.add(world);
+                    scheduleTimeToDay(Arrays.asList(player.getWorld()));
                 }
-                addTask(worlds);
+                else
+                {
+                    List<World> worlds = new LinkedList<World>();
+                    for (World entry : Bukkit.getWorlds()) {
+                        if (entry.getEnvironment().equals(World.Environment.NORMAL))
+                            worlds.add(entry);
+                    }
+                    scheduleTimeToDay(worlds);
+                }
+            } else if (sleepersLeft > 0)
+            {
+                Map<String, String> replace = new LinkedHashMap<String, String>();
+                replace.put("<amount>", Integer.toString(sleepersLeft));
+                management.sendMessageToGroup("amount_left", sleepTracker.getRelevantPlayers(world), replace);
             }
         } else {
-            LinkedHashMap<String, String> replace = new LinkedHashMap<String, String>();
+            Map<String, String> replace = new LinkedHashMap<String, String>();
             replace.put("<time>", Long.toString(sleepTracker.whenCanPlayerSleep(player.getUniqueId())));
             management.sendMessage("sleep_spam", player, replace);
         }
@@ -68,24 +78,34 @@ public class OnSleepEvent implements Listener {
     @EventHandler
     public void onWakeEvent (PlayerBedLeaveEvent event)
     {
+        World world = event.getPlayer().getWorld();
+        sleepTracker.removeSleepingPlayer(world);
 
+        int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
+
+        if (numNeeded > 0)
+        {
+            Map<String, String> replace = new LinkedHashMap<String, String>();
+            replace.put("<amount>", Integer.toString(numNeeded));
+            management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace);
+        }
     }
 
     /**
      * Add a task that will be performed after a set time, it can still be cancelled!
      * @param worlds
      */
-    public void addTask(List<World> worlds) {
+    public void scheduleTimeToDay(List<World> worlds) {
         SetTimeToDay task = new SetTimeToDay(worlds, management);
         pendingTasks.add(task);
-        task.runTaskLater(plugin, management.getIntegerSetting("sleep_delay"));
+        task.runTaskLater(plugin, bedEnterDelay);
     }
 
     /**
      * Cancel tasks that will set time to day in the given worlds, they will also be removed from the pendingTasks list
      * @param worlds
      */
-    public void removeTask(List<World> worlds)
+    public void deScheduleTimeToDay(List<World> worlds)
     {
         for (SetTimeToDay task : pendingTasks)
         {
@@ -98,25 +118,5 @@ public class OnSleepEvent implements Listener {
                 }
             }
         }
-    }
-
-    /**
-     * Check if a Player meets the requirements to sleep
-     * Also checks if the World meets the requirements
-     * Sends messages to players if needed
-     * @return
-     */
-    public boolean playerMaySleep(Player player)
-    {
-        World worldObj = player.getWorld();
-        if (worldObj.getTime() > 12500 || worldObj.hasStorm() || worldObj.isThundering()) {
-
-            UUID uuid = player.getUniqueId();
-
-            if (sleepTracker.checkPlayerSleepDelay(uuid))
-                return true;
-            else return false;
-        }
-        return false;
     }
 }

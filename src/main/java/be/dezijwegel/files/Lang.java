@@ -27,7 +27,7 @@ public class Lang implements Reloadable {
     }
 
     /**
-     * (Attempt to) send a message to the given player.
+     * (Attempt to) send a message to the given receiver
      * The message must exist in the default lang.yml or lang.yml on disk
      * @param messagePath
      * @param receiver
@@ -38,7 +38,7 @@ public class Lang implements Reloadable {
     }
 
     /**
-     * (Attempt to) send a message to the given player.
+     * (Attempt to) send a message to the given receiver
      * The message must exist in the default lang.yml or lang.yml on disk
      * The placeholders (keys of replacings) will be replaced by their respective values
      * @param messagePath
@@ -49,6 +49,38 @@ public class Lang implements Reloadable {
     {
         String msg = composeMessage(messagePath);
         receiver.sendMessage(prepareMessage(msg,replacings));
+    }
+
+    /**
+     * Send a given String to a group of receivers
+     * @param messagePath
+     * @param receivers
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers)
+    {
+        String msg = composeMessage(messagePath);
+        for (Player player : receivers)
+        {
+            player.sendMessage(msg);
+        }
+    }
+
+    /**
+     * (Attempt to) send a message to the given receivers
+     * The message must exist in the default lang.yml or lang.yml on disk
+     * The placeholders (keys of replacings) will be replaced by their respective values
+     * @param messagePath
+     * @param receivers
+     * @param replacings
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings)
+    {
+        String msg = composeMessage(messagePath);
+        String replaced = prepareMessage(msg, replacings);
+        for (Player player : receivers)
+        {
+            player.sendMessage(replaced);
+        }
     }
 
     /**
