@@ -24,6 +24,7 @@ public class ConfigAPI {
     public FileType type;
     private BetterSleeping plugin;
 
+    private FileConfiguration defaultConfig;
     public enum FileType {
         CONFIG,
         LANG
@@ -34,23 +35,24 @@ public class ConfigAPI {
      * @param plugin
      */
     public ConfigAPI(FileType type, BetterSleeping plugin) {
-
-        saveDefaultConfig();
-
         this.plugin = plugin;
+
+        this.type = type;
 
         switch (type) {
             case CONFIG:
                 this.file = new File(plugin.getDataFolder(), "config.yml");
                 this.configuration = YamlConfiguration.loadConfiguration(file);
-                this.type = type;
+                this.defaultConfig = YamlConfiguration.loadConfiguration(new File("config.yml"));
                 break;
             case LANG:
                 this.file = new File(plugin.getDataFolder(), "lang.yml");
                 this.configuration = YamlConfiguration.loadConfiguration(file);
-                this.type = type;
+                this.defaultConfig = YamlConfiguration.loadConfiguration(new File("lang.yml"));
                 break;
         }
+
+        saveDefaultConfig();
 
     }
 
@@ -62,6 +64,13 @@ public class ConfigAPI {
     public Object get(String path) {
         return configuration.get(path);
     }
+
+    /**
+     * Get the default Object from file in jar
+     * @param path
+     * @return
+     */
+    public Object getDefault(String path) {return defaultConfig.get(path); }
 
     /**
      * Get a String from a file

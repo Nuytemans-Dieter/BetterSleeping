@@ -136,8 +136,8 @@ public class OnSleepEvent implements Listener, Reloadable {
 
         if (configFile.containsIgnoreDefault("world_specific_behavior"))
         {
-            if (configFile.getBoolean("world_specific_behavior") != prevBehavior)
-                plugin.reloadBehavior();
+            if (configFile.getBoolean("world_specific_behavior") != prevBehavior){}
+                //plugin.reloadBehavior();
         } else {
             console.sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option \'world_specific_behavior\' has been found in config.yml, the config file might be reset upon restart!");
         }

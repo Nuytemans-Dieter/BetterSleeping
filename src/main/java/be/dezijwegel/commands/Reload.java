@@ -69,7 +69,7 @@ public class Reload implements CommandExecutor {
         }
 
         //Reload the (no) multiworld option
-        plugin.reloadBehavior();
+        //plugin.reloadBehavior();
 
         if (reloadables.size() > 0) {
             for (Reloadable rel : reloadables)

@@ -10,17 +10,17 @@ public class Config implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
-    private Map<String, Object> config;
+//    private Map<String, Object> config;
 
     public Config(BetterSleeping plugin)
     {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
-        config = new HashMap<String,Object>();
-
-        configAPI.loadTypesFromFile(String.class, config);
-        configAPI.loadTypesFromFile(Boolean.class, config);
+//        config = new HashMap<String,Object>();
+//
+//        configAPI.loadTypesFromFile(String.class, config);
+//        configAPI.loadTypesFromFile(Boolean.class, config);
     }
 
     /**
@@ -31,18 +31,19 @@ public class Config implements Reloadable {
      */
     public Object getOption(String path)
     {
-        if (config.containsKey(path))
+        if (configAPI.get(path) != null)
         {
-            Object obj = config.get(path);
-            if (obj != null) return obj;
+            return configAPI.get(path);
+        } else
+        {
+            return configAPI.getDefault(path);
         }
-
-        return null;
     }
 
     /**
      * Get a Boolean value of an option
-     * Will return null when the option was not found or was not a Boolean
+     * Will look in default values when the option was not found
+     * Will return null when the option was not a Boolean or was also not found in default file
      * @param path
      * @return
      */
@@ -50,9 +51,8 @@ public class Config implements Reloadable {
     {
         Object obj = getOption(path);
         if (obj instanceof Boolean)
-        {
-            return (Boolean) obj;
-        } else return null;
+            return (boolean) obj;
+        else return null;
     }
 
     /**
@@ -65,17 +65,16 @@ public class Config implements Reloadable {
     {
         Object obj = getOption(path);
         if (getOption(path) instanceof Integer)
-        {
             return (Integer) obj;
-        } else return null;
+        else return 0;
     }
 
     @Override
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
-        config = new HashMap<String,Object>();
+//        config = new HashMap<String,Object>();
 
-        configAPI.loadTypesFromFile(String.class, config);
-        configAPI.loadTypesFromFile(Boolean.class, config);
+//        configAPI.loadTypesFromFile(String.class, config);
+//        configAPI.loadTypesFromFile(Boolean.class, config);
     }
 }

@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class BetterSleeping extends JavaPlugin{
 
-    public static boolean debug = false;
+    public static boolean debug = true;
 
     private OnSleepEvent onSleepEvent;
     protected Reload reload;

@@ -14,16 +14,16 @@ public class Lang implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
-    private Map<String, Object> lang;
+//    private Map<String, Object> lang;
 
     public Lang (BetterSleeping plugin)
     {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
-        lang = new HashMap<String, Object>();
-
-        configAPI.loadTypesFromFile(String.class, lang);
+//        lang = new HashMap<String, Object>();
+//
+//        configAPI.loadTypesFromFile(String.class, lang);
     }
 
     /**
@@ -34,7 +34,8 @@ public class Lang implements Reloadable {
      */
     public void sendMessage(String messagePath, CommandSender receiver)
     {
-        receiver.sendMessage(composeMessage(messagePath));
+        String msg = composeMessage(messagePath);
+        if (msg != "") receiver.sendMessage(msg);
     }
 
     /**
@@ -48,7 +49,7 @@ public class Lang implements Reloadable {
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings)
     {
         String msg = composeMessage(messagePath);
-        receiver.sendMessage(prepareMessage(msg,replacings));
+        if (msg != "") receiver.sendMessage(prepareMessage(msg,replacings));
     }
 
     /**
@@ -59,9 +60,11 @@ public class Lang implements Reloadable {
     public void sendMessageToGroup(String messagePath, List<Player> receivers)
     {
         String msg = composeMessage(messagePath);
-        for (Player player : receivers)
+        if (msg != "")
         {
-            player.sendMessage(msg);
+            for (Player player : receivers) {
+                player.sendMessage(msg);
+            }
         }
     }
 
@@ -76,10 +79,12 @@ public class Lang implements Reloadable {
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings)
     {
         String msg = composeMessage(messagePath);
-        String replaced = prepareMessage(msg, replacings);
-        for (Player player : receivers)
+        if (msg != "")
         {
-            player.sendMessage(replaced);
+            String replaced = prepareMessage(msg, replacings);
+            for (Player player : receivers) {
+                player.sendMessage(replaced);
+            }
         }
     }
 
@@ -92,20 +97,19 @@ public class Lang implements Reloadable {
     {
         String message = "";
 
-        if (lang.containsKey("prefix"))
+        if (configAPI.getString("prefix") != null)
         {
-            Object prefix = lang.get("prefix");
-            if (prefix != null && prefix instanceof String)
-            message = message + (String) prefix;
+            String prefix = configAPI.getString("prefix");
+            message += prefix;
         }
 
-        if (lang.containsKey(messagePath))
+        if (configAPI.getString(messagePath) != null)
         {
-            if (lang.get(messagePath) instanceof String)
-            {
-                message = message + (String) lang.get(messagePath);
-            }
+            message = message + (String) configAPI.getString(messagePath);
         }
+
+        if (configAPI.getString(messagePath).equalsIgnoreCase("ignored"))
+            message = "";
 
         return message;
     }
@@ -116,11 +120,26 @@ public class Lang implements Reloadable {
      */
     public String prepareMessage(String message, Map<String, String> replacings)
     {
-        for (Map.Entry<String, String> entry : replacings.entrySet())
+        if (BetterSleeping.debug)
         {
-            if (message.contains(entry.getKey()))
-            {
-                message.replaceAll(entry.getKey(), entry.getValue());
+            System.out.println("-----");
+            System.out.println("Preparing message: " + message);
+
+            for (Map.Entry<String, String> entry : replacings.entrySet()) {
+                if (message.contains(entry.getKey())) {
+                    System.out.println("Replace " + entry.getKey() + " with " + entry.getValue());
+                    message = message.replaceAll(entry.getKey(), entry.getValue());
+                } else {
+                    System.out.println("Message did not contain " + entry.getKey());
+                }
+            }
+            System.out.println("Result: " + message);
+            System.out.println("-----");
+        } else {
+            for (Map.Entry<String, String> entry : replacings.entrySet()) {
+                if (message.contains(entry.getKey())) {
+                    message = message.replaceAll(entry.getKey(), entry.getValue());
+                }
             }
         }
         return message;
@@ -129,8 +148,8 @@ public class Lang implements Reloadable {
     @Override
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
-        lang = new HashMap<String, Object>();
-
-        configAPI.loadTypesFromFile(String.class, lang);
+//        lang = new HashMap<String, Object>();
+//
+//        configAPI.loadTypesFromFile(String.class, lang);
     }
 }

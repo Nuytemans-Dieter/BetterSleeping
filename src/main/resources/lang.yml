@@ -17,18 +17,18 @@ prefix: "&6[BetterSleeping] &3"
 enough_sleeping: "Enough people are sleeping now, the night/storm will be skipped in a moment!"
 
 # The message people receive after the night/storm has been skipped
-good_morning: "Good morning!"
+good_morning: "Good morning! Have a great day!"
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
 cancelled: "Someone left their bed so the night/storm won't be skipped! Waiting for <amount> more sleepers."
 
 # The message which indicates how many more people need to rest
-# <amount> will be replaced by the appropriate 
+# <amount> will be replaced by the appropriate number of people that are needed
 # Will be sent to all online players (or all players in a specific world depending on settings)
 # when someone enters a bed 
 amount_left: "There are <amount> more people needed to skip the night/storm!"
 
-# The message a player gets when he/she doesn't have access to a command and tries to execute it
+# The message a player gets when he/she doesn't have access to a command and tries to execute that command
 no_permission: "&4You don't have permission to execute that command!"
 
 # The message that will be sent to the command sender and console when the reload is complete

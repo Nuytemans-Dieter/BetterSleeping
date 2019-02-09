@@ -5,11 +5,12 @@
 	-Added an in-built debugging system, for developer use only
 	-Multiworld mode and regular mode now use the same core systems
 	-The option 'multiworld_support' Is now true by default
-	-Unit testing has been implemented, by using PowerMockito
+	-Unit testing has been implemented, by using PowerMockito but is not being used yet
 	-Players are now given the time they have to wait before they can sleep again (in 'sleep_spam', with '<time>')
 	-Merged OnSleepEventGlobal and OnSleepEventLocal to reduce duplicate code, the funcionality was maintained
 	-The default 'cancelled'-message has been changed and includes the amount of extra players that are required
 	-Removed 'good morning'- and 'good night'-messages on startup/poweroff
+	-A 'shit-load' of bugs were fixed
 
 
 TO DO:
@@ -18,8 +19,9 @@ TO DO:
 
 (Potentially) planned features:
 -Give players (configurable) temporary buffs for sleeping (Healing, filling food bar, speed,...)
--Give players (configurable) temporary debuffs for not sleeping (Poison, mining fatigue, slowness...)
+-Give players (configurable) temporary debuffs for not sleeping (Poison, mining fatigue, slowness, spawn monster...)
 -Tab auto complete for /bettersleeping reload
 -Add a command shortcut (like /bs reload)
 -Add the ability for players to disable a specific message
+-Add an option to show messages on screen but not in the chat
 -Will not be implemented: Automatic punishments (felt redundant since players are not able to spam chat like that anymore)

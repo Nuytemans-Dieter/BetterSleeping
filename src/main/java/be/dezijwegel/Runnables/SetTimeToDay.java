@@ -1,6 +1,7 @@
 package be.dezijwegel.Runnables;
 
 import be.dezijwegel.bettersleeping.Management;
+import be.dezijwegel.events.SleepTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -13,12 +14,16 @@ import java.util.Set;
 public class SetTimeToDay extends BukkitRunnable {
 
     Set<World> worlds;
-    Management management;
 
-    public SetTimeToDay (List<World> worlds, Management management)
+    Management management;
+    SleepTracker sleepTracker;
+
+    public SetTimeToDay (List<World> worlds, Management management, SleepTracker sleepTracker)
     {
         this.worlds = new HashSet<World>();
+
         this.management = management;
+        this.sleepTracker = sleepTracker;
 
         for (World world : worlds)
         {
@@ -41,13 +46,14 @@ public class SetTimeToDay extends BukkitRunnable {
         {
             world.setTime(1000);
             world.setStorm(false);
+            sleepTracker.worldWasSetToDay(world);
         }
 
         for (Player player : Bukkit.getOnlinePlayers())
         {
             if (worlds.contains(player.getLocation().getWorld()))
             {
-                management.sendMessage("enough_sleeping", player);
+                management.sendMessage("good_morning", player);
             }
         }
     }
