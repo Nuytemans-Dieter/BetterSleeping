@@ -1,0 +1,19 @@
+-BetterSleeping was completely rewritten, improving maintainability a lot
+	-'World_specific_behavior' is now called 'multiworld_support'
+	-Configuration was rebuilt, became more modular and has a better structure altogether
+	-Adding configuration options will be much easier from now on
+	-Added an in-built debugging system, for developer use only
+	-Multiworld mode and regular mode now use the same core systems
+	-The option 'multiworld_support' Is now true by default
+	-Unit testing has been implemented, by using PowerMockito
+	-Players can now be given the time they have to wait before they can sleep again ('sleep_spam')
+
+TO DO:
+-Improve the ConfigAPI further (the biggest part has been written in a seperate project already)
+
+(Potentially) planned features:
+-Implement unit testing
+-Give players (configurable) temporary buffs for sleeping (Healing, filling food bar, speed)
+-Tab auto complete for /bettersleeping reload
+-Add a command shortcut (like /bs reload)
+-Automatic punishments for people that try to spam the chat with BetterSleeping messages (kick, ban,..)

@@ -18,7 +18,6 @@ percentage_needed: 30
 # Default: 40
 sleep_delay: 40
 
-
 # Set the time (in seconds) that players have to wait before they can enter a bed again after leaving
 # Default: 10
 bed_enter_delay: 10
@@ -35,5 +34,5 @@ bed_enter_delay: 10
 #           Example:        There are 100 online players, 90 in the End and 10 in the Overworld.
 #                           30 people (of all worlds combined) must be sleeping in order to skip the night/storm.
 #                           The night/storm will be skipped in EVERY world!!
-# Default: false
-world_specific_behavior: false
+# Default: true
+multiworld_support: true

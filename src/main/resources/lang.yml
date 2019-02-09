@@ -2,11 +2,9 @@
 #  BetterSleeping  #
 # ################ #
 
-
 # This file contains all messages, this is where they can be customised to allow other languages
 # A message can be disabled by setting the text to "ignored", an example can be found below
 # some_setting: "ignored"
-
 
 # This is the text that will be put in front of all messages, you can change
 # this prefix if you want to but I would be grateful if you kept the name of this
@@ -15,18 +13,14 @@
 # To disable the prefix, it must simply be left empty (written as: "")
 prefix: "&6[BetterSleeping] &3"
 
-
 # The message people get when enough people are sleeping
 enough_sleeping: "Enough people are sleeping now, the night/storm will be skipped in a moment!"
-
 
 # The message people receive after the night/storm has been skipped
 good_morning: "Good morning!"
 
-
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
 cancelled: "Someone left their bed so the night/storm won't be skipped!"
-
 
 # The message which indicates how many more people need to rest
 # <amount> will be replaced by the appropriate 
@@ -34,14 +28,11 @@ cancelled: "Someone left their bed so the night/storm won't be skipped!"
 # when someone enters a bed 
 amount_left: "There are <amount> more people needed to skip the night/storm!"
 
-
 # The message a player gets when he/she doesn't have access to a command and tries to execute it
 no_permission: "&4You don't have permission to execute that command!"
-
 
 # The message that will be sent to the command sender and console when the reload is complete
 message_reloaded: "Reload complete!"
 
-
 # players that try to spam BetterSleeping messages will receive this
-sleep_spam: "You have to wait a little longer before you can sleep again!"
+sleep_spam: "You have to wait <time> more seconds before you can sleep again!"

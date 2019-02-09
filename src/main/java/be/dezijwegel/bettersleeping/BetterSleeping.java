@@ -1,10 +1,10 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.commands.Reload;
-import be.dezijwegel.events.OnSleepEvent;
-import be.dezijwegel.events.OnSleepEventGlobal;
-import be.dezijwegel.events.OnSleepEventLocal;
-import be.dezijwegel.files.FileManagement;
+import be.dezijwegel.OLD.OnSleepEvent;
+import be.dezijwegel.OLD.OnSleepEventGlobal;
+import be.dezijwegel.OLD.OnSleepEventLocal;
+import be.dezijwegel.OLD.FileManagement;
 import java.util.LinkedList;
 
 import org.bukkit.Bukkit;
@@ -16,6 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author Dieter Nuytemans
  */
 public class BetterSleeping extends JavaPlugin{
+
+    public static boolean debug = false;
 
     private FileManagement configFile;
     private FileManagement langFile;

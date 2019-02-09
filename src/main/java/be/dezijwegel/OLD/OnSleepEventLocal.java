@@ -2,10 +2,10 @@
  * Geen license header toegevoegd
  * Dieter Nuytemans
  */
-package be.dezijwegel.events;
+package be.dezijwegel.OLD;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.files.FileManagement;
+
 import java.util.HashMap;
 
 import javafx.scene.paint.Color;
@@ -21,7 +21,7 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
  * @author Dieter Nuytemans
  * OnSleepEventLocal will consider each world seperate from eachother
  */
-public class OnSleepEventLocal extends OnSleepEvent{
+public class OnSleepEventLocal extends OnSleepEvent {
     
     private BetterSleeping plugin;
     
