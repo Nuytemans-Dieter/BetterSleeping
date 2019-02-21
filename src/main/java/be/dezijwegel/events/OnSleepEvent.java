@@ -63,8 +63,11 @@ public class OnSleepEvent implements Listener {
                     System.out.println("-----");
                 }
 
+                int numPlayersInWorld = 0;
+                for (Player p: Bukkit.getOnlinePlayers())
+                    if (p.getWorld().equals(world)) numPlayersInWorld++;
 
-                if (numSleepers == Bukkit.getOnlinePlayers().size())
+                if (numSleepers == numPlayersInWorld)
                 {
                     // Prevents default sleeping mechanics from taking control by setting the time to day quicker
                     // The players would receive wrong messages otherwise
@@ -185,24 +188,22 @@ public class OnSleepEvent implements Listener {
         {
             if (multiworld) {
                 int numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
+
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<amount>", Integer.toString(numNeeded));
+                management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(worlds.get(0)), replace);
 
-                List<Player> players = new LinkedList<Player>();
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    players.add(player);
-                }
+            }
+            else
+            {
+                World world = worlds.get(0);
 
-                management.sendMessageToGroup("cancelled", players, replace);
+                int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
 
-            } else {
-                for (World world : Bukkit.getWorlds()) {
-                    int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
-                    Map<String, String> replace = new LinkedHashMap<String, String>();
-                    replace.put("<amount>", Integer.toString(numNeeded));
+                Map<String, String> replace = new LinkedHashMap<String, String>();
+                replace.put("<amount>", Integer.toString(numNeeded));
+                management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace);
 
-                    management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace);
-                }
             }
         }
 

@@ -4,11 +4,14 @@
 
 # If the explanation in this file is not clear enough, please check BetterSleeping's Spigot page
 # I like hearing your opinions! Let me know in the plugin's discussion section or via a review!
-# If you have any requests, let me know and I'll look into them whenever I can.
-# Bugs are stupid but the more information you give when reporting them, the better I'll be able to fix them!
+# If you have any requests, let me know and I'll look into them as soon as possible.
+# Bugs are annoying but the more information you give when reporting them, the better I'll be able to fix them!
+
+# To reset this file, simply delete it!
 
 # Set the percentage of online players that need to be sleeping 
-# in order to skip the night/storm.
+# in order to skip the night/storm. Will be rounded up!
+# Example: 2 players + this is set to 51 => 51% * 2 = 1,02 but it will be rounded up so: 2 players needed!
 # Default: 30
 percentage_needed: 30
 
@@ -21,11 +24,6 @@ sleep_delay: 40
 # Set the time (in seconds) that players have to wait before they can enter a bed again after leaving
 # Default: 10
 bed_enter_delay: 10
-
-# Choose whether the messages should be sent in the chat or not
-# If set to false, players will get on-screen messages instead of messages in the chat
-# Default: true
-messages_in_chat: true
 
 # Choose whether BetterSleeping should treat every world seperate from eachother (true)
 #       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping

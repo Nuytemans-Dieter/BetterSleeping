@@ -53,15 +53,12 @@ public class ConfigAPI {
         Reader defaultStream = null;
         try {
             defaultStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
-        } catch (UnsupportedEncodingException ex) {}
-
-        if (defaultStream != null) {
-            this.defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
-        }
-
+            if (defaultStream != null) {
+                this.defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
+            }
+        } catch (Exception ex) {}
 
         saveDefaultConfig();
-
     }
 
     /**
