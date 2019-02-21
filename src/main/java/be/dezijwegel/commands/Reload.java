@@ -1,10 +1,13 @@
 package be.dezijwegel.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.bettersleeping.Management;
 import be.dezijwegel.bettersleeping.Reloadable;
 import be.dezijwegel.OLD.FileManagement;
 import java.util.LinkedList;
 import java.util.logging.Level;
+
+import static org.bukkit.Bukkit.getConsoleSender;
 import static org.bukkit.Bukkit.getLogger;
 
 import org.bukkit.command.Command;
@@ -18,40 +21,23 @@ import org.bukkit.entity.Player;
  */
 public class Reload implements CommandExecutor {
     
-    private LinkedList<FileManagement> files;
     private LinkedList<Reloadable> reloadables;
-    
-    private FileManagement langFile;
+
+    private Management management;
     private BetterSleeping plugin;
-    
-    private String prefix;
-    private String message_reloaded;
-    private String no_permission;
+
     
     /**
-     * Set files that can be easily reloaded
-     * @param files
+     * Creates an object that reloads given objects IN ORDER!!
      * @param reloadables
-     * @param langFile
+     * @param management
+     * @param plugin
      */
-    public Reload (LinkedList<FileManagement> files, LinkedList<Reloadable> reloadables, FileManagement langFile, BetterSleeping plugin)
+    public Reload (LinkedList<Reloadable> reloadables, Management management, BetterSleeping plugin)
     {
-        this.files = files;
+        this.management = management;
         this.reloadables = reloadables;
-        this.langFile = langFile;
         this.plugin = plugin;
-        
-        if (langFile.contains("prefix"))
-            prefix = langFile.getString("prefix");
-        else prefix = "§6[BetterSleeping] §3";
-        
-        if (langFile.contains("message_reloaded"))
-            message_reloaded = langFile.getString("message_reloaded");
-        else message_reloaded = "Reload complete!";
-        
-        if (langFile.contains("no_permission"))
-            no_permission = langFile.getString("no_permission");
-        else no_permission = "§4You don't have permission to execute that command!";
     }
     
     /**
@@ -59,75 +45,33 @@ public class Reload implements CommandExecutor {
      */
     public void reloadFiles()
     {
-        if (files.size() > 0)
+        for (Reloadable rel : reloadables)
         {
-            for (FileManagement file : files)
-            {
-                file.saveDefaultConfig();
-                file.reloadFile();
-            }
+            rel.reload();
         }
-
-        //Reload the (no) multiworld option
-        //plugin.reloadBehavior();
-
-        if (reloadables.size() > 0) {
-            for (Reloadable rel : reloadables)
-            {
-                rel.reload();
-            }
-        }
-        
-        if (langFile.contains("prefix"))
-            prefix = langFile.getString("prefix");
-        else prefix = "§6[BetterSleeping] §3";
-        
-        if (langFile.contains("message_reloaded"))
-            message_reloaded = langFile.getString("message_reloaded");
-        else message_reloaded = "Reload complete!";
-        
-        if (langFile.contains("no_permission"))
-            no_permission = langFile.getString("no_permission");
-        else no_permission = "§4You don't have permission to execute that command!";
     }
 
     public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
-        if (cs instanceof Player)
+
+        if (cmnd.getName().equalsIgnoreCase("bettersleeping"))
         {
-            Player sender = (Player) cs;
-            if (string.equalsIgnoreCase("bettersleeping"))
+            if (strings.length > 0)
             {
-                if (strings.length > 0)
+                if (strings[0].equalsIgnoreCase("reload"))
                 {
-                    if (strings[0].equalsIgnoreCase("reload"))
-                    {
-                        if (sender.isOp() || sender.hasPermission("bettersleeping.reload")) {
-                            reloadFiles();
-                            if (!message_reloaded.equalsIgnoreCase("ignored"))
-                                sender.sendMessage(prefix + message_reloaded);
-                            getLogger().log(Level.INFO, "[BetterSleeping] {0}", message_reloaded);
-                        } else {
-                            if (!no_permission.equalsIgnoreCase("ignored"))
-                                sender.sendMessage(prefix + no_permission);
-                        }       
-                        return true;
-                    }
-                }
-            }
-        } else {
-            if (string.equalsIgnoreCase("bettersleeping"))
-            {
-                if (strings.length > 0)
-                {
-                    if (strings[0].equalsIgnoreCase("reload"))
-                    {
+                    if (!(cs instanceof Player) || cs.isOp() || cs.hasPermission("bettersleeping.reload")) {
                         reloadFiles();
-                        getLogger().log(Level.INFO, "[BetterSleeping] {0}", message_reloaded);
-                        return true;
+                        if (cs instanceof Player)
+                            {management.sendMessage("message_reloaded", cs);}
+                        management.sendMessage("message_reloaded", getConsoleSender());
+                    } else {
+                        management.sendMessage("no_permission", cs);
                     }
+                    return true;
                 }
             }
         }
+
         return false;
     }
 }

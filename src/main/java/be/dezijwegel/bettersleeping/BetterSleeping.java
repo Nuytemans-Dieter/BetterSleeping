@@ -3,8 +3,8 @@ package be.dezijwegel.bettersleeping;
 import be.dezijwegel.commands.Reload;
 import java.util.LinkedList;
 
+import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnSleepEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,52 +12,40 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Dieter Nuytemans
  */
-public class BetterSleeping extends JavaPlugin{
+public class BetterSleeping extends JavaPlugin implements Reloadable{
 
-    public static boolean debug = true;
+    public static boolean debug = false;
 
     private OnSleepEvent onSleepEvent;
-    protected Reload reload;
+    private Reload reload;
 
-    LinkedList<Reloadable> reloadables;
+    private LinkedList<Reloadable> reloadables;
     
    @Override
    public void onEnable()
    {
-       Management management = new Management(this);
-       onSleepEvent = new OnSleepEvent(management, this);
-
-       getServer().getPluginManager().registerEvents(onSleepEvent, this);
-
-       reloadables = new LinkedList<>();
-       //Makes sure that all values are loaded on startup
-
-       //reload = new Reload(files, reloadables, langFile, this);
-
-       //this.getCommand("bettersleeping").setExecutor(reload);
+       startPlugin();
    }
 
-    /**
-     * Allows the world_specific_behavior to be changed by just reloading the server
-     */
-    /*
-   public void reloadBehavior()
-   {
-       boolean worldSpecificBehavior;
-       if (configFile.containsIgnoreDefault("world_specific_behavior"))
-           worldSpecificBehavior = configFile.getBoolean("world_specific_behavior");
-       else worldSpecificBehavior = false;
-       
-       HandlerList.unregisterAll(onSleepEvent);
-       reloadables.remove(onSleepEvent);
-       
-       if (worldSpecificBehavior)   
-           onSleepEvent = new OnSleepEventLocal(configFile, langFile, this);
-       else                         
-           onSleepEvent = new OnSleepEventGlobal(configFile, langFile, this);
-       
-       getServer().getPluginManager().registerEvents(onSleepEvent, this);
-       reloadables.add(onSleepEvent);
-   }
-   */
+    @Override
+    public void reload() {
+        HandlerList.unregisterAll();
+        startPlugin();
+    }
+
+    public void startPlugin()
+    {
+        Management management = new Management(this);
+
+        onSleepEvent = new OnSleepEvent(management, this);
+        getServer().getPluginManager().registerEvents(onSleepEvent, this);
+
+        reloadables = new LinkedList<Reloadable>();
+        reloadables.add(this);
+        reload = new Reload(reloadables, management, this);
+
+        this.getCommand("bettersleeping").setExecutor(reload);
+        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion());
+    }
+
 }

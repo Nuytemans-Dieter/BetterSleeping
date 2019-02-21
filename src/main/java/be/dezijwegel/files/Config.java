@@ -3,17 +3,13 @@ package be.dezijwegel.files;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Reloadable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Config implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
 //    private Map<String, Object> config;
 
-    public Config(BetterSleeping plugin)
-    {
+    public Config(BetterSleeping plugin) {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
@@ -31,13 +27,7 @@ public class Config implements Reloadable {
      */
     public Object getOption(String path)
     {
-        if (configAPI.get(path) != null)
-        {
-            return configAPI.get(path);
-        } else
-        {
-            return configAPI.getDefault(path);
-        }
+        return configAPI.get(path);
     }
 
     /**
@@ -49,10 +39,7 @@ public class Config implements Reloadable {
      */
     public Boolean getBoolean(String path)
     {
-        Object obj = getOption(path);
-        if (obj instanceof Boolean)
-            return (boolean) obj;
-        else return null;
+        return configAPI.getBoolean(path);
     }
 
     /**
@@ -63,10 +50,7 @@ public class Config implements Reloadable {
      */
     public Integer getInt(String path)
     {
-        Object obj = getOption(path);
-        if (getOption(path) instanceof Integer)
-            return (Integer) obj;
-        else return 0;
+        return configAPI.getInt(path);
     }
 
     @Override

@@ -9,6 +9,6 @@ public interface Reloadable {
     /**
      * Should contain the correct actions to reload a class/object
      */
-    public void reload();
+    void reload();
     
 }

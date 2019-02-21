@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class OnSleepEvent implements Listener {
     private Management management;
     private SleepTracker sleepTracker;
 
-    private int sleepDelay;
+    private long sleepDelay;
     private boolean multiworld;
 
     private List<SetTimeToDay> pendingTasks;
@@ -41,51 +42,65 @@ public class OnSleepEvent implements Listener {
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();
-        if (sleepTracker.playerMaySleep(player))
-        {
-            if (BetterSleeping.debug)
-            {
-                System.out.println(player.getName() + " got in bed!");
-            }
-
-            World world = player.getLocation().getWorld();
-            sleepTracker.addSleepingPlayer(world);
-            int sleepersLeft = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
-
-            if (BetterSleeping.debug)
-            {
-                World worldDebug = player.getLocation().getWorld();
-                System.out.println("-----");
-                System.out.println("World: \"" + worldDebug.getName() + "\" Multiworld: " + multiworld);
-                System.out.println("# relevant players: " + sleepTracker.getRelevantPlayers(worldDebug).size() + " + Percentage needed: " + management.getIntegerSetting("percentage_needed"));
-                System.out.println("Sleepers needed: " + sleepTracker.getTotalSleepersNeeded(world));
-                System.out.println("Num sleeping: " + sleepTracker.getTotalSleepersNeeded(world));
-                System.out.println("-----");
-            }
-
-            if (sleepersLeft == 0)
-            {
-                if (multiworld)
-                {
-                    scheduleTimeToDay(Arrays.asList(player.getWorld()));
+        if(!event.isCancelled()) {
+            if (sleepTracker.playerMaySleep(player)) {
+                if (BetterSleeping.debug) {
+                    System.out.println(player.getName() + " got in bed!");
                 }
-                else
+
+                World world = player.getLocation().getWorld();
+                sleepTracker.addSleepingPlayer(world);
+                int numSleepers = sleepTracker.getNumSleepingPlayers(world);
+                int sleepersLeft = sleepTracker.getTotalSleepersNeeded(world) - numSleepers;
+
+                if (BetterSleeping.debug) {
+                    World worldDebug = player.getLocation().getWorld();
+                    System.out.println("-----");
+                    System.out.println("World: \"" + worldDebug.getName() + "\" Multiworld: " + multiworld);
+                    System.out.println("# relevant players: " + sleepTracker.getRelevantPlayers(worldDebug).size() + " + Percentage needed: " + management.getIntegerSetting("percentage_needed"));
+                    System.out.println("Sleepers needed: " + sleepTracker.getTotalSleepersNeeded(world));
+                    System.out.println("Num sleeping: " + sleepTracker.getNumSleepingPlayers(world));
+                    System.out.println("-----");
+                }
+
+
+                if (numSleepers == Bukkit.getOnlinePlayers().size())
                 {
+                    // Prevents default sleeping mechanics from taking control by setting the time to day quicker
+                    // The players would receive wrong messages otherwise
+
                     List<World> worlds = new LinkedList<World>();
-                    for (World entry : Bukkit.getWorlds()) {
-                        if (entry.getEnvironment().equals(World.Environment.NORMAL))
+                    if (multiworld)
+                        worlds = Arrays.asList(player.getWorld());
+                    else {
+                        for (World entry : Bukkit.getWorlds()) {
                             worlds.add(entry);
+                        }
                     }
-                    scheduleTimeToDay(worlds);
+                    SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker);
+                    task.run();
                 }
+                else if (sleepersLeft == 0)
+                {
+                    if (multiworld) {
+                        scheduleTimeToDay(Arrays.asList(player.getWorld()));
+                    } else {
+                        List<World> worlds = new LinkedList<World>();
+                        for (World entry : Bukkit.getWorlds()) {
+                            worlds.add(entry);
+                        }
+                        scheduleTimeToDay(worlds);
+                    }
 
-                management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()));
+                    management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()));
 
-            } else if (sleepersLeft > 0)
-            {
-                Map<String, String> replace = new LinkedHashMap<String, String>();
-                replace.put("<amount>", Integer.toString(sleepersLeft));
-                management.sendMessageToGroup("amount_left", sleepTracker.getRelevantPlayers(world), replace);
+                } else if (sleepersLeft > 0) {
+                    Map<String, String> replace = new LinkedHashMap<String, String>();
+                    replace.put("<amount>", Integer.toString(sleepersLeft));
+                    management.sendMessageToGroup("amount_left", sleepTracker.getRelevantPlayers(world), replace);
+                }
+            } else {
+                event.setCancelled(true);
             }
         }
     }
@@ -102,26 +117,38 @@ public class OnSleepEvent implements Listener {
         {
             System.out.println("-----");
             System.out.println(event.getPlayer().getName() + " got out of bed!");
+            System.out.println(event.getPlayer().getWorld().getName() + " time: " + event.getPlayer().getWorld().getTime());
             System.out.println("Num needed: " + numNeeded);
             System.out.println("-----");
         }
 
         if (numNeeded > 0)
         {
+
+            if(BetterSleeping.debug)
+            {
+                System.out.println("-----");
+                System.out.println("Descheduling...");
+                System.out.println("-----");
+            }
+
             if (multiworld)
             {
                 deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()));
-            }
-            else
-            {
+            } else {
                 List<World> worlds = new LinkedList<World>();
                 for (World entry : Bukkit.getWorlds()) {
-                    if (entry.getEnvironment().equals(World.Environment.NORMAL))
                         worlds.add(entry);
                 }
                 deScheduleTimeToDay(worlds);
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerLogout(PlayerQuitEvent event)
+    {
+        sleepTracker.playerLogout(event.getPlayer());
     }
 
     /**
@@ -154,41 +181,44 @@ public class OnSleepEvent implements Listener {
      */
     public void deScheduleTimeToDay(List<World> worlds)
     {
-        if (sleepTracker.getTimeSinceLastSetToDay(worlds.get(0)) < 10) {
-            for (SetTimeToDay task : pendingTasks) {
-                if (worlds.get(0) != null) {
-                    if (task.getWorlds().contains(worlds.get(0))) {
+        if (sleepTracker.getTimeSinceLastSetToDay(worlds.get(0)) > 10)
+        {
+            if (multiworld) {
+                int numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
+                Map<String, String> replace = new LinkedHashMap<String, String>();
+                replace.put("<amount>", Integer.toString(numNeeded));
 
-                        task.cancel();
-                        pendingTasks.remove(task);
+                List<Player> players = new LinkedList<Player>();
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    players.add(player);
+                }
 
-                        if (BetterSleeping.debug) {
-                            System.out.println("-----");
-                            System.out.println("Descheduling: ");
-                            System.out.println("After removing: ");
-                            System.out.println("# Pendingtasks: " + pendingTasks.size());
-                            System.out.println("-----");
-                        }
+                management.sendMessageToGroup("cancelled", players, replace);
 
-                        if (multiworld) {
-                            int numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
-                            Map<String, String> replace = new LinkedHashMap<String, String>();
-                            replace.put("<amount>", Integer.toString(numNeeded));
+            } else {
+                for (World world : Bukkit.getWorlds()) {
+                    int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
+                    Map<String, String> replace = new LinkedHashMap<String, String>();
+                    replace.put("<amount>", Integer.toString(numNeeded));
 
-                            List<Player> players = new LinkedList<Player>();
-                            for (Player player : Bukkit.getOnlinePlayers()) {
-                                players.add(player);
-                            }
+                    management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace);
+                }
+            }
+        }
 
-                            management.sendMessageToGroup("cancelled", players, replace);
-                        } else {
-                            for (World world : task.getWorlds()) {
-                                int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
-                                Map<String, String> replace = new LinkedHashMap<String, String>();
-                                replace.put("<amount>", Integer.toString(numNeeded));
-                                management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace);
-                            }
-                        }
+        for (SetTimeToDay task : pendingTasks) {
+            if (worlds.get(0) != null) {
+                if (task.getWorlds().contains(worlds.get(0)))
+                {
+                    task.cancel();
+                    pendingTasks.remove(task);
+
+                    if (BetterSleeping.debug) {
+                        System.out.println("-----");
+                        System.out.println("Descheduling: ");
+                        System.out.println("After removing: ");
+                        System.out.println("# Pendingtasks: " + pendingTasks.size());
+                        System.out.println("-----");
                     }
                 }
             }

@@ -22,6 +22,11 @@ sleep_delay: 40
 # Default: 10
 bed_enter_delay: 10
 
+# Choose whether the messages should be sent in the chat or not
+# If set to false, players will get on-screen messages instead of messages in the chat
+# Default: true
+messages_in_chat: true
+
 # Choose whether BetterSleeping should treat every world seperate from eachother (true)
 #       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
 #                           If this condition is met, the night/storm will ONLY be skipped in that same world

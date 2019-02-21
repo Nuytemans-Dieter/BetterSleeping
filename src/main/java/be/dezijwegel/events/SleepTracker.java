@@ -31,6 +31,8 @@ public class SleepTracker {
         this.multiworld = management.getBooleanSetting("multiworld_support");
         this.bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
         this.percentageNeeded = management.getIntegerSetting("percentage_needed");
+        if (percentageNeeded > 100) percentageNeeded = 100;
+        else if (percentageNeeded < 0) percentageNeeded = 0;
     }
 
     /**
@@ -64,7 +66,7 @@ public class SleepTracker {
         long currentTime = System.currentTimeMillis() / 1000L;
         if (sleepList.containsKey(uuid))
         {
-            if (whenCanPlayerSleep(uuid) < 1)
+            if (whenCanPlayerSleep(uuid) == 0)
             {
                 sleepList.put(uuid, currentTime);
                 return true;
@@ -87,9 +89,11 @@ public class SleepTracker {
         if (sleepList.containsKey(uuid))
         {
             long currentTime = System.currentTimeMillis() / 1000L;
-            if(bedEnterDelay < ( currentTime - sleepList.get(uuid) ) )
-                return bedEnterDelay - (currentTime - sleepList.get(uuid));
-            else return 0L;
+            long deltaTime = currentTime - sleepList.get(uuid);
+            if(deltaTime < bedEnterDelay) {
+                long temp = bedEnterDelay - deltaTime;
+                return temp;
+            }else return 0L;
 
         } else {
             return 0L;
@@ -236,9 +240,19 @@ public class SleepTracker {
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<time>", Long.toString(whenCanPlayerSleep(player.getUniqueId())));
                 management.sendMessage("sleep_spam", player, replace);
-
+                return false;
             }
         }
         return false;
+    }
+
+    /**
+     * Stop keeping track of when the given Player last slept
+     * @param player
+     */
+    public void playerLogout(Player player)
+    {
+        if (sleepList.containsKey(player.getUniqueId()))
+            sleepList.remove(player.getUniqueId());
     }
 }

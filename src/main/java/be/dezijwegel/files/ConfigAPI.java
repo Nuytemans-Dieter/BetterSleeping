@@ -8,12 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.List;
+import java.io.*;
 import java.util.Map;
 
 
@@ -23,6 +18,8 @@ public class ConfigAPI {
     private File file;
     public FileType type;
     private BetterSleeping plugin;
+
+    String fileName;
 
     private FileConfiguration defaultConfig;
     public enum FileType {
@@ -39,18 +36,29 @@ public class ConfigAPI {
 
         this.type = type;
 
-        switch (type) {
-            case CONFIG:
-                this.file = new File(plugin.getDataFolder(), "config.yml");
-                this.configuration = YamlConfiguration.loadConfiguration(file);
-                this.defaultConfig = YamlConfiguration.loadConfiguration(new File("config.yml"));
+        switch (type)
+        {
+            case CONFIG :
+                fileName = "config.yml";
                 break;
             case LANG:
-                this.file = new File(plugin.getDataFolder(), "lang.yml");
-                this.configuration = YamlConfiguration.loadConfiguration(file);
-                this.defaultConfig = YamlConfiguration.loadConfiguration(new File("lang.yml"));
+                fileName = "lang.yml";
                 break;
         }
+
+        this.file = new File(plugin.getDataFolder(), fileName);
+        this.configuration = YamlConfiguration.loadConfiguration(file);
+
+        //Copy contents of internal config file
+        Reader defaultStream = null;
+        try {
+            defaultStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
+        } catch (UnsupportedEncodingException ex) {}
+
+        if (defaultStream != null) {
+            this.defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
+        }
+
 
         saveDefaultConfig();
 
@@ -62,7 +70,9 @@ public class ConfigAPI {
      * @return Object
      */
     public Object get(String path) {
-        return configuration.get(path);
+        if (configuration.contains(path))
+            return configuration.get(path);
+        else return defaultConfig.get(path);
     }
 
     /**
@@ -70,6 +80,7 @@ public class ConfigAPI {
      * @param path
      * @return
      */
+    @Deprecated
     public Object getDefault(String path) {return defaultConfig.get(path); }
 
     /**
@@ -78,11 +89,27 @@ public class ConfigAPI {
      * @return String
      */
     public String getString(String path) {
-        String string = configuration.getString(path);
-        if (string != null)
+
+        String string;
+
+        if (configuration.contains(path))
+            string = configuration.getString(path);
+        else string = defaultConfig.getString(path);
+
+        /*
+        if (BetterSleeping.debug)
         {
-            if (string.contains("&")) string = string.replaceAll("&", "§");
+            System.out.println("-----");
+            System.out.println("Debug: " + path + ", contains: " + configuration.contains(path) + ", value: " + string);
+            System.out.println("Default contains: " + defaultConfig.contains(path) + ", value: " + defaultConfig.getString(path));
+            System.out.println("Default has: " + defaultConfig.getKeys(true));
+            System.out.println("-----");
         }
+        */
+
+        if (string != null)
+            if (string.contains("&")) string = string.replaceAll("&", "§");
+
         return string;
     }
 
@@ -93,7 +120,9 @@ public class ConfigAPI {
      */
     public int getInt(String path)
     {
-        return configuration.getInt(path);
+        if (configuration.contains(path))
+            return configuration.getInt(path);
+        else return defaultConfig.getInt(path);
     }
 
     /**
@@ -103,7 +132,9 @@ public class ConfigAPI {
      */
     public boolean getBoolean(String path)
     {
-        return configuration.getBoolean(path);
+        if (configuration.contains(path))
+            return configuration.getBoolean(path);
+        else return defaultConfig.getBoolean(path);
     }
 
     /**
@@ -113,11 +144,14 @@ public class ConfigAPI {
      */
     public long getLong(String path)
     {
-        return configuration.getLong(path);
+        if (configuration.contains(path))
+            return configuration.getLong(path);
+        return defaultConfig.getLong(path);
     }
 
     /**
      * Check if the file contains a specific path
+     * Does not check the default configuration file
      * @param path
      * @return
      */
@@ -140,14 +174,7 @@ public class ConfigAPI {
      */
     public void forceDefaultConfig()
     {
-        switch (type) {
-            case CONFIG:
-                plugin.saveResource("config.yml", true);
-                break;
-            case LANG:
-                plugin.saveResource("lang.yml", true);
-                break;
-        }
+        plugin.saveResource(fileName, true);
     }
 
     /**
@@ -155,28 +182,14 @@ public class ConfigAPI {
      */
     public void reloadFile() {
         if (configuration == null) {
-            switch (type) {
-                case CONFIG:
-                    file = new File(plugin.getDataFolder(), "config.yml");
-                    break;
-                case LANG:
-                    file = new File(plugin.getDataFolder(), "lang.yml");
-                    break;
-            }
+            file = new File(plugin.getDataFolder(), fileName);
         }
         configuration = YamlConfiguration.loadConfiguration(file);
 
         // Look for defaults in the jar
         Reader defConfigStream = null;
         try {
-            switch (type) {
-                case CONFIG:
-                    defConfigStream = new InputStreamReader(plugin.getResource("config.yml"), "UTF8");
-                    break;
-                case LANG:
-                    defConfigStream = new InputStreamReader(plugin.getResource("lang.yml"), "UTF8");
-                    break;
-            }
+                defConfigStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
         } catch (UnsupportedEncodingException ex) {}
 
         if (defConfigStream != null) {
@@ -187,27 +200,13 @@ public class ConfigAPI {
 
     public void saveDefaultConfig() {
         if (file == null) {
-            switch (type) {
-                case CONFIG:
-                    file = new File(plugin.getDataFolder(), "config.yml");
-                    break;
-                case LANG:
-                    file = new File(plugin.getDataFolder(), "lang.yml");
-                    break;
-            }
+
+            file = new File(plugin.getDataFolder(), fileName);
         }
         if (!file.exists()) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            switch (type) {
-                case CONFIG:
-                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new configuration file...");
-                    plugin.saveResource("config.yml", false);
-                    break;
-                case LANG:
-                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new language file...");
-                    plugin.saveResource("lang.yml", false);
-                    break;
-            }
+            console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new " + fileName + " ...");
+            plugin.saveResource(fileName, false);
         }
     }
 
@@ -216,18 +215,11 @@ public class ConfigAPI {
      * @param type
      * @param map
      */
+    @Deprecated
     public void loadTypesFromFile(Class type, Map<String, Object> map)
     {
         File file = null;
-        switch (this.type)
-        {
-            case CONFIG:
-                file = new File("config.yml");
-                break;
-            case LANG:
-                file = new File("lang.yml");
-                break;
-        }
+        file = new File(fileName);
         YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(file);
 
         for (String path : configuration.getKeys(true))
@@ -255,7 +247,7 @@ public class ConfigAPI {
                             if (type.isInstance(defaultConfig.get(path))) {
                                 ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
                                 map.put(path, defaultConfig.get(path));
-                                console.sendMessage("[BetterSleeping] " + Color.RED + "A missing config option (" + path + ") has been found in " + getConfigName() + ". Now using default value: " + defaultConfig.get(path));
+                                console.sendMessage("[BetterSleeping] " + Color.RED + "A missing config option (" + path + ") has been found in " + fileName + ". Now using default value: " + defaultConfig.get(path));
                             }
                         }
                     }
@@ -268,6 +260,7 @@ public class ConfigAPI {
      * Checks a path and send specific messages to the console regarding to the configuration
      * @param path
      */
+    @Deprecated
     public void performPathCheck(String path)
     {
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
@@ -292,20 +285,5 @@ public class ConfigAPI {
                 }
             }
         }
-    }
-
-    /**
-     * Get the name of this config file
-     * @return
-     */
-    public String getConfigName()
-    {
-        switch(type)
-        {
-            case LANG:   return "lang.yml";
-            case CONFIG: return "config.yml";
-        }
-
-        return "";
     }
 }

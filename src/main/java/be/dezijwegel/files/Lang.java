@@ -5,8 +5,6 @@ import be.dezijwegel.bettersleeping.Reloadable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,11 +103,10 @@ public class Lang implements Reloadable {
 
         if (configAPI.getString(messagePath) != null)
         {
-            message = message + (String) configAPI.getString(messagePath);
+            if (configAPI.getString(messagePath).equalsIgnoreCase("ignored"))
+                message = "";
+            else message = message + (String) configAPI.getString(messagePath);
         }
-
-        if (configAPI.getString(messagePath).equalsIgnoreCase("ignored"))
-            message = "";
 
         return message;
     }

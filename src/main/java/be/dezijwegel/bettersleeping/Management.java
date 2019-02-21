@@ -11,11 +11,12 @@ import java.util.Map;
 
 public class Management {
 
+    private BetterSleeping plugin;
     private Config config;
     private Lang lang;
 
-    public Management (BetterSleeping plugin)
-    {
+    public Management (BetterSleeping plugin) {
+        this.plugin = plugin;
         config = new Config(plugin);
         lang = new Lang(plugin);
     }
@@ -82,4 +83,5 @@ public class Management {
     {
         return config.getInt(path);
     }
+
 }
