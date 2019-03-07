@@ -9,13 +9,13 @@
 
 # This is the text that will be put in front of all messages, you can change
 # this prefix if you want to but I would be grateful if you kept the name of this plugin in the prefix
-# The symbol '&' is used for color codes (like § in vanilla)
+# The symbol '&' is used for color codes
 # Note that the prefix cannot be disabled by putting "ignored"
 # To disable the prefix, it must simply be left empty (written as: "")
 prefix: "&6[BetterSleeping] &3"
 
 # The message people get when enough people are sleeping
-enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in a moment!"
+enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in <time> seconds!"
 
 # The message people receive after the night/storm has been skipped
 good_morning: "Good morning! Have a great day!"

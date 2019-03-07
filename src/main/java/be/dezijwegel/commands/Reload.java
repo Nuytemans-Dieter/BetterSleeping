@@ -3,12 +3,9 @@ package be.dezijwegel.commands;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Management;
 import be.dezijwegel.bettersleeping.Reloadable;
-import be.dezijwegel.OLD.FileManagement;
 import java.util.LinkedList;
-import java.util.logging.Level;
 
 import static org.bukkit.Bukkit.getConsoleSender;
-import static org.bukkit.Bukkit.getLogger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

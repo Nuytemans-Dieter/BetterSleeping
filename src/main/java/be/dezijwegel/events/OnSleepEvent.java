@@ -95,7 +95,9 @@ public class OnSleepEvent implements Listener {
                         scheduleTimeToDay(worlds);
                     }
 
-                    management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()));
+                    Map<String, String> replace = new HashMap<String, String>();
+                    replace.put("<time>", Integer.toString(management.getIntegerSetting("sleep_delay") / 40));
+                    management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()), replace);
 
                 } else if (sleepersLeft > 0) {
                     Map<String, String> replace = new LinkedHashMap<String, String>();
