@@ -2,15 +2,34 @@
 #  BetterSleeping  #
 # ################ #
 
-# This file contains all messages, this is where they can be customised to allow other languages
-# A message can be disabled by setting the text to "ignored", an example can be found below
+# CONFIGURATION TUTORIAL:
+# The symbol '&' is used for color codes
+# Any message can be disabled by setting the text to "ignored", an example can be found below
 # some_setting: "ignored"
-# To reset this file, simply delete it and restart your server.
+# Tags <keyword>
+
+# BetterSleeping offers support for several placeholders:
+# <amount>
+#     Replaced by:    the correct number in that context.
+#     Can be used in: cancelled, amount_left
+# <time>
+#     Replaced by:    Will be replaced by the correct time
+#     Can be used in: enough_sleeping, sleep_spam
+# <receiver>
+#     Replaced by:    The player receiving the message
+#     Can be used in: Every message!
+
+# Singular/plural nouns are taken in account too!
+# Simply add [singular.plural] in an applicable message and it will be correctly substituted.
+# Example: <amount> more [player.players] [is.are] needed!
+#          When 1 more player is needed, the singular sides will be taken: 1 more player is needed
+#          Otherwise, the plural sides will be chosen: 5 more players are needed
+
+
+
 
 # This is the text that will be put in front of all messages, you can change
 # this prefix if you want to but I would be grateful if you kept the name of this plugin in the prefix
-# The symbol '&' is used for color codes
-# Note that the prefix cannot be disabled by putting "ignored"
 # To disable the prefix, it must simply be left empty (written as: "")
 prefix: "&6[BetterSleeping] &3"
 
@@ -18,17 +37,14 @@ prefix: "&6[BetterSleeping] &3"
 enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in <time> seconds!"
 
 # The message people receive after the night/storm has been skipped
-good_morning: "Good morning! Have a great day!"
+good_morning: "Good morning! Have a great day, <receiver>!"
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
-# With [player.players], the correct one is chosen by default. If you want to customise this, please stick to [singular.plural]
 cancelled: "Someone left their bed! Waiting for <amount> more [player.players] to sleep."
 
 # The message which indicates how many more people need to rest
-# <amount> will be replaced by the appropriate number of people that are needed
-# Will be sent to all online players (or all players in a specific world depending on settings)
+# Will be sent to all online players (or all players in a specific world depending on multiworld_support)
 # when someone enters a bed
-# With [player.players], the correct one is chosen by default. If you want to customise this, please stick to [singular.plural]
 amount_left: "There [is.are] <amount> more [player.players] needed to skip the night/storm!"
 
 # The message a player gets when he/she doesn't have access to a command and tries to execute that command

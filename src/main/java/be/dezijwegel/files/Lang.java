@@ -5,6 +5,7 @@ import be.dezijwegel.bettersleeping.Reloadable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,18 @@ public class Lang implements Reloadable {
     }
 
     /**
+     * Sends a raw message to the receiver but substitutes <receiver> by the receiver's name
+     * @param message
+     * @param receiver
+     */
+    private void send(String message, CommandSender receiver)
+    {
+        if (message.contains("<receiver>"))
+            receiver.sendMessage(message.replace("<receiver>", receiver.getName()));
+        else receiver.sendMessage(message);
+    }
+
+    /**
      * (Attempt to) send a message to the given receiver
      * The message must exist in the default lang.yml or lang.yml on disk
      * @param messagePath
@@ -28,8 +41,7 @@ public class Lang implements Reloadable {
      */
     public void sendMessage(String messagePath, CommandSender receiver)
     {
-        String msg = composeMessage(messagePath);
-        if (msg != "") receiver.sendMessage(msg);
+        sendMessage(messagePath,receiver,new LinkedHashMap<>());
     }
 
     /**
@@ -42,8 +54,7 @@ public class Lang implements Reloadable {
      */
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings)
     {
-        String msg = composeMessage(messagePath);
-        if (msg != "") receiver.sendMessage(prepareMessage(msg,replacings));
+        sendMessage(messagePath,receiver,replacings,false);
     }
 
     /**
@@ -58,8 +69,9 @@ public class Lang implements Reloadable {
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings, boolean singular)
     {
         String msg = composeMessage(messagePath);
-        msg = correctSingularPlural(prepareMessage(msg,replacings), singular);
-        if (msg != "") receiver.sendMessage(msg);
+        msg = prepareMessage(msg,replacings);
+        msg = correctSingularPlural(msg, singular);
+        if (msg != "") send(msg, receiver);
     }
 
     /**
@@ -69,13 +81,7 @@ public class Lang implements Reloadable {
      */
     public void sendMessageToGroup(String messagePath, List<Player> receivers)
     {
-        String msg = composeMessage(messagePath);
-        if (msg != "")
-        {
-            for (Player player : receivers) {
-                player.sendMessage(msg);
-            }
-        }
+        sendMessageToGroup(messagePath, receivers, new LinkedHashMap<>());
     }
 
     /**
@@ -88,14 +94,7 @@ public class Lang implements Reloadable {
      */
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings)
     {
-        String msg = composeMessage(messagePath);
-        if (msg != "")
-        {
-            String replaced = prepareMessage(msg, replacings);
-            for (Player player : receivers) {
-                player.sendMessage(replaced);
-            }
-        }
+        sendMessageToGroup(messagePath, receivers, replacings, false);
     }
 
     /**
@@ -115,7 +114,7 @@ public class Lang implements Reloadable {
             String replaced = prepareMessage(msg, replacings);
             replaced = correctSingularPlural(replaced, singular);
             for (Player player : receivers) {
-                player.sendMessage(replaced);
+                send(replaced, player);
             }
         }
     }
@@ -151,28 +150,11 @@ public class Lang implements Reloadable {
      */
     public String prepareMessage(String message, Map<String, String> replacings)
     {
-//        if (BetterSleeping.debug)
-//        {
-//            System.out.println("-----");
-//            System.out.println("Preparing message: " + message);
-//
-//            for (Map.Entry<String, String> entry : replacings.entrySet()) {
-//                if (message.contains(entry.getKey())) {
-//                    System.out.println("Replace " + entry.getKey() + " with " + entry.getValue());
-//                    message = message.replaceAll(entry.getKey(), entry.getValue());
-//                } else {
-//                    System.out.println("Message did not contain " + entry.getKey());
-//                }
-//            }
-//            System.out.println("Result: " + message);
-//            System.out.println("-----");
-//        } else {
             for (Map.Entry<String, String> entry : replacings.entrySet()) {
                 if (message.contains(entry.getKey())) {
                     message = message.replaceAll(entry.getKey(), entry.getValue());
                 }
             }
-//        }
         return message;
     }
 
@@ -200,11 +182,12 @@ public class Lang implements Reloadable {
                     {
                         String[] strings = temp.split("\\.");
 
-                        if (singular) str = str.replace("[" + temp + "]",strings[0]);
-                        else str = str.replace("[" + temp + "]",strings[1]);
-
+                        if (strings.length > 1)
+                        {
+                            if (singular) str = str.replace("[" + temp + "]", strings[0]);
+                            else str = str.replace("[" + temp + "]", strings[1]);
+                        }
                     } else str = str.replace("[" + temp + "]", temp);
-                    System.out.println(str);
                 }
             }
             else
