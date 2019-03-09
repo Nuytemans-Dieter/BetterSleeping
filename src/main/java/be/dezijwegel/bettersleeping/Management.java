@@ -42,6 +42,16 @@ public class Management {
     }
 
     /**
+     * Send a message to a receiver in the provided list, perform replacements and fix singular/plural nouns
+     * @param messagePath
+     * @param receiver
+     * @param replacings
+     */
+    public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings, boolean singular) {
+        lang.sendMessage(messagePath, receiver, replacings, singular);
+    }
+
+    /**
      * Send a message to all receivers in the provided list
      * @param messagePath
      * @param receivers
@@ -60,6 +70,17 @@ public class Management {
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String, String> replacings)
     {
         lang.sendMessageToGroup(messagePath,receivers,replacings);
+    }
+
+    /**
+     * Send a message to all receivers in the provided list, perform replacements and fix singular/plural nouns
+     * @param messagePath
+     * @param receivers
+     * @param replacings
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String, String> replacings, boolean singular)
+    {
+        lang.sendMessageToGroup(messagePath,receivers,replacings, singular);
     }
 
     /**

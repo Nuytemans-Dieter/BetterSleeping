@@ -47,6 +47,22 @@ public class Lang implements Reloadable {
     }
 
     /**
+     * (Attempt to) send a message to the given receiver
+     * The message must exist in the default lang.yml or lang.yml on disk
+     * The placeholders (keys of replacings) will be replaced by their respective values
+     * If a [singular.plural] part exists, it will be corrected based on the given boolean
+     * @param messagePath
+     * @param receiver
+     * @param replacings
+     */
+    public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings, boolean singular)
+    {
+        String msg = composeMessage(messagePath);
+        msg = correctSingularPlural(prepareMessage(msg,replacings), singular);
+        if (msg != "") receiver.sendMessage(msg);
+    }
+
+    /**
      * Send a given String to a group of receivers
      * @param messagePath
      * @param receivers
@@ -76,6 +92,28 @@ public class Lang implements Reloadable {
         if (msg != "")
         {
             String replaced = prepareMessage(msg, replacings);
+            for (Player player : receivers) {
+                player.sendMessage(replaced);
+            }
+        }
+    }
+
+    /**
+     * (Attempt to) send a message to the given receivers
+     * The message must exist in the default lang.yml or lang.yml on disk
+     * The placeholders (keys of replacings) will be replaced by their respective values
+     * If a [singular.plural] part exists, it will be corrected based on the given boolean
+     * @param messagePath
+     * @param receivers
+     * @param replacings
+     */
+    public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings, boolean singular)
+    {
+        String msg = composeMessage(messagePath);
+        if (msg != "")
+        {
+            String replaced = prepareMessage(msg, replacings);
+            replaced = correctSingularPlural(replaced, singular);
             for (Player player : receivers) {
                 player.sendMessage(replaced);
             }
@@ -136,6 +174,50 @@ public class Lang implements Reloadable {
             }
 //        }
         return message;
+    }
+
+    /**
+     * Replaces [singular.plural] to the correct one (singular or plural), based on a given amount. The corrected String is returned.
+     * @param str The String that will be checked for singular/plural nouns in the form of [singular.plural]
+     * @param singular set to true if the String should be corrected to be singular, or plural if false
+     * @return the corrected String
+     */
+    public String correctSingularPlural(String str, boolean singular)
+    {
+        String string = str;
+        boolean bracketsOpen = false;
+        int startIndex = 0;
+        for (int ind = 0; ind < string.length()-1; ind++)
+        {
+            if (bracketsOpen)
+            {
+                if (string.charAt(ind) == ']')
+                {
+                    String temp = string.substring(startIndex+1,ind);
+                    bracketsOpen = false;
+
+                    if (str.contains("."))
+                    {
+                        String[] strings = temp.split("\\.");
+
+                        if (singular) str = str.replace("[" + temp + "]",strings[0]);
+                        else str = str.replace("[" + temp + "]",strings[1]);
+
+                    } else str = str.replace("[" + temp + "]", temp);
+                    System.out.println(str);
+                }
+            }
+            else
+            {
+                if (string.charAt(ind) == '[')
+                {
+                    startIndex = ind;
+                    bracketsOpen = true;
+                }
+            }
+        }
+
+        return str;
     }
 
     @Override
