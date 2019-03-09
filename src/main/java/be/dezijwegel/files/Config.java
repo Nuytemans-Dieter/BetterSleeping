@@ -7,16 +7,11 @@ public class Config implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
-//    private Map<String, Object> config;
 
     public Config(BetterSleeping plugin) {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
-//        config = new HashMap<String,Object>();
-//
-//        configAPI.loadTypesFromFile(String.class, config);
-//        configAPI.loadTypesFromFile(Boolean.class, config);
     }
 
     /**

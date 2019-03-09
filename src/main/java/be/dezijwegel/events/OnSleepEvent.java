@@ -44,24 +44,24 @@ public class OnSleepEvent implements Listener {
         Player player = event.getPlayer();
         if(!event.isCancelled()) {
             if (sleepTracker.playerMaySleep(player)) {
-                if (BetterSleeping.debug) {
-                    System.out.println(player.getName() + " got in bed!");
-                }
+//                if (BetterSleeping.debug) {
+//                    System.out.println(player.getName() + " got in bed!");
+//                }
 
                 World world = player.getLocation().getWorld();
                 sleepTracker.addSleepingPlayer(world);
                 int numSleepers = sleepTracker.getNumSleepingPlayers(world);
                 int sleepersLeft = sleepTracker.getTotalSleepersNeeded(world) - numSleepers;
 
-                if (BetterSleeping.debug) {
-                    World worldDebug = player.getLocation().getWorld();
-                    System.out.println("-----");
-                    System.out.println("World: \"" + worldDebug.getName() + "\" Multiworld: " + multiworld);
-                    System.out.println("# relevant players: " + sleepTracker.getRelevantPlayers(worldDebug).size() + " + Percentage needed: " + management.getIntegerSetting("percentage_needed"));
-                    System.out.println("Sleepers needed: " + sleepTracker.getTotalSleepersNeeded(world));
-                    System.out.println("Num sleeping: " + sleepTracker.getNumSleepingPlayers(world));
-                    System.out.println("-----");
-                }
+//                if (BetterSleeping.debug) {
+//                    World worldDebug = player.getLocation().getWorld();
+//                    System.out.println("-----");
+//                    System.out.println("World: \"" + worldDebug.getName() + "\" Multiworld: " + multiworld);
+//                    System.out.println("# relevant players: " + sleepTracker.getRelevantPlayers(worldDebug).size() + " + Percentage needed: " + management.getIntegerSetting("percentage_needed"));
+//                    System.out.println("Sleepers needed: " + sleepTracker.getTotalSleepersNeeded(world));
+//                    System.out.println("Num sleeping: " + sleepTracker.getNumSleepingPlayers(world));
+//                    System.out.println("-----");
+//                }
 
                 int numPlayersInWorld = 0;
                 for (Player p: Bukkit.getOnlinePlayers())
@@ -96,7 +96,9 @@ public class OnSleepEvent implements Listener {
                     }
 
                     Map<String, String> replace = new HashMap<String, String>();
-                    replace.put("<time>", Integer.toString(management.getIntegerSetting("sleep_delay") / 40));
+                    //Calculates the time players have to stay in bed, (double) and Math#ceil() for accuracy but (int) for a nice looking output
+                    int waitTime  = (int) Math.ceil( (double) management.getIntegerSetting("sleep_delay") / 20 );
+                    replace.put("<time>", Integer.toString(waitTime));
                     management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()), replace);
 
                 } else if (sleepersLeft > 0) {
@@ -118,24 +120,24 @@ public class OnSleepEvent implements Listener {
 
         int numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
 
-        if (BetterSleeping.debug)
-        {
-            System.out.println("-----");
-            System.out.println(event.getPlayer().getName() + " got out of bed!");
-            System.out.println(event.getPlayer().getWorld().getName() + " time: " + event.getPlayer().getWorld().getTime());
-            System.out.println("Num needed: " + numNeeded);
-            System.out.println("-----");
-        }
+//        if (BetterSleeping.debug)
+//        {
+//            System.out.println("-----");
+//            System.out.println(event.getPlayer().getName() + " got out of bed!");
+//            System.out.println(event.getPlayer().getWorld().getName() + " time: " + event.getPlayer().getWorld().getTime());
+//            System.out.println("Num needed: " + numNeeded);
+//            System.out.println("-----");
+//        }
 
         if (numNeeded > 0)
         {
 
-            if(BetterSleeping.debug)
-            {
-                System.out.println("-----");
-                System.out.println("Descheduling...");
-                System.out.println("-----");
-            }
+//            if(BetterSleeping.debug)
+//            {
+//                System.out.println("-----");
+//                System.out.println("Descheduling...");
+//                System.out.println("-----");
+//            }
 
             if (multiworld)
             {
@@ -165,19 +167,19 @@ public class OnSleepEvent implements Listener {
         pendingTasks.add(task);
         task.runTaskLater(plugin, sleepDelay);
 
-        if (BetterSleeping.debug)
-        {
-            System.out.println("-----");
-            System.out.println("Scheduling...");
-            System.out.println("Delay: " + sleepDelay);
-            System.out.println("# tasks: " + pendingTasks.size());
-            System.out.println("Worlds: ");
-            for (World world : worlds)
-            {
-                System.out.println(" - \"" + world.getName() + "\"");
-            }
-            System.out.println("-----");
-        }
+//        if (BetterSleeping.debug)
+//        {
+//            System.out.println("-----");
+//            System.out.println("Scheduling...");
+//            System.out.println("Delay: " + sleepDelay);
+//            System.out.println("# tasks: " + pendingTasks.size());
+//            System.out.println("Worlds: ");
+//            for (World world : worlds)
+//            {
+//                System.out.println(" - \"" + world.getName() + "\"");
+//            }
+//            System.out.println("-----");
+//        }
     }
 
     /**
@@ -216,13 +218,13 @@ public class OnSleepEvent implements Listener {
                     task.cancel();
                     pendingTasks.remove(task);
 
-                    if (BetterSleeping.debug) {
-                        System.out.println("-----");
-                        System.out.println("Descheduling: ");
-                        System.out.println("After removing: ");
-                        System.out.println("# Pendingtasks: " + pendingTasks.size());
-                        System.out.println("-----");
-                    }
+//                    if (BetterSleeping.debug) {
+//                        System.out.println("-----");
+//                        System.out.println("Descheduling: ");
+//                        System.out.println("After removing: ");
+//                        System.out.println("# Pendingtasks: " + pendingTasks.size());
+//                        System.out.println("-----");
+//                    }
                 }
             }
         }

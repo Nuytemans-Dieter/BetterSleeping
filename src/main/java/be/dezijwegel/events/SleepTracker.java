@@ -1,6 +1,5 @@
 package be.dezijwegel.events;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -202,21 +201,21 @@ public class SleepTracker {
                 list.add(player);
         }
 
-        if (BetterSleeping.debug)
-        {
-            System.out.println("-----");
-            System.out.println("Getting relevant players...");
-            System.out.println("Multiworld: " + multiworld + " Num found: " + list.size());
-            System.out.println("World: \"" + world.getName() + "\"");
-            int i = 0;
-            for (Player p : list)
-            {
-                i++;
-                if (i > 10) System.out.println("");
-                System.out.print(p.getName() + "(" + p.getWorld().getName() + ") ");
-            }
-            System.out.println("-----");
-        }
+//        if (BetterSleeping.debug)
+//        {
+//            System.out.println("-----");
+//            System.out.println("Getting relevant players...");
+//            System.out.println("Multiworld: " + multiworld + " Num found: " + list.size());
+//            System.out.println("World: \"" + world.getName() + "\"");
+//            int i = 0;
+//            for (Player p : list)
+//            {
+//                i++;
+//                if (i > 10) System.out.println("");
+//                System.out.print(p.getName() + "(" + p.getWorld().getName() + ") ");
+//            }
+//            System.out.println("-----");
+//        }
 
         return list;
     }

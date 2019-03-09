@@ -12,16 +12,12 @@ public class Lang implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
-//    private Map<String, Object> lang;
 
     public Lang (BetterSleeping plugin)
     {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
-//        lang = new HashMap<String, Object>();
-//
-//        configAPI.loadTypesFromFile(String.class, lang);
     }
 
     /**
@@ -117,28 +113,28 @@ public class Lang implements Reloadable {
      */
     public String prepareMessage(String message, Map<String, String> replacings)
     {
-        if (BetterSleeping.debug)
-        {
-            System.out.println("-----");
-            System.out.println("Preparing message: " + message);
-
+//        if (BetterSleeping.debug)
+//        {
+//            System.out.println("-----");
+//            System.out.println("Preparing message: " + message);
+//
+//            for (Map.Entry<String, String> entry : replacings.entrySet()) {
+//                if (message.contains(entry.getKey())) {
+//                    System.out.println("Replace " + entry.getKey() + " with " + entry.getValue());
+//                    message = message.replaceAll(entry.getKey(), entry.getValue());
+//                } else {
+//                    System.out.println("Message did not contain " + entry.getKey());
+//                }
+//            }
+//            System.out.println("Result: " + message);
+//            System.out.println("-----");
+//        } else {
             for (Map.Entry<String, String> entry : replacings.entrySet()) {
                 if (message.contains(entry.getKey())) {
-                    System.out.println("Replace " + entry.getKey() + " with " + entry.getValue());
-                    message = message.replaceAll(entry.getKey(), entry.getValue());
-                } else {
-                    System.out.println("Message did not contain " + entry.getKey());
-                }
-            }
-            System.out.println("Result: " + message);
-            System.out.println("-----");
-        } else {
-            for (Map.Entry<String, String> entry : replacings.entrySet()) {
-                if (message.contains(entry.getKey())) {
                     message = message.replaceAll(entry.getKey(), entry.getValue());
                 }
             }
-        }
+//        }
         return message;
     }
 
