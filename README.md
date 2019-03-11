@@ -1,5 +1,5 @@
-# BetterSleeping
-A Spigot plugin that will make sleeping on servers less of a hassle
+# BetterSleeping (1200+ downloads!)
+A Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page").
 
 ## What this plugin does
 Normally all players must sleep before a night/storm can be skipped on a multiplayer server.
