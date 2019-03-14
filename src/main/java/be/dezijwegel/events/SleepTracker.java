@@ -121,7 +121,9 @@ public class SleepTracker {
             numPlayers = Bukkit.getOnlinePlayers().size();
         }
 
-        return (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
+        int numNeeded = (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
+        if (numNeeded > 1) return numNeeded;
+        else return 1;
     }
 
     /**
