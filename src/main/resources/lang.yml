@@ -54,4 +54,4 @@ no_permission: "&4You don't have permission to execute that command!"
 message_reloaded: "Reload complete!"
 
 # players that try to spam BetterSleeping messages will receive this
-sleep_spam: "You have to wait <time> more seconds before you can sleep again!"
+sleep_spam: "You have to wait <time> more [second.seconds] before you can sleep again!"

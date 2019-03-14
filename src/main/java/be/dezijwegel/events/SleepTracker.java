@@ -237,8 +237,11 @@ public class SleepTracker {
                 return true;
             else {
                 Map<String, String> replace = new LinkedHashMap<String, String>();
-                replace.put("<time>", Long.toString(whenCanPlayerSleep(player.getUniqueId())));
-                management.sendMessage("sleep_spam", player, replace);
+                long time = whenCanPlayerSleep(player.getUniqueId());
+                replace.put("<time>", Long.toString(time));
+                boolean isSingular;
+                if (time == 1) isSingular = true; else isSingular = false;
+                management.sendMessage("sleep_spam", player, replace, isSingular);
                 return false;
             }
         }
