@@ -5,10 +5,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.*;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 
@@ -200,15 +204,24 @@ public class ConfigAPI {
     }
 
     public void saveDefaultConfig() {
-        if (file == null) {
-
-            file = new File(plugin.getDataFolder(), fileName);
-        }
         if (!file.exists()) {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new " + fileName + " ...");
             plugin.saveResource(fileName, false);
         }
+        if (file == null) {
+
+            file = new File(plugin.getDataFolder(), fileName);
+        }
+    }
+
+    /**
+     * Gets the ConfigurationSection that equals the path
+     * @param path
+     */
+    public ConfigurationSection getConfigurationSection(String path)
+    {
+        return configuration.getConfigurationSection(path);
     }
 
     /**

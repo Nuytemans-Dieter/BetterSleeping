@@ -53,6 +53,11 @@ public class SetTimeToDay extends BukkitRunnable {
             if (worlds.contains(player.getLocation().getWorld()))
             {
                 management.sendMessage("good_morning", player);
+
+                if (player.isSleeping())
+                {
+                    management.addEffects(player);
+                }
             }
         }
 
