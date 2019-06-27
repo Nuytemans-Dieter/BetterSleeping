@@ -42,7 +42,7 @@ public class OnSleepEvent implements Listener {
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();
-        if(!event.isCancelled()) {
+        if(!event.isCancelled() && event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
             if (sleepTracker.playerMaySleep(player)) {
 
                 World world = player.getLocation().getWorld();
