@@ -1,7 +1,7 @@
 package be.dezijwegel.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.Management;
+import be.dezijwegel.management.Management;
 import be.dezijwegel.bettersleeping.Reloadable;
 import java.util.LinkedList;
 

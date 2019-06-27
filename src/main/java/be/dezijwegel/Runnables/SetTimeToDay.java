@@ -1,6 +1,6 @@
 package be.dezijwegel.Runnables;
 
-import be.dezijwegel.bettersleeping.Management;
+import be.dezijwegel.management.Management;
 import be.dezijwegel.events.SleepTracker;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

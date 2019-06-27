@@ -22,9 +22,11 @@ public class ConfigAPI {
     String fileName;
 
     private FileConfiguration defaultConfig;
+
     public enum FileType {
         CONFIG,
-        LANG
+        LANG,
+        BUFFS
     }
 
     /**
@@ -44,6 +46,8 @@ public class ConfigAPI {
             case LANG:
                 fileName = "lang.yml";
                 break;
+            case BUFFS:
+                fileName = "buffs.yml";
         }
 
         this.file = new File(plugin.getDataFolder(), fileName);

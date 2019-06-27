@@ -2,7 +2,7 @@ package be.dezijwegel.events;
 
 import be.dezijwegel.Runnables.SetTimeToDay;
 import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.Management;
+import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
