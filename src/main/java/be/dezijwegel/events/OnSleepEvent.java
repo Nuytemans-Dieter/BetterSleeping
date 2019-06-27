@@ -87,6 +87,7 @@ public class OnSleepEvent implements Listener {
                     //Calculates the time players have to stay in bed, (double) and Math#ceil() for accuracy but (int) for a nice looking output
                     int waitTime  = (int) Math.ceil( (double) management.getIntegerSetting("sleep_delay") / 20 );
                     replace.put("<time>", Integer.toString(waitTime));
+                    replace.put("<user>", event.getPlayer().getDisplayName());
                     management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()), replace);
 
                 } else if (sleepersLeft > 0) {
@@ -115,13 +116,13 @@ public class OnSleepEvent implements Listener {
         {
             if (multiworld)
             {
-                deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()));
+                deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()), event.getPlayer().getDisplayName());
             } else {
                 List<World> worlds = new LinkedList<World>();
                 for (World entry : Bukkit.getWorlds()) {
                         worlds.add(entry);
                 }
-                deScheduleTimeToDay(worlds);
+                deScheduleTimeToDay(worlds, event.getPlayer().getDisplayName());
             }
         }
     }
@@ -144,9 +145,10 @@ public class OnSleepEvent implements Listener {
 
     /**
      * Cancel tasks that will set time to day in the given worlds, they will also be removed from the pendingTasks list
-     * @param worlds
+     * @param worlds the world for which the time to day is cancelled
+     * @param playerName the player that left their bed
      */
-    public void deScheduleTimeToDay(List<World> worlds)
+    public void deScheduleTimeToDay(List<World> worlds, String playerName)
     {
         if (sleepTracker.getTimeSinceLastSetToDay(worlds.get(0)) > 10)
         {
@@ -155,6 +157,7 @@ public class OnSleepEvent implements Listener {
 
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<amount>", Integer.toString(numNeeded));
+                replace.put("<user>", playerName);
                 boolean singular;
                 if (numNeeded == 1) singular = true; else singular = false;
                 management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(worlds.get(0)), replace, singular);

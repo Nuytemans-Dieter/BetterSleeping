@@ -2,22 +2,24 @@
 #  BetterSleeping  #
 # ################ #
 
-# CONFIGURATION TUTORIAL:
+# CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
 # Any message can be disabled by setting the text to "ignored", an example can be found below
 # some_setting: "ignored"
-# Tags <keyword>
 
 # BetterSleeping offers support for several placeholders:
 # <amount>
-#     Replaced by:    the correct number in that context.
-#     Can be used in: cancelled, amount_left
+#     Replaced by:      the correct number in that context.
+#     Can be used in:   cancelled, amount_left
 # <time>
-#     Replaced by:    Will be replaced by the correct time
-#     Can be used in: enough_sleeping, sleep_spam
+#     Replaced by:      Will be replaced by the correct time
+#     Can be used in:   enough_sleeping, sleep_spam
 # <receiver>
-#     Replaced by:    The player receiving the message
-#     Can be used in: Every message!
+#     Replaced by:      The player receiving the message
+#     Can be used in:   Every message!
+# <user>
+#     Replaced by:      The player who did an action (leave or enter a bed for example)
+#     Can be used in:   cancelled, amount_left
 
 # Singular/plural nouns are taken in account too!
 # Simply add [singular.plural] in an applicable message and it will be correctly substituted.
@@ -40,12 +42,12 @@ enough_sleeping: "Enough players are sleeping now, the night/storm will be skipp
 good_morning: "Good morning! Have a great day, <receiver>!"
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
-cancelled: "Someone left their bed! Waiting for <amount> more [player.players] to sleep."
+cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep."
 
 # The message which indicates how many more people need to rest
 # Will be sent to all online players (or all players in a specific world depending on multiworld_support)
 # when someone enters a bed
-amount_left: "There [is.are] <amount> more [player.players] needed to skip the night/storm!"
+amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm!"
 
 # The message a player gets when he/she doesn't have access to a command and tries to execute that command
 no_permission: "&4You don't have permission to execute that command!"
