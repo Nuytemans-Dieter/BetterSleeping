@@ -34,6 +34,18 @@ public class Management {
     }
 
     /**
+     * Add all buffs to a List of players
+     * @param players
+     */
+    public void addEffects(List<Player> players)
+    {
+        for (Player player : players)
+        {
+            buffs.addEffects(player);
+        }
+    }
+
+    /**
      * Send the given message from lang.yml to the player (prefix will be automatically included, if present)
      * @param messagePath
      * @param receiver
