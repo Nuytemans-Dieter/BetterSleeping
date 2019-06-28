@@ -72,11 +72,16 @@ public class OnSleepEvent implements Listener {
                     task.run();
 
                     //Make sure everyone gets their buff
-                    for (Player p : Bukkit.getOnlinePlayers())
+                    if (management.areBuffsEnabled())
                     {
-                        if (worlds.contains(p.getWorld()))
-                        {
-                            management.addEffects(p);
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (worlds.contains(p.getWorld())) {
+                                int numBuffs = management.getNumBuffs();
+                                management.addEffects(p);
+                                Map<String, String> replace = new HashMap<String, String>();
+                                replace.put("<amount>", Integer.toString( numBuffs ));
+                                management.sendMessage("buff_received", p, replace, numBuffs == 1);
+                            }
                         }
                     }
                 }

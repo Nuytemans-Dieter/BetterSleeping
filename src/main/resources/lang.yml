@@ -10,7 +10,7 @@
 # BetterSleeping offers support for several placeholders:
 # <amount>
 #     Replaced by:      the correct number in that context.
-#     Can be used in:   cancelled, amount_left
+#     Can be used in:   cancelled, amount_left, buff_received
 # <time>
 #     Replaced by:      Will be replaced by the correct time
 #     Can be used in:   enough_sleeping, sleep_spam
@@ -41,6 +41,9 @@ enough_sleeping: "Enough players are sleeping now, the night/storm will be skipp
 # The message people receive after the night/storm has been skipped
 good_morning: "Good morning! Have a great day, <receiver>!"
 
+# Players that slept and receive a buff will get this message
+buff_received: "You feel well rested and received <amount> [buff.buffs]!"
+
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
 cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep."
 
@@ -55,5 +58,5 @@ no_permission: "&4You don't have permission to execute that command!"
 # The message that will be sent to the command sender and console when the reload is complete
 message_reloaded: "Reload complete!"
 
-# players that try to spam BetterSleeping messages will receive this
+# Players that try to spam BetterSleeping messages will receive this
 sleep_spam: "You have to wait <time> more [second.seconds] before you can sleep again!"

@@ -31,6 +31,15 @@ public class Buffs implements Reloadable {
     }
 
     /**
+     * Gets the amount of buffs that will be applied after sleeping
+     * @return
+     */
+    public int getNumBuffs()
+    {
+        return buffs.size();
+    }
+
+    /**
      * Gets the PotionEffectType that relates to the given name
      * @param effect name
      * @return PotionEffectType

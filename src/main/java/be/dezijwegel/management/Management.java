@@ -46,6 +46,24 @@ public class Management {
     }
 
     /**
+     * Get the amount of enabled buffs
+     * @return
+     */
+    public int getNumBuffs()
+    {
+        return buffs.getNumBuffs();
+    }
+
+    /**
+     * Check if one or more buffs will be given after sleeping
+     * @return
+     */
+    public boolean areBuffsEnabled()
+    {
+        return buffs.areBuffsEnabled();
+    }
+
+    /**
      * Send the given message from lang.yml to the player (prefix will be automatically included, if present)
      * @param messagePath
      * @param receiver

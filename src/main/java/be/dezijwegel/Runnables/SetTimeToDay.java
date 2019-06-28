@@ -7,9 +7,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SetTimeToDay extends BukkitRunnable {
 
@@ -54,9 +52,13 @@ public class SetTimeToDay extends BukkitRunnable {
             {
                 management.sendMessage("good_morning", player);
 
-                if (player.isSleeping())
-                {
-                    management.addEffects(player);
+                if (management.areBuffsEnabled()) {
+                    if (player.isSleeping()) {
+                        management.addEffects(player);
+                        Map<String, String> replace = new HashMap<String, String>();
+                        replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
+                        management.sendMessage("buff_received", player, replace, management.getNumBuffs() == 1);
+                    }
                 }
             }
         }

@@ -26,4 +26,21 @@ public class BuffManagement {
         }
     }
 
+    /**
+     * Check if one or more buffs will be given after sleeping
+     * @return
+     */
+    public boolean areBuffsEnabled()
+    {
+        return config.getNumBuffs() > 0;
+    }
+
+    /**
+     * Get the amount of buffs that are enabled
+     * @return
+     */
+    public int getNumBuffs()
+    {
+        return config.getNumBuffs();
+    }
 }
