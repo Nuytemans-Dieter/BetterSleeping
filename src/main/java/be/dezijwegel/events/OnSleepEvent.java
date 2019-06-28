@@ -70,6 +70,15 @@ public class OnSleepEvent implements Listener {
                     }
                     SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker);
                     task.run();
+
+                    //Make sure everyone gets their buff
+                    for (Player p : Bukkit.getOnlinePlayers())
+                    {
+                        if (worlds.contains(p.getWorld()))
+                        {
+                            management.addEffects(p);
+                        }
+                    }
                 }
                 else if (sleepersLeft == 0)
                 {
