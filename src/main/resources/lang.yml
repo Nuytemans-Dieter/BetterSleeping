@@ -36,7 +36,7 @@
 prefix: "&6[BetterSleeping] &3"
 
 # The message people get when enough people are sleeping
-enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in <time> seconds!"
+enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in <time> [second.seconds]!"
 
 # The message people receive after the night/storm has been skipped
 good_morning: "Good morning! Have a great day, <receiver>!"

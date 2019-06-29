@@ -102,7 +102,7 @@ public class OnSleepEvent implements Listener {
                     int waitTime  = (int) Math.ceil( (double) management.getIntegerSetting("sleep_delay") / 20 );
                     replace.put("<time>", Integer.toString(waitTime));
                     replace.put("<user>", event.getPlayer().getDisplayName());
-                    management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()), replace);
+                    management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()), replace, waitTime == 1);
 
                 } else if (sleepersLeft > 0) {
                     Map<String, String> replace = new LinkedHashMap<String, String>();
