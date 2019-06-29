@@ -192,13 +192,18 @@ public class ConfigAPI {
     }
 
     public void saveDefaultConfig() {
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
             console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new " + fileName + " ...");
             plugin.saveResource(fileName, false);
-        }
-        if (file == null) {
 
+            //Make sure the Configuration is up to date. Otherwise missing options may be reported!
+            this.configuration = YamlConfiguration.loadConfiguration(file);
+        }
+
+        if (file == null)
+        {
             file = new File(plugin.getDataFolder(), fileName);
         }
     }
