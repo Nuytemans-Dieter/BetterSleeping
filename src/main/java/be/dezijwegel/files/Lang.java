@@ -26,7 +26,7 @@ public class Lang implements Reloadable {
      * @param message
      * @param receiver
      */
-    private void send(String message, CommandSender receiver)
+    private void sendRaw(String message, CommandSender receiver)
     {
         if (message.contains("<receiver>"))
             receiver.sendMessage(message.replace("<receiver>", receiver.getName()));
@@ -68,10 +68,8 @@ public class Lang implements Reloadable {
      */
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings, boolean singular)
     {
-        String msg = composeMessage(messagePath);
-        msg = prepareMessage(msg,replacings);
-        msg = correctSingularPlural(msg, singular);
-        if (msg != "") send(msg, receiver);
+        String msg = composeMessage(messagePath, replacings, singular);
+        if (msg != "") sendRaw(msg, receiver);
     }
 
     /**
@@ -108,47 +106,57 @@ public class Lang implements Reloadable {
      */
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings, boolean singular)
     {
-        String msg = composeMessage(messagePath);
-        if (msg != "")
-        {
-            String replaced = prepareMessage(msg, replacings);
-            replaced = correctSingularPlural(replaced, singular);
-            for (Player player : receivers) {
-                send(replaced, player);
-            }
+        String message = composeMessage(messagePath, replacings, singular);
+
+        for (Player player : receivers) {
+            sendRaw(message, player);
         }
     }
 
     /**
-     * Creates a String that combines prefix and message
+     * Returns a String which is the composed version of the message (ready for sending to a player)
      * @param messagePath
      * @return
      */
-    public String composeMessage(String messagePath)
+    public String composeMessage(String messagePath, Map<String, String> replacings, boolean isSingular)
     {
         String message = "";
+
+        if (configAPI.getString(messagePath) != null)
+            message = configAPI.getString(messagePath);
+
+        message = substitute(message,replacings);
+        message = correctSingularPlural(message, isSingular);
+        message = addPrefix(message);
+
+        return message;
+    }
+
+    /**
+     * Creates a String that combines the prefix with the given string
+     * @param message
+     * @return
+     */
+    public String addPrefix(String message)
+    {
+        String fullMessage = "";
 
         if (configAPI.getString("prefix") != null)
         {
             String prefix = configAPI.getString("prefix");
-            message += prefix;
+            fullMessage += prefix;
         }
 
-        if (configAPI.getString(messagePath) != null)
-        {
-            if (configAPI.getString(messagePath).equalsIgnoreCase("ignored"))
-                message = "";
-            else message = message + (String) configAPI.getString(messagePath);
-        }
+        fullMessage += message;
 
-        return message;
+        return fullMessage;
     }
 
     /**
      * Replace certain Strings within the given message
      * @return
      */
-    public String prepareMessage(String message, Map<String, String> replacings)
+    public String substitute(String message, Map<String, String> replacings)
     {
             for (Map.Entry<String, String> entry : replacings.entrySet()) {
                 if (message.contains(entry.getKey())) {
