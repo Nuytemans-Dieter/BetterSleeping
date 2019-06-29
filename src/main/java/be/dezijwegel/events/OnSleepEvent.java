@@ -107,6 +107,7 @@ public class OnSleepEvent implements Listener {
                 } else if (sleepersLeft > 0) {
                     Map<String, String> replace = new LinkedHashMap<String, String>();
                     replace.put("<amount>", Integer.toString(sleepersLeft));
+                    replace.put("<user>", event.getPlayer().getDisplayName());
                     boolean singular;
                     if (sleepersLeft == 1) singular = true; else singular = false;
                     management.sendMessageToGroup("amount_left", sleepTracker.getRelevantPlayers(world), replace, singular);
@@ -185,6 +186,7 @@ public class OnSleepEvent implements Listener {
 
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<amount>", Integer.toString(numNeeded));
+                replace.put("<user>", playerName);
                 boolean singular;
                 if (numNeeded == 1) singular = true; else singular = false;
                 management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace, singular);
