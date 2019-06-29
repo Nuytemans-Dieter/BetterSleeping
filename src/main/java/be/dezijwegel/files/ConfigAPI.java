@@ -100,17 +100,6 @@ public class ConfigAPI {
             string = configuration.getString(path);
         else string = defaultConfig.getString(path);
 
-        /*
-        if (BetterSleeping.debug)
-        {
-            System.out.println("-----");
-            System.out.println("Debug: " + path + ", contains: " + configuration.contains(path) + ", value: " + string);
-            System.out.println("Default contains: " + defaultConfig.contains(path) + ", value: " + defaultConfig.getString(path));
-            System.out.println("Default has: " + defaultConfig.getKeys(true));
-            System.out.println("-----");
-        }
-        */
-
         if (string != null)
             if (string.contains("&")) string = string.replaceAll("&", "§");
 

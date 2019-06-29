@@ -27,12 +27,6 @@ public class SetTimeToDay extends BukkitRunnable {
         {
             this.worlds.add(world);
         }
-
-//        if (BetterSleeping.debug)
-//        {
-//            System.out.println("-----");
-//            System.out.println("Created SetTimeToDay at System time: " + System.currentTimeMillis());
-//        }
     }
 
     /**
@@ -68,14 +62,6 @@ public class SetTimeToDay extends BukkitRunnable {
             world.setTime(1000);
             world.setStorm(false);
             sleepTracker.worldWasSetToDay(world);
-
-//            if (BetterSleeping.debug)
-//            {
-//                System.out.println("Set time to day in world \"" + world.getName() + "\"");
-//                System.out.println("System time: " + System.currentTimeMillis());
-//            }
         }
-
-        //this.cancel();
     }
 }
