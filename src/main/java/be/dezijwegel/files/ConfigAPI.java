@@ -241,15 +241,25 @@ public class ConfigAPI {
 
             if (missingOptions.size() > 0)
             {
-                if (missingOptions.size() == 1)
-                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
-                else Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
+                ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and restart the server");
-                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "The default values will be used until then");
+                if (missingOptions.size() == 1)
+                     console.sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
+                else console.sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
+
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and restart the server");
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "The default values will be used until then");
 
                 for (String path : missingOptions)
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: \"" + getString(path) + "\"");
+                {
+                    Object value = defaultConfig.get(path);
+
+                    //Change formatting if the setting is a String
+                    if (value instanceof String)
+                        value = "\"" + value + "\"";
+
+                    console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: " + value);
+                }
             }
         }
     }
