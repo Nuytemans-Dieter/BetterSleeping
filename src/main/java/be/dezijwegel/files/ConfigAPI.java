@@ -252,6 +252,7 @@ public class ConfigAPI {
                 else Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
 
                 Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and restart the server");
+                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "The default values will be used until then");
 
                 for (String path : missingOptions)
                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: \"" + getString(path) + "\"");
