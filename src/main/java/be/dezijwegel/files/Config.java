@@ -12,6 +12,7 @@ public class Config implements Reloadable {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
+        configAPI.reportMissingOptions();
     }
 
     /**
@@ -51,6 +52,7 @@ public class Config implements Reloadable {
     @Override
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
+        configAPI.reportMissingOptions();
 //        config = new HashMap<String,Object>();
 
 //        configAPI.loadTypesFromFile(String.class, config);

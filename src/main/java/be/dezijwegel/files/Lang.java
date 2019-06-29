@@ -19,6 +19,7 @@ public class Lang implements Reloadable {
         this.plugin = plugin;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
+        configAPI.reportMissingOptions();
     }
 
     /**
@@ -214,6 +215,7 @@ public class Lang implements Reloadable {
     @Override
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
+        configAPI.reportMissingOptions();
 //        lang = new HashMap<String, Object>();
 //
 //        configAPI.loadTypesFromFile(String.class, lang);

@@ -3,7 +3,6 @@ package be.dezijwegel.files;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,7 +12,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
+import java.util.LinkedList;
 
 
 public class ConfigAPI {
@@ -225,79 +224,115 @@ public class ConfigAPI {
     }
 
     /**
-     * Load all values that are an instance of a given type into the given list
-     * @param type
-     * @param map
+     * Compare the default file with the one on the server and report every missing option
      */
-    @Deprecated
-    public void loadTypesFromFile(Class type, Map<String, Object> map)
+    public void reportMissingOptions()
     {
-        File file = null;
-        file = new File(fileName);
-        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(file);
+        Reader defConfigStream = null;
+        try {
+            defConfigStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
+        } catch (UnsupportedEncodingException ex) {}
 
-        for (String path : configuration.getKeys(true))
-        {
-            boolean found = false;
+        if (defConfigStream != null) {
+            LinkedList<String> missingOptions = new LinkedList<>();
 
-            if (!configuration.isConfigurationSection(path)) {
-                if (configuration.contains(path)) {
-                    if (configuration.get(path) != null) {
-                        if (type.isInstance(configuration.get(path))) {
-                            map.put(path, configuration.get(path));
-                            found = true;
-
-                            //Give the console messages if needed (regarding configuration options)
-                            performPathCheck(path);
-                        }
-                    }
-                }
-            }
-
-            if (!found) {
-                if (!defaultConfig.isConfigurationSection(path)) {
-                    if (defaultConfig.contains(path)) {
-                        if (defaultConfig.get(path) != null) {
-                            if (type.isInstance(defaultConfig.get(path))) {
-                                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                                map.put(path, defaultConfig.get(path));
-                                console.sendMessage("[BetterSleeping] " + Color.RED + "A missing config option (" + path + ") has been found in " + fileName + ". Now using default value: " + defaultConfig.get(path));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Checks a path and send specific messages to the console regarding to the configuration
-     * @param path
-     */
-    @Deprecated
-    public void performPathCheck(String path)
-    {
-        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        if (type == FileType.CONFIG) {
-            if (path.equalsIgnoreCase("world_specific_behavior")) {
-                String append = "";
-                if (configuration.get(path) != null) {
-                    append = " Your preferred value will still be used: " + configuration.get(path);
-                } else {
-                    append = " The default value will be used: true";
-                }
-                console.sendMessage("[BetterSleeping] " + Color.RED + "Your config file contains \'world_specific_behavior\', please replace this with \'multiworld_support\'." + append);
-            }
-        } else if (type == FileType.LANG)
-        {
-            if (path.equalsIgnoreCase("prefix"))
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            for (String path : defConfig.getKeys(true))
             {
-                if (!configuration.getString(path).toLowerCase().contains("bettersleeping"))
+                if ( ! configuration.contains(path))
                 {
-                    console.sendMessage("[BetterSleeping] Please consider keeping \'BetterSleeping\' in the prefix, as it would support my plugin.");
-                    console.sendMessage("[BetterSleeping] Of course you are not obliged to do so, since I gave you the option but it would be greatly appreciated! :-)");
+                    missingOptions.add(path);
                 }
+            }
+
+            if (missingOptions.size() > 0)
+            {
+                if (missingOptions.size() == 1)
+                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
+                else Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
+
+                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and restart the server");
+
+                for (String path : missingOptions)
+                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: \"" + getString(path) + "\"");
             }
         }
     }
+
+//    /**
+//     * Load all values that are an instance of a given type into the given list
+//     * @param type
+//     * @param map
+//     */
+//    @Deprecated
+//    public void loadTypesFromFile(Class type, Map<String, Object> map)
+//    {
+//        File file = null;
+//        file = new File(fileName);
+//        YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(file);
+//
+//        for (String path : configuration.getKeys(true))
+//        {
+//            boolean found = false;
+//
+//            if (!configuration.isConfigurationSection(path)) {
+//                if (configuration.contains(path)) {
+//                    if (configuration.get(path) != null) {
+//                        if (type.isInstance(configuration.get(path))) {
+//                            map.put(path, configuration.get(path));
+//                            found = true;
+//
+//                            //Give the console messages if needed (regarding configuration options)
+//                            performPathCheck(path);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            if (!found) {
+//                if (!defaultConfig.isConfigurationSection(path)) {
+//                    if (defaultConfig.contains(path)) {
+//                        if (defaultConfig.get(path) != null) {
+//                            if (type.isInstance(defaultConfig.get(path))) {
+//                                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+//                                map.put(path, defaultConfig.get(path));
+//                                console.sendMessage("[BetterSleeping] " + Color.RED + "A missing config option (" + path + ") has been found in " + fileName + ". Now using default value: " + defaultConfig.get(path));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    /**
+//     * Checks a path and send specific messages to the console regarding to the configuration
+//     * @param path
+//     */
+//    @Deprecated
+//    public void performPathCheck(String path)
+//    {
+//        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+//        if (type == FileType.CONFIG) {
+//            if (path.equalsIgnoreCase("world_specific_behavior")) {
+//                String append = "";
+//                if (configuration.get(path) != null) {
+//                    append = " Your preferred value will still be used: " + configuration.get(path);
+//                } else {
+//                    append = " The default value will be used: true";
+//                }
+//                console.sendMessage("[BetterSleeping] " + Color.RED + "Your config file contains \'world_specific_behavior\', please replace this with \'multiworld_support\'." + append);
+//            }
+//        } else if (type == FileType.LANG)
+//        {
+//            if (path.equalsIgnoreCase("prefix"))
+//            {
+//                if (!configuration.getString(path).toLowerCase().contains("bettersleeping"))
+//                {
+//                    console.sendMessage("[BetterSleeping] Please consider keeping \'BetterSleeping\' in the prefix, as it would support my plugin.");
+//                    console.sendMessage("[BetterSleeping] Of course you are not obliged to do so, since I gave you the option but it would be greatly appreciated! :-)");
+//                }
+//            }
+//        }
+//    }
 }
