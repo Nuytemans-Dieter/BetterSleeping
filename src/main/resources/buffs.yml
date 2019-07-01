@@ -28,10 +28,11 @@ positive_effects:
   absorption:
     time: 0
     level: 1
-  # Allows the player
+  # Allows the player to jump higher
   jump:
     time: 0
     level: 1
+  # Makes the player run faster
   speed:
     time: 0
     level: 1
