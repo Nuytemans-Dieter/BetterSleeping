@@ -29,6 +29,11 @@ public class Lang implements Reloadable {
      */
     private void sendRaw(String message, CommandSender receiver)
     {
+        if (message.equals(""))
+        {
+            return;
+        }
+
         if (message.contains("<receiver>"))
             receiver.sendMessage(message.replace("<receiver>", receiver.getName()));
         else receiver.sendMessage(message);
@@ -126,6 +131,11 @@ public class Lang implements Reloadable {
         if (configAPI.getString(messagePath) != null)
             message = configAPI.getString(messagePath);
 
+        if (isMessageDisabled(message))
+        {
+            return "";
+        }
+
         message = substitute(message,replacings);
         message = correctSingularPlural(message, isSingular);
         message = addPrefix(message);
@@ -165,6 +175,16 @@ public class Lang implements Reloadable {
                 }
             }
         return message;
+    }
+
+    public boolean isMessageDisabled(String message)
+    {
+        switch (message)
+        {
+            case "":        return true;
+            case "ignored": return true;
+            default:        return false;
+        }
     }
 
     /**
