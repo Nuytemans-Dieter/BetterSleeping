@@ -1,8 +1,8 @@
 package be.dezijwegel.commands;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.management.Management;
-import be.dezijwegel.bettersleeping.Reloadable;
+import be.dezijwegel.interfaces.Reloadable;
 import java.util.LinkedList;
 
 import static org.bukkit.Bukkit.getConsoleSender;

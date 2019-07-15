@@ -1,6 +1,6 @@
 package be.dezijwegel.management;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.files.Buffs;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;

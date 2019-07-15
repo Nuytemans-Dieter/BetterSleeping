@@ -1,6 +1,6 @@
 package be.dezijwegel.management;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.files.Config;
 import be.dezijwegel.files.Lang;
 import org.bukkit.command.CommandSender;

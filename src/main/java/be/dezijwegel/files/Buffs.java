@@ -1,7 +1,10 @@
 package be.dezijwegel.files;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.Reloadable;
+import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.interfaces.Reloadable;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -75,6 +78,10 @@ public class Buffs implements Reloadable {
         ConfigurationSection section = configAPI.getConfigurationSection(basePath);
         if (section != null)
         {
+            int numLoadedEffects = 0;
+
+            ConsoleCommandSender console = Bukkit.getConsoleSender();
+
             for (String key : section.getKeys(false)) {
                 //If time and level exist
                 if (configAPI.contains(basePath + "." + key + ".time") && configAPI.contains(basePath + "." + key + ".level")) {
@@ -88,9 +95,13 @@ public class Buffs implements Reloadable {
                                     configAPI.getInt(basePath + "." + key + ".time"),
                                     configAPI.getInt(basePath + "." + key + ".level"))
                             );
+                            numLoadedEffects++;
                     }
                 }
             }
+
+            console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + numLoadedEffects + " Sleeping buffs were found and loaded!");
+
         }
     }
 }

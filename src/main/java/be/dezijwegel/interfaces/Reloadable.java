@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping;
+package be.dezijwegel.interfaces;
 
 /**
  *

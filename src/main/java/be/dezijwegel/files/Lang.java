@@ -1,7 +1,7 @@
 package be.dezijwegel.files;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.Reloadable;
+import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.interfaces.Reloadable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -165,7 +165,7 @@ public class Lang implements Reloadable {
 
     /**
      * Replace certain Strings within the given message
-     * @return
+     * @return the substitution
      */
     public String substitute(String message, Map<String, String> replacings)
     {
@@ -177,7 +177,12 @@ public class Lang implements Reloadable {
         return message;
     }
 
-    public boolean isMessageDisabled(String message)
+    /**
+     * Check if a given message (must be previously fetched from config) is set to disabled
+     * @param message the message
+     * @return true or false, whether the message is disabled or not
+     */
+    private boolean isMessageDisabled(String message)
     {
         switch (message)
         {
@@ -236,8 +241,5 @@ public class Lang implements Reloadable {
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
         configAPI.reportMissingOptions();
-//        lang = new HashMap<String, Object>();
-//
-//        configAPI.loadTypesFromFile(String.class, lang);
     }
 }

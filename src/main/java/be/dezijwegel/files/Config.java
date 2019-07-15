@@ -1,7 +1,7 @@
 package be.dezijwegel.files;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.Reloadable;
+import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.interfaces.Reloadable;
 
 public class Config implements Reloadable {
 
@@ -53,9 +53,5 @@ public class Config implements Reloadable {
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
         configAPI.reportMissingOptions();
-//        config = new HashMap<String,Object>();
-
-//        configAPI.loadTypesFromFile(String.class, config);
-//        configAPI.loadTypesFromFile(Boolean.class, config);
     }
 }

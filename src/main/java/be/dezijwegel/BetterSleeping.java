@@ -1,5 +1,6 @@
-package be.dezijwegel.bettersleeping;
+package be.dezijwegel;
 
+import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.commands.Reload;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnSleepEvent;
@@ -13,7 +14,7 @@ import java.util.LinkedList;
  *
  * @author Dieter Nuytemans
  */
-public class BetterSleeping extends JavaPlugin implements Reloadable{
+public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
     private OnSleepEvent onSleepEvent;
