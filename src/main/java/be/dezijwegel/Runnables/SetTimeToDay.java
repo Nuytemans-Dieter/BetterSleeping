@@ -52,6 +52,10 @@ public class SetTimeToDay extends BukkitRunnable {
                         Map<String, String> replace = new HashMap<String, String>();
                         replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
                         management.sendMessage("buff_received", player, replace, management.getNumBuffs() == 1);
+                    } else {
+                        Map<String, String> replace = new HashMap<>();
+                        replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
+                        management.sendMessage("no_buff_received", player, replace, management.getNumBuffs() == 1);
                     }
                 }
             }

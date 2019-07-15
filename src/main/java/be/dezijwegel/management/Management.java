@@ -15,12 +15,14 @@ public class Management {
     private BetterSleeping plugin;
     private Config config;
     private Lang lang;
+
     private BuffManagement buffs;
 
     public Management (BetterSleeping plugin) {
         this.plugin = plugin;
         config = new Config(plugin);
         lang = new Lang(plugin);
+
         buffs = new BuffManagement(plugin);
     }
 

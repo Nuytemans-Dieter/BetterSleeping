@@ -10,7 +10,7 @@
 # BetterSleeping offers support for several placeholders:
 # <amount>
 #     Replaced by:      the correct number in that context.
-#     Can be used in:   cancelled, amount_left, buff_received
+#     Can be used in:   cancelled, amount_left, buff_received, no_buff_received
 # <time>
 #     Replaced by:      Will be replaced by the correct time
 #     Can be used in:   enough_sleeping, sleep_spam
@@ -23,6 +23,7 @@
 
 # Singular/plural nouns are taken in account too!
 # Simply add [singular.plural] in an applicable message and it will be correctly substituted.
+# Can be used in:   enough_sleeping, buff_received, no_buff_received, cancelled, amount_left, sleep_spam
 # Example: <amount> more [player.players] [is.are] needed!
 #          When 1 more player is needed, the singular sides will be taken: 1 more player is needed
 #          Otherwise, the plural sides will be chosen: 5 more players are needed
@@ -43,6 +44,9 @@ good_morning: "Good morning! Have a great day, <receiver>!"
 
 # Players that slept and receive a buff will get this message
 buff_received: "You feel well rested and received <amount> [buff.buffs]!"
+
+# Players that didn't sleep will receive this message after the night was skipped
+no_buff_received: "You didn't sleep and feel tired, you did not receive[ .<amount> ][a buff.buffs]"
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
 cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep."
