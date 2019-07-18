@@ -21,7 +21,13 @@ public class Management {
     public Management (BetterSleeping plugin) {
         this.plugin = plugin;
         config = new Config(plugin);
-        lang = new Lang(plugin);
+
+        boolean sendMessagesInChat = config.getBoolean("messages_in_chat");
+        Lang.SendType sendType;
+        if (sendMessagesInChat) sendType = Lang.SendType.CHAT;
+        else                    sendType = Lang.SendType.SCREEN;
+
+        lang = new Lang(plugin, sendType);
 
         buffs = new BuffManagement(plugin);
     }

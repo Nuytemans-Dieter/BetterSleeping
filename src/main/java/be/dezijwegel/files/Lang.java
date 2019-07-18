@@ -2,6 +2,9 @@ package be.dezijwegel.files;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.interfaces.Reloadable;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,10 +16,17 @@ public class Lang implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
+    private SendType sendType;
 
-    public Lang (BetterSleeping plugin)
+    public enum SendType {
+        CHAT,
+        SCREEN
+    }
+
+    public Lang (BetterSleeping plugin, SendType sendType)
     {
         this.plugin = plugin;
+        this.sendType = sendType;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
         configAPI.reportMissingOptions();
@@ -29,14 +39,36 @@ public class Lang implements Reloadable {
      */
     private void sendRaw(String message, CommandSender receiver)
     {
+        // Cancel if message is set to ignored
         if (message.equals(""))
         {
             return;
         }
 
-        if (message.contains("<receiver>"))
-            receiver.sendMessage(message.replace("<receiver>", receiver.getName()));
-        else receiver.sendMessage(message);
+        // Replace receiver by the player's name
+        if (message.contains("<receiver>")) {
+            message = message.replace("<receiver>", receiver.getName());
+        } else receiver.sendMessage(message);
+
+        // Send message to the receiver through screen or chat, depending on the setting
+        if (sendType == SendType.SCREEN || !(receiver instanceof Player) )
+        {
+
+            receiver.sendMessage( message );
+
+        }
+        else if (sendType == SendType.CHAT)
+        {
+
+            Player player = (Player) receiver;
+            Player.Spigot p = player.spigot();
+
+            BaseComponent bc = new TextComponent();
+            bc.addExtra( message );
+            ChatMessageType type = ChatMessageType.ACTION_BAR;
+            p.sendMessage(type, bc);
+
+        }
     }
 
     /**
