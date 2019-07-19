@@ -236,9 +236,10 @@ public class ConfigAPI {
                 }
             }
 
+            ConsoleCommandSender console = Bukkit.getConsoleSender();
+
             if (missingOptions.size() > 0)
             {
-                ConsoleCommandSender console = Bukkit.getConsoleSender();
 
                 if (missingOptions.size() == 1)
                      console.sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
@@ -257,6 +258,8 @@ public class ConfigAPI {
 
                     console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: " + value);
                 }
+            } else {
+                console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "No missing options were found in " + fileName + "!");
             }
         }
     }

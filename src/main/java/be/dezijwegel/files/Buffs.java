@@ -102,7 +102,7 @@ public class Buffs implements Reloadable {
 
             if (numLoadedEffects > 0) {
                 if (numLoadedEffects == 1)
-                    console.sendMessage("[BetterSleeping] One sleeping buff was found and loaded!");
+                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "One sleeping buff was found and loaded!");
                 else
                     console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + numLoadedEffects + " Sleeping buffs were found and loaded!");
             } else {
