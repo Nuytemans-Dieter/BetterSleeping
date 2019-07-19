@@ -68,7 +68,7 @@ public class OnSleepEvent implements Listener {
                             worlds.add(entry);
                         }
                     }
-                    SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker);
+                    SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker, false);
                     task.run();
 
                     //Make sure everyone gets their buff

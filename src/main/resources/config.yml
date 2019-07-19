@@ -28,11 +28,13 @@ bed_enter_delay: 10
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen
 # !IMPORTANT!
-# If set to false
+# ONLY if set to false
 # Sometimes several messages are sent at once. Only the last message will be shown on screen!
 # Please disable the messages below in lang.yml or people may never receive 'good_morning'
 #   - buff_received: "ignored"
 #   - no_buff_received: "ignored"
+# If you really want to say good morning AND list the amount of buffs received:
+#   - Disable 'good_morning' and add your good morning to the two messages listed above.
 # Default: true
 messages_in_chat: true
 

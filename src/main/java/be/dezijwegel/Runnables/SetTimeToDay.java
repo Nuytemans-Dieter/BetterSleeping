@@ -11,10 +11,11 @@ import java.util.*;
 
 public class SetTimeToDay extends BukkitRunnable {
 
-    Set<World> worlds;
+    private Set<World> worlds;
 
-    Management management;
-    SleepTracker sleepTracker;
+    private Management management;
+    private SleepTracker sleepTracker;
+    private boolean giveBuffs;
 
     public SetTimeToDay (List<World> worlds, Management management, SleepTracker sleepTracker)
     {
@@ -22,6 +23,21 @@ public class SetTimeToDay extends BukkitRunnable {
 
         this.management = management;
         this.sleepTracker = sleepTracker;
+        this.giveBuffs = true;
+
+        for (World world : worlds)
+        {
+            this.worlds.add(world);
+        }
+    }
+
+    public SetTimeToDay (List<World> worlds, Management management, SleepTracker sleepTracker, boolean giveBuffs)
+    {
+        this.worlds = new HashSet<World>();
+
+        this.management = management;
+        this.sleepTracker = sleepTracker;
+        this.giveBuffs = giveBuffs;
 
         for (World world : worlds)
         {
@@ -46,7 +62,7 @@ public class SetTimeToDay extends BukkitRunnable {
             {
                 management.sendMessage("good_morning", player);
 
-                if (management.areBuffsEnabled()) {
+                if (this.giveBuffs && management.areBuffsEnabled()) {
                     if (player.isSleeping()) {
                         management.addEffects(player);
                         Map<String, String> replace = new HashMap<String, String>();
