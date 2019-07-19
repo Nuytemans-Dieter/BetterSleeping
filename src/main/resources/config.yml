@@ -27,7 +27,12 @@ bed_enter_delay: 10
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen
-# Note that sometimes several messages are sent at once. Only the last message will be shown on screen!
+# !IMPORTANT!
+# If set to false
+# Sometimes several messages are sent at once. Only the last message will be shown on screen!
+# Please disable the messages below in lang.yml or people will never receive 'good_morning'
+#   - buff_received: "ignored"
+#   - no_buff_received: "ignored"
 # Default: true
 messages_in_chat: true
 
