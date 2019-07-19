@@ -3,7 +3,7 @@
 # ################ #
 
 # These are effects that will be applied after sleeping, only on the players that have slept
-# The idea is to give a well rested bonus so sleeping is encouraged
+# The idea is to give a well rested bonus so sleeping is encouraged and more people will try to sleep
 
 # CONFIGURATION GUIDE:
 # To disable an effect, set its time to 0 or simply remove it from the list
@@ -17,6 +17,7 @@
 
 # Level
 # The level doesn't have to be a vanilla level. OP configurations are possible.
+# Setting it too high may have unexpected results
 
 # Negative effects are currently not planned
 positive_effects:

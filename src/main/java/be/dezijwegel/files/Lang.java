@@ -48,18 +48,17 @@ public class Lang implements Reloadable {
         // Replace receiver by the player's name
         if (message.contains("<receiver>")) {
             message = message.replace("<receiver>", receiver.getName());
-        } else receiver.sendMessage(message);
+        }
 
         // Send message to the receiver through screen or chat, depending on the setting
-        if (sendType == SendType.SCREEN || !(receiver instanceof Player) )
+        if (sendType == SendType.CHAT || !(receiver instanceof Player) )
         {
 
             receiver.sendMessage( message );
 
         }
-        else if (sendType == SendType.CHAT)
+        else /*if (sendType == SendType.SCREEN)*/
         {
-
             Player player = (Player) receiver;
             Player.Spigot p = player.spigot();
 
@@ -183,10 +182,16 @@ public class Lang implements Reloadable {
     public String addPrefix(String message)
     {
         String fullMessage = "";
+        String prefix = "";
 
+        // Get the prefix
         if (configAPI.getString("prefix") != null)
         {
-            String prefix = configAPI.getString("prefix");
+            prefix = configAPI.getString("prefix");
+        }
+
+        // Check if the prefix is disabled
+        if ( ! isMessageDisabled(prefix)) {
             fullMessage += prefix;
         }
 
@@ -235,7 +240,7 @@ public class Lang implements Reloadable {
         String string = str;
         boolean bracketsOpen = false;
         int startIndex = 0;
-        for (int ind = 0; ind < string.length()-1; ind++)
+        for (int ind = 0; ind < string.length(); ind++)
         {
             if (bracketsOpen)
             {

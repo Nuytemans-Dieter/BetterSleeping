@@ -7,40 +7,40 @@
 # If you have any requests, let me know and I'll look into them as soon as possible.
 # Bugs are annoying but the more information you give when reporting them, the better I'll be able to fix them!
 
-# To reset this file, simply delete it!
+# To reset this file, simply delete it.
 
 # Set the percentage of online players that need to be sleeping 
 # in order to skip the night/storm. Will be rounded up!
-# Example: 2 players + this is set to 51 => 51% * 2 = 1,02 but it will be rounded up so: 2 players needed!
+# Example: 2 online players + this is set to 51 => 51% * 2 = 1,02 but it will be rounded up so: 2 players needed!
 # Default: 30
 percentage_needed: 30
 
-# Set the time (in ticks) that players will have to remain in their beds 
-# as soon as enough people are sleeping.
-# A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds
+# Set the time (in ticks) that players will have to remain in their beds when enough people are sleeping
+# A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds which roughly equals the single player delay
 # Default: 40
 sleep_delay: 40
 
-# Set the time (in seconds) that players have to wait before they can enter a bed again after leaving
+# Set the time (in seconds) that players have to wait before they can enter a bed again after getting out of bed
 # Default: 10
 bed_enter_delay: 10
 
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen
+# Note that sometimes several messages are sent at once. Only the last message will be shown on screen!
 # Default: true
 messages_in_chat: true
 
-# Choose whether BetterSleeping should treat every world seperate from eachother (true)
+# Choose whether BetterSleeping should treat every world seperate from eachother (when set to true)
 #       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
 #                           If this condition is met, the night/storm will ONLY be skipped in that same world
-#           Example:        There are 100 online players, 90 in the End and 10 in the Overworld.
-#                           3 people are sleeping in the Overworld and since 30% of people in that world are sleeping
-#                           The night will be skipped, but ONLY in the Overworld
-# Or if it should count the global number of sleeping players and skip the night/storm in all worlds (false)
+#           Example:        There are 100 online players, 90 in world1 and 10 in world2.
+#                           3 people are sleeping in the world2 and since 30% of people in that world are sleeping
+#                           The night will be skipped, but ONLY in world2
+# Or if it should count the global number of sleeping players and skip the night/storm in all worlds (when set to false)
 #       percentage_needed:  30 would mean that 30% of all ONLINE players should be sleeping
 #                           If this condition is met, the night/storm will be skipped in EVERY world
-#           Example:        There are 100 online players, 90 in the End and 10 in the Overworld.
+#           Example:        There are 100 online players, 90 in world1 and 10 in world2.
 #                           30 people (of all worlds combined) must be sleeping in order to skip the night/storm.
 #                           The night/storm will be skipped in EVERY world!!
 # Default: true
