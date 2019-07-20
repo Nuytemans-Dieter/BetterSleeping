@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
@@ -38,7 +39,7 @@ public class OnSleepEvent implements Listener {
         pendingTasks = new LinkedList<SetTimeToDay>();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();

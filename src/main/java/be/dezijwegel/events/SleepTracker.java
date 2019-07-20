@@ -1,7 +1,10 @@
 package be.dezijwegel.events;
 
 import be.dezijwegel.management.Management;
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.User;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -14,13 +17,23 @@ public class SleepTracker {
     private Map<World, Long> lastSetToDay;
 
     private Management management;
+    private Essentials essentials = null;
 
+    private boolean isEssentialsHooked;
     private boolean multiworld;
     private int bedEnterDelay;
     private int percentageNeeded;
 
     public SleepTracker(Management management)
     {
+        isEssentialsHooked = Bukkit.getPluginManager().isPluginEnabled("Essentials");
+        if (isEssentialsHooked) {
+            essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+            Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into Essentials!");
+        } else {
+            Bukkit.getConsoleSender().sendMessage("[BetterSleeping] Essentials was not found on this server!");
+        }
+
         sleepList = new HashMap<UUID, Long>();
         numSleeping = new HashMap<World, Integer>();
         lastSetToDay = new HashMap<World, Long>();
@@ -107,13 +120,24 @@ public class SleepTracker {
      */
     public int getTotalSleepersNeeded(World world)
     {
+
         int numPlayers = 0;
         if (multiworld)
         {
             for (Player player : Bukkit.getOnlinePlayers())
             {
-                if (player.getLocation().getWorld().equals(world))
-                    numPlayers++;
+                if (player.getLocation().getWorld().equals(world)) {
+
+                    boolean isAfk = false;
+
+                    if (isEssentialsHooked)
+                    {
+                        User user = essentials.getUser(player);
+                        if (user.isAfk()) isAfk = true;
+                    }
+
+                    if (! isAfk) numPlayers++;
+                }
             }
         }
         else
