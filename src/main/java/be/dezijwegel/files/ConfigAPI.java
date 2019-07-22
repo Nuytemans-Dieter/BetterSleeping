@@ -245,7 +245,7 @@ public class ConfigAPI {
                      console.sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
                 else console.sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
 
-                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and restart the server");
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)");
                 console.sendMessage("[BetterSleeping] " + ChatColor.RED + "The default values will be used until then");
 
                 for (String path : missingOptions)
