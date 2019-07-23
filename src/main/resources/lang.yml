@@ -56,6 +56,10 @@ cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to
 # Sent when someone enters a bed
 amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm!"
 
+# This message is sent when a player tries to sleep but they have got a bypass permission
+# Permissions include bettersleeping.bypass and essentials.sleepingignored
+bypass_message: "You have got bypass permissions so you don't need to sleep, <receiver>."
+
 # The message a player gets when they don't have access to a command and tries to execute it anyway
 no_permission: "&4You don't have permission to execute that command!"
 

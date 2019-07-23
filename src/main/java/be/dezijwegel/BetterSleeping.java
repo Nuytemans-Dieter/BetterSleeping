@@ -1,10 +1,11 @@
 package be.dezijwegel;
 
-import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.commands.Reload;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnSleepEvent;
+import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -16,6 +17,7 @@ import java.util.LinkedList;
  */
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
+    public static boolean debug = true;
 
     private OnSleepEvent onSleepEvent;
     private Reload reload;
@@ -36,6 +38,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     public void startPlugin()
     {
+        if (BetterSleeping.debug)
+        {
+            Bukkit.getLogger().info("-----");
+            Bukkit.getLogger().info("Starting BetterSleeping in debugging mode...");
+            Bukkit.getLogger().info("-----");
+        }
         Management management = new Management(this);
 
         onSleepEvent = new OnSleepEvent(management, this);
