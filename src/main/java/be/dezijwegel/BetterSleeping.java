@@ -17,7 +17,7 @@ import java.util.LinkedList;
  */
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
-    public static boolean debug = true;
+    public static boolean debug = false;
 
     private OnSleepEvent onSleepEvent;
     private Reload reload;
