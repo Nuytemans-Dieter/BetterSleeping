@@ -3,7 +3,10 @@ package be.dezijwegel.management;
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.files.Config;
 import be.dezijwegel.files.Lang;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -30,6 +33,31 @@ public class Management {
         lang = new Lang(plugin, sendType);
 
         buffs = new BuffManagement(plugin);
+
+        checkConfiguration();
+    }
+
+    /**
+     * This method will report any wrong configurations to the console
+     */
+    private void checkConfiguration()
+    {
+        if (config.getBoolean("messages_in_chat"))
+        {
+            return;
+        }
+
+        if ( (!lang.isPathDisabled("buff_received") || (!lang.isPathDisabled("no_buff_received")) ) && !(lang.isPathDisabled("good_morning")))
+        {
+            ConsoleCommandSender console = Bukkit.getConsoleSender();
+
+            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Players may not receive all messages due to the messages_in_chat setting.");
+            if (!lang.isPathDisabled("buff_received"))
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "good_morning may not be visible to all users. You can either disable buff_received or good_morning");
+            if (!lang.isPathDisabled("no_buff_received"))
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "good_morning may not be visible to all users. You can either disable no_buff_received or good_morning");
+            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Alternatively, you can set messages_in_chat to true.");
+        }
     }
 
     /**

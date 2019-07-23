@@ -230,6 +230,16 @@ public class Lang implements Reloadable {
     }
 
     /**
+     * Check if a given path to a message is set to disabled
+     * @param path the path to the message in lang.yml
+     * @return true or false, whether the message is disabled or not
+     */
+    public boolean isPathDisabled(String path)
+    {
+        return isMessageDisabled( configAPI.getString(path) );
+    }
+
+    /**
      * Replaces [singular.plural] to the correct one (singular or plural), based on a given amount. The corrected String is returned.
      * @param str The String that will be checked for singular/plural nouns in the form of [singular.plural]
      * @param singular set to true if the String should be corrected to be singular, or plural if false
