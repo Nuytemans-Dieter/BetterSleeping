@@ -93,7 +93,7 @@ public class Buffs implements Reloadable {
                             buffs.add(new PotionEffect(
                                     effect,
                                     configAPI.getInt(basePath + "." + key + ".time"),
-                                    configAPI.getInt(basePath + "." + key + ".level"))
+                                    configAPI.getInt(basePath + "." + key + ".level") - 1)
                             );
                             numLoadedEffects++;
                     }

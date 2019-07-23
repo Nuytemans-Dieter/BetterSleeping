@@ -9,9 +9,19 @@
 # another_setting: ""
 
 # BetterSleeping offers support for several placeholders:
+# <current_amount>
+#     Replaced by:      The current amount of something.
+#     Can be used in:   cancelled, amount_left
+#     Example:          When 5 players are sleeping, it will be replaced by 5
 # <amount>
-#     Replaced by:      the correct number in that context.
+#     Replaced by:      The correct number in that context.
 #     Can be used in:   cancelled, amount_left, buff_received, no_buff_received
+#     Example:          When 5 players are sleeping and 7 are required, it will be replaced by 2
+#     Example:          When 3 buffs are enabled, it will be replaced by 3
+# <total_amount>
+#     Replaced by:      The correct total amount needed in that context, not considering the current amount
+#     Can be used in:   cancelled, amount_left
+#     Example:          When 7 sleeping players are required, it will be replaced by 7
 # <time>
 #     Replaced by:      The correct time (in seconds)
 #     Can be used in:   enough_sleeping, sleep_spam
@@ -24,6 +34,7 @@
 
 # Singular/plural nouns are taken in account too!
 # Simply add [singular.plural] in an applicable message and it will be correctly substituted.
+# The <amount> tag is always used as reference. This means that <current_amount> or <total_amount> are not considered in this process.
 # Can be used in:   enough_sleeping, buff_received, no_buff_received, cancelled, amount_left, sleep_spam
 # Example: <amount> more [player.players] [is.are] needed!
 #          When 1 more player is needed, the singular sides will be taken: 1 more player is needed
@@ -49,12 +60,16 @@ buff_received: "You feel well rested and received <amount> [buff.buffs]!"
 no_buff_received: "You didn't sleep and feel tired, so you didn't receive [a.<amount>] [buff.buffs]!"
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
-cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep."
+cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep. <current_amount>/<total_amount>"
 
 # This message indicates how many more people need to rest
 # Will be sent to all online players (or all players in a specific world depending on multiworld_support)
 # Sent when someone enters a bed
-amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm!"
+amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm! <current_amount>/<total_amount>"
+
+# This message is sent when a player tries to sleep but they have got a bypass permission
+# Permissions include bettersleeping.bypass and essentials.sleepingignored
+bypass_message: "You have got bypass permissions so you don't need to sleep, <receiver>."
 
 # The message a player gets when they don't have access to a command and tries to execute it anyway
 no_permission: "&4You don't have permission to execute that command!"

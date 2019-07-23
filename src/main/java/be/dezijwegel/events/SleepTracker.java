@@ -113,12 +113,18 @@ public class SleepTracker {
             for (Player player : Bukkit.getOnlinePlayers())
             {
                 if (player.getLocation().getWorld().equals(world))
-                    numPlayers++;
+                    if ( !isPlayerBypassed(player) )
+                        numPlayers++;
             }
         }
         else
         {
             numPlayers = Bukkit.getOnlinePlayers().size();
+            for (Player p : Bukkit.getOnlinePlayers())
+            {
+                if ( isPlayerBypassed( p ) )
+                    numPlayers--;
+            }
         }
 
         int numNeeded = (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
@@ -219,6 +225,11 @@ public class SleepTracker {
 
             UUID uuid = player.getUniqueId();
 
+            if ( isPlayerBypassed(player) )
+            {
+                management.sendMessage("bypass_message", player);
+                return false;
+            }
             if (checkPlayerSleepDelay(uuid))
                 return true;
             else {
@@ -231,6 +242,18 @@ public class SleepTracker {
                 return false;
             }
         }
+        return false;
+    }
+
+    /**
+     * Check if the player has any sleeping bypass permissions
+     * @param player
+     * @return
+     */
+    public boolean isPlayerBypassed(Player player)
+    {
+        if (player.hasPermission("essentials.sleepingignored"))     return true;
+        if (player.hasPermission("bettersleeping.bypass"))          return true;
         return false;
     }
 
