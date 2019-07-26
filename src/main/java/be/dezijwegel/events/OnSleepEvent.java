@@ -261,15 +261,18 @@ public class OnSleepEvent implements Listener {
                 management.sendMessageToGroup("cancelled", sleepTracker.getRelevantPlayers(world), replace, singular);
             }
 
-            for (SetTimeToDay task : pendingTasks) {
+            for (Iterator<SetTimeToDay> it = pendingTasks.iterator(); it.hasNext();)
+            {
+                SetTimeToDay task = it.next();
                 if (worlds.get(0) != null) {
                     if (task.getWorlds().contains(worlds.get(0)))
                     {
                         task.cancel();
-                        pendingTasks.remove(task);
+                        it.remove();
                     }
                 }
             }
+
         // If the time was just set to day
         } else {
             if (BetterSleeping.debug)
