@@ -63,8 +63,11 @@ public class SetTimeToDay extends BukkitRunnable {
                 management.sendMessage("good_morning", player);
 
                 if (this.giveBuffs && management.areBuffsEnabled()) {
-                    if (player.isSleeping() || sleepTracker.isPlayerBypassed( player )) {
+                    boolean isAsleep = player.isSleeping();
+                    boolean isBypassed = sleepTracker.isPlayerBypassed( player );
+                    boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
 
+                    if ( isAsleep || ( giveBypassBuffs && isBypassed ) ) {
                         management.addEffects(player);
 
                         Map<String, String> replace = new HashMap<String, String>();

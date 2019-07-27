@@ -24,6 +24,11 @@ sleep_delay: 40
 # Default: 10
 bed_enter_delay: 10
 
+# Decide whether or not players with sleeping bypass permissions get buffs (bettersleeping.bypass OR essentials.sleepingignored)
+# Those players can never sleep, even if they want to
+# Default: true
+buffs_for_bypassing_players: true
+
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen
