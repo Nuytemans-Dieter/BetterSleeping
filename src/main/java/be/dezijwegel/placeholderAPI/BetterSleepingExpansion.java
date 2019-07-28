@@ -1,22 +1,26 @@
 package be.dezijwegel.placeholderAPI;
 
 import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
 public class BetterSleepingExpansion extends PlaceholderExpansion {
 
     private BetterSleeping plugin;
     private Management management;
+    private SleepTracker sleepTracker;
 
     /**
      * @param plugin instance of BetterSleeping
      */
-    public BetterSleepingExpansion(BetterSleeping plugin, Management management)
+    public BetterSleepingExpansion(BetterSleeping plugin, Management management, SleepTracker sleepTracker)
     {
         this.plugin = plugin;
         this.management = management;
+        this.sleepTracker = sleepTracker;
     }
 
     /**
@@ -61,11 +65,8 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
     /**
      * This is the method called when a placeholder with our identifier
      * is found and needs a value.
-     * @param  player
-     *         A {@link org.bukkit.Player Player}.
-     * @param  identifier
-     *         A String containing the identifier/value.
-     *
+     * @param  player The involved player
+     * @param  identifier The requested replacement
      * @return possibly-null String of the requested identifier.
      */
     @Override
@@ -75,18 +76,36 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
             return "";
         }
 
-        // %someplugin_placeholder1%
-        if(identifier.equals("placeholder1")){
-            return plugin.getConfig().getString("placeholder1", "value doesnt exist");
+        if(identifier.equals("current_sleepers")){
+            return Integer.toString( sleepTracker.getNumSleepingPlayers( player.getWorld() ));
         }
 
-        // %someplugin_placeholder2%
-        if(identifier.equals("placeholder2")){
-            return plugin.getConfig().getString("placeholder2", "value doesnt exist");
+        if(identifier.equals("remaining_sleepers")){
+            int numNeeded = sleepTracker.getTotalSleepersNeeded(player.getWorld());
+            int numCurrent = sleepTracker.getNumSleepingPlayers(player.getWorld());
+            return Integer.toString( numNeeded - numCurrent );
         }
 
-        // We return null if an invalid placeholder (f.e. %someplugin_placeholder3%)
-        // was provided
+        if(identifier.equals("total_needed_sleepers")){
+            return Integer.toString( sleepTracker.getTotalSleepersNeeded( player.getWorld() ));
+        }
+
+        if(identifier.equals("buffs_amount")){
+            return Integer.toString( management.getNumBuffs() );
+        }
+
+        if(identifier.equals("night_skip_time")){
+            return Integer.toString( management.getConfig().getInt("sleep_delay") );
+        }
+
+        if(identifier.equals("sleep_spam_time")){
+            return Long.toString( sleepTracker.whenCanPlayerSleep( player.getUniqueId() ));
+        }
+
+        if(identifier.equals("receiver")){
+            return ChatColor.stripColor( player.getName() );
+        }
+
         return null;
     }
 }

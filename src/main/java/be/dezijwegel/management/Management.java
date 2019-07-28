@@ -38,6 +38,15 @@ public class Management {
     }
 
     /**
+     * Get the Config class with al settings
+     * @return
+     */
+    public Config getConfig()
+    {
+        return config;
+    }
+
+    /**
      * This method will report any wrong configurations to the console
      */
     private void checkConfiguration()

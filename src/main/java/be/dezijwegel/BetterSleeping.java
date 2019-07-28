@@ -57,7 +57,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         // If PlaceholderAPI is registered
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
-            new BetterSleepingExpansion(this, management).register();
+            new BetterSleepingExpansion(this, management, onSleepEvent.getSleepTracker()).register();
             Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into PlaceholderAPI!");
         }
 

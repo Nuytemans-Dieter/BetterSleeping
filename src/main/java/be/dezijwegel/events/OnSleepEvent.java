@@ -315,4 +315,13 @@ public class OnSleepEvent implements Listener {
             }
         }
     }
+
+    /**
+     * Get the instance of sleepTracker
+     * @return the sleepTracker object in use
+     */
+    public SleepTracker getSleepTracker()
+    {
+        return sleepTracker;
+    }
 }
