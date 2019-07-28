@@ -5,9 +5,11 @@ import be.dezijwegel.interfaces.Reloadable;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +49,8 @@ public class Lang implements Reloadable {
 
         // Replace receiver by the player's name
         if (message.contains("<receiver>")) {
-            message = message.replace("<receiver>", receiver.getName());
+            String colorlessName = ChatColor.stripColor( receiver.getName() );
+            message = message.replace("<receiver>", colorlessName );
         }
 
         // Send message to the receiver through screen or chat, depending on the setting
@@ -206,11 +209,19 @@ public class Lang implements Reloadable {
      */
     public String substitute(String message, Map<String, String> replacings)
     {
-            for (Map.Entry<String, String> entry : replacings.entrySet()) {
-                if (message.contains(entry.getKey())) {
-                    message = message.replaceAll(entry.getKey(), entry.getValue());
-                }
+
+        Map<String, String> colorStripped = new HashMap<String, String>();
+
+        for (Map.Entry<String, String> entry : replacings.entrySet()) {
+            String val = ChatColor.stripColor(entry.getValue());
+            colorStripped.put(entry.getKey(), val);
+        }
+
+        for (Map.Entry<String, String> entry : replacings.entrySet()) {
+            if (message.contains(entry.getKey())) {
+                message = message.replaceAll(entry.getKey(), entry.getValue());
             }
+        }
         return message;
     }
 
