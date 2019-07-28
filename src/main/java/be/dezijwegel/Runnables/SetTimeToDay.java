@@ -1,7 +1,8 @@
 package be.dezijwegel.Runnables;
 
-import be.dezijwegel.management.Management;
+import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.events.SleepTracker;
+import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -56,6 +57,12 @@ public class SetTimeToDay extends BukkitRunnable {
 
     @Override
     public void run() {
+        if (BetterSleeping.debug)
+        {
+            Bukkit.getLogger().info("-----");
+            Bukkit.getLogger().info("[BetterSleeping] SetTimeToDay");
+        }
+
         for (Player player : Bukkit.getOnlinePlayers())
         {
             if (worlds.contains(player.getLocation().getWorld()))
@@ -66,6 +73,16 @@ public class SetTimeToDay extends BukkitRunnable {
                     boolean isAsleep = player.isSleeping();
                     boolean isBypassed = sleepTracker.isPlayerBypassed( player );
                     boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
+
+                    if (BetterSleeping.debug)
+                    {
+                        Bukkit.getLogger().info("[BetterSleeping] ---");
+                        Bukkit.getLogger().info("[BetterSleeping] SetTimeToDay");
+                        Bukkit.getLogger().info("[BetterSleeping] isAsleep: " + isAsleep);
+                        Bukkit.getLogger().info("[BetterSleeping] isBypassed: " + isBypassed);
+                        Bukkit.getLogger().info("[BetterSleeping] giveBypassBuffs: " + giveBypassBuffs);
+                        Bukkit.getLogger().info("[BetterSleeping] Buffs? " + (isAsleep || ( giveBypassBuffs && isBypassed)));
+                    }
 
                     if ( isAsleep || ( giveBypassBuffs && isBypassed ) ) {
                         management.addEffects(player);
@@ -87,6 +104,11 @@ public class SetTimeToDay extends BukkitRunnable {
             world.setTime(1000);
             world.setStorm(false);
             sleepTracker.worldWasSetToDay(world);
+        }
+
+        if (BetterSleeping.debug)
+        {
+            Bukkit.getLogger().info("-----");
         }
     }
 }

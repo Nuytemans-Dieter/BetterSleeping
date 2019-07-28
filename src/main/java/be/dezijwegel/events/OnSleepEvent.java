@@ -101,11 +101,30 @@ public class OnSleepEvent implements Listener {
                     {
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             if (worlds.contains(p.getWorld())) {
-                                int numBuffs = management.getNumBuffs();
-                                management.addEffects(p);
-                                Map<String, String> replace = new HashMap<String, String>();
-                                replace.put("<amount>", Integer.toString( numBuffs ));
-                                management.sendMessage("buff_received", p, replace, numBuffs == 1);
+                                boolean isBypassed = sleepTracker.isPlayerBypassed( p );
+                                boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
+
+                                if (BetterSleeping.debug)
+                                {
+                                    Bukkit.getLogger().info("[BetterSleeping] ---");
+                                    Bukkit.getLogger().info("[BetterSleeping] SetTimeToDay");
+                                    Bukkit.getLogger().info("[BetterSleeping] Player: " + p.getName());
+                                    Bukkit.getLogger().info("[BetterSleeping] isBypassed: " + isBypassed);
+                                    Bukkit.getLogger().info("[BetterSleeping] giveBypassBuffs: " + giveBypassBuffs);
+                                    Bukkit.getLogger().info("[BetterSleeping] Buffs? " + (!isBypassed || giveBypassBuffs));
+                                }
+
+                                if (!isBypassed || giveBypassBuffs) {
+                                    int numBuffs = management.getNumBuffs();
+                                    management.addEffects(p);
+                                    Map<String, String> replace = new HashMap<String, String>();
+                                    replace.put("<amount>", Integer.toString(numBuffs));
+                                    management.sendMessage("buff_received", p, replace, numBuffs == 1);
+                                } else {
+                                    Map<String, String> replace = new HashMap<>();
+                                    replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
+                                    management.sendMessage("no_buff_received", p, replace, management.getNumBuffs() == 1);
+                                }
                             }
                         }
                     }
