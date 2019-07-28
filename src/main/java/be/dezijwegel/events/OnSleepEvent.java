@@ -128,6 +128,19 @@ public class OnSleepEvent implements Listener {
                             }
                         }
                     }
+
+                    // Remove all scheduled tasks
+                    for (Iterator<SetTimeToDay> it = pendingTasks.iterator(); it.hasNext();)
+                    {
+                        SetTimeToDay setTask = it.next();
+                        if (worlds.get(0) != null) {
+                            if (setTask.getWorlds().contains(worlds.get(0)))
+                            {
+                                setTask.cancel();
+                                it.remove();
+                            }
+                        }
+                    }
                 }
                 else if (sleepersLeft == 0)
                 {
