@@ -5,7 +5,9 @@ import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
+import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -52,6 +54,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         reloadables = new LinkedList<Reloadable>();
         reloadables.add(this);
         reload = new Reload(reloadables, management, this);
+
+        // If PlaceholderAPI is registered
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+            new BetterSleepingExpansion(this, management).register();
+            Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into PlaceholderAPI!");
+        }
 
         this.getCommand("bettersleeping").setExecutor(reload);
         this.getCommand("bettersleeping").setTabCompleter(new TabCompletion());
