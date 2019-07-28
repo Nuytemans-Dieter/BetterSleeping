@@ -14,21 +14,35 @@
     </properties>
 
     <repositories>
+
+        <!-- SPIGOT -->
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <!-- BUNGEECORD -->
         <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+
+        <!-- ESSENTIALS -->
         <repository>
             <id>ess-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
+
+        <!-- PAPI -->
+        <repository>
+            <id>placeholderapi</id>
+            <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
 
     <dependencies>
+
+        <!-- SPIGOT -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -36,6 +50,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- BUNGEECORD -->
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
@@ -51,10 +66,19 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- ESSENTIALS -->
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
             <version>2.16.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- PAPI -->
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.10.3</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
