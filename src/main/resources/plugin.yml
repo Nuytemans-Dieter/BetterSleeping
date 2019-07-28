@@ -1,6 +1,6 @@
 name: BetterSleeping
 author: vallas
-version: 2.3.2
+version: 2.4.0
 main: be.dezijwegel.BetterSleeping
 description: A plugin that makes sleeping in multiplayer fun again!
 api-version: 1.14

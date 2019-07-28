@@ -39,7 +39,7 @@ public class OnSleepEvent implements Listener {
         pendingTasks = new LinkedList<SetTimeToDay>();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();
