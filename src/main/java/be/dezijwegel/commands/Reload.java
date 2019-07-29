@@ -1,22 +1,21 @@
 package be.dezijwegel.commands;
 
 import be.dezijwegel.BetterSleeping;
-import be.dezijwegel.management.Management;
 import be.dezijwegel.interfaces.Reloadable;
+import be.dezijwegel.management.Management;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
 import java.util.LinkedList;
 
 import static org.bukkit.Bukkit.getConsoleSender;
-
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 /**
  *
  * @author Dieter Nuytemans
  */
-public class Reload implements CommandExecutor {
+public class Reload implements be.dezijwegel.interfaces.Command {
     
     private LinkedList<Reloadable> reloadables;
 
@@ -48,25 +47,19 @@ public class Reload implements CommandExecutor {
         }
     }
 
-    public boolean onCommand(CommandSender cs, Command cmnd, String string, String[] strings) {
-
-        if (cmnd.getName().equalsIgnoreCase("bettersleeping"))
+    @Override
+    public boolean execute(CommandSender cs, Command cmnd, String string, String[] strings) {
+        if (strings[0].equalsIgnoreCase("reload"))
         {
-            if (strings.length > 0)
-            {
-                if (strings[0].equalsIgnoreCase("reload"))
-                {
-                    if (!(cs instanceof Player) || cs.isOp() || cs.hasPermission("bettersleeping.reload")) {
-                        reloadFiles();
-                        if (cs instanceof Player)
-                            {management.sendMessage("message_reloaded", cs);}
-                        management.sendMessage("message_reloaded", getConsoleSender());
-                    } else {
-                        management.sendMessage("no_permission", cs);
-                    }
-                    return true;
-                }
+            if (!(cs instanceof Player) || cs.isOp() || cs.hasPermission("bettersleeping.reload")) {
+                reloadFiles();
+                if (cs instanceof Player)
+                {management.sendMessage("message_reloaded", cs);}
+                management.sendMessage("message_reloaded", getConsoleSender());
+            } else {
+                management.sendMessage("no_permission", cs);
             }
+            return true;
         }
 
         return false;

@@ -1,6 +1,6 @@
 package be.dezijwegel;
 
-import be.dezijwegel.commands.Reload;
+import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
@@ -22,9 +22,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     public static boolean debug = false;
 
+    // Events
     private OnSleepEvent onSleepEvent;
     private OnPhantomSpawnEvent onPhantomSpawnEvent;
-    private Reload reload;
+
+    // Commands
+    private CommandHandler commandHandler;
 
     private LinkedList<Reloadable> reloadables;
     
@@ -57,7 +60,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         reloadables = new LinkedList<Reloadable>();
         reloadables.add(this);
-        reload = new Reload(reloadables, management, this);
+
+        commandHandler = new CommandHandler(reloadables, management, onSleepEvent.getSleepTracker(), this);
+
 
         // If PlaceholderAPI is registered
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
@@ -65,7 +70,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into PlaceholderAPI!");
         }
 
-        this.getCommand("bettersleeping").setExecutor(reload);
+        this.getCommand("bettersleeping").setExecutor(commandHandler);
         this.getCommand("bettersleeping").setTabCompleter(new TabCompletion());
     }
 
