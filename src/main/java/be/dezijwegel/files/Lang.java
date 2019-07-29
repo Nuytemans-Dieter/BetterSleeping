@@ -5,6 +5,7 @@ import be.dezijwegel.interfaces.Reloadable;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -164,6 +165,13 @@ public class Lang implements Reloadable {
 
         if (configAPI.getString(messagePath) != null)
             message = configAPI.getString(messagePath);
+
+        if(BetterSleeping.debug)
+        {
+            Bukkit.getLogger().info("-----");
+            Bukkit.getLogger().info("[BetterSleeping] Getting message " + messagePath);
+            Bukkit.getLogger().info("[BetterSleeping] Found message: " + message);
+        }
 
         if (isMessageDisabled(message))
         {
