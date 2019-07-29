@@ -166,14 +166,20 @@ public class SleepTracker {
         int numSleeping;
         if (multiworld)
         {
-            numSleeping = this.numSleeping.get(world);
+            if (this.numSleeping.get(world) == null)
+                numSleeping = 0;
+            else
+                numSleeping = this.numSleeping.get(world);
         }
         else
         {
             numSleeping = 0;
             for (Map.Entry<World, Integer> entry : this.numSleeping.entrySet())
             {
-                numSleeping += entry.getValue();
+                if (entry.getValue() == null)
+                    numSleeping = 0;
+                else
+                    numSleeping += entry.getValue();
             }
         }
 

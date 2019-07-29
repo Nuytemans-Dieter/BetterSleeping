@@ -30,7 +30,7 @@ public class Help implements be.dezijwegel.interfaces.Command {
         {
             if (cs instanceof ConsoleCommandSender || cs.hasPermission("bettersleeping.help.user") || cs.hasPermission("bettersleeping.help.admin") || cs.hasPermission("bettersleeping.help"))
             {
-                cs.sendMessage(ChatColor.GOLD + "--= BetterSleeping help =--");
+                cs.sendMessage(ChatColor.GOLD + "---= BetterSleeping help =---");
                 for (CommandInfo info : commandList)
                 {
                     cs.sendMessage(ChatColor.DARK_AQUA + "Command: " + ChatColor.WHITE + info.command);
@@ -39,10 +39,10 @@ public class Help implements be.dezijwegel.interfaces.Command {
                     {
                         cs.sendMessage(ChatColor.DARK_AQUA + "Permission: " + ChatColor.WHITE + info.permission);
                     }
-                    cs.sendMessage("---==---");
+                    cs.sendMessage(ChatColor.GOLD + "---==---");
                 }
             } else {
-                management.sendMessage(ChatColor.GOLD + "no_permission", cs);
+                management.sendMessage("no_permission", cs);
             }
 
             return true;

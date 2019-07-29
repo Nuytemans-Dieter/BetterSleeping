@@ -95,7 +95,7 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
         }
 
         if(identifier.equals("night_skip_time")){
-            return Integer.toString( management.getConfig().getInt("sleep_delay") );
+            return Integer.toString( management.getConfig().getInt("sleep_delay")/20 );
         }
 
         if(identifier.equals("sleep_spam_time")){
