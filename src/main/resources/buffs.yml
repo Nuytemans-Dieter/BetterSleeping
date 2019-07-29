@@ -18,7 +18,7 @@
 
 # Level
 # The level doesn't have to be a vanilla level. OP configurations are possible.
-# Setting it too high may have unexpected results
+# Setting it too high may have unexpected results (<90 should be fine)
 
 # Negative effects are currently not planned
 positive_effects:
