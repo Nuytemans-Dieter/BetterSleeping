@@ -29,6 +29,12 @@ bed_enter_delay: 10
 # Default: true
 buffs_for_bypassing_players: true
 
+# Choose whether or not phantoms are disabled
+# Setting this to true means that phantoms will never spawn again
+# Phantoms that spawned before setting this to true will still live until despawned or killed
+# Defaut: false
+disable_phantoms: false
+
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen

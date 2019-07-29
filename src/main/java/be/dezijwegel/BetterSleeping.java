@@ -2,6 +2,7 @@ package be.dezijwegel;
 
 import be.dezijwegel.commands.Reload;
 import be.dezijwegel.commands.TabCompletion;
+import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
@@ -22,6 +23,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     public static boolean debug = false;
 
     private OnSleepEvent onSleepEvent;
+    private OnPhantomSpawnEvent onPhantomSpawnEvent;
     private Reload reload;
 
     private LinkedList<Reloadable> reloadables;
@@ -49,7 +51,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         Management management = new Management(this);
 
         onSleepEvent = new OnSleepEvent(management, this);
+        onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
         getServer().getPluginManager().registerEvents(onSleepEvent, this);
+        getServer().getPluginManager().registerEvents(onPhantomSpawnEvent, this);
 
         reloadables = new LinkedList<Reloadable>();
         reloadables.add(this);
