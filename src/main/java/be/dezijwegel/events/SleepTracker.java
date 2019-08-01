@@ -5,6 +5,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -281,8 +282,24 @@ public class SleepTracker {
      */
     public boolean isPlayerBypassed(Player player)
     {
+        // Permission based
         if (player.hasPermission("essentials.sleepingignored"))     return true;
         if (player.hasPermission("bettersleeping.bypass"))          return true;
+
+        // Gamemode based bypassing
+        boolean ignoreCreative = management.getBooleanSetting("ignore_creative");
+        if (ignoreCreative && player.getGameMode() == GameMode.CREATIVE) return true;
+
+        boolean ignoreSpectator = management.getBooleanSetting("ignore_spectator");
+        if (ignoreSpectator && player.getGameMode() == GameMode.SPECTATOR) return true;
+
+        boolean ignoreAdventure = management.getBooleanSetting("ignore_adventure");
+        if (ignoreAdventure && player.getGameMode() == GameMode.ADVENTURE) return true;
+
+        boolean ignoreSurvival = management.getBooleanSetting("ignore_survival");
+        if (ignoreSurvival && player.getGameMode() == GameMode.SURVIVAL) return true;
+
+        // Otherwise it is not a bypassing player
         return false;
     }
 

@@ -59,6 +59,17 @@ multiworld_support: true
 buffs_for_bypassing_players: true
 
 
+# Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
+# Default: false
+ignore_survival: false
+# Default: false
+ignore_creative: false
+# Default: false
+ignore_adventure: false
+# Default: false
+ignore_spectator: false
+
+
 # Choose whether or not phantoms are disabled
 # Setting this to true means that phantoms will never spawn again (counts for ALL phantoms)
 # Phantoms that spawned before setting this to true will still live until despawned or killed

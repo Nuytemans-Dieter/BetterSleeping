@@ -100,6 +100,8 @@ message_reloaded: "Reload complete!"
 # Bypass messages |
 # --------------- #
 
+# A bypass is given to players with permission bettersleeping.bypass OR essentials.sleepingignored
+# And it is given to players with ignored gamemodes (this can be set in config.yml but is disabled by default)
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include bettersleeping.bypass and essentials.sleepingignored
