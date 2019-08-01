@@ -35,6 +35,12 @@ public class SkipNight implements be.dezijwegel.interfaces.Command{
             }
 
             Player player = (Player) cs;
+
+            if ( ! sleepTracker.isPlayerBypassed( player ))
+            {
+                management.sendMessage("no_permission", player);
+            }
+
             World world = player.getWorld();
 
             if (world.getTime() < 1300) {
