@@ -71,7 +71,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
 
         this.getCommand("bettersleeping").setExecutor(commandHandler);
-        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion());
+        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion( onSleepEvent.getSleepTracker() ));
     }
 
 }

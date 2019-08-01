@@ -1,5 +1,6 @@
 package be.dezijwegel.commands;
 
+import be.dezijwegel.events.SleepTracker;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -10,18 +11,42 @@ import java.util.List;
 
 public class TabCompletion implements TabCompleter {
 
+    private SleepTracker sleepTracker;
+
+    public TabCompletion ( SleepTracker sleepTracker )
+    {
+        this.sleepTracker = sleepTracker;
+    }
+
     @Override
     public List<String> onTabComplete (CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("bettersleeping"))
         {
             if (sender instanceof Player)
             {
-                if (sender.isOp() || sender.hasPermission("bettersleeping.reload"))
+                Player player = (Player) sender;
+                List options = new LinkedList<String>();
+
+                if ( sender.hasPermission("bettersleeping.reload") )
                 {
-                    List options = new LinkedList<String>();
                     options.add("reload");
-                    return options;
-                } else return null;
+                }
+
+                if ( sleepTracker.isPlayerBypassed( player ) )
+                {
+                    options.add("skip");
+                }
+
+                if ( player.hasPermission("bettersleeping.help.user") || player.hasPermission("bettersleeping.help.admin") || player.hasPermission("bettersleeping.help"))
+                {
+                    options.add("help");
+                }
+
+                if (options.isEmpty())
+                    return null;
+
+                return options;
+
             } else return null;
         } else return null;
     }
