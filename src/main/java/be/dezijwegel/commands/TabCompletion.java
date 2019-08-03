@@ -42,6 +42,11 @@ public class TabCompletion implements TabCompleter {
                     options.add("skip");
                 }
 
+                if ( sender.hasPermission("bettersleeping.status") )
+                {
+                    options.add("status");
+                }
+
                 if (options.isEmpty())
                     return null;
 

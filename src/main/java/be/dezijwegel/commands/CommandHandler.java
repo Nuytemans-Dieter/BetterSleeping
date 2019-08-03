@@ -20,6 +20,7 @@ public class CommandHandler implements CommandExecutor {
     private be.dezijwegel.interfaces.Command reload;
     private be.dezijwegel.interfaces.Command skipNight;
     private be.dezijwegel.interfaces.Command help;
+    private be.dezijwegel.interfaces.Command status;
 
 
     /**
@@ -37,6 +38,7 @@ public class CommandHandler implements CommandExecutor {
         reload = new Reload(reloadables, management, plugin);
         help = new Help(management);
         skipNight = new SkipNight(management, sleepTracker);
+        status = new Status();
     }
 
 
@@ -46,7 +48,7 @@ public class CommandHandler implements CommandExecutor {
         {
             if (strings.length > 0)
             {
-                switch(strings[0])
+                switch(strings[0].toLowerCase())
                 {
                     case "reload":
                         return reload.execute(cs, cmd, string, strings);
@@ -54,6 +56,10 @@ public class CommandHandler implements CommandExecutor {
                         return help.execute(cs, cmd, string, strings);
                     case "skip":
                         return skipNight.execute(cs, cmd, string, strings);
+                    case "status":
+                        return status.execute(cs, cmd, string, strings);
+                    case "s":
+                        return status.execute(cs, cmd, string, strings);
                 }
             }
         }
