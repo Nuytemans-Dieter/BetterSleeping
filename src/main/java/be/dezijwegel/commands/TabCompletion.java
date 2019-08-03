@@ -27,6 +27,11 @@ public class TabCompletion implements TabCompleter {
                 Player player = (Player) sender;
                 List options = new LinkedList<String>();
 
+                if ( player.hasPermission("bettersleeping.help.user") || player.hasPermission("bettersleeping.help.admin") || player.hasPermission("bettersleeping.help"))
+                {
+                    options.add("help");
+                }
+
                 if ( sender.hasPermission("bettersleeping.reload") )
                 {
                     options.add("reload");
@@ -35,11 +40,6 @@ public class TabCompletion implements TabCompleter {
                 if ( sleepTracker.isPlayerBypassed( player ) )
                 {
                     options.add("skip");
-                }
-
-                if ( player.hasPermission("bettersleeping.help.user") || player.hasPermission("bettersleeping.help.admin") || player.hasPermission("bettersleeping.help"))
-                {
-                    options.add("help");
                 }
 
                 if (options.isEmpty())
