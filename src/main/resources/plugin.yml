@@ -10,3 +10,27 @@ commands:
         usage: /bettersleeping reload or /bs reload
         permission: bettersleeping.reload
         aliases: [bs]
+permissions:
+    bettersleeping.*:
+        description: Gives access to all BetterSleeping commands (/bs skip not included so you may want to add acces through bettersleeping.bypass)
+        children:
+            bettersleeping.help: true
+            bettersleeping.reload: true
+            bettersleeping.status: true
+            bettersleeping.help.user: true
+            bettersleeping.help.admin: true
+    bettersleeping.reload:
+        description: Gives access to /bs reload which will reload the BetterSleeping config files
+        default: op
+    bettersleeping.status:
+        description: Gives access to /bs status which will display info about the sleeping players
+        default: true
+    bettersleeping.bypass:
+        description: Gives access to /bs skip and this player will be ignored from the required player count
+        default: op
+    bettersleeping.help.admin:
+        description: Permission nodes will be shown when performing /bs help
+        default: op
+    bettersleeping.help.user:
+        description: Gives info about all commands a user has access to
+        default: true
