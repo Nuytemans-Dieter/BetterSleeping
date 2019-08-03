@@ -128,16 +128,7 @@ public class SleepTracker {
             for (Player player : Bukkit.getOnlinePlayers())
             {
                 if (player.getLocation().getWorld().equals(world)) {
-
-                    boolean isAfk = false;
-
-                    if (isEssentialsHooked)
-                    {
-                        User user = essentials.getUser(player);
-                        if (user.isAfk()) isAfk = true;
-                    }
-
-                    if (! isAfk) numPlayers++;
+                    if (! isAfk( player )) numPlayers++;
                 }
             }
         }
@@ -146,7 +137,7 @@ public class SleepTracker {
             numPlayers = Bukkit.getOnlinePlayers().size();
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if ( isPlayerBypassed( p ) )
+                if ( isPlayerBypassed( p ) ||isAfk( p ) )
                     numPlayers--;
             }
         }
@@ -154,6 +145,24 @@ public class SleepTracker {
         int numNeeded = (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
         if (numNeeded > 1) return numNeeded;
         else return 1;
+    }
+    
+    /**
+     * Check whether or not the given player should be counted towards needed sleeping players
+     * @param player
+     * @return
+     */
+    private boolean isAfk( Player player )
+    {
+        boolean isAfk = false;
+
+        if (isEssentialsHooked && management.getBooleanSetting("essentials_afk_support"))
+        {
+            User user = essentials.getUser( player );
+            if (user.isAfk()) isAfk = true;
+        }
+
+        return isAfk;
     }
 
     /**

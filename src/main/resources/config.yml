@@ -32,6 +32,11 @@ sleep_delay: 40
 bed_enter_delay: 10
 
 
+# Choose whether or not AFK players (Essentials is required) will be counted towards the amount of sleeping players needed
+# Default: true
+essentials_afk_support: true
+
+
 # Choose whether BetterSleeping should treat every world seperate from eachother (when set to true)
 #       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
 #                           If this condition is met, the night/storm will ONLY be skipped in that same world
