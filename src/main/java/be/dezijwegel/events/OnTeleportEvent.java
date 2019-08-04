@@ -1,5 +1,6 @@
 package be.dezijwegel.events;
 
+import be.dezijwegel.BetterSleeping;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -23,8 +24,16 @@ public class OnTeleportEvent implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onTeleportEvent(PlayerTeleportEvent teleport)
     {
+        final int max_distance = 10;
+
         Player player = teleport.getPlayer();
-        if ( player.isSleeping() && teleport.getFrom().distance( teleport.getTo() ) > 10)
+        boolean sameWorld = teleport.getFrom().equals( teleport.getTo() );
+        double distance = 0;
+        if (sameWorld)
+            distance = teleport.getFrom().distance( teleport.getTo() );
+        else distance = max_distance + 1;
+
+        if ( player.isSleeping() && distance > max_distance)
         {
             Block bed = teleport.getFrom().getBlock();
             try {
@@ -34,11 +43,15 @@ public class OnTeleportEvent implements Listener {
                     return;
                 }
 
+                player.teleport( teleport.getFrom() );
                 PlayerBedLeaveEvent newEvent = new PlayerBedLeaveEvent(player, bed, false);
                 Bukkit.getPluginManager().callEvent( newEvent );
 
             } catch (Exception e) {}
         }
+
+        if (BetterSleeping.debug)
+            Bukkit.getLogger().info("Sleeping: " + player.isSleeping() + ", dist: " + distance + "/" + max_distance);
     }
 
 }
