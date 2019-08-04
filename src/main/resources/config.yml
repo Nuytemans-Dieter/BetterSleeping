@@ -88,6 +88,12 @@ disable_phantoms: false
 # Messages settings |
 # ----------------- #
 
+
+# Choose whether or not a sound will be played when a player receives a BetterSleeping message
+# Default: false
+message_sound: false
+
+
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen

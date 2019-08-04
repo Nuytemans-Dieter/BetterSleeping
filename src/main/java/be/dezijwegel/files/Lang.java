@@ -7,6 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -20,16 +21,18 @@ public class Lang implements Reloadable {
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
     private SendType sendType;
+    private boolean playSound;
 
     public enum SendType {
         CHAT,
         SCREEN
     }
 
-    public Lang (BetterSleeping plugin, SendType sendType)
+    public Lang (BetterSleeping plugin, SendType sendType, boolean playSound)
     {
         this.plugin = plugin;
         this.sendType = sendType;
+        this.playSound = playSound;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
         configAPI.reportMissingOptions();
@@ -70,7 +73,13 @@ public class Lang implements Reloadable {
             bc.addExtra( message );
             ChatMessageType type = ChatMessageType.ACTION_BAR;
             p.sendMessage(type, bc);
+        }
 
+        // Play a sound, if enabled
+        if ( receiver instanceof Player && playSound )
+        {
+            Player player = (Player) receiver;
+            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
         }
     }
 

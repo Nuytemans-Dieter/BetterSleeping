@@ -30,7 +30,7 @@ public class Management {
         if (sendMessagesInChat) sendType = Lang.SendType.CHAT;
         else                    sendType = Lang.SendType.SCREEN;
 
-        lang = new Lang(plugin, sendType);
+        lang = new Lang(plugin, sendType, config.getBoolean("message_sound"));
 
         buffs = new BuffManagement(plugin);
 
