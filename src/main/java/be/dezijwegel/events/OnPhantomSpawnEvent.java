@@ -22,9 +22,9 @@ public class OnPhantomSpawnEvent implements Listener {
     @EventHandler
     public void onPhantomSpawn(EntitySpawnEvent event)
     {
-        if (event.getEntityType() == EntityType.PHANTOM)
+        if ( management.getBooleanSetting("disable_phantoms") )
         {
-            if ( management.getBooleanSetting("disable_phantoms") == true )
+            if ( event.getEntityType() == EntityType.PHANTOM )
             {
                 event.setCancelled(true);
             }

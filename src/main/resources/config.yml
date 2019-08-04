@@ -9,6 +9,7 @@
 # You can find a live list of upcoming features/bug fixes here: https://github.com/Nuytemans-Dieter/BetterSleeping/issues
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
 
+
 # --------------- #
 # Sleep settings  |
 # --------------- #
@@ -78,8 +79,10 @@ ignore_spectator: false
 # Choose whether or not phantoms are disabled
 # Setting this to true means that phantoms will never spawn again (counts for ALL phantoms)
 # Phantoms that spawned before setting this to true will still live until despawned or killed
+# Please do not set this to true if you are using a Spigot version below 1.13 as this will cause errors in the console
 # Defaut: false
 disable_phantoms: false
+
 
 # ----------------- #
 # Messages settings |
