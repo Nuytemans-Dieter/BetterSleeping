@@ -27,29 +27,24 @@ public class Help implements be.dezijwegel.interfaces.Command {
 
     @Override
     public boolean execute(CommandSender cs, Command cmnd, String string, String[] strings) {
-        if (strings[0].equalsIgnoreCase("help"))
+        if (cs instanceof ConsoleCommandSender || cs.hasPermission("bettersleeping.help.user") || cs.hasPermission("bettersleeping.help.admin") || cs.hasPermission("bettersleeping.help"))
         {
-            if (cs instanceof ConsoleCommandSender || cs.hasPermission("bettersleeping.help.user") || cs.hasPermission("bettersleeping.help.admin") || cs.hasPermission("bettersleeping.help"))
+            cs.sendMessage(ChatColor.GOLD + "---= BetterSleeping help =---");
+            for (CommandInfo info : commandList)
             {
-                cs.sendMessage(ChatColor.GOLD + "---= BetterSleeping help =---");
-                for (CommandInfo info : commandList)
+                cs.sendMessage(ChatColor.DARK_AQUA + "Command: " + ChatColor.WHITE + info.command);
+                cs.sendMessage(ChatColor.DARK_AQUA + "Description: " + ChatColor.WHITE + info.description);
+                if (cs.hasPermission("bettersleeping.help.admin"))
                 {
-                    cs.sendMessage(ChatColor.DARK_AQUA + "Command: " + ChatColor.WHITE + info.command);
-                    cs.sendMessage(ChatColor.DARK_AQUA + "Description: " + ChatColor.WHITE + info.description);
-                    if (cs.hasPermission("bettersleeping.help.admin"))
-                    {
-                        cs.sendMessage(ChatColor.DARK_AQUA + "Permission: " + ChatColor.WHITE + info.permission);
-                    }
-                    cs.sendMessage(ChatColor.GOLD + "---==---");
+                    cs.sendMessage(ChatColor.DARK_AQUA + "Permission: " + ChatColor.WHITE + info.permission);
                 }
-            } else {
-                management.sendMessage("no_permission", cs);
+                cs.sendMessage(ChatColor.GOLD + "---==---");
             }
-
-            return true;
+        } else {
+            management.sendMessage("no_permission", cs);
         }
 
-        return false;
+        return true;
     }
 
     private class CommandInfo {

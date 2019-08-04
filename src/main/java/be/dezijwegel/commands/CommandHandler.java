@@ -38,7 +38,7 @@ public class CommandHandler implements CommandExecutor {
         reload = new Reload(reloadables, management, plugin);
         help = new Help(management);
         skipNight = new SkipNight(management, sleepTracker);
-        status = new Status();
+        status = new Status(sleepTracker, management);
     }
 
 
