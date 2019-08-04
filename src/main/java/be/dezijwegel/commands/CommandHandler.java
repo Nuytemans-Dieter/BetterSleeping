@@ -61,6 +61,8 @@ public class CommandHandler implements CommandExecutor {
                     case "s":
                         return status.execute(cs, cmd, string, strings);
                 }
+            } else {
+                return help.execute(cs, cmd, string, strings);
             }
         }
 

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class Lang implements Reloadable {
 
@@ -53,7 +54,7 @@ public class Lang implements Reloadable {
 
         // Replace receiver by the player's name
         if (message.contains("<receiver>")) {
-            String colorlessName = ChatColor.stripColor( receiver.getName() );
+            String colorlessName = stripColor( ChatColor.stripColor( receiver.getName() ) );
             message = message.replace("<receiver>", colorlessName );
         }
 
@@ -76,11 +77,16 @@ public class Lang implements Reloadable {
         }
 
         // Play a sound, if enabled
-        if ( receiver instanceof Player && playSound )
+        if ( !( Bukkit.getVersion().contains("1.12") ) && receiver instanceof Player && playSound )
         {
             Player player = (Player) receiver;
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
         }
+    }
+
+    public String stripColor(String input) {
+        Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf('&') + "[0-9A-FK-OR]");
+        return input == null?null:STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }
 
     /**

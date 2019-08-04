@@ -39,17 +39,18 @@ public class SkipNight implements be.dezijwegel.interfaces.Command{
             if ( ! sleepTracker.isPlayerBypassed( player ))
             {
                 management.sendMessage("no_permission", player);
+                return true;
             }
 
             World world = player.getWorld();
 
-            if (world.getTime() < 1300) {
+            if (world.getTime() < 12600) {
                 management.sendMessage("not_night_yet", player);
                 return true;
             }
 
 
-            if (allPlayersInWorldHaveBypassPermissions(world)) {
+            if ( allPlayersInWorldHaveBypassPermissions(world) ) {
                 ArrayList<World> worlds = new ArrayList<World>();
                 worlds.add(world);
                 SetTimeToDay toDay = new SetTimeToDay(worlds, management, sleepTracker);

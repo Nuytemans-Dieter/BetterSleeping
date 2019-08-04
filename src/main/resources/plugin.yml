@@ -1,14 +1,14 @@
 name: BetterSleeping
 author: vallas
-version: 2.4.0
+version: 2.5.0
 main: be.dezijwegel.BetterSleeping
 description: A plugin that makes sleeping in multiplayer fun again!
 softdepend: [Essentials, PlaceholderAPI]
 commands:
     bettersleeping:
         description: See all BetterSleeping commands
-        usage: /bettersleeping reload or /bs reload
-        permission: bettersleeping.reload
+        usage: Perform /bettersleeping help or /bs help to see a list of commands!
+        default: true
         aliases: [bs]
 permissions:
     bettersleeping.*:

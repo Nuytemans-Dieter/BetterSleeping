@@ -105,5 +105,6 @@ message_sound: false
 #   - no_buff_received: "ignored"
 # If you really want to say good morning AND list the amount of buffs received:
 #   - Disable 'good_morning' and add your good morning to the two messages listed above.
+# A faulty configuration will be reported to console upon startup or reload
 # Default: true
 messages_in_chat: true

@@ -50,7 +50,7 @@ public class OnSleepEvent implements Listener {
             Bukkit.getLogger().info("A player went to bed");
         }
 
-        if(!event.isCancelled() && event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK) {
+        if(!event.isCancelled() && ( Bukkit.getVersion().contains("1.12") || event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK ) ) {
             if (sleepTracker.playerMaySleep(player)) {
 
                 World world = player.getLocation().getWorld();

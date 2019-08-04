@@ -27,6 +27,9 @@ public class TabCompletion implements TabCompleter {
                 Player player = (Player) sender;
                 List options = new LinkedList<String>();
 
+                if (args.length > 0)
+                    return options;
+
                 if ( player.hasPermission("bettersleeping.help.user") || player.hasPermission("bettersleeping.help.admin") || player.hasPermission("bettersleeping.help"))
                 {
                     options.add("help");

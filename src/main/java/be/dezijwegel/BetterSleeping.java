@@ -4,6 +4,7 @@ import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
+import be.dezijwegel.events.OnTeleportEvent;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;
@@ -25,6 +26,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     // Events
     private OnSleepEvent onSleepEvent;
     private OnPhantomSpawnEvent onPhantomSpawnEvent;
+    private OnTeleportEvent onTeleportEvent;
 
     // Commands
     private CommandHandler commandHandler;
@@ -55,8 +57,10 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         onSleepEvent = new OnSleepEvent(management, this);
         onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
+        onTeleportEvent = new OnTeleportEvent( onSleepEvent.getSleepTracker() );
         getServer().getPluginManager().registerEvents(onSleepEvent, this);
         getServer().getPluginManager().registerEvents(onPhantomSpawnEvent, this);
+        getServer().getPluginManager().registerEvents(onTeleportEvent, this);
 
         reloadables = new LinkedList<Reloadable>();
         reloadables.add(this);

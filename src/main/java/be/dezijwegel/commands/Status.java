@@ -46,18 +46,26 @@ public class Status implements Command {
             player.sendMessage(ChatColor.DARK_AQUA + "Sleeping players: " + ChatColor.WHITE + numSleeping + "/" +numNeeded);
 
             if (sleepTracker.getNumSleepingPlayers(world) != 0) {
+
                 String sleepingPlayerNames = "";
                 List<Player> sleepers = getSleepingPlayers(player);
-                int i = 0;
-                for (Player p : getSleepingPlayers(player)) {
-                    if (i == numPlayersListed-1)
+                for (int i = 0; i < numPlayersListed; i++) {
+
+                    Player p = sleepers.get(i);
+
+                    if (i == numPlayersListed-1 || i == sleepers.size()-1) {
                         sleepingPlayerNames += p.getName();
-                    else
+                        i = numPlayersListed;
+                    } else {
                         sleepingPlayerNames += p.getName() + ", ";
-                    i++;
+                    }
                 }
 
-                player.sendMessage(ChatColor.DARK_AQUA + "Some sleeping players: " + ChatColor.WHITE + sleepingPlayerNames);
+                if (sleepers.size() > 1) {
+                    player.sendMessage(ChatColor.DARK_AQUA + "Some sleeping players: " + ChatColor.WHITE + sleepingPlayerNames);
+                } else {
+                    player.sendMessage(ChatColor.DARK_AQUA + "Only one sleeping player: " + ChatColor.WHITE + sleepingPlayerNames);
+                }
             }
 
             player.sendMessage(ChatColor.GOLD + "---==---");
