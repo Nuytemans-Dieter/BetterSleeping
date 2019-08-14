@@ -308,7 +308,7 @@ public class SleepTracker {
     public boolean isPlayerBypassed(Player player)
     {
         // Permission based
-        if (player.hasPermission("essentials.sleepingignored"))     return true;
+        if (isEssentialsHooked && player.hasPermission("essentials.sleepingignored"))     return true;
         if (player.hasPermission("bettersleeping.bypass"))          return true;
 
         // Gamemode based bypassing
