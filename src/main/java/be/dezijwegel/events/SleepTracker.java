@@ -48,6 +48,7 @@ public class SleepTracker {
         else if (percentageNeeded < 0) percentageNeeded = 0;
     }
 
+
     /**
      * Get how many seconds ago the time was set to day
      * @param world
@@ -60,6 +61,7 @@ public class SleepTracker {
         } else return 3600;
     }
 
+
     /**
      * Add the current time to the list of lastSetToDay
      * @param world
@@ -68,6 +70,7 @@ public class SleepTracker {
     {
         lastSetToDay.put(world, System.currentTimeMillis()/1000);
     }
+
 
     /**
      * Check whether or not a Player (by uuid) must wait a while before they can sleep (again)
@@ -92,6 +95,7 @@ public class SleepTracker {
         }
     }
 
+
     /**
      * Gets the time (seconds) a Player must wait before they can sleep again
      * @param uuid
@@ -113,6 +117,7 @@ public class SleepTracker {
         }
     }
 
+
     /**
      * Get the number of players that should be sleeping for the night to be skipped
      * This method also considers the 'multiworld_support' setting in config.yml
@@ -128,7 +133,8 @@ public class SleepTracker {
             for (Player player : Bukkit.getOnlinePlayers())
             {
                 if (player.getLocation().getWorld().equals(world)) {
-                    if (! isAfk( player )) numPlayers++;
+                    if (! isAfk( player ) && ! isPlayerBypassed( player ))
+                        numPlayers++;
                 }
             }
         }
@@ -137,7 +143,7 @@ public class SleepTracker {
             numPlayers = Bukkit.getOnlinePlayers().size();
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if ( isPlayerBypassed( p ) ||isAfk( p ) )
+                if ( isPlayerBypassed( p ) || isAfk( p ) )
                     numPlayers--;
             }
         }
@@ -146,7 +152,8 @@ public class SleepTracker {
         if (numNeeded > 1) return numNeeded;
         else return 1;
     }
-    
+
+
     /**
      * Check whether or not the given player should be counted towards needed sleeping players
      * @param player
@@ -164,6 +171,7 @@ public class SleepTracker {
 
         return isAfk;
     }
+
 
     /**
      * Get the number of relevant players that are currently sleeping
@@ -196,6 +204,7 @@ public class SleepTracker {
         return numSleeping;
     }
 
+
     /**
      * Add a player to the sleeping list
      * @param world
@@ -212,6 +221,7 @@ public class SleepTracker {
         }
     }
 
+
     /**
      * Remove a player from the sleeping list
      * @param world
@@ -221,12 +231,16 @@ public class SleepTracker {
         if (numSleeping.containsKey(world))
         {
             int num = numSleeping.get(world) -1;
+
+            if (num < 0) num = 0;
+
             numSleeping.put(world, num);
         } else
         {
             numSleeping.put(world, 0);
         }
     }
+
 
     /**
      * Get a list of players that are relevant to the given world
@@ -250,6 +264,7 @@ public class SleepTracker {
 
         return list;
     }
+
 
     /**
      * Check if a Player meets the requirements to sleep
@@ -284,6 +299,7 @@ public class SleepTracker {
         return false;
     }
 
+
     /**
      * Check if the player has any sleeping bypass permissions
      * @param player
@@ -311,6 +327,7 @@ public class SleepTracker {
         // Otherwise it is not a bypassing player
         return false;
     }
+
 
     /**
      * Stop keeping track of when the given Player last slept
