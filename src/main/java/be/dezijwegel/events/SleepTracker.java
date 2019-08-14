@@ -308,8 +308,11 @@ public class SleepTracker {
     public boolean isPlayerBypassed(Player player)
     {
         // Permission based
-        if (isEssentialsHooked && player.hasPermission("essentials.sleepingignored"))     return true;
-        if (player.hasPermission("bettersleeping.bypass"))          return true;
+        if ( management.getBooleanSetting("enable_bypass_permissions") )
+        {
+            if (isEssentialsHooked && player.hasPermission("essentials.sleepingignored"))   return true;
+            if (player.hasPermission("bettersleeping.bypass"))                              return true;
+        }
 
         // Gamemode based bypassing
         boolean ignoreCreative = management.getBooleanSetting("ignore_creative");
@@ -324,7 +327,7 @@ public class SleepTracker {
         boolean ignoreSurvival = management.getBooleanSetting("ignore_survival");
         if (ignoreSurvival && player.getGameMode() == GameMode.SURVIVAL) return true;
 
-        // Otherwise it is not a bypassing player
+        // Otherwise it is not a bypassed player
         return false;
     }
 

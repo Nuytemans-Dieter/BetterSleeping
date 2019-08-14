@@ -59,6 +59,20 @@ multiworld_support: true
 # --------------- #
 
 
+# !!!PLEASE READ BEFORE EDITING!!!
+# Due to popular demand, bypass permissions can now be disabled. There is a catch, however.
+# An issue may arise when this is set to false and Essentials is installed:
+# When everyone except for OPs is sleeping, the night is skipped instantly and BetterSLeeping will send a message saying that skipping the night was canceled!
+# If set to true, BetterSleeping will ignore those players and this bug can no longer occur.
+# If you want to prevent this bug AND allow OPs to sleep, do the following:
+# Add both permissions (below) to all OPs, using a permissions plugin like PermissionsEx, LuckPerms, GroupManager, etc.
+# -bettersleeping.bypass AND -essentials.sleepingignored. Notice the - sign! That MUST be included!
+# Gamemodes can still be ignored if this is set to false.
+# Now that you know all the details, you can safely make the right decision.
+# Default: true (duh)
+enable_bypass_permissions: true
+
+
 # Decide whether or not players with sleeping bypass permissions get buffs (bettersleeping.bypass OR essentials.sleepingignored)
 # Those players can never sleep, even if they want to
 # Default: true
