@@ -101,7 +101,7 @@ public class SetTimeToDay extends BukkitRunnable {
 
         for (World world : worlds)
         {
-            world.setTime(1000);
+            world.setTime(0);
             world.setStorm(false);
             sleepTracker.worldWasSetToDay(world);
         }
