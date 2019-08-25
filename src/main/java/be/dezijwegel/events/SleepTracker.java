@@ -8,6 +8,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
 
 import java.util.*;
 
@@ -327,7 +328,33 @@ public class SleepTracker {
         boolean ignoreSurvival = management.getBooleanSetting("ignore_survival");
         if (ignoreSurvival && player.getGameMode() == GameMode.SURVIVAL) return true;
 
+        boolean ignoreVanished = management.getBooleanSetting("ignore_vanished_players");
+        if (ignoreVanished && isPlayerHidden(player)) return true;
+
         // Otherwise it is not a bypassed player
+        return false;
+    }
+
+
+    /**
+     * Check if a player is hidden by another plugin
+     * Supports: Essentials, Essentials-compatible vanish plugins, PremiumVanish, SuperVanish, VanishNoPacket and more!
+     * @param player
+     * @return
+     */
+    private boolean isPlayerHidden(Player player)
+    {
+        for (MetadataValue meta : player.getMetadata("vanished")) {
+            if (meta.asBoolean()) return true;
+        }
+
+        if (isEssentialsHooked)
+        {
+            User user = essentials.getUser( player );
+            if (user.isHidden())
+                return true;
+        }
+
         return false;
     }
 

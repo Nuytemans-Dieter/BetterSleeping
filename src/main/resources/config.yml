@@ -85,6 +85,14 @@ enable_bypass_permissions: true
 buffs_for_bypassing_players: true
 
 
+# Choose whether or not vanished players should be ignored
+# The plugins on the line below are supported
+# Essentials, Essentials-compatible vanish plugins, PremiumVanish, SuperVanish, VanishNoPacket and more!
+# Without a supported plugin, this setting will have no effect
+# Default: true
+ignore_vanished_players: true
+
+
 # Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
 # Default: false
 ignore_survival: false
