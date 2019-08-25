@@ -8,11 +8,13 @@
 #                                               | |             __/ | 
 #                                               |_|            |___/  
 
+
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below
 # some_setting: "ignored"
 # another_setting: ""
+
 
 # BetterSleeping offers support for several placeholders:
 # <current_amount>
@@ -37,6 +39,7 @@
 # <user>
 #     Replaced by:      The player who did an action (enter or leave a bed for example)
 #     Can be used in:   cancelled, amount_left
+
 
 # Singular/plural nouns are taken in account too!
 # Simply add [singular.plural] in an applicable message and it will be correctly substituted.
