@@ -100,7 +100,7 @@ ignore_spectator: false
 # Setting this to true means that phantoms will never spawn again (counts for ALL phantoms)
 # Phantoms that spawned before setting this to true will still live until despawned or killed
 # Please do not set this to true if you are using a Spigot version below 1.13 as this will cause errors in the console
-# Defaut: false
+# Default: false
 disable_phantoms: false
 
 
