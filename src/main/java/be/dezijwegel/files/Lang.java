@@ -2,6 +2,7 @@ package be.dezijwegel.files;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.interfaces.Reloadable;
+import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -56,6 +57,16 @@ public class Lang implements Reloadable {
         if (message.contains("<receiver>")) {
             String colorlessName = stripColor( ChatColor.stripColor( receiver.getName() ) );
             message = message.replace("<receiver>", colorlessName );
+        }
+
+        // Replace PlaceholderAPI placeholders
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+        {
+            if (receiver instanceof Player)
+            {
+                Player p = (Player) receiver;
+                message = PlaceholderAPI.setPlaceholders(p, message);
+            }
         }
 
         // Send message to the receiver through screen or chat, depending on the setting
