@@ -29,16 +29,20 @@
 # <total_amount>
 #     Replaced by:      The correct total amount needed in that context, not considering the current amount
 #     Can be used in:   cancelled, amount_left
-#     Example:          When 7 sleeping players are required, it will be replaced by 7
+#     Example:          When 7 sleeping players are required, it will be replaced by 7. Even when 2 are sleeping
 # <time>
 #     Replaced by:      The correct time (in seconds)
 #     Can be used in:   enough_sleeping, sleep_spam
+#     Example:          When enough players are sleeping, it will be replaced by the time it takes to skip the night (sleep_delay)
+#     Example:          When a player enters their bed within the cooldown time, it is replaced by the time they need to wait
 # <receiver>
 #     Replaced by:      The player receiving the message
 #     Can be used in:   Every message!
+#     Example:          When user Freddy_Krueger receives a message, it will be replaced by Freddy_Krueger
 # <user>
 #     Replaced by:      The player who did an action (enter or leave a bed for example)
 #     Can be used in:   cancelled, amount_left
+#     Example:          When user Freddy_Krueger leaves or enters a bed, it is replaced by Freddy_Krueger
 
 
 # Singular/plural nouns are taken in account too!
@@ -54,8 +58,9 @@
 # General messages |
 # ---------------- #
 
+
 # This is the text that will be put in front of all messages
-# Feel free to change this prefix if you want to but I would be grateful if you kept the name of my plugin in the prefix
+# You are allowed to put whatever you want in the prefix, but I would appreciate it if BetterSleeping is kept in the prefix
 prefix: "&6[BetterSleeping] &3"
 
 
@@ -72,7 +77,7 @@ cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to
 
 
 # This message indicates how many more people need to rest
-# Will be sent to all online players (or all players in a specific world depending on multiworld_support)
+# Will be sent to all players in that world
 # Sent when someone enters a bed
 amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm! <current_amount>/<total_amount>"
 
@@ -80,9 +85,11 @@ amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.pla
 # Players that try to enter their bed too quickly after getting out of it
 sleep_spam: "You have to wait <time> more [second.seconds] before you can sleep again!"
 
+
 # -------------- #
 # Buffs messages |
 # -------------- #
+
 
 # Players that went to bed will get this message if buffs are enabled
 buff_received: "You feel well rested and received <amount> [buff.buffs]!"

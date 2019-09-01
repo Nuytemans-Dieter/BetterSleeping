@@ -21,8 +21,8 @@
 # --------------- #
 
 
-# Set the percentage of online players that need to be sleeping 
-# in order to skip the night/storm. Will be rounded up!
+# Set the percentage of online players that need to be sleeping to skip the night/storm
+# The number of players will be rounded up!
 # Example: 2 online players + this is set to 51 => 51% * 2 = 1,02 but it will be rounded up so: 2 players needed!
 # Default: 30
 percentage_needed: 30
@@ -35,11 +35,13 @@ sleep_delay: 40
 
 
 # Set the time (in seconds) that players have to wait before they can enter a bed again after getting out of bed
+# This prevents a player's ability to spam the other players
 # Default: 10
 bed_enter_delay: 10
 
 
 # Choose whether or not AFK players (Essentials is required) will be counted towards the amount of sleeping players needed
+# AFK time is not taken into account. Players may abuse this by setting themselves afk to lower the amount of required sleeping players
 # Default: true
 essentials_afk_support: true
 
@@ -52,19 +54,21 @@ essentials_afk_support: true
 # !!!PLEASE READ BEFORE EDITING!!!
 # Due to popular demand, bypass permissions can now be disabled. There is a catch, however.
 # An issue may arise when this is set to false and Essentials is installed:
-# When everyone except for OPs is sleeping, the night is skipped instantly and BetterSleeping will send a message saying that skipping the night was canceled!
+# When everyone (except for OPs) is sleeping, the night is skipped instantly and BetterSleeping will send a message saying that skipping the night was canceled!
 # If set to true, BetterSleeping will ignore those players and this bug can no longer occur.
 # If you want to prevent this bug AND allow OPs to sleep, please do the following:
 # Add both permissions (below) to all OPs, using a permissions plugin like PermissionsEx, LuckPerms, GroupManager, etc.
-# -bettersleeping.bypass AND -essentials.sleepingignored. Notice the - sign! That MUST be included!
+# Negate bettersleeping.bypass AND essentials.sleepingignored
+#   With permissionsEx, negating is done by adding a '-' in front of the permission
+#   With LuckPerms, negating is done by setting the permission node to false
 # Gamemodes can still be ignored if this is set to false.
 # Now that you know all the details, you can safely make the right decision.
-# Default: true (duh)
+# Default: true
 enable_bypass_permissions: true
 
 
-# Decide whether or not players with sleeping bypass permissions get buffs (bettersleeping.bypass OR essentials.sleepingignored)
-# Those players can never sleep, even if they want to
+# Decide whether or not players with sleeping bypass permissions will get buffs
+# Those players cannot sleep, even if they want to
 # Default: true
 buffs_for_bypassing_players: true
 
@@ -91,7 +95,7 @@ ignore_spectator: false
 # Choose whether or not phantoms are disabled
 # Setting this to true means that phantoms will never spawn again (counts for ALL phantoms)
 # Phantoms that spawned before setting this to true will still live until despawned or killed
-# Please do not set this to true if you are using a Spigot version below 1.13 as this will cause errors in the console
+# Please do not set this to true if you are using a Spigot version below 1.13 as this can cause errors in the console
 # Default: false
 disable_phantoms: false
 
@@ -99,6 +103,18 @@ disable_phantoms: false
 # ----------------- #
 # Messages settings |
 # ----------------- #
+
+
+# Choose whether or not everyone in the same world should receive all messages
+# When an option is set to false, that message will only be sent to players that are sleeping.
+# Default: true
+enough_sleeping_public: true
+# Default: true
+good_morning_public: true
+# Default: true
+cancelled_public: true
+# Default: true
+amount_left_public: true
 
 
 # Choose whether or not a sound will be played when a player receives a BetterSleeping message

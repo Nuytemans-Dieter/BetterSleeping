@@ -18,18 +18,15 @@
 # To disable an effect, set its time to 0 or simply remove it from the list
 # Not all in-game effects are included so adding options outside of the list below is not supported:
 # regeneration, absorption, jump, speed, damage_resistance, fast_digging, increase_damage
-# Feel free to request more effects if that is something you'd like to see
-
+# Feel free to request more effects
 # Time
 # The time in ticks for which the effect will be applied
 # 20 ticks generally equals one second.
-
 # Level
 # The level doesn't have to be a vanilla level. OP configurations are possible.
 # Setting it too high may have unexpected results (<90 should be fine)
 
 
-# Negative effects are currently not planned
 positive_effects:
   # Regenerate hitpoints over time
   regeneration:
