@@ -22,7 +22,6 @@ public class OnSleepEvent implements Listener {
     private SleepTracker sleepTracker;
 
     private long sleepDelay;
-    private boolean multiworld;
 
     private List<SetTimeToDay> pendingTasks;
 
@@ -33,7 +32,6 @@ public class OnSleepEvent implements Listener {
         this.management = management;
         sleepTracker = new SleepTracker(management);
 
-        multiworld = management.getBooleanSetting("multiworld_support");
         sleepDelay = management.getIntegerSetting("sleep_delay");
 
         pendingTasks = new LinkedList<SetTimeToDay>();
@@ -69,7 +67,6 @@ public class OnSleepEvent implements Listener {
 
                 if (BetterSleeping.debug)
                 {
-                    Bukkit.getLogger().info("Multiworld: " + multiworld);
                     Bukkit.getLogger().info("World: " + event.getPlayer().getWorld().getName());
                     Bukkit.getLogger().info("Num sleeping players: " + numSleepers);
                     Bukkit.getLogger().info("Total sleepers needed " + sleepTracker.getTotalSleepersNeeded(world));
@@ -86,13 +83,7 @@ public class OnSleepEvent implements Listener {
                     }
 
                     List<World> worlds = new LinkedList<World>();
-                    if (multiworld)
-                        worlds = Arrays.asList(player.getWorld());
-                    else {
-                        for (World entry : Bukkit.getWorlds()) {
-                            worlds.add(entry);
-                        }
-                    }
+                    worlds = Arrays.asList(player.getWorld());
                     SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker, false);
                     task.run();
 
@@ -150,15 +141,7 @@ public class OnSleepEvent implements Listener {
                         Bukkit.getLogger().info("Default mechanics are not taking over");
                     }
 
-                    if (multiworld) {
-                        scheduleTimeToDay(Arrays.asList(player.getWorld()));
-                    } else {
-                        List<World> worlds = new LinkedList<World>();
-                        for (World entry : Bukkit.getWorlds()) {
-                            worlds.add(entry);
-                        }
-                        scheduleTimeToDay(worlds);
-                    }
+                    scheduleTimeToDay(Arrays.asList(player.getWorld()));
 
                     Map<String, String> replace = new HashMap<String, String>();
                     //Calculates the time players have to stay in bed, (double) and Math#ceil() for accuracy but (int) for a nice looking output
@@ -215,21 +198,11 @@ public class OnSleepEvent implements Listener {
             Bukkit.getLogger().info("Wake event fires");
             Bukkit.getLogger().info("Player left bed: " + event.getPlayer().getName());
             Bukkit.getLogger().info("More players needed: " + numNeeded);
-            Bukkit.getLogger().info("Multiworld: " + multiworld);
         }
 
         if (numNeeded > 0)
         {
-            if (multiworld)
-            {
-                deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()), event.getPlayer().getName());
-            } else {
-                List<World> worlds = new LinkedList<World>();
-                for (World entry : Bukkit.getWorlds()) {
-                        worlds.add(entry);
-                }
-                deScheduleTimeToDay(worlds, event.getPlayer().getName());
-            }
+            deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()), event.getPlayer().getName());
         }
 
         if (BetterSleeping.debug)
@@ -275,11 +248,7 @@ public class OnSleepEvent implements Listener {
                 int numNeeded;
                 World world = worlds.get(0);
 
-                if (multiworld) {
-                    numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
-                } else {
-                    numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
-                }
+                numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
 
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<amount>", Integer.toString(numNeeded));

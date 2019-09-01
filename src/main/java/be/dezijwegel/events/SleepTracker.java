@@ -22,7 +22,6 @@ public class SleepTracker {
     private Essentials essentials = null;
 
     private boolean isEssentialsHooked;
-    private boolean multiworld;
     private int bedEnterDelay;
     private int percentageNeeded;
 
@@ -42,7 +41,6 @@ public class SleepTracker {
 
         this.management = management;
 
-        this.multiworld = management.getBooleanSetting("multiworld_support");
         this.bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
         this.percentageNeeded = management.getIntegerSetting("percentage_needed");
         if (percentageNeeded > 100) percentageNeeded = 100;
@@ -129,8 +127,6 @@ public class SleepTracker {
     {
 
         int numPlayers = 0;
-        if (multiworld)
-        {
             for (Player player : Bukkit.getOnlinePlayers())
             {
                 if (player.getLocation().getWorld().equals(world)) {
@@ -138,16 +134,6 @@ public class SleepTracker {
                         numPlayers++;
                 }
             }
-        }
-        else
-        {
-            numPlayers = Bukkit.getOnlinePlayers().size();
-            for (Player p : Bukkit.getOnlinePlayers())
-            {
-                if ( isPlayerBypassed( p ) || isAfk( p ) )
-                    numPlayers--;
-            }
-        }
 
         int numNeeded = (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
         if (numNeeded > 1) return numNeeded;
@@ -183,24 +169,10 @@ public class SleepTracker {
     public int getNumSleepingPlayers(World world)
     {
         int numSleeping;
-        if (multiworld)
-        {
-            if (this.numSleeping.get(world) == null)
-                numSleeping = 0;
-            else
-                numSleeping = this.numSleeping.get(world);
-        }
-        else
-        {
+        if (this.numSleeping.get(world) == null)
             numSleeping = 0;
-            for (Map.Entry<World, Integer> entry : this.numSleeping.entrySet())
-            {
-                if (entry.getValue() == null)
-                    numSleeping = 0;
-                else
-                    numSleeping += entry.getValue();
-            }
-        }
+        else
+            numSleeping = this.numSleeping.get(world);
 
         return numSleeping;
     }
@@ -245,23 +217,14 @@ public class SleepTracker {
 
     /**
      * Get a list of players that are relevant to the given world
-     * Does take 'multiworld_support' into account
      * @param world
      * @return
      */
     public List<Player> getRelevantPlayers(World world)
     {
         List<Player> list = new LinkedList<Player>();
-        if (multiworld)
-        {
-            for (Player player : Bukkit.getOnlinePlayers())
-                if (player.getLocation().getWorld().equals(world)) list.add(player);
-        }
-        else
-        {
-            for (Player player : Bukkit.getOnlinePlayers())
-                list.add(player);
-        }
+        for (Player player : Bukkit.getOnlinePlayers())
+            if (player.getLocation().getWorld().equals(world)) list.add(player);
 
         return list;
     }

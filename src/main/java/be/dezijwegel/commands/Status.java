@@ -87,23 +87,10 @@ public class Status implements Command {
     {
         List<Player> players = new ArrayList<Player>();
 
-        if ( management.getBooleanSetting("multiworld_support") )
+        World world = player.getWorld();
+        for (Player p : Bukkit.getOnlinePlayers())
         {
-            World world = player.getWorld();
-            for (Player p : Bukkit.getOnlinePlayers())
-            {
-                if (p.getWorld().equals( world ))
-                {
-                    if ( p.isSleeping() )
-                        players.add( p );
-
-                    if (players.size() >= numPlayersListed)
-                        return players;
-                }
-            }
-
-        } else {
-            for (Player p : Bukkit.getOnlinePlayers())
+            if (p.getWorld().equals( world ))
             {
                 if ( p.isSleeping() )
                     players.add( p );

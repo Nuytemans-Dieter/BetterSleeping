@@ -44,22 +44,6 @@ bed_enter_delay: 10
 essentials_afk_support: true
 
 
-# Choose whether BetterSleeping should treat every world seperate from eachother (when set to true)
-#       percentage_needed:  30 would mean that 30% of all players IN WORLD X should be sleeping
-#                           If this condition is met, the night/storm will ONLY be skipped in that same world
-#           Example:        There are 100 online players, 90 in world1 and 10 in world2.
-#                           3 people are sleeping in the world2 and since 30% of people in that world are sleeping
-#                           The night will be skipped, but ONLY in world2
-# Or if it should count the global number of sleeping players and skip the night/storm in all worlds (when set to false)
-#       percentage_needed:  30 would mean that 30% of all ONLINE players should be sleeping
-#                           If this condition is met, the night/storm will be skipped in EVERY world
-#           Example:        There are 100 online players, 90 in world1 and 10 in world2.
-#                           30 people (of all worlds combined) must be sleeping in order to skip the night/storm.
-#                           The night/storm will be skipped in EVERY world!!
-# Default: true
-multiworld_support: true
-
-
 # --------------- #
 # Bypass settings |
 # --------------- #
