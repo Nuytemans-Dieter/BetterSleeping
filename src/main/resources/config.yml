@@ -16,6 +16,12 @@
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
 
 
+# Choose whether or not BetterSleeping should check for updates on startup
+# No information from your server is shared or collected in this process.
+# Default: true
+update_checker: true
+
+
 # --------------- #
 # Sleep settings  |
 # --------------- #
