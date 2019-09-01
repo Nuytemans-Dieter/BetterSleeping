@@ -11,8 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 public class SkipNight implements be.dezijwegel.interfaces.Command{
 
     private Management management;
@@ -51,9 +49,7 @@ public class SkipNight implements be.dezijwegel.interfaces.Command{
 
 
             if ( allPlayersInWorldHaveBypassPermissions(world) ) {
-                ArrayList<World> worlds = new ArrayList<World>();
-                worlds.add(world);
-                SetTimeToDay toDay = new SetTimeToDay(worlds, management, sleepTracker);
+                SetTimeToDay toDay = new SetTimeToDay(world, management, sleepTracker);
                 toDay.run();
             } else {
                 management.sendMessage("not_all_players_bypassed", player);
