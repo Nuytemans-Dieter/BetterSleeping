@@ -51,7 +51,7 @@ public class OnSleepEvent implements Listener {
         if(!event.isCancelled() && ( Bukkit.getVersion().contains("1.12") || event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK ) ) {
             if (sleepTracker.playerMaySleep(player)) {
 
-                World world = player.getLocation().getWorld();
+                World world = player.getWorld();
                 sleepTracker.addSleepingPlayer(world);
                 int numSleepers = sleepTracker.getNumSleepingPlayers(world);
                 int sleepersLeft = sleepTracker.getTotalSleepersNeeded(world) - numSleepers;
@@ -82,16 +82,14 @@ public class OnSleepEvent implements Listener {
                         Bukkit.getLogger().info("!Attention! Default mechanics try to skip the night, ignoring sleep_delay");
                     }
 
-                    List<World> worlds = new LinkedList<World>();
-                    worlds = Arrays.asList(player.getWorld());
-                    SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker, false);
+                    SetTimeToDay task = new SetTimeToDay(player.getWorld(), management, sleepTracker, false);
                     task.run();
 
                     //Make sure everyone gets their buff
                     if (management.areBuffsEnabled())
                     {
                         for (Player p : Bukkit.getOnlinePlayers()) {
-                            if (worlds.contains(p.getWorld())) {
+                            if (world.equals(p.getWorld())) {
                                 boolean isBypassed = sleepTracker.isPlayerBypassed( p );
                                 boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
 
@@ -120,12 +118,12 @@ public class OnSleepEvent implements Listener {
                         }
                     }
 
-                    // Remove all scheduled tasks
+                    // Remove the scheduled task(s)
                     for (Iterator<SetTimeToDay> it = pendingTasks.iterator(); it.hasNext();)
                     {
                         SetTimeToDay setTask = it.next();
-                        if (worlds.get(0) != null) {
-                            if (setTask.getWorlds().contains(worlds.get(0)))
+                        if (world != null) {
+                            if (setTask.getWorld().equals(world))
                             {
                                 setTask.cancel();
                                 it.remove();
@@ -141,7 +139,7 @@ public class OnSleepEvent implements Listener {
                         Bukkit.getLogger().info("Default mechanics are not taking over");
                     }
 
-                    scheduleTimeToDay(Arrays.asList(player.getWorld()));
+                    scheduleTimeToDay(player.getWorld());
 
                     Map<String, String> replace = new HashMap<String, String>();
                     //Calculates the time players have to stay in bed, (double) and Math#ceil() for accuracy but (int) for a nice looking output
@@ -202,7 +200,7 @@ public class OnSleepEvent implements Listener {
 
         if (numNeeded > 0)
         {
-            deScheduleTimeToDay(Arrays.asList(event.getPlayer().getWorld()), event.getPlayer().getName());
+            deScheduleTimeToDay(event.getPlayer().getWorld(), event.getPlayer().getName());
         }
 
         if (BetterSleeping.debug)
@@ -219,20 +217,20 @@ public class OnSleepEvent implements Listener {
 
     /**
      * Add a task that will be performed after a set time, it can still be cancelled!
-     * @param worlds
+     * @param world
      */
-    public void scheduleTimeToDay(List<World> worlds) {
-        SetTimeToDay task = new SetTimeToDay(worlds, management, sleepTracker);
+    public void scheduleTimeToDay(World world) {
+        SetTimeToDay task = new SetTimeToDay(world, management, sleepTracker);
         pendingTasks.add(task);
         task.runTaskLater(plugin, sleepDelay);
     }
 
     /**
      * Cancel tasks that will set time to day in the given worlds, they will also be removed from the pendingTasks list
-     * @param worlds the world for which the time to day is cancelled
+     * @param world the world for which the time to day is cancelled
      * @param playerName the name of the player that left their bed
      */
-    public void deScheduleTimeToDay(List<World> worlds, String playerName)
+    public void deScheduleTimeToDay(World world, String playerName)
     {
 
         if (BetterSleeping.debug)
@@ -243,12 +241,11 @@ public class OnSleepEvent implements Listener {
         }
 
         // If player gets out of bed himself / bed is broken / any other reason which is not a time change
-        if (worlds.get(0).getTime() > 5000 || worlds.get(0).isThundering() ) {
-            if (sleepTracker.getTimeSinceLastSetToDay(worlds.get(0)) > 10) {
+        if (world.getTime() > 5000 || world.isThundering() ) {
+            if (sleepTracker.getTimeSinceLastSetToDay(world) > 10) {
                 int numNeeded;
-                World world = worlds.get(0);
 
-                numNeeded = sleepTracker.getTotalSleepersNeeded(worlds.get(0)) - sleepTracker.getNumSleepingPlayers(worlds.get(0));
+                numNeeded = sleepTracker.getTotalSleepersNeeded(world) - sleepTracker.getNumSleepingPlayers(world);
 
                 Map<String, String> replace = new LinkedHashMap<String, String>();
                 replace.put("<amount>", Integer.toString(numNeeded));
@@ -265,8 +262,8 @@ public class OnSleepEvent implements Listener {
             for (Iterator<SetTimeToDay> it = pendingTasks.iterator(); it.hasNext();)
             {
                 SetTimeToDay task = it.next();
-                if (worlds.get(0) != null) {
-                    if (task.getWorlds().contains(worlds.get(0)))
+                if (world != null) {
+                    if (task.getWorld().equals(world))
                     {
                         task.cancel();
                         it.remove();

@@ -12,47 +12,37 @@ import java.util.*;
 
 public class SetTimeToDay extends BukkitRunnable {
 
-    private Set<World> worlds;
+    private World world;
 
     private Management management;
     private SleepTracker sleepTracker;
     private boolean giveBuffs;
 
-    public SetTimeToDay (List<World> worlds, Management management, SleepTracker sleepTracker)
+    public SetTimeToDay (World world, Management management, SleepTracker sleepTracker)
     {
-        this.worlds = new HashSet<World>();
+        this.world = world;
 
         this.management = management;
         this.sleepTracker = sleepTracker;
         this.giveBuffs = true;
-
-        for (World world : worlds)
-        {
-            this.worlds.add(world);
-        }
     }
 
-    public SetTimeToDay (List<World> worlds, Management management, SleepTracker sleepTracker, boolean giveBuffs)
+    public SetTimeToDay (World world, Management management, SleepTracker sleepTracker, boolean giveBuffs)
     {
-        this.worlds = new HashSet<World>();
+        this.world = world;
 
         this.management = management;
         this.sleepTracker = sleepTracker;
         this.giveBuffs = giveBuffs;
-
-        for (World world : worlds)
-        {
-            this.worlds.add(world);
-        }
     }
 
     /**
      * Get the world(s) of which the time will be set to day
      * @return
      */
-    public Set<World> getWorlds()
+    public World getWorld()
     {
-        return worlds;
+        return world;
     }
 
     @Override
@@ -65,7 +55,7 @@ public class SetTimeToDay extends BukkitRunnable {
 
         for (Player player : Bukkit.getOnlinePlayers())
         {
-            if (worlds.contains(player.getLocation().getWorld()))
+            if (world.equals(player.getLocation().getWorld()))
             {
                 management.sendMessage("good_morning", player);
 
@@ -99,12 +89,9 @@ public class SetTimeToDay extends BukkitRunnable {
             }
         }
 
-        for (World world : worlds)
-        {
-            world.setTime(0);
-            world.setStorm(false);
-            sleepTracker.worldWasSetToDay(world);
-        }
+        world.setTime(0);
+        world.setStorm(false);
+        sleepTracker.worldWasSetToDay(world);
 
         if (BetterSleeping.debug)
         {
