@@ -125,7 +125,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 if (updateVersion.equals(currentVersion)) {
                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] You are using the latest version: " + currentVersion + ".");
                 } else {
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Update detected, you are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/");
+                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/");
                 }
             } catch (IOException e) {
                 Bukkit.getLogger().info("[BetterSleeping] An error occurred while retrieving the latest version!");
