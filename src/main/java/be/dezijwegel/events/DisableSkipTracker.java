@@ -2,6 +2,7 @@ package be.dezijwegel.events;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.Runnables.EnableSkipWorld;
+import be.dezijwegel.management.Management;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -15,14 +16,20 @@ public class DisableSkipTracker {
 
     Plugin plugin;
 
+    Management management;
+    SleepTracker sleepTracker;
+
     private ArrayList<World> disabledWorlds;        // The last time that skipping the night was disabled
 
     boolean enabled;    // Whether or not this feature is enabled
     int duration;       // The duration (in minutes) of this feature
 
-    public DisableSkipTracker(Plugin plugin, boolean enabled, int duration)
+    public DisableSkipTracker(Plugin plugin, Management management, SleepTracker sleepTracker, boolean enabled, int duration)
     {
         this.plugin = plugin;
+
+        this.management = management;
+        this.sleepTracker = sleepTracker;
 
         disabledWorlds = new ArrayList<>();
         //lastUserNightCmd = new HashMap<>();
@@ -44,7 +51,7 @@ public class DisableSkipTracker {
 
         if ( ! disabledWorlds.contains( world ))
             disabledWorlds.add( world );
-        EnableSkipWorld enableWorld = new EnableSkipWorld(disabledWorlds, world);
+        EnableSkipWorld enableWorld = new EnableSkipWorld(plugin, management, sleepTracker, disabledWorlds, world);
         enableWorld.runTaskLater(plugin, duration * 20);
     }
 

@@ -48,7 +48,7 @@ public class SleepTracker {
         this.management = management;
         boolean enableSkip = management.getBooleanSetting("disable_skip_command");
         int durationSkip = management.getIntegerSetting("disable_skip_time");
-        this.disableSkipTracker = new DisableSkipTracker(plugin, enableSkip, durationSkip);
+        this.disableSkipTracker = new DisableSkipTracker(plugin, management, this, enableSkip, durationSkip);
 
         this.bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
         this.percentageNeeded = management.getIntegerSetting("percentage_needed");

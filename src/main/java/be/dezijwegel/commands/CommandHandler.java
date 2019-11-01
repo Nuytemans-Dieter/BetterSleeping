@@ -40,7 +40,7 @@ public class CommandHandler implements CommandExecutor {
         help = new Help(management);
         skipNight = new SkipNight(management, sleepTracker);
         status = new Status(sleepTracker, management);
-        night = new Night(sleepTracker);
+        night = new Night(management, sleepTracker);
 
     }
 
