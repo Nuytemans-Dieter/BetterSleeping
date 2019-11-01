@@ -31,10 +31,11 @@
 #     Can be used in:   cancelled, amount_left
 #     Example:          When 7 sleeping players are required, it will be replaced by 7. Even when 2 are sleeping
 # <time>
-#     Replaced by:      The correct time (in seconds)
-#     Can be used in:   enough_sleeping, sleep_spam
-#     Example:          When enough players are sleeping, it will be replaced by the time it takes to skip the night (sleep_delay)
-#     Example:          When a player enters their bed within the cooldown time, it is replaced by the time they need to wait
+#     Replaced by:      The correct time (in seconds or minutes)
+#     Can be used in:   enough_sleeping, sleep_spam, disable_skip
+#     Example:          When enough players are sleeping, it will be replaced by the time it takes to skip the night (sleep_delay) in seconds
+#     Example:          When a player enters their bed within the cooldown time, it is replaced by the time they need to wait in seconds
+#     Example:          When a player disabled sleeping in a world for a while, the waiting time can be used in minutes
 # <receiver>
 #     Replaced by:      The player receiving the message
 #     Can be used in:   Every message!
@@ -112,8 +113,18 @@ no_permission: "&4You don't have permission to execute that command!"
 message_reloaded: "Reload complete!"
 
 
+# This message is shown when a user tries to execute a disabled command
+command_disabled: "&4This command has been disabled! Please notify an administrator if you believe this is an error."
+
+
 # This message will be sent to all players in a world when someone disabled skipping the night
 disable_skip: "<user> disabled skipping the night for <time> minutes!"
+# This message is sent to the relevant players when skipping the night in a world is no longer disabled
+enable_skip: "Sleeping in <world> is now enabled again!"
+
+
+# This message is sent when a user tries to disable skipping the night in a world where it is currently already disabled
+already_disabled: "&cSkipping the night in this world is already disabled. Please try again later."
 
 
 # --------------- #

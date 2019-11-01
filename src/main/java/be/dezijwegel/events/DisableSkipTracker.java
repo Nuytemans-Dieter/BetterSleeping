@@ -42,7 +42,8 @@ public class DisableSkipTracker {
         if ( ! enabled )
             return;
 
-        disabledWorlds.add( world );
+        if ( ! disabledWorlds.contains( world ))
+            disabledWorlds.add( world );
         EnableSkipWorld enableWorld = new EnableSkipWorld(disabledWorlds, world);
         enableWorld.runTaskLater(plugin, duration * 20);
     }
@@ -62,6 +63,16 @@ public class DisableSkipTracker {
             return true;
         else
             return false;
+    }
+
+
+    /**
+     * Get for how many minutes skipping the night will be disabled
+     * @return a duration in minutes
+     */
+    public int getDuration()
+    {
+        return duration;
     }
 
 }

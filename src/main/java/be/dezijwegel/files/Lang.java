@@ -88,7 +88,7 @@ public class Lang implements Reloadable {
         }
     }
 
-    public String stripColor(String input) {
+    public static String stripColor(String input) {
         Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf('&') + "[0-9A-FK-OR]");
         return input == null?null:STRIP_COLOR_PATTERN.matcher(input).replaceAll("");
     }

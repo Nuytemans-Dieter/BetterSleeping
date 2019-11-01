@@ -30,7 +30,7 @@ public class OnSleepEvent implements Listener {
     {
         this.plugin = plugin;
         this.management = management;
-        sleepTracker = new SleepTracker(management);
+        sleepTracker = new SleepTracker(plugin, management);
 
         sleepDelay = management.getIntegerSetting("sleep_delay");
 

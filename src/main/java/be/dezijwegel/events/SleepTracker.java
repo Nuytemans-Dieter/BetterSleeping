@@ -9,10 +9,13 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
 public class SleepTracker {
+
+    Plugin plugin;
 
     private Map<UUID, Long> sleepList;
     private Map<World, Integer> numSleeping;
@@ -26,8 +29,10 @@ public class SleepTracker {
     private int bedEnterDelay;
     private int percentageNeeded;
 
-    public SleepTracker(Management management)
+    public SleepTracker(Plugin plugin, Management management)
     {
+        this.plugin = plugin;
+
         isEssentialsHooked = Bukkit.getPluginManager().isPluginEnabled("Essentials");
         if (isEssentialsHooked) {
             essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
@@ -43,7 +48,7 @@ public class SleepTracker {
         this.management = management;
         boolean enableSkip = management.getBooleanSetting("disable_skip_command");
         int durationSkip = management.getIntegerSetting("disable_skip_time");
-        // this.disableSkipTracker = new DisableSkipTracker(enableSkip, durationSkip);
+        this.disableSkipTracker = new DisableSkipTracker(plugin, enableSkip, durationSkip);
 
         this.bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
         this.percentageNeeded = management.getIntegerSetting("percentage_needed");
@@ -323,6 +328,15 @@ public class SleepTracker {
         }
 
         return false;
+    }
+
+    /**
+     * Get the DisableSkipTracker to track disabled worlds
+     * @return DisableSkipTracker
+     */
+    public DisableSkipTracker getDisableSkipTracker()
+    {
+        return disableSkipTracker;
     }
 
 
