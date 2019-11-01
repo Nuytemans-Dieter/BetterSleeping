@@ -2,10 +2,8 @@ package be.dezijwegel.files;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.interfaces.Reloadable;
+import be.dezijwegel.util.ScreenMessageSender;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -22,8 +20,8 @@ public class Lang implements Reloadable {
 
     private BetterSleeping plugin;
     private ConfigAPI configAPI;
-    private SendType sendType;
-    private boolean playSound;
+    protected SendType sendType;
+    protected boolean playSound;
 
     public enum SendType {
         CHAT,
@@ -45,7 +43,7 @@ public class Lang implements Reloadable {
      * @param message
      * @param receiver
      */
-    private void sendRaw(String message, CommandSender receiver)
+    protected void sendRaw(String message, CommandSender receiver)
     {
         // Cancel if message is set to ignored
         if (message.equals(""))
@@ -78,13 +76,8 @@ public class Lang implements Reloadable {
         }
         else /*if (sendType == SendType.SCREEN)*/
         {
-            Player player = (Player) receiver;
-            Player.Spigot p = player.spigot();
-
-            BaseComponent bc = new TextComponent();
-            bc.addExtra( message );
-            ChatMessageType type = ChatMessageType.ACTION_BAR;
-            p.sendMessage(type, bc);
+            // Send an on-screen message
+            ScreenMessageSender.sendMessage((Player) receiver, message);
         }
 
         // Play a sound, if enabled
