@@ -52,6 +52,18 @@ bed_enter_delay: 10
 essentials_afk_support: true
 
 
+# NOTE: This is a beta feature! Please give feedback when you have used this.
+# Choose whether or not /bs night is enabled by default (only OP has access by default)
+# /bs night or /bs n will disable skipping the night for a short time
+# This allows players with permission to finish their business
+# CAUTION! This may cause players to abuse this system and the night will never be skipped
+# Default: false
+disable_skip_command: false
+# Choose for how many minutes the night won't be skipped after executing /bs night
+# Default: 1 (in minutes!)
+disable_skip_time: 1
+
+
 # --------------- #
 # Bypass settings |
 # --------------- #

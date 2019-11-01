@@ -112,6 +112,10 @@ no_permission: "&4You don't have permission to execute that command!"
 message_reloaded: "Reload complete!"
 
 
+# This message will be sent to all players in a world when someone disabled skipping the night
+disable_skip: "<user> disabled skipping the night for <time> minutes!"
+
+
 # --------------- #
 # Bypass messages |
 # --------------- #

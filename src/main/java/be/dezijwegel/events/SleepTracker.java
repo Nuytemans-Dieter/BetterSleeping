@@ -19,6 +19,7 @@ public class SleepTracker {
     private Map<World, Long> lastSetToDay;
 
     private Management management;
+    private DisableSkipTracker disableSkipTracker;
     private Essentials essentials = null;
 
     private boolean isEssentialsHooked;
@@ -40,6 +41,9 @@ public class SleepTracker {
         lastSetToDay = new HashMap<World, Long>();
 
         this.management = management;
+        boolean enableSkip = management.getBooleanSetting("disable_skip_command");
+        int durationSkip = management.getIntegerSetting("disable_skip_time");
+        // this.disableSkipTracker = new DisableSkipTracker(enableSkip, durationSkip);
 
         this.bedEnterDelay = management.getIntegerSetting("bed_enter_delay");
         this.percentageNeeded = management.getIntegerSetting("percentage_needed");

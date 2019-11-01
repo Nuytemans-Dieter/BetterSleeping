@@ -21,6 +21,7 @@ public class CommandHandler implements CommandExecutor {
     private be.dezijwegel.interfaces.Command skipNight;
     private be.dezijwegel.interfaces.Command help;
     private be.dezijwegel.interfaces.Command status;
+    private be.dezijwegel.interfaces.Command night;
 
 
     /**
@@ -39,6 +40,8 @@ public class CommandHandler implements CommandExecutor {
         help = new Help(management);
         skipNight = new SkipNight(management, sleepTracker);
         status = new Status(sleepTracker, management);
+        night = new Night(sleepTracker);
+
     }
 
 
@@ -57,9 +60,11 @@ public class CommandHandler implements CommandExecutor {
                     case "skip":
                         return skipNight.execute(cs, cmd, string, strings);
                     case "status":
-                        return status.execute(cs, cmd, string, strings);
                     case "s":
                         return status.execute(cs, cmd, string, strings);
+                    case "night":
+                    case "n":
+                        return night.execute(cs, cmd, string, strings);
                 }
             } else {
                 return help.execute(cs, cmd, string, strings);
