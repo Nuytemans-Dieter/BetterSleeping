@@ -1,6 +1,7 @@
 package be.dezijwegel.Runnables;
 
 import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
@@ -51,6 +52,20 @@ public class SetTimeToDay extends BukkitRunnable {
         {
             Bukkit.getLogger().info("-----");
             Bukkit.getLogger().info("[BetterSleeping] SetTimeToDay");
+        }
+
+        // Don't skip the night if this is not supported
+        DisableSkipTracker disableSkipTracker = sleepTracker.getDisableSkipTracker();
+        if ( disableSkipTracker.isDisabled(world) ) {
+
+            if (BetterSleeping.debug)
+            {
+                Bukkit.getLogger().info("Skipping the night is currently disabled in " + world.getName() + "!");
+                Bukkit.getLogger().info("Cancelling...");
+                Bukkit.getLogger().info("-----");
+            }
+
+            return;
         }
 
         for (Player player : Bukkit.getOnlinePlayers())
