@@ -219,6 +219,9 @@ public class ConfigAPI {
      */
     public void reportMissingOptions()
     {
+
+        // Get the missing configuration options that are not configuration sections
+
         Reader defConfigStream = null;
         try {
             defConfigStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
@@ -230,11 +233,15 @@ public class ConfigAPI {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
             for (String path : defConfig.getKeys(true))
             {
-                if ( ! configuration.contains(path))
+                if ( ! defConfig.isConfigurationSection(path) )
                 {
-                    missingOptions.add(path);
+                    if (!configuration.contains(path)) {
+                        missingOptions.add(path);
+                    }
                 }
             }
+
+            // Report to console
 
             ConsoleCommandSender console = Bukkit.getConsoleSender();
 
@@ -250,12 +257,29 @@ public class ConfigAPI {
 
                 for (String path : missingOptions)
                 {
+                    // Handle value
                     Object value = defaultConfig.get(path);
 
-                    //Change formatting if the setting is a String
+                    // Change formatting if the setting is a String
                     if (value instanceof String)
                         value = "\"" + value + "\"";
 
+
+                    // Handle path
+                    if (path.contains("."))
+                    {
+                        String[] sections = path.split("\\.");  // Split the path in its sections
+                        path = "";                                     // Reset the path variable
+
+                        for (int i = sections.length-1; i > 0; i--)    // Loop each subsection in reversed order
+                        {
+                            String part = sections[i];
+                            path += "'" + part + "'" + " in section ";             // Print each section in reversed order
+                        }
+                        path += "'" + sections[0] + "'";                           // Add the actual setting name
+                    }
+
+                    // Send message
                     console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: " + value);
                 }
             } else {
