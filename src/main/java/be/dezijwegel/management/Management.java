@@ -47,10 +47,11 @@ public class Management {
     }
 
     /**
-     * This method will report any wrong configurations to the console
+     * This method will report any faulty configurations to the console
      */
     private void checkConfiguration()
     {
+        // No errors can be made if messages are sent in chat
         if (config.getBoolean("messages_in_chat"))
         {
             return;
@@ -66,6 +67,22 @@ public class Management {
             if (!lang.isPathDisabled("no_buff_received"))
                 console.sendMessage("[BetterSleeping] " + ChatColor.RED + "good_morning may not be visible to all users. You can either disable no_buff_received or good_morning");
             console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Alternatively, you can set messages_in_chat to true.");
+        }
+
+        /**
+         * import net.md_5.bungee.api.ChatMessageType;
+         * import net.md_5.bungee.api.chat.BaseComponent;
+         * import net.md_5.bungee.api.chat.TextComponent;
+         */
+        // If messages are sent on screen AND the server is not running Spigot -> Warn the console!
+        if ( ! isUsingSpigot() )
+        {
+            ConsoleCommandSender console = Bukkit.getConsoleSender();
+
+            console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "You are not using Spigot so messages cannot be displayed on screen!");
+            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please set 'messages_in_chat' in config.yml to false start using Spigot to prevent console errors.");
+            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "The option 'messages_in_chat' in config.yml is now being ignored and messages will be sent through chat!");
+            lang = new Lang(plugin, Lang.SendType.CHAT, config.getBoolean("message_sound"));
         }
     }
 
@@ -190,6 +207,19 @@ public class Management {
     public Integer getIntegerSetting(String path)
     {
         return config.getInt(path);
+    }
+
+    /**
+     * Check if the server is running Spigot
+     * @return true if Spigot is being used. False in every other case
+     */
+    public boolean isUsingSpigot () {
+        try  {
+            Class.forName( "org.spigotmc.SpigotConfig" );
+            return true;
+        }  catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 
 }
