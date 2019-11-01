@@ -129,6 +129,20 @@ public class Lang implements Reloadable {
     public void sendMessage(String messagePath, CommandSender receiver, Map<String, String> replacings, boolean singular)
     {
         String msg = composeMessage(messagePath, replacings, singular);
+
+        // If the option exists and it is set tot true: only send to awake players
+        if (configAPI.getBoolean("hide_message_from_non_sleepers." + messagePath))
+        {
+            if (receiver instanceof Player)
+            {
+                Player p = (Player) receiver;
+                if ( ! p.isSleeping())
+                {
+                    return;
+                }
+            }
+        }
+
         if (msg != "") sendRaw(msg, receiver);
     }
 
@@ -168,8 +182,12 @@ public class Lang implements Reloadable {
     {
         String message = composeMessage(messagePath, replacings, singular);
 
+        boolean hideMessage = configAPI.getBoolean("hide_message_from_non_sleepers." + messagePath);
+
         for (Player player : receivers) {
-            sendRaw(message, player);
+            // Only send the message if everyone should receive that message or if the player is sleeping
+            if ( hideMessage == false || player.isSleeping())
+                sendRaw(message, player);
         }
     }
 

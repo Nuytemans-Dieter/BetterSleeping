@@ -128,6 +128,16 @@ amount_left_public: true
 message_sound: false
 
 
+# Players will always receive these messages when they are sleeping
+# Players that are not sleeping will only receive the messages below if they are set to false
+# Default: false (for every option)
+hide_message_from_non_sleepers:
+  enough_sleeping: false
+  good_morning: false
+  cancelled: false
+  amount_left: false
+
+
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
 # Setting this to false will result in the messages being shown on screen
