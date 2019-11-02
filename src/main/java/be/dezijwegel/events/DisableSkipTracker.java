@@ -52,7 +52,7 @@ public class DisableSkipTracker {
         if ( ! disabledWorlds.contains( world ))
             disabledWorlds.add( world );
         EnableSkipWorld enableWorld = new EnableSkipWorld(plugin, management, sleepTracker, disabledWorlds, world);
-        enableWorld.runTaskLater(plugin, duration * 20);
+        enableWorld.runTaskLater(plugin, duration * 1200);
     }
 
 
