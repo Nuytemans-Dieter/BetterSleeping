@@ -55,6 +55,7 @@ public class EnableSkipWorld extends BukkitRunnable {
             int waitTime  = (int) Math.ceil( (double) management.getIntegerSetting("sleep_delay") / 20 );
             replace.put("<time>", Integer.toString(waitTime));
             replace.put("<user>", "The last required player");
+            replace.put("<world>", enableWorld.getName());
             management.sendMessageToGroup("enough_sleeping", sleepTracker.getRelevantPlayers( enableWorld ), replace, waitTime == 1);
         }
     }
