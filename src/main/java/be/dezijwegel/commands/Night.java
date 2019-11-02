@@ -59,7 +59,7 @@ public class Night implements be.dezijwegel.interfaces.Command {
                 Map<String, String> replacings = new HashMap<>();
                 replacings.put("<user>", Lang.stripColor( ChatColor.stripColor( player.getName() ) ));
                 replacings.put("<time>", Integer.toString(disableSkipTracker.getDuration()));
-                management.sendMessageToGroup("disable_skip", sleepTracker.getRelevantPlayers(world), replacings);
+                management.sendMessageToGroup("disable_skip", sleepTracker.getRelevantPlayers(world), replacings, disableSkipTracker.getDuration() == 1);
             } else {
                 management.sendMessage("already_disabled", player);
             }
