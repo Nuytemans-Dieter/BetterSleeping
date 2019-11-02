@@ -266,18 +266,15 @@ public class ConfigAPI {
 
 
                     // Handle path
-                    if (path.contains("."))
-                    {
-                        String[] sections = path.split("\\.");  // Split the path in its sections
-                        path = "";                                     // Reset the path variable
+                    String[] sections = path.split("\\.");  // Split the path in its sections
+                    path = "";                                     // Reset the path variable
 
-                        for (int i = sections.length-1; i > 0; i--)    // Loop each subsection in reversed order
-                        {
-                            String part = sections[i];
-                            path += "'" + part + "'" + " in section ";             // Print each section in reversed order
-                        }
-                        path += "'" + sections[0] + "'";                           // Add the actual setting name
+                    for (int i = sections.length-1; i > 0; i--)    // Loop each subsection in reversed order
+                    {
+                        String part = sections[i];
+                        path += "'" + part + "'" + " in section ";             // Print each section in reversed order
                     }
+                    path += "'" + sections[0] + "'";                           // Add the actual setting name
 
                     // Send message
                     console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: " + value);
