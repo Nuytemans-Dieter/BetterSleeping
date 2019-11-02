@@ -43,7 +43,7 @@ public class Lang implements Reloadable {
      * @param message
      * @param receiver
      */
-    protected void sendRaw(String message, CommandSender receiver)
+    private void sendRaw(String message, CommandSender receiver)
     {
         // Cancel if message is set to ignored
         if (message.equals(""))
@@ -183,10 +183,10 @@ public class Lang implements Reloadable {
         String message = composeMessage(messagePath, replacings, singular);
 
         boolean hideMessage = configAPI.getBoolean("hide_message_from_non_sleepers." + messagePath);
-
+        //boolean hideMessage = configAPI.getBoolean(messagePath);
         for (Player player : receivers) {
             // Only send the message if everyone should receive that message or if the player is sleeping
-            if ( hideMessage == false || player.isSleeping())
+            if ( !hideMessage || player.isSleeping())
                 sendRaw(message, player);
         }
     }
