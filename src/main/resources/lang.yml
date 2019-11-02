@@ -44,12 +44,16 @@
 #     Replaced by:      The player who did an action (enter or leave a bed for example)
 #     Can be used in:   cancelled, amount_left
 #     Example:          When user Freddy_Krueger leaves or enters a bed, it is replaced by Freddy_Krueger
+# <world>
+#     Replaced by:      The name of the relevant world
+#     Can be used in:   enable_skip
+#     Example:          The night in world 'Overworld' can be skipped again: <world> is replaced by 'Overworld'
 
 
 # Singular/plural nouns are taken in account too!
 # Simply add [singular.plural] in an applicable message and it will be correctly substituted.
 # The <amount> tag is always used as reference. This means that <current_amount> or <total_amount> are not considered in this process.
-# Can be used in:   enough_sleeping, buff_received, no_buff_received, cancelled, amount_left, sleep_spam
+# Can be used in:   enough_sleeping, buff_received, no_buff_received, cancelled, amount_left, sleep_spam, disable_skip
 # Example: <amount> more [player.players] [is.are] needed!
 #          When 1 more player is needed, the singular sides will be taken: 1 more player is needed
 #          Otherwise, the plural sides will be chosen: 5 more players are needed
@@ -118,7 +122,7 @@ command_disabled: "&4This command has been disabled! Please notify an administra
 
 
 # This message will be sent to all players in a world when someone disabled skipping the night
-disable_skip: "<user> disabled skipping the night for <time> minutes!"
+disable_skip: "<user> disabled skipping the night for <time> [minute.minutes]!"
 # This message is sent to the relevant players when skipping the night in a world is no longer disabled
 enable_skip: "Sleeping in <world> is now enabled again!"
 
