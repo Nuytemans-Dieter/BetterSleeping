@@ -124,31 +124,18 @@ disable_phantoms: false
 # ----------------- #
 
 
-# Choose whether or not everyone in the same world should receive all messages
+# Choose whether or not non-sleeping players should receive the following BetterSleeping messages (see lang.yml)
 # When an option is set to false, that message will only be sent to players that are sleeping.
-# Default: true
+# Default: true (for all options)
 enough_sleeping_public: true
-# Default: true
 good_morning_public: true
-# Default: true
 cancelled_public: true
-# Default: true
 amount_left_public: true
 
 
 # Choose whether or not a sound will be played when a player receives a BetterSleeping message
 # Default: false
 message_sound: false
-
-
-# Players will always receive these messages when they are sleeping
-# Players that are not sleeping will only receive the messages below if they are set to false
-# Default: false (for every option)
-hide_message_from_non_sleepers:
-  enough_sleeping: false
-  good_morning: false
-  cancelled: false
-  amount_left: false
 
 
 # Choose where the messages will appear
