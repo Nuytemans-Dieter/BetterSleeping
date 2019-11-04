@@ -134,16 +134,12 @@ public class Lang implements Reloadable {
     {
         String msg = composeMessage(messagePath, replacings, singular);
 
-        Bukkit.getLogger().info("Sending to single player: " + receiver.getName());
-
         // If the option exists and it is set tot true: only send to awake players
         boolean doHideMessage = false;
         if (sleepingOnly.containsKey(messagePath + "_sleepingOnly") )
         {
             doHideMessage = sleepingOnly.get(messagePath + "_sleepingOnly");
         }
-
-        Bukkit.getLogger().info("doHideMessage: " + doHideMessage);
 
         if (receiver instanceof Player)
         {
@@ -154,20 +150,17 @@ public class Lang implements Reloadable {
                 // Return if player hasn't slept yet
                 if (player.getBedSpawnLocation() == null)
                 {
-                    Bukkit.getLogger().info("Player hasn't slept yet");
                     return;
                 }
 
                 // Return if the player is close to their bed: Player is likely to be sleeping
-                if (player.getLocation().distance( player.getBedSpawnLocation() ) >= 2)
+                if (!player.isSleeping() && player.getLocation().distance( player.getBedSpawnLocation() ) >= 3)
                 {
-                    Bukkit.getLogger().info("Player too far from bed");
                     return;
                 }
             }
         }
 
-        Bukkit.getLogger().info("Sending message " + msg);
         if (msg != "") sendRaw(msg, receiver);
     }
 
@@ -217,11 +210,18 @@ public class Lang implements Reloadable {
             // Only send the message if everyone should receive that message or if the player is sleeping
 
             boolean isProbablySleeping = false;
-            if (doHideMessage && player.getBedSpawnLocation() != null)
+            if (doHideMessage)
             {
-                if (player.getLocation().distance( player.getBedSpawnLocation() ) < 2)
+                if (player.isSleeping())
                 {
                     isProbablySleeping = true;
+                }
+                else if(player.getBedSpawnLocation() != null)
+                {
+                    double distance = player.getLocation().distance( player.getBedSpawnLocation() );
+                    if ( distance < 3 ) {
+                        isProbablySleeping = true;
+                    }
                 }
             }
 
