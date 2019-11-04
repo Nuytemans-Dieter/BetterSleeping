@@ -9,6 +9,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,21 +19,24 @@ import java.util.regex.Pattern;
 
 public class Lang implements Reloadable {
 
-    private BetterSleeping plugin;
-    private ConfigAPI configAPI;
-    protected SendType sendType;
-    protected boolean playSound;
+    private BetterSleeping plugin;                  // The instance of this plugin
+    private ConfigAPI configAPI;                    // A ConfigAPI instance to do all the dirty work (lower-level)
+    private SendType sendType;                      // The way that messages are sent to the player (Chat, screen)
+    private boolean playSound;                      // Should a sound be played when a player receives a message?
+    private Map<String, Boolean> sleepingOnly;      // A message path and whether or not only sleeping players should receive it
+
 
     public enum SendType {
         CHAT,
         SCREEN
     }
 
-    public Lang (BetterSleeping plugin, SendType sendType, boolean playSound)
+    public Lang (BetterSleeping plugin, SendType sendType, boolean playSound, Map<String, Boolean> sleepingOnly)
     {
         this.plugin = plugin;
         this.sendType = sendType;
         this.playSound = playSound;
+        this.sleepingOnly = sleepingOnly;
 
         configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
         configAPI.reportMissingOptions();
@@ -130,19 +134,40 @@ public class Lang implements Reloadable {
     {
         String msg = composeMessage(messagePath, replacings, singular);
 
+        Bukkit.getLogger().info("Sending to single player: " + receiver.getName());
+
         // If the option exists and it is set tot true: only send to awake players
-        if (configAPI.getBoolean("hide_message_from_non_sleepers." + messagePath))
+        boolean doHideMessage = false;
+        if (sleepingOnly.containsKey(messagePath + "_sleepingOnly") )
         {
-            if (receiver instanceof Player)
+            doHideMessage = sleepingOnly.get(messagePath + "_sleepingOnly");
+        }
+
+        Bukkit.getLogger().info("doHideMessage: " + doHideMessage);
+
+        if (receiver instanceof Player)
+        {
+            Player player = (Player) receiver;
+
+            if (doHideMessage)
             {
-                Player p = (Player) receiver;
-                if ( ! p.isSleeping())
+                // Return if player hasn't slept yet
+                if (player.getBedSpawnLocation() == null)
                 {
+                    Bukkit.getLogger().info("Player hasn't slept yet");
+                    return;
+                }
+
+                // Return if the player is close to their bed: Player is likely to be sleeping
+                if (player.getLocation().distance( player.getBedSpawnLocation() ) >= 2)
+                {
+                    Bukkit.getLogger().info("Player too far from bed");
                     return;
                 }
             }
         }
 
+        Bukkit.getLogger().info("Sending message " + msg);
         if (msg != "") sendRaw(msg, receiver);
     }
 
@@ -181,12 +206,26 @@ public class Lang implements Reloadable {
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings, boolean singular)
     {
         String message = composeMessage(messagePath, replacings, singular);
+        String fullPath = messagePath + "_sleepingOnly";
 
-        boolean hideMessage = configAPI.getBoolean("hide_message_from_non_sleepers." + messagePath);
-        //boolean hideMessage = configAPI.getBoolean(messagePath);
+        boolean doHideMessage = false;
+        if (sleepingOnly.containsKey(fullPath)) {
+            doHideMessage = sleepingOnly.get(fullPath);
+        }
+
         for (Player player : receivers) {
             // Only send the message if everyone should receive that message or if the player is sleeping
-            if ( !hideMessage || player.isSleeping())
+
+            boolean isProbablySleeping = false;
+            if (doHideMessage && player.getBedSpawnLocation() != null)
+            {
+                if (player.getLocation().distance( player.getBedSpawnLocation() ) < 2)
+                {
+                    isProbablySleeping = true;
+                }
+            }
+
+            if ( doHideMessage == false || isProbablySleeping)
                 sendRaw(message, player);
         }
     }
