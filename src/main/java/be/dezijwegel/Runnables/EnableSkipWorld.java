@@ -41,7 +41,9 @@ public class EnableSkipWorld extends BukkitRunnable {
         disabledWorlds.remove( enableWorld );
 
         // Tell the players that sleeping has been enabled again
-        management.sendMessageToGroup("enable_skip", sleepTracker.getRelevantPlayers(enableWorld));
+        Map<String, String> replace = new HashMap<String, String>();
+        replace.put("<world>", enableWorld.getName());
+        management.sendMessageToGroup("enable_skip", sleepTracker.getRelevantPlayers(enableWorld), replace);
 
         // Check if enough people are sleeping. If this is the case, skip the night!
         int numSleeping = sleepTracker.getNumSleepingPlayers( enableWorld );
@@ -50,7 +52,7 @@ public class EnableSkipWorld extends BukkitRunnable {
             SetTimeToDay setTimeToDay = new SetTimeToDay(enableWorld, management, sleepTracker);
             setTimeToDay.runTaskLater(plugin, management.getIntegerSetting("sleep_delay"));
 
-            Map<String, String> replace = new HashMap<String, String>();
+            replace = new HashMap<String, String>();
             //Calculates the time players have to stay in bed, (double) and Math#ceil() for accuracy but (int) for a nice looking output
             int waitTime  = (int) Math.ceil( (double) management.getIntegerSetting("sleep_delay") / 20 );
             replace.put("<time>", Integer.toString(waitTime));
