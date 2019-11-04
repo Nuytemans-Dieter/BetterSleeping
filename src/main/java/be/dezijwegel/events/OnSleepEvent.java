@@ -131,6 +131,13 @@ public class OnSleepEvent implements Listener {
                         }
                     }
                 }
+                else if (sleepTracker.getDisableSkipTracker().isDisabled( world ))
+                {
+                    if (sleepersLeft == 0)
+                        management.sendMessageToGroup("disabled_enough_sleeping", sleepTracker.getRelevantPlayers(player.getWorld()));
+                    else
+                        management.sendMessage("disabled_amount_left", player);
+                }
                 else if (sleepersLeft == 0)
                 {
                     if (BetterSleeping.debug)

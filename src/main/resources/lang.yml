@@ -131,6 +131,19 @@ enable_skip: "Sleeping in <world> is now enabled again!"
 already_disabled: "&cSkipping the night in this world is already disabled. Please try again later."
 
 
+# ------------------------------- #
+# Disable night skipping messages |
+# ------------------------------- #
+
+
+# Sent to every player that enters their bed while skipping their world is disabled
+disabled_amount_left: "Skipping the night is still disabled in this world. Please wait a few moments"
+
+
+# Sent to all relevant players if enough players are sleeping but skipping in their world is disabled
+disabled_enough_sleeping: "Enough players are sleeping but skipping the night is currently disabled!"
+
+
 # --------------- #
 # Bypass messages |
 # --------------- #

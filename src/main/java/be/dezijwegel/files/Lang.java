@@ -141,6 +141,14 @@ public class Lang implements Reloadable {
             doHideMessage = sleepingOnly.get(messagePath + "_sleepingOnly");
         }
 
+        if (messagePath.equals( "disabled_enough_sleeping" ))
+        {
+            if (sleepingOnly.containsKey("enough_sleeping_sleepingOnly") )
+            {
+                doHideMessage = sleepingOnly.get("enough_sleeping_sleepingOnly");
+            }
+        }
+
         if (receiver instanceof Player)
         {
             Player player = (Player) receiver;
@@ -200,6 +208,11 @@ public class Lang implements Reloadable {
     {
         String message = composeMessage(messagePath, replacings, singular);
         String fullPath = messagePath + "_sleepingOnly";
+
+        if (messagePath.equals( "disabled_enough_sleeping" ))
+        {
+            fullPath = "enough_sleeping_sleepingOnly";
+        }
 
         boolean doHideMessage = false;
         if (sleepingOnly.containsKey(fullPath)) {
