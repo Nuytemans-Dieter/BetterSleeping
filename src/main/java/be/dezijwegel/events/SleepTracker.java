@@ -46,7 +46,7 @@ public class SleepTracker {
         lastSetToDay = new HashMap<World, Long>();
 
         this.management = management;
-        boolean enableSkip = management.getBooleanSetting("disable_skip_command");
+        boolean enableSkip = management.getBooleanSetting("enable_no_skip_night_command");
         int durationSkip = management.getIntegerSetting("disable_skip_time");
         this.disableSkipTracker = new DisableSkipTracker(plugin, management, this, enableSkip, durationSkip);
 

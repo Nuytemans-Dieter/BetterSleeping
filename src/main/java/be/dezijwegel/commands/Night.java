@@ -49,7 +49,7 @@ public class Night implements be.dezijwegel.interfaces.Command {
 
 
                 // If this command is disabled
-                if ( ! management.getBooleanSetting("disable_skip_command"))
+                if ( ! management.getBooleanSetting("enable_no_skip_night_command"))
                 {
                     management.sendMessage("command_disabled", player);
                     return true;
