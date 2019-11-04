@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,13 @@ public class Management {
         if ( ! isUsingSpigot() )
             sendType = Lang.SendType.CHAT;
 
-        lang = new Lang(plugin, sendType, config.getBoolean("message_sound"));
+        Map<String, Boolean> onlyIsSleeping = new HashMap<String, Boolean>();
+        onlyIsSleeping.put("enough_sleeping_sleepingOnly", config.getBoolean("enough_sleeping_sleepingOnly"));
+        onlyIsSleeping.put("good_morning_sleepingOnly", config.getBoolean("good_morning_sleepingOnly"));
+        onlyIsSleeping.put("cancelled_sleepingOnly", config.getBoolean("cancelled_sleepingOnly"));
+        onlyIsSleeping.put("amount_left_sleepingOnly", config.getBoolean("amount_left_sleepingOnly"));
+
+        lang = new Lang(plugin, sendType, config.getBoolean("message_sound"), onlyIsSleeping);
 
         buffs = new BuffManagement(plugin);
 
