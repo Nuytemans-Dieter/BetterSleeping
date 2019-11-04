@@ -17,9 +17,9 @@ public class SleepTracker {
 
     Plugin plugin;
 
-    private Map<UUID, Long> sleepList;
-    private Map<World, Integer> numSleeping;
-    private Map<World, Long> lastSetToDay;
+    private Map<UUID, Long> sleepList;          // Keeps track of when a player went last to sleep
+    private Map<World, Integer> numSleeping;    // Keeps track of the number of sleeping players in each world
+    private Map<World, Long> lastSetToDay;      // Keeps track when the time in each world was last set to day
 
     private Management management;
     private DisableSkipTracker disableSkipTracker;

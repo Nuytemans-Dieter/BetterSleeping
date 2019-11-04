@@ -126,6 +126,7 @@ disable_phantoms: false
 message_sound: false
 
 
+# This is an EXPERIMENTAL feature!
 # Choose whether or not non-sleeping players should receive the following BetterSleeping messages (see lang.yml)
 # When an option is set to true, that message will only be sent to players that are sleeping.
 # Default: false (for all options)
