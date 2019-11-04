@@ -23,6 +23,7 @@ public class Help implements be.dezijwegel.interfaces.Command {
         commandList.add( new CommandInfo("Not a command", "Players with this permission will not be able to sleep and won't be counted towards required sleeping players.", "bettersleeping.bypass or essentials.sleepingignored"));
         commandList.add( new CommandInfo("/bs skip", "If all players in your world have bypass permissions, the night will be skipped instantly.", "bettersleeping.bypass or essentials.sleepingignored"));
         commandList.add( new CommandInfo("/bs status or /bs s", "This will display info about the current sleeping players", "bettersleeping.status") );
+        commandList.add( new CommandInfo("/bs night or /bs n", "This command will disable skipping the night for a set time", "bettersleeping.night"));
     }
 
     @Override
