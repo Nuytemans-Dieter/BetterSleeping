@@ -4,11 +4,10 @@ A Spigot plugin that will make sleeping on servers less of a hassle. More inform
 ## What this plugin does
 Usually all players must sleep before a night/storm can be skipped on a multiplayer server.
 BetterSleeping allows this to be skipped when a given percentage of players is sleeping.
-Quite extensive configuration is included to suite your needs. The configuration includes but is not limited to:
+Quite extensive configuration is included to suit your needs. The configuration includes, but is not limited to:
  - Set a **percentage** of players that must sleep to skip the night
  - All messages can be **customised** in lang.yml
  - Give players **buffs** (potion effects) for sleeping
- - The delay players need to wait while sleeping before the time is set to day
  - **Disable phantoms**
  - Display **messages on screen** instead of in the chat
  - ... And **so much more**! Check the [configuration wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki/Configuration) to see all options. 
