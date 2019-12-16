@@ -2,6 +2,7 @@ package be.dezijwegel.management;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.files.Config;
+import be.dezijwegel.files.Console;
 import be.dezijwegel.files.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,7 +18,10 @@ import java.util.Map;
 public class Management {
 
     private BetterSleeping plugin;
+
+    // Configuration file types
     private Config config;
+    private Console consoleConfig;
     private Lang lang;
 
     private BuffManagement buffs;
@@ -35,14 +39,16 @@ public class Management {
             sendType = Lang.SendType.CHAT;
 
         Map<String, Boolean> onlyIsSleeping = new HashMap<String, Boolean>();
-        onlyIsSleeping.put("enough_sleeping_sleepingOnly", config.getBoolean("enough_sleeping_sleepingOnly"));
-        onlyIsSleeping.put("good_morning_sleepingOnly", config.getBoolean("good_morning_sleepingOnly"));
-        onlyIsSleeping.put("cancelled_sleepingOnly", config.getBoolean("cancelled_sleepingOnly"));
-        onlyIsSleeping.put("amount_left_sleepingOnly", config.getBoolean("amount_left_sleepingOnly"));
+        onlyIsSleeping.put("enough_sleeping_sleepingOnly",  config.getBoolean("enough_sleeping_sleepingOnly"));
+        onlyIsSleeping.put("good_morning_sleepingOnly",     config.getBoolean("good_morning_sleepingOnly"));
+        onlyIsSleeping.put("cancelled_sleepingOnly",        config.getBoolean("cancelled_sleepingOnly"));
+        onlyIsSleeping.put("amount_left_sleepingOnly",      config.getBoolean("amount_left_sleepingOnly"));
 
         lang = new Lang(plugin, sendType, config.getBoolean("message_sound"), onlyIsSleeping);
 
         buffs = new BuffManagement(plugin);
+
+        consoleConfig = new Console(plugin);
 
         checkConfiguration();
     }
@@ -55,6 +61,17 @@ public class Management {
     {
         return config;
     }
+
+
+    /**
+     * Get the configuration file for console logging
+     * @return a Console Object that allows reading of console logging settings
+     */
+    public Console getConsoleConfig()
+    {
+        return consoleConfig;
+    }
+
 
     /**
      * This method will report any faulty configurations to the console
@@ -71,12 +88,26 @@ public class Management {
         {
             ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Players may not receive all messages due to the messages_in_chat setting.");
-            if (!lang.isPathDisabled("buff_received"))
-                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "good_morning may not be visible to all users. You can either disable buff_received or good_morning");
-            if (!lang.isPathDisabled("no_buff_received"))
-                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "good_morning may not be visible to all users. You can either disable no_buff_received or good_morning");
-            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Alternatively, you can set 'messages_in_chat' in config.yml to true.");
+            String message1 = "Players may not receive all messages due to the messages_in_chat setting.";
+            String message2 = "good_morning may not be visible to all users. You can either disable buff_received or good_morning";
+            String message3 = "good_morning may not be visible to all users. You can either disable no_buff_received or good_morning";
+            String message4 = "Alternatively, you can set 'messages_in_chat' in config.yml to true.";
+
+            if (consoleConfig.isNegativeRed()) {
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message1);
+                if (!lang.isPathDisabled("buff_received"))
+                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message2);
+                if (!lang.isPathDisabled("no_buff_received"))
+                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message3);
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message4);
+            } else {
+                console.sendMessage("[BetterSleeping] " + message1);
+                if (!lang.isPathDisabled("buff_received"))
+                    console.sendMessage("[BetterSleeping] " + message2);
+                if (!lang.isPathDisabled("no_buff_received"))
+                    console.sendMessage("[BetterSleeping] " + message3);
+                console.sendMessage("[BetterSleeping] " + message4);
+            }
         }
 
         // If messages are sent on screen AND the server is not running Spigot -> Warn the console!
@@ -84,9 +115,19 @@ public class Management {
         {
             ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-            console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "You are not using Spigot so messages cannot be displayed on screen!");
-            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please set 'messages_in_chat' in config.yml to false or start using Spigot to prevent console errors.");
-            console.sendMessage("[BetterSleeping] " + ChatColor.RED + "The option 'messages_in_chat' in config.yml is now being ignored and messages will be sent through chat!");
+            String message1 = "You are not using Spigot so messages cannot be displayed on screen!";
+            String message2 = "Please set 'messages_in_chat' in config.yml to false or start using Spigot to prevent console errors.";
+            String message3= "The option 'messages_in_chat' in config.yml is now being ignored and messages will be sent through chat!";
+
+            if (consoleConfig.isNegativeRed()) {
+                console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message1);
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message2);
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message3);
+            } else {
+                console.sendMessage("[BetterSleeping] " + message1);
+                console.sendMessage("[BetterSleeping] " + message2);
+                console.sendMessage("[BetterSleeping] " + message3);
+            }
         }
     }
 

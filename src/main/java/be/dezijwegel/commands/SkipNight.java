@@ -28,7 +28,12 @@ public class SkipNight implements be.dezijwegel.interfaces.Command{
         {
             if (cs instanceof ConsoleCommandSender)
             {
-                cs.sendMessage("[BetterSleeping] " + ChatColor.RED + "The console cannot perform /bs skip!");
+                String message = "The console cannot perform /bs skip!";
+
+                if (management.getConsoleConfig().isNegativeRed())
+                    cs.sendMessage("[BetterSleeping] " + ChatColor.RED + message);
+                else
+                    cs.sendMessage("[BetterSleeping] " + message);
                 return true;
             }
 

@@ -28,7 +28,8 @@ public class ConfigAPI {
     public enum FileType {
         CONFIG,
         LANG,
-        BUFFS
+        BUFFS,
+        CONSOLE
     }
 
     /**
@@ -48,6 +49,10 @@ public class ConfigAPI {
                 break;
             case BUFFS:
                 fileName = "buffs.yml";
+                break;
+            case CONSOLE:
+                fileName = "console.yml";
+                break;
         }
 
         this.file = new File(plugin.getDataFolder(), fileName);
@@ -245,15 +250,31 @@ public class ConfigAPI {
 
             ConsoleCommandSender console = Bukkit.getConsoleSender();
 
+            Console consoleConfig = new Console(plugin);
+
             if (missingOptions.size() > 0)
             {
 
-                if (missingOptions.size() == 1)
-                     console.sendMessage("[BetterSleeping] " + ChatColor.RED + "A missing option has been found in " + fileName + "!");
-                else console.sendMessage("[BetterSleeping] " + ChatColor.RED + missingOptions.size() + " Missing options have been found in " + fileName + "!");
+                String message1 = "A missing option has been found in " + fileName + "!";
+                String message2 = missingOptions.size() + " Missing options have been found in " + fileName + "!";
+                String message3 = "Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)";
+                String message4 = "The default values will be used until then";
 
-                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)");
-                console.sendMessage("[BetterSleeping] " + ChatColor.RED + "The default values will be used until then");
+                if (consoleConfig.isNegativeRed()) {
+                    if (missingOptions.size() == 1)
+                        console.sendMessage("[BetterSleeping] " + ChatColor.RED + message1);
+                    else console.sendMessage("[BetterSleeping] " + ChatColor.RED + message2);
+
+                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message3);
+                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message4);
+                } else {
+                    if (missingOptions.size() == 1)
+                        console.sendMessage("[BetterSleeping] " + message1);
+                    else console.sendMessage("[BetterSleeping] " + message2);
+
+                    console.sendMessage("[BetterSleeping] " + message3);
+                    console.sendMessage("[BetterSleeping] " + message4);
+                }
 
                 for (String path : missingOptions)
                 {
@@ -277,10 +298,20 @@ public class ConfigAPI {
                     path += "'" + sections[0] + "'";                           // Add the actual setting name
 
                     // Send message
-                    console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + "Missing option: " + path + " with default value: " + value);
+                    String message = "Missing option: " + path + " with default value: " + value;
+                    if (consoleConfig.isNegativeRed())
+                        console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
+                    else
+                        console.sendMessage("[BetterSleeping] " + message);
                 }
             } else {
-                console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "No missing options were found in " + fileName + "!");
+
+                String message = "No missing options were found in " + fileName + "!";
+
+                if (consoleConfig.isPositiveGreen())
+                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + message);
+                else
+                    console.sendMessage("[BetterSleeping] " + message);
             }
         }
     }

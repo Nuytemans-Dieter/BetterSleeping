@@ -123,7 +123,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String updateVersion = reader.readLine();
                 if (updateVersion.equals(currentVersion)) {
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] You are using the latest version: " + currentVersion + ".");
+                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] You are using the latest version: " + currentVersion);
                 } else {
                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/");
                 }

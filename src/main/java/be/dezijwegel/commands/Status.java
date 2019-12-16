@@ -71,7 +71,13 @@ public class Status implements Command {
             player.sendMessage(ChatColor.GOLD + "---==---");
 
         } else {
-            cs.sendMessage("[BetterSleeping] " + ChatColor.RED + "Only players can perform /bs status!");
+            String message = "Only players can perform /bs status!";
+
+            if (management.getConsoleConfig().isNegativeRed())
+                cs.sendMessage("[BetterSleeping] " + ChatColor.RED + message);
+            else
+                cs.sendMessage("[BetterSleeping] " + message);
+            
             return true;
         }
 

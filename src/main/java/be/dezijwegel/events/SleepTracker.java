@@ -36,7 +36,14 @@ public class SleepTracker {
         isEssentialsHooked = Bukkit.getPluginManager().isPluginEnabled("Essentials");
         if (isEssentialsHooked) {
             essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
-            Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into Essentials!");
+
+            String message = "Successfully hooked into Essentials!";
+
+            if (management.getConsoleConfig().isPositiveGreen())
+                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + message);
+            else
+                Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + message);
+
         } else {
             Bukkit.getConsoleSender().sendMessage("[BetterSleeping] Essentials was not found on this server!");
         }
