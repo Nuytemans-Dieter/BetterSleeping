@@ -52,16 +52,15 @@ bed_enter_delay: 10
 essentials_afk_support: true
 
 
-# This is an EXPERIMENTAL FEATURE! Its behavior might be unexpected so please give me feedback
 # Choose whether /bs night is enabled by default (only OP has access by default)
-# /bs night or /bs n will disable skipping the night for a short time (which you can choose)
-# This allows players with the correct permission to finish their business
-# CAUTION! This feature can allow players to abuse this system and prevent the night from being skipped indefinitely!
-# This setting will have no effect if all players in a world go to bed. Nothing can be done about that as it is a default mechanic
+# /bs night or /bs n will disable skipping the night for a short time (which you can configure below)
+# Players must have the correct permission to use this command!
+# Keep in mind that this feature can allow players to abuse this system and prevent the night from being skipped indefinitely!
+# This setting will have no effect if all players in a world go to bed. Nothing can be done about that as it is a default mechanic (and everyone would want to skip in that case anyway)
 # Default: false
 enable_no_skip_night_command: false
-# Choose for how many minutes the night won't be skipped after executing /bs night
-# Default: 1 (in minutes!)
+# Choose for how many minutes the night won't be skipped after executing /bs night (in minutes!)
+# Default: 1
 disable_skip_time: 1
 
 
@@ -70,9 +69,9 @@ disable_skip_time: 1
 # --------------- #
 
 
-# !!!PLEASE READ BEFORE EDITING!!!
-# Due to popular demand, bypass permissions can now be disabled. There is a catch, however.
-# An issue may arise when this is set to false and Essentials is installed:
+# Please read this wall of text before editing enable_bypass_permissions!
+# This feature was only added due to popular request.
+# An issue may arise when bypass permissions are disabled and Essentials is installed:
 # When everyone (except for OPs) is sleeping, the night is skipped instantly and BetterSleeping will send a message saying that skipping the night was canceled!
 # If set to true, BetterSleeping will ignore those players and this bug can no longer occur.
 # If you want to prevent this bug AND allow OPs to sleep, please do the following:
@@ -80,15 +79,15 @@ disable_skip_time: 1
 # Negate bettersleeping.bypass AND essentials.sleepingignored
 #   With permissionsEx, negating is done by adding a '-' in front of the permission
 #   With LuckPerms, negating is done by setting the permission node to false
-#   Other permission management plugins may have a different syntax, please check their information
-# Gamemodes can still be ignored if this is set to false.
-# Now that you know all the details, you can safely make the right decision.
+#   Other permission management plugins may have a different syntax, please check their documentation
+# Specific gamemodes can still be ignored when this is set to false.
+# Thank you for reading this!
 # Default: true
 enable_bypass_permissions: true
 
 
 # Decide whether or not players with sleeping bypass permissions will get buffs
-# Those players will not be able sleep, even if they want to. This means that they would never get their buffs if this is set to false.
+# Those players will not be able sleep, even if they want to. This means that they would never be able to get their buffs if this is set to false.
 # Default: true
 buffs_for_bypassing_players: true
 
@@ -96,20 +95,19 @@ buffs_for_bypassing_players: true
 # Choose whether or not vanished players should be bypassed
 # The plugins on the line below are supported
 # Essentials, Essentials-compatible vanish plugins, PremiumVanish, SuperVanish, VanishNoPacket and even more plugins!
-# Without a supported plugin, this setting will have no effect
 # Default: true
 ignore_vanished_players: true
 
 
 # Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
-# Default: false (for all options)
+# Default: false
 ignore_survival: false
 ignore_creative: false
 ignore_adventure: false
 
 
 # Choose whether or not phantoms are disabled
-# Setting this to true means that phantoms will never spawn again (this effects ALL phantoms)
+# Setting this to true means that phantoms will never spawn again (this affects ALL phantoms)
 # Phantoms that spawned before setting this to true will still live until despawned or killed
 # Please do not set this to true if you are using a Spigot version below 1.13 as this can cause errors in the console
 # Default: false
@@ -126,7 +124,6 @@ disable_phantoms: false
 message_sound: false
 
 
-# This is an EXPERIMENTAL feature!
 # Choose whether or not non-sleeping players should receive the following BetterSleeping messages (see lang.yml)
 # When an option is set to true, that message will only be sent to players that are sleeping.
 # Default: false (for all options)
@@ -138,14 +135,13 @@ amount_left_sleepingOnly: false
 
 # Choose where the messages will appear
 # Setting this to true will result in the messages being sent to the chat
-# Setting this to false will result in the messages being shown on screen
-# !IMPORTANT! (only when set to false)
+# Setting this to false will result in the messages being shown on screen (read the text below to prevent issues)
 # Sometimes several messages are sent at once. Only the last message will be shown on screen!
 # Please disable the messages below in lang.yml or people may never receive 'good_morning'
 #   - buff_received: "ignored"
 #   - no_buff_received: "ignored"
 # If you really want to say good morning AND list the amount of buffs received:
 #   - Disable 'good_morning' and add your good morning to the two messages listed above.
-# A faulty configuration will be reported to the console upon startup or reload and will tell you what to change
+# A faulty configuration will be reported to the console upon startup or reload and will advise you on how to fix the configuration
 # Default: true
 messages_in_chat: true
