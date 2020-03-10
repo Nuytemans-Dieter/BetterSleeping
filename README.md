@@ -1,4 +1,4 @@
-# BetterSleeping (18000+ downloads!)
+# BetterSleeping (19000+ downloads!)
 A Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). For a guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki).
 
 ## What this plugin does
