@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -21,7 +22,7 @@ public class ConfigAPI {
     private File file;
     private JavaPlugin plugin;
 
-    String fileName;
+    String fileName = "";
 
     private FileConfiguration defaultConfig;
 
@@ -276,10 +277,13 @@ public class ConfigAPI {
                     console.sendMessage("[BetterSleeping] " + message4);
                 }
 
+                ArrayList<String> currentPath = new ArrayList<>();
+                currentPath.add("");
                 for (String path : missingOptions)
                 {
                     // Handle value
                     Object value = defaultConfig.get(path);
+
 
                     // Change formatting if the setting is a String
                     if (value instanceof String)
@@ -287,18 +291,54 @@ public class ConfigAPI {
 
 
                     // Handle path
-                    String[] sections = path.split("\\.");  // Split the path in its sections
-                    path = "";                                     // Reset the path variable
+                    String[] sections = path.split("\\.");   // Split the path in its sections
+                    path = "";                                      // Reset the path variable
 
-                    for (int i = sections.length-1; i > 0; i--)    // Loop each subsection in reversed order
+
+                    // Remove part of the path that is a deeper level than this setting can possibly be
+                    if (currentPath.size() > sections.length)
                     {
-                        String part = sections[i];
-                        path += "'" + part + "'" + " in section ";             // Print each section in reversed order
+                        currentPath.subList(sections.length, currentPath.size()).clear();
                     }
-                    path += "'" + sections[0] + "'";                           // Add the actual setting name
 
-                    // Send message
-                    String message = "Missing option: " + path + " with default value: " + value;
+
+                    // Handle subsection logging and indentation
+                    int index = 0;                                  // Index of the current path level
+                    String indentation = "";                        // Indentation for the current level
+                    for (String section : sections)
+                    {
+                        if (index+1 != sections.length) {           // Prevents the option name itself to be viewed as part of path
+                            if (index > currentPath.size() || !currentPath.get(index).equals(section))  // If the current option is in a different subsection
+                            {
+                                // Set the path change
+                                if (index > currentPath.size())     // If index does NOT exist
+                                {
+                                    // Add to the end of list
+                                    currentPath.add(section);
+                                } else {                            // If index DOES exist
+                                    // Replace the element at index
+                                    currentPath.set(index, section);
+                                    // Remove deprecated sub-branches
+                                    currentPath.subList(index, currentPath.size()).clear();
+                                }
+
+                                // Print path change
+                                String message = indentation + "In subsection: \'" + section + "\'";
+                                if (consoleConfig.isNegativeRed())
+                                    console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
+                                else
+                                    console.sendMessage("[BetterSleeping] " + message);
+                            }
+
+                            indentation += "  ";
+                            index++;
+                        }
+                    }
+
+                    path += "'" + sections[0] + "'";                 // Get the actual setting name
+
+                    // Print the missing option with its defaul value
+                    String message = indentation + "Missing option: " + path + " with default value: " + value;
                     if (consoleConfig.isNegativeRed())
                         console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
                     else
