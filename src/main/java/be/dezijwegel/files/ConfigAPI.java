@@ -30,7 +30,8 @@ public class ConfigAPI {
         CONFIG,
         LANG,
         BUFFS,
-        CONSOLE
+        CONSOLE,
+        EVENTS
     }
 
     /**
@@ -53,6 +54,9 @@ public class ConfigAPI {
                 break;
             case CONSOLE:
                 fileName = "console.yml";
+                break;
+            case EVENTS:
+                fileName = "events.yml";
                 break;
         }
 

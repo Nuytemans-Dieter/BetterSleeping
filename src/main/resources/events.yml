@@ -1,0 +1,37 @@
+
+#  ____       _   _            _____ _                 _
+# |  _ \     | | | |          / ____| |               (_)
+# | |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _
+# |  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` |
+# | |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| |
+# |____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, |
+#                                               | |             __/ |
+#                                               |_|            |___/
+
+
+# This file allows you to enable and disable specific timed events
+# These events are time locked, that means they are only active on specific days
+# They are all enabled by default but are as lightweight as possible
+# More timed events will be added in the future
+
+
+# ------------ #
+# Timed events |
+# ------------ #
+
+
+# About date formats:
+# Written in a DD/MM format: These dates are the same every year
+# Written in a DD/MM/YYYY format: These dates will change each year
+
+
+# Features: None at this time
+# Start: 01/04
+# Stop:  08/04
+enable_april_fools: true
+
+
+# Features: None at this time
+# Start: 12/04/2020
+# Stop:  19/04/2020
+enable_easter: true
