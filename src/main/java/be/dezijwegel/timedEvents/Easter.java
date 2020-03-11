@@ -1,18 +1,14 @@
 package be.dezijwegel.timedEvents;
 
-import be.dezijwegel.interfaces.TimedEvent;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-import java.util.Date;
+public class Easter extends Timed {
 
-public class Easter implements TimedEvent {
-    @Override
-    public Date getStartDate() {
-        return null;
-    }
-
-    @Override
-    public Date getEndDate() {
-        return null;
+    public Easter()
+    {
+        super(  new GregorianCalendar(2020, Calendar.APRIL, 12),    // Start date
+                new GregorianCalendar(2020, Calendar.APRIL, 19));   // End date
     }
 
     @Override

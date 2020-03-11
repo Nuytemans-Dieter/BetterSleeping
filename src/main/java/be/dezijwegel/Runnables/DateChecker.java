@@ -4,10 +4,11 @@ import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.TimedEvent;
 import be.dezijwegel.timedEvents.AprilFools;
 import be.dezijwegel.timedEvents.Easter;
+import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.Month;
+import java.util.*;
 
 /**
  * This class handles starting and stopping timed events like April Fools, Easter, etc.
@@ -15,7 +16,7 @@ import java.util.HashMap;
 public class DateChecker extends BukkitRunnable {
 
     private EventsConfig config;
-    private HashMap<EventType, TimedEvent> events = new HashMap<>();
+    private Map<EventType, TimedEvent> events = new HashMap<>();
 
     public enum EventType {
         APRIL_FOOLS,
@@ -38,5 +39,33 @@ public class DateChecker extends BukkitRunnable {
     @Override
     public void run() {
 
+        Calendar today = Calendar.getInstance(TimeZone.getDefault());
+
+        for (Map.Entry<EventType, TimedEvent> entry : events.entrySet())
+        {
+            // Read the Entry
+            EventType type   = entry.getKey();
+            TimedEvent event = entry.getValue();
+
+            // Get event start and end date
+            Calendar start = event.getStartDate();
+            Calendar end   = event.getEndDate();
+
+            // See if today is in the right window
+            // date1.CompareTo(date2):
+            // <0 : Date1 is before date2
+            // =0 : Date1 is at the same time as date2
+            // >0 : Date1 is after date2
+            if (start.compareTo(today) <= 0 && end.compareTo(today) >= 0)
+            {
+                if ( ! event.getIsActive()) {   // Activate if the event is not active yet
+                    event.startEvent();
+                }
+            }
+            else if (event.getIsActive())       // Not in the right window! Stop event if currently active
+            {
+                event.stopEvent();
+            }
+        }
     }
 }

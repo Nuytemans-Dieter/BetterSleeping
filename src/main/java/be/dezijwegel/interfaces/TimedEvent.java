@@ -1,12 +1,15 @@
 package be.dezijwegel.interfaces;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public interface TimedEvent {
 
-    Date getStartDate();
-    Date getEndDate();
+    Calendar getStartDate();    // Get the date on which this event starts
+    Calendar getEndDate();      // Get the date on which this event ends
 
-    void startEvent();
-    void stopEvent();
+    void startEvent();          // Start the current event
+    void stopEvent();           // Stop the current event
+
+    boolean getIsActive();      // Check whether or not the event is currently active
 }
