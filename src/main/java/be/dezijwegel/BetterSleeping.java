@@ -10,6 +10,7 @@ import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
@@ -70,6 +71,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
         Management management = new Management(this);
 
+        ConsoleLogger.setConfig(management.getConsoleConfig());
+
         onSleepEvent = new OnSleepEvent(management, this);
         onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
         onTeleportEvent = new OnTeleportEvent( onSleepEvent.getSleepTracker() );
@@ -116,10 +119,10 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         /**
          * Create an instance of UpdateChecker and perform an update check
          */
-        public UpdateChecker( String currentVersion)
+        UpdateChecker(String currentVersion)
         {
             this.currentVersion = currentVersion;
-            this.run();
+            this.start();
         }
 
         @Override
@@ -135,7 +138,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             URLConnection conn = null;
             try {
                 conn = url.openConnection();
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 Bukkit.getLogger().info("[BetterSleeping] An error occurred while retrieving the latest version!");
             }
 
@@ -147,7 +150,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 } else {
                     Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/");
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 Bukkit.getLogger().info("[BetterSleeping] An error occurred while retrieving the latest version!");
             }
         }
