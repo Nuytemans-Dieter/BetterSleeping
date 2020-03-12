@@ -1,10 +1,12 @@
 package be.dezijwegel;
 
+import be.dezijwegel.Runnables.DateChecker;
 import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.events.OnTeleportEvent;
+import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;
@@ -34,6 +36,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     private OnPhantomSpawnEvent onPhantomSpawnEvent;
     private OnTeleportEvent onTeleportEvent;
 
+    private DateChecker dateChecker;
+
     // Commands
     private CommandHandler commandHandler;
 
@@ -47,11 +51,16 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     @Override
     public void reload() {
+
+        // Reset where needed
+        dateChecker.cancel();
         HandlerList.unregisterAll(this);
+
+        // Restart all
         startPlugin();
     }
 
-    public void startPlugin()
+    private void startPlugin()
     {
         if (BetterSleeping.debug)
         {
@@ -80,13 +89,24 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into PlaceholderAPI!");
         }
 
-        this.getCommand("bettersleeping").setExecutor(commandHandler);
-        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion( onSleepEvent.getSleepTracker() ));
+        try {
+            this.getCommand("bettersleeping").setExecutor(commandHandler);
+            this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
+        } catch(NullPointerException e)
+        {
+            e.printStackTrace();
+        }
 
         if (management.getBooleanSetting("update_checker")) {
             String version = this.getDescription().getVersion();
             new UpdateChecker( version );
         }
+
+        EventsConfig eventsConfig = new EventsConfig(this);
+
+        dateChecker = new DateChecker(eventsConfig, management.getConsoleConfig());
+        // 20x3600 = 72 000 -> Ticks in an hour
+        dateChecker.runTaskTimer(this, 0, 72000);
     }
 
     private class UpdateChecker extends Thread {

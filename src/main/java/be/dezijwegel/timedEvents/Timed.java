@@ -15,6 +15,8 @@ public class Timed implements TimedEvent {
     {
         this.start = start;
         this.end   = end;
+
+        isActive = false;
     }
 
     @Override

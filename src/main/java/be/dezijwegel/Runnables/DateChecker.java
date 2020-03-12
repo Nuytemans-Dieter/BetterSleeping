@@ -1,13 +1,15 @@
 package be.dezijwegel.Runnables;
 
+import be.dezijwegel.files.Console;
 import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.TimedEvent;
 import be.dezijwegel.timedEvents.AprilFools;
 import be.dezijwegel.timedEvents.Easter;
+import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.time.Month;
 import java.util.*;
 
 /**
@@ -16,6 +18,7 @@ import java.util.*;
 public class DateChecker extends BukkitRunnable {
 
     private EventsConfig config;
+    private Console consoleConfig;
     private Map<EventType, TimedEvent> events = new HashMap<>();
 
     public enum EventType {
@@ -23,9 +26,10 @@ public class DateChecker extends BukkitRunnable {
         EASTER
     }
 
-    public DateChecker(EventsConfig eventsConfig)
+    public DateChecker(EventsConfig eventsConfig, Console consoleConfig)
     {
         this.config = eventsConfig;
+        this.consoleConfig = consoleConfig;
         
         // Create all types of events and add them to the list
         events.put(EventType.APRIL_FOOLS, new AprilFools());
@@ -58,12 +62,29 @@ public class DateChecker extends BukkitRunnable {
             // >0 : Date1 is after date2
             if (start.compareTo(today) <= 0 && end.compareTo(today) >= 0)
             {
-                if ( ! event.getIsActive()) {   // Activate if the event is not active yet
+                if ( config.isEnabled(type) && ! event.getIsActive()) {   // Activate if the event is not active yet
+
+                    // Start the event
                     event.startEvent();
+
+                    // Get the name of the event
+                    String eventName = type.toString().toLowerCase();
+                    eventName = eventName.replace("_", " ");
+                    eventName = WordUtils.capitalize(eventName);
+
+                    // Log to the console
+                    String message = "A timed event has just started: " + eventName + "!";
+                    if (consoleConfig.isPositiveGreen())
+                    {
+                        Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.LIGHT_PURPLE + message);
+                    } else {
+                        Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + message);
+                    }
                 }
             }
             else if (event.getIsActive())       // Not in the right window! Stop event if currently active
             {
+                // Stop the event
                 event.stopEvent();
             }
         }
