@@ -21,6 +21,24 @@ public class ConsoleLogger {
 
 
     /**
+     * Get whether positive messages are colored
+     * @return boolean, true = enabled
+     */
+    public static boolean isPositiveColored(){
+        return config.isPositiveGreen();
+    }
+
+
+    /**
+     * Get whether positive messages are colored
+     * @return boolean, true = enabled
+     */
+    public static boolean isNegativeColored(){
+        return config.isNegativeRed();
+    }
+
+
+    /**
      * Log plain text to the console, colors will be maintained but this is discouraged
      * Use logPositive() or logNegative() instead when using colors
      * [BetterSleeping] will be added automatically

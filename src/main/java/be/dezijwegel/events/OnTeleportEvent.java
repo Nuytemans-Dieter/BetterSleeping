@@ -1,6 +1,7 @@
 package be.dezijwegel.events;
 
 import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -39,7 +40,7 @@ public class OnTeleportEvent implements Listener {
             try {
                 if (Bukkit.getVersion().contains("1.12"))
                 {
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "One of your players (" + player.getName() + ChatColor.RED + ") may be trying to exploit a glitch within BetterSleeping! In versions beyond 1.12, this bug cannot be exploited anymore.");
+                    ConsoleLogger.logNegative("One of your players (" + player.getName() + (ConsoleLogger.isNegativeColored() ? ChatColor.RED : "" ) + ") may be trying to exploit a glitch within BetterSleeping! In versions beyond 1.12, this bug cannot be exploited anymore.", ChatColor.RED);
                     return;
                 }
 

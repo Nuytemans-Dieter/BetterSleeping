@@ -1,5 +1,6 @@
 package be.dezijwegel.files;
 
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -201,8 +202,7 @@ public class ConfigAPI {
     public void saveDefaultConfig() {
         if (!file.exists())
         {
-            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Copying a new " + fileName + " ...");
+            ConsoleLogger.logPositive("Copying a new " + fileName + " ...", ChatColor.GREEN);
             plugin.saveResource(fileName, false);
 
             //Make sure the Configuration is up to date. Otherwise missing options may be reported!

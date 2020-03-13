@@ -2,6 +2,7 @@ package be.dezijwegel.files;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.interfaces.Reloadable;
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -102,11 +103,11 @@ public class Buffs implements Reloadable {
 
             if (numLoadedEffects > 0) {
                 if (numLoadedEffects == 1)
-                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "One sleeping buff was found and loaded!");
+                    ConsoleLogger.logPositive("One sleeping buff was found and loaded!", ChatColor.GREEN);
                 else
-                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + numLoadedEffects + " Sleeping buffs were found and loaded!");
+                    ConsoleLogger.logPositive(numLoadedEffects + " Sleeping buffs were found and loaded!", ChatColor.GREEN);
             } else {
-                console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + "No enabled sleeping buffs were found!");
+                ConsoleLogger.logPositive("No enabled sleeping buffs were found!", ChatColor.GREEN);
             }
 
         }

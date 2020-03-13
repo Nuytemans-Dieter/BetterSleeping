@@ -89,7 +89,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // If PlaceholderAPI is registered
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
             new BetterSleepingExpansion(this, management, onSleepEvent.getSleepTracker()).register();
-            Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.GREEN + "Succesfully hooked into PlaceholderAPI!");
+            ConsoleLogger.logPositive("Succesfully hooked into PlaceholderAPI!", ChatColor.GREEN);
         }
 
         try {
@@ -146,9 +146,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String updateVersion = reader.readLine();
                 if (updateVersion.equals(currentVersion)) {
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] You are using the latest version: " + currentVersion);
+                    ConsoleLogger.logInfo("You are using the latest version: " + currentVersion);
                 } else {
-                    Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + ChatColor.RED + "Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/");
+                    ConsoleLogger.logNegative("Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/", ChatColor.RED);
                 }
             } catch (IOException | NullPointerException e) {
                 Bukkit.getLogger().info("[BetterSleeping] An error occurred while retrieving the latest version!");
