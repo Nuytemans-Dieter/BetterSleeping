@@ -8,6 +8,7 @@ import be.dezijwegel.timedEvents.Easter;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -26,14 +27,14 @@ public class DateChecker extends BukkitRunnable {
         EASTER
     }
 
-    public DateChecker(EventsConfig eventsConfig, Console consoleConfig)
+    public DateChecker(Plugin plugin, EventsConfig eventsConfig, Console consoleConfig)
     {
         this.config = eventsConfig;
         this.consoleConfig = consoleConfig;
         
         // Create all types of events and add them to the list
-        events.put(EventType.APRIL_FOOLS, new AprilFools());
-        events.put(EventType.EASTER,      new Easter());
+        events.put(EventType.APRIL_FOOLS, new AprilFools(plugin));
+        events.put(EventType.EASTER,      new Easter(plugin));
     }
 
 

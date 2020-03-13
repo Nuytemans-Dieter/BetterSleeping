@@ -107,7 +107,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         EventsConfig eventsConfig = new EventsConfig(this);
 
-        dateChecker = new DateChecker(eventsConfig, management.getConsoleConfig());
+        dateChecker = new DateChecker(this, eventsConfig, management.getConsoleConfig());
         // 20x3600 = 72 000 -> Ticks in an hour
         dateChecker.runTaskTimer(this, 0, 72000);
     }

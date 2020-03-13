@@ -1,18 +1,23 @@
 package be.dezijwegel.timedEvents;
 
 import be.dezijwegel.interfaces.TimedEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Calendar;
 
 public class Timed implements TimedEvent {
+
+    Plugin plugin;      // Shared with subclasses and same package
 
     private Calendar start;
     private Calendar end;
 
     private boolean isActive;
 
-    public Timed(Calendar start, Calendar end)
+    public Timed(Plugin plugin, Calendar start, Calendar end)
     {
+        this.plugin = plugin;
+
         this.start = start;
         this.end   = end;
 
