@@ -1,6 +1,7 @@
 package be.dezijwegel.Runnables;
 
 import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
 import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
@@ -68,6 +69,7 @@ public class SetTimeToDay extends BukkitRunnable {
             return;
         }
 
+        List<Player> didNotSleepList = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
         {
             if (world.equals(player.getLocation().getWorld()))
@@ -99,9 +101,15 @@ public class SetTimeToDay extends BukkitRunnable {
                         Map<String, String> replace = new HashMap<>();
                         replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
                         management.sendMessage("no_buff_received", player, replace, management.getNumBuffs() == 1);
+
+                        // Add this player to the not-slept list
+                        didNotSleepList.add(player);
                     }
                 }
             }
+
+            // Throw did not sleep event
+            new PlayersDidNotSleepEvent(didNotSleepList);
         }
 
         world.setTime(0);
