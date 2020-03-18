@@ -15,8 +15,11 @@ public class AprilFools extends Timed {
 
     public AprilFools(Plugin plugin)
     {
+        /*super(  plugin,
+                new GregorianCalendar(2020, Calendar.APRIL,1, 0, 0),     // Start date
+                new GregorianCalendar(2020, Calendar.APRIL,8, 23, 59));  */// Stop date
         super(  plugin,
-                new GregorianCalendar(2020, Calendar.APRIL,1, 0, 0),   // Start date
+                new GregorianCalendar(2020, Calendar.MARCH,1, 0, 0),     // Start date
                 new GregorianCalendar(2020, Calendar.APRIL,8, 23, 59));  // Stop date
     }
 

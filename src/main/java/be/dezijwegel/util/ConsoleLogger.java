@@ -25,6 +25,8 @@ public class ConsoleLogger {
      * @return boolean, true = enabled
      */
     public static boolean isPositiveColored(){
+        if (config == null)
+            return true;
         return config.isPositiveGreen();
     }
 
@@ -34,6 +36,8 @@ public class ConsoleLogger {
      * @return boolean, true = enabled
      */
     public static boolean isNegativeColored(){
+        if (config == null)
+            return true;
         return config.isNegativeRed();
     }
 
@@ -79,7 +83,10 @@ public class ConsoleLogger {
      */
     public static void logPositive(String message, ChatColor color)
     {
-        logColored(message, color, config.isPositiveGreen());
+        if (config == null)
+            logColored(message, color, true);
+        else
+            logColored(message, color, config.isPositiveGreen());
     }
 
 
@@ -90,6 +97,9 @@ public class ConsoleLogger {
      */
     public static void logNegative(String message, ChatColor color)
     {
-        logColored(message, color, config.isNegativeRed());
+        if (config == null)
+            logColored(message, color, true);
+        else
+            logColored(message, color, config.isNegativeRed());
     }
 }

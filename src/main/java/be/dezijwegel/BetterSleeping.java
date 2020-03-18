@@ -6,6 +6,7 @@ import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.events.OnTeleportEvent;
+import be.dezijwegel.files.Console;
 import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
@@ -69,9 +70,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             Bukkit.getLogger().info("Starting BetterSleeping in debugging mode...");
             Bukkit.getLogger().info("-----");
         }
-        Management management = new Management(this);
+        ConsoleLogger.setConfig(new Console(this));
 
-        ConsoleLogger.setConfig(management.getConsoleConfig());
+        Management management = new Management(this);
 
         onSleepEvent = new OnSleepEvent(management, this);
         onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
