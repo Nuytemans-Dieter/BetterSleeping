@@ -66,3 +66,8 @@ positive_effects:
   increase_damage:
     time: 0
     level: 1
+
+  # Replenish saturation over time
+  saturation:
+    time: 0
+    level: 1

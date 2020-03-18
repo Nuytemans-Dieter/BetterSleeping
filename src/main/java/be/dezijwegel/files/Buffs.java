@@ -63,6 +63,8 @@ public class Buffs implements Reloadable {
             return PotionEffectType.FAST_DIGGING;
         } else if (effect.equalsIgnoreCase("increase_damage")) {
             return PotionEffectType.INCREASE_DAMAGE;
+        } else if (effect.equalsIgnoreCase("saturation")) {
+            return PotionEffectType.SATURATION;
         } else {
             return null;
         }
