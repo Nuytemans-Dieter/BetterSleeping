@@ -74,6 +74,16 @@ public class Management {
 
 
     /**
+     * Get the Lang object to handle message sending
+     * @return get the Lang file handler w/ util functionality
+     */
+    public Lang getLang()
+    {
+        return lang;
+    }
+
+
+    /**
      * This method will report any faulty configurations to the console
      */
     private void checkConfiguration()
