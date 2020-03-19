@@ -116,7 +116,7 @@ public class SetTimeToDay extends BukkitRunnable {
             }
 
             // Throw did not sleep event
-            if (didNotSleepList.size() > 0) {
+            if (didNotSleepList.size() > 0 && giveBuffs) {      // If giveBuffs==false -> preventing default mechanics, no pranks!
                 PlayersDidNotSleepEvent event = new PlayersDidNotSleepEvent(didNotSleepList);
                 Bukkit.getPluginManager().callEvent(event);
             }

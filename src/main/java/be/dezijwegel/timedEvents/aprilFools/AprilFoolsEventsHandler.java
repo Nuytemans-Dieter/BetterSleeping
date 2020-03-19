@@ -27,7 +27,8 @@ public class AprilFoolsEventsHandler implements Listener {
     private Set<UUID> creeperPrankedList;   // A Set of player IDs that have already been creeper pranked
     private Set<UUID> explosionPrankedList; // A set of player IDs that have already been pranked with an explosion
 
-    Random random;
+    private Random random;
+    private long lastNightPrank = 0;
 
     public AprilFoolsEventsHandler(Plugin plugin, Lang lang)
     {
@@ -72,9 +73,11 @@ public class AprilFoolsEventsHandler implements Listener {
     @EventHandler
     public void onTimeSetToDay(TimeSetToDayEvent event)
     {
+        long now = System.currentTimeMillis();
         int randNum = random.nextInt(100);
-        if (randNum < 2) {                          // Approx. 1 in 50 times this prank happens
+        if (randNum < 3 && now - lastNightPrank > 50000) {                          // Approx. 1 in 50 times this prank happens
             doTimePrank(event.getWorld());
+            lastNightPrank = System.currentTimeMillis();
         }
     }
 
@@ -94,7 +97,7 @@ public class AprilFoolsEventsHandler implements Listener {
     {
         // Create explosion
         Location loc = player.getLocation();
-        player.getWorld().createExplosion(loc, 1, false, false);    // NO fire or explosion damage!
+        player.getWorld().createExplosion(loc, (float) 0.3, false, false);    // NO fire or explosion damage!
 
         // Send message
         lang.sendMessage("april_fools_explosion_prank", player);
@@ -104,19 +107,7 @@ public class AprilFoolsEventsHandler implements Listener {
     private void doTimePrank(World world)
     {
         // Set the time to night
-        world.setTime(20000);
-
-        // Get the affected players
-        List<Player> players = new ArrayList<>();
-        for (Player player : Bukkit.getOnlinePlayers())
-        {
-            if (player.getWorld().equals(world))
-            {
-                players.add(player);
-            }
-        }
-
-        // Send message to affected players
-        lang.sendMessageToGroup("april_fools_time_prank", players);
+        SetTimeNightRunnable setNight = new SetTimeNightRunnable(world, lang);
+        setNight.runTaskLater(plugin, 60L);
     }
 }
