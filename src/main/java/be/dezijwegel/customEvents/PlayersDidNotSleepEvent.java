@@ -11,7 +11,7 @@ import java.util.List;
 public class PlayersDidNotSleepEvent extends Event {
 
 
-    private List<Player> players = new ArrayList<>();
+    private List<Player> players;
     private static final HandlerList HANDLERS = new HandlerList();
 
 
