@@ -6,6 +6,7 @@ import be.dezijwegel.customEvents.TimeSetToDayEvent;
 import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -77,10 +78,11 @@ public class SetTimeToDay extends BukkitRunnable {
             {
                 management.sendMessage("good_morning", player);
 
+                boolean isAsleep = player.isSleeping();
+                boolean isBypassed = sleepTracker.isPlayerBypassed( player );
+                boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
+
                 if (this.giveBuffs && management.areBuffsEnabled()) {
-                    boolean isAsleep = player.isSleeping();
-                    boolean isBypassed = sleepTracker.isPlayerBypassed( player );
-                    boolean giveBypassBuffs = management.getBooleanSetting("buffs_for_bypassing_players");
 
                     if (BetterSleeping.debug)
                     {
@@ -103,16 +105,24 @@ public class SetTimeToDay extends BukkitRunnable {
                         replace.put("<amount>", Integer.toString( management.getNumBuffs() ));
                         management.sendMessage("no_buff_received", player, replace, management.getNumBuffs() == 1);
 
-                        // Add this player to the not-slept list
-                        didNotSleepList.add(player);
                     }
+                }
+
+                if( isAsleep || ( giveBypassBuffs && isBypassed )) {}
+                else {
+                    // Add this player to the not-slept list
+                    didNotSleepList.add(player);
                 }
             }
 
             // Throw did not sleep event
-            new PlayersDidNotSleepEvent(didNotSleepList);
-            // Throw payers did not sleep event
-            new TimeSetToDayEvent(world);
+            if (didNotSleepList.size() > 0) {
+                PlayersDidNotSleepEvent event = new PlayersDidNotSleepEvent(didNotSleepList);
+                Bukkit.getPluginManager().callEvent(event);
+            }
+            // Throw players did not sleep event
+            TimeSetToDayEvent timeEvent = new TimeSetToDayEvent(world);
+            Bukkit.getPluginManager().callEvent(timeEvent);
         }
 
         world.setTime(0);

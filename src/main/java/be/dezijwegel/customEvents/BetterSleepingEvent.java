@@ -8,12 +8,6 @@ public class BetterSleepingEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
-    public BetterSleepingEvent()
-    {
-        Bukkit.getPluginManager().callEvent(this);
-    }
-
-
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
