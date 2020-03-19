@@ -28,6 +28,17 @@ public class EventsConfig implements Reloadable {
     }
 
 
+    /**
+     * Get whether or not a specific option is enabled
+     * @param path the path to the option
+     * @return the current option of this setting, or default if non-existant
+     */
+    public boolean getBoolean(String path)
+    {
+        return configAPI.getBoolean(path);
+    }
+
+
     @Override
     public void reload() {
         configAPI = new ConfigAPI(ConfigAPI.FileType.EVENTS, plugin);

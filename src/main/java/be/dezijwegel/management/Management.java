@@ -3,6 +3,7 @@ package be.dezijwegel.management;
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.files.Config;
 import be.dezijwegel.files.Console;
+import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.files.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -22,6 +23,7 @@ public class Management {
     // Configuration file types
     private Config config;
     private Console consoleConfig;
+    private EventsConfig eventsConfig;
     private Lang lang;
 
     private BuffManagement buffs;
@@ -50,8 +52,21 @@ public class Management {
 
         consoleConfig = new Console(plugin);
 
+        eventsConfig = new EventsConfig(plugin);
+
         checkConfiguration();
     }
+
+
+    /**
+     * Get the configuration file for events
+     * @return a EventsConfig Object that allows the reading of event settings
+     */
+    public EventsConfig getEventsConfig()
+    {
+        return eventsConfig;
+    }
+
 
     /**
      * Get the Config class with al settings

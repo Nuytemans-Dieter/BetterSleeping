@@ -84,10 +84,16 @@ public class AprilFoolsEventsHandler implements Listener {
 
     private void doCreeperSoundPrank(Player player)
     {
+        // Check whether this prank is enabled
+        if (!management.getEventsConfig().getBoolean("april_fools.enable_creeper_prank"))
+            return;
+
+        // Prepare runnables
         BukkitRunnable hiss = new PlaySoundRunnable(player, Sound.ENTITY_CREEPER_PRIMED);
         BukkitRunnable boom = new PlaySoundRunnable(player, Sound.ENTITY_GENERIC_EXPLODE);
         BukkitRunnable msg = new SendMessageRunnable(management.getLang(), player, "april_fools_creeper_prank");
 
+        // Execute runnables
         hiss.runTask(plugin);
         boom.runTaskLater(plugin, 25L);
         msg.runTaskLater(plugin, 30L);
@@ -96,6 +102,10 @@ public class AprilFoolsEventsHandler implements Listener {
 
     private void doExplosionPrank(Player player)
     {
+        // Check whether this prank is enabled
+        if (!management.getEventsConfig().getBoolean("april_fools.enable_explosion_prank"))
+            return;
+
         // Create explosion
         Location loc = player.getLocation();
         player.getWorld().createExplosion(loc, (float) 0.3, false, false);    // NO fire or explosion damage!
@@ -107,6 +117,10 @@ public class AprilFoolsEventsHandler implements Listener {
 
     private void doTimePrank(World world)
     {
+        // Check whether this prank is enabled
+        if (!management.getEventsConfig().getBoolean("april_fools.enable_time_prank"))
+            return;
+
         // Set the time to night
         SetTimeNightRunnable setNight = new SetTimeNightRunnable(world, management.getLang());
         setNight.runTaskLater(plugin, 60L);

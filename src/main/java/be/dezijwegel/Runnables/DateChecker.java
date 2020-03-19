@@ -29,10 +29,10 @@ public class DateChecker extends BukkitRunnable {
         EASTER
     }
 
-    public DateChecker(Plugin plugin, Management management, EventsConfig eventsConfig, Console consoleConfig)
+    public DateChecker(Plugin plugin, Management management)
     {
-        this.config = eventsConfig;
-        this.consoleConfig = consoleConfig;
+        this.config = management.getEventsConfig();
+        this.consoleConfig = management.getConsoleConfig();
         
         // Create all types of events and add them to the list
         events.put(EventType.APRIL_FOOLS, new AprilFools(plugin, management));
