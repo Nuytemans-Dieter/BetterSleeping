@@ -1,6 +1,7 @@
 package be.dezijwegel.timedEvents.aprilFools;
 
 
+import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -10,10 +11,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
+@Deprecated
 public class ColorBedsRunnable extends BukkitRunnable {
 
     private List<Block> beds = new ArrayList<>();
 
+    /*
     private static final Set<Material> BED_COLORS = EnumSet.of(
             Material.BLACK_BED, Material.BLUE_BED, Material.BROWN_BED,
             Material.CYAN_BED, Material.GRAY_BED, Material.GREEN_BED,
@@ -21,13 +24,13 @@ public class ColorBedsRunnable extends BukkitRunnable {
             Material.MAGENTA_BED, Material.ORANGE_BED, Material.PINK_BED,
             Material.PURPLE_BED, Material.RED_BED, Material.WHITE_BED,
             Material.YELLOW_BED
-    );
+    );*/
 
     private static final Set<DyeColor> DYE_COLORS = EnumSet.of(
-            DyeColor.BLACK, DyeColor.BLUE, DyeColor.BROWN, DyeColor.CYAN,
-            DyeColor.GRAY, DyeColor.GREEN, DyeColor.LIGHT_BLUE, DyeColor.LIGHT_GRAY,
-            DyeColor.LIME, DyeColor.MAGENTA, DyeColor.ORANGE, DyeColor.PINK, DyeColor.PURPLE,
-            DyeColor.RED, DyeColor.WHITE, DyeColor.YELLOW
+            DyeColor.BLACK,     DyeColor.BLUE,      DyeColor.BROWN,         DyeColor.CYAN,
+            DyeColor.GRAY,      DyeColor.GREEN,     DyeColor.LIGHT_BLUE,    DyeColor.LIGHT_GRAY,
+            DyeColor.LIME,      DyeColor.MAGENTA,   DyeColor.ORANGE,        DyeColor.PINK,
+            DyeColor.PURPLE,    DyeColor.RED,       DyeColor.WHITE,         DyeColor.YELLOW
     );
 
     /**
@@ -37,8 +40,7 @@ public class ColorBedsRunnable extends BukkitRunnable {
      */
     public void addBed(Block block)
     {
-        if (BED_COLORS.contains(block.getType()))
-            beds.add(block);
+        beds.add(block);
     }
 
 
@@ -54,7 +56,6 @@ public class ColorBedsRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-
         // Choose a random bed color
         DyeColor newBedColor = DyeColor.RED;
         int random = new Random().nextInt(DYE_COLORS.size());
@@ -69,9 +70,10 @@ public class ColorBedsRunnable extends BukkitRunnable {
         }
 
         // Change all bed colors
+        List<Block> bedsToBeRemoved = new ArrayList<>();
         for (Block bed : beds)
         {
-            if (BED_COLORS.contains(bed.getType()))     // Check if the Block is a bed
+            if (bed.getType().toString().contains("BED"))     // Check if the Block is a bed
             {
                 if (bed instanceof Colorable)
                 {
@@ -79,8 +81,14 @@ public class ColorBedsRunnable extends BukkitRunnable {
                     colorable.setColor(newBedColor);
                 }
             } else {
-                beds.remove(bed);                       // Remove the block if it is not a bed
+                bedsToBeRemoved.add(bed);                   // Remove the block if it is not a bed
             }
+        }
+
+        // Remove destroyed beds
+        for(Block bed : bedsToBeRemoved)
+        {
+            beds.remove(bed);
         }
     }
 }
