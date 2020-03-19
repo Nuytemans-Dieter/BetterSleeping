@@ -11,7 +11,7 @@
 
 # This file allows you to enable and disable specific timed events
 # These events are time locked, that means they are only active on specific days
-# They are all enabled by default but are as lightweight as possible
+# They are all disabled by default but are as lightweight as possible
 # More timed events will be added in the future
 
 
@@ -25,13 +25,33 @@
 # Written in a DD/MM/YYYY format: These dates will change each year
 
 
-# Features: None at this time
+# Start and stop date (DD/MM)
 # Start: 01/04
 # Stop:  08/04
-enable_april_fools: true
+enable_april_fools: false
+# This is a list of features which can individually be enabled/disabled
+april_fools:
+  # Play creeper charge and explosion sound the first time (!) players go to bed
+  # This sound will always be played to non-sleepers
+  # Default: true
+  enable_creeper_prank: true
+  # People who don't sleep will explode once (!)
+  # This does not cause damage to blocks and does not start fires
+  # The player will take mild damage (a few hearts at most, without armor)
+  # Default: false
+  enable_explosion_prank: false
+  # Every time the night is skipped, there is a 2% chance of time being set to night again
+  # Can't happen more than once every 50 seconds
+  # Default: true
+  enable_time_prank: true
 
 
-# Features: None at this time
+
+# Start and stop date (DD/MM)
 # Start: 12/04/2020
 # Stop:  19/04/2020
-enable_easter: true
+enable_easter: false
+easter:
+  # Players poop an egg when they wake up
+  # Default: true
+  enable_poop_egg: true

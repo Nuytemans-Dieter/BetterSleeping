@@ -5,6 +5,7 @@ import be.dezijwegel.Runnables.SendMessageRunnable;
 import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
 import be.dezijwegel.customEvents.TimeSetToDayEvent;
 import be.dezijwegel.files.Lang;
+import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -22,7 +23,7 @@ public class AprilFoolsEventsHandler implements Listener {
 
 
     private Plugin plugin;
-    private Lang lang;
+    private Management management;
 
     private Set<UUID> creeperPrankedList;   // A Set of player IDs that have already been creeper pranked
     private Set<UUID> explosionPrankedList; // A set of player IDs that have already been pranked with an explosion
@@ -30,10 +31,10 @@ public class AprilFoolsEventsHandler implements Listener {
     private Random random;
     private long lastNightPrank = 0;
 
-    public AprilFoolsEventsHandler(Plugin plugin, Lang lang)
+    public AprilFoolsEventsHandler(Plugin plugin, Management management)
     {
         this.plugin = plugin;
-        this.lang = lang;
+        this.management = management;
 
         creeperPrankedList = new HashSet<>();
         explosionPrankedList = new HashSet<>();
@@ -85,7 +86,7 @@ public class AprilFoolsEventsHandler implements Listener {
     {
         BukkitRunnable hiss = new PlaySoundRunnable(player, Sound.ENTITY_CREEPER_PRIMED);
         BukkitRunnable boom = new PlaySoundRunnable(player, Sound.ENTITY_GENERIC_EXPLODE);
-        BukkitRunnable msg = new SendMessageRunnable(lang, player, "april_fools_creeper_prank");
+        BukkitRunnable msg = new SendMessageRunnable(management.getLang(), player, "april_fools_creeper_prank");
 
         hiss.runTask(plugin);
         boom.runTaskLater(plugin, 25L);
@@ -100,14 +101,14 @@ public class AprilFoolsEventsHandler implements Listener {
         player.getWorld().createExplosion(loc, (float) 0.3, false, false);    // NO fire or explosion damage!
 
         // Send message
-        lang.sendMessage("april_fools_explosion_prank", player);
+        management.getLang().sendMessage("april_fools_explosion_prank", player);
     }
 
 
     private void doTimePrank(World world)
     {
         // Set the time to night
-        SetTimeNightRunnable setNight = new SetTimeNightRunnable(world, lang);
+        SetTimeNightRunnable setNight = new SetTimeNightRunnable(world, management.getLang());
         setNight.runTaskLater(plugin, 60L);
     }
 }
