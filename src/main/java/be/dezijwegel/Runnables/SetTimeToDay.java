@@ -2,6 +2,7 @@ package be.dezijwegel.Runnables;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
+import be.dezijwegel.customEvents.TimeSetToDayEvent;
 import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
@@ -110,6 +111,8 @@ public class SetTimeToDay extends BukkitRunnable {
 
             // Throw did not sleep event
             new PlayersDidNotSleepEvent(didNotSleepList);
+            // Throw payers did not sleep event
+            new TimeSetToDayEvent(world);
         }
 
         world.setTime(0);

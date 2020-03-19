@@ -4,13 +4,13 @@ import org.bukkit.World;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class TimeSetToDayEvent extends Event {
+public class TimeSetToDayEvent extends BetterSleepingEvent {
 
-    private static final HandlerList HANDLERS = new HandlerList();
     private World world;
 
     public TimeSetToDayEvent(World world)
     {
+        super();
         this.world = world;
     }
 
@@ -24,13 +24,4 @@ public class TimeSetToDayEvent extends Event {
         return world;
     }
 
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
 }

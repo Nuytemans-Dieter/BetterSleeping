@@ -1,4 +1,4 @@
-package be.dezijwegel.timedEvents.aprilFools;
+package be.dezijwegel.Runnables;
 
 import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
 import org.bukkit.Sound;

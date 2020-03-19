@@ -2,6 +2,7 @@ package be.dezijwegel.Runnables;
 
 import be.dezijwegel.files.Console;
 import be.dezijwegel.files.EventsConfig;
+import be.dezijwegel.files.Lang;
 import be.dezijwegel.interfaces.TimedEvent;
 import be.dezijwegel.timedEvents.AprilFools;
 import be.dezijwegel.timedEvents.Easter;
@@ -27,14 +28,14 @@ public class DateChecker extends BukkitRunnable {
         EASTER
     }
 
-    public DateChecker(Plugin plugin, EventsConfig eventsConfig, Console consoleConfig)
+    public DateChecker(Plugin plugin, Lang lang, EventsConfig eventsConfig, Console consoleConfig)
     {
         this.config = eventsConfig;
         this.consoleConfig = consoleConfig;
         
         // Create all types of events and add them to the list
-        events.put(EventType.APRIL_FOOLS, new AprilFools(plugin));
-        events.put(EventType.EASTER,      new Easter(plugin));
+        events.put(EventType.APRIL_FOOLS, new AprilFools(plugin, lang));
+        events.put(EventType.EASTER,      new Easter(    plugin, lang));
     }
 
 

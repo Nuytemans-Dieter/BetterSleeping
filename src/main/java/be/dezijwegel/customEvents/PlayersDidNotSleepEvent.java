@@ -8,12 +8,9 @@ import org.bukkit.event.HandlerList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayersDidNotSleepEvent extends Event {
-
+public class PlayersDidNotSleepEvent extends BetterSleepingEvent {
 
     private List<Player> players;
-    private static final HandlerList HANDLERS = new HandlerList();
-
 
     /**
      * Get a list of players
@@ -21,8 +18,8 @@ public class PlayersDidNotSleepEvent extends Event {
      */
     public PlayersDidNotSleepEvent(List<Player> players)
     {
+        super();
         this.players = players;
-        Bukkit.getPluginManager().callEvent(this);
     }
 
 
@@ -35,14 +32,4 @@ public class PlayersDidNotSleepEvent extends Event {
         return players;
     }
 
-
-    @Override
-    public HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-
-    public static HandlerList getHandlerList() {
-        return HANDLERS;
-    }
 }

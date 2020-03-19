@@ -148,6 +148,7 @@ disabled_enough_sleeping: "Enough players are sleeping but skipping the night is
 # Bypass messages |
 # --------------- #
 
+
 # A bypass is given to players with permission bettersleeping.bypass OR essentials.sleepingignored
 # And it is given to players with ignored gamemodes (this can be set in config.yml but is disabled by default)
 
@@ -162,3 +163,28 @@ not_night_yet: "&4You don't feel tired yet, <receiver>!"
 
 # This message is sent when a user performs /bs skip and not all players in that world have bypass permissions
 not_all_players_bypassed: "&4Not all players in your world have got bypass permissions!"
+
+
+# --------------------- #
+# Timed events messages | Enable/disable specific timed events in events.yml!
+# --------------------- # Events are disabled by default
+
+
+# APRIL FOOLS #
+# ----------- #
+
+# People who were pranked with a fake creeper explosion sound will receive this message
+april_fools_creeper_prank: "Gotcha, April Fools! Don't worry, your house is just fine."
+
+
+# When the event messes with the time, people get this message
+april_fools_time_prank: "April Fools! We set the time to night, just because we wanted to."
+
+
+# Sent when the event fakes an explosion at the player's location
+april_fools_explosion_prank: "April Fools! It was a fake explosion, everything is fine."
+
+
+# EASTER #
+# ------ #
+# Coming soon!
