@@ -46,12 +46,15 @@ public class AprilFoolsEventsHandler implements Listener {
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
-        UUID playerID = event.getPlayer().getUniqueId();
+        if(!event.isCancelled() && ( Bukkit.getVersion().contains("1.12") || event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK ))
+        {
+            UUID playerID = event.getPlayer().getUniqueId();
 
-        // Only do the prank once for entering the bed
-        if ( ! creeperPrankedList.contains(playerID)) {
-            doCreeperSoundPrank(event.getPlayer());
-            creeperPrankedList.add(playerID);
+            // Only do the prank once for entering the bed
+            if (!creeperPrankedList.contains(playerID)) {
+                doCreeperSoundPrank(event.getPlayer());
+                creeperPrankedList.add(playerID);
+            }
         }
     }
 
