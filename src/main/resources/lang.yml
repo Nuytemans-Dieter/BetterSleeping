@@ -188,3 +188,9 @@ april_fools_time_prank: "April Fools! We set the time to night, just because we 
 
 # Sent when the event fakes an explosion at the player's location
 april_fools_explosion_prank: "April Fools! It was a fake explosion, everything is fine."
+
+# EASTER #
+# ------ #
+
+# The message people get when they poop an egg after wakeup
+easter_poopegg: "Happy Easter! You just pooped an egg."
