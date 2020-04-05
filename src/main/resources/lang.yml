@@ -192,5 +192,10 @@ april_fools_explosion_prank: "April Fools! It was a fake explosion, everything i
 # EASTER #
 # ------ #
 
+
 # The message people get when they poop an egg after wakeup
 easter_poopegg: "Happy Easter! You just pooped an egg."
+
+
+# Players get this message when hearing the Easter jingle
+easter_jingle: "Enjoy the beautiful Easter bells. Maybe they'll drop an egg soon!"
