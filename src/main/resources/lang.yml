@@ -9,6 +9,10 @@
 #                                               |_|            |___/  
 
 
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/lang.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+
+
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below

@@ -8,6 +8,11 @@
 #                                               | |             __/ |
 #                                               |_|            |___/
 
+
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/console.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+
+
 # This file contains configuration regarding the style of messages sent to the console
 # Neutral messages will always be displayed as white text
 

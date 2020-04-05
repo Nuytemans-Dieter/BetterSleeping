@@ -17,6 +17,10 @@
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
 
 
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+
+
 # Choose whether or not BetterSleeping should check for updates on startup
 # No information from your server is shared or collected in this process.
 # Default: true

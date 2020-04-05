@@ -9,8 +9,12 @@
 #                                               |_|            |___/
 
 
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/events.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+
+
 # This file allows you to enable and disable specific timed events
-# These events are time locked, that means they are only active on specific days
+# These events are time locked, that means they are only active on specific days (even if you set them as enabled)
 # They are all disabled by default but are as lightweight as possible
 # More timed events will be added in the future
 
@@ -27,7 +31,7 @@
 
 # Start and stop date (DD/MM)
 # Start: 01/04
-# Stop:  08/04
+# Stop:  05/04
 enable_april_fools: false
 # This is a list of features which can individually be enabled/disabled
 april_fools:
