@@ -71,7 +71,8 @@ public class SetTimeToDay extends BukkitRunnable {
             return;
         }
 
-        List<Player> didNotSleepList = new ArrayList<>();
+        // NEEDED FOR APRIL FOOLS IMPLEMENTATION
+        //List<Player> didNotSleepList = new ArrayList<>();
         for (Player player : Bukkit.getOnlinePlayers())
         {
             if (world.equals(player.getLocation().getWorld()))
@@ -108,13 +109,14 @@ public class SetTimeToDay extends BukkitRunnable {
                     }
                 }
 
-                if( isAsleep || ( giveBypassBuffs && isBypassed )) {}
-                else {
+                /*  CUSTOM APRIL FOOLS EVENT UTIL
+                if (!isAsleep && (!giveBypassBuffs || !isBypassed)) {
                     // Add this player to the not-slept list
                     didNotSleepList.add(player);
                 }
+                */
             }
-
+            /*      CUSTOM APRIL FOOLS EVENT THROWING
             // Throw did not sleep event
             if (didNotSleepList.size() > 0 && giveBuffs) {      // If giveBuffs==false -> preventing default mechanics, no pranks!
                 PlayersDidNotSleepEvent event = new PlayersDidNotSleepEvent(didNotSleepList);
@@ -123,6 +125,7 @@ public class SetTimeToDay extends BukkitRunnable {
             // Throw players did not sleep event
             TimeSetToDayEvent timeEvent = new TimeSetToDayEvent(world);
             Bukkit.getPluginManager().callEvent(timeEvent);
+            */
         }
 
         world.setTime(0);

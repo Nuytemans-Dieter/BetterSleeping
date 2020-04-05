@@ -145,9 +145,11 @@ public class SleepTracker {
         int numPlayers = 0;
             for (Player player : Bukkit.getOnlinePlayers())
             {
-                if (player.getLocation().getWorld().equals(world)) {
-                    if (! isAfk( player ) && ! isPlayerBypassed( player ))
-                        numPlayers++;
+                if (player.getWorld().getEnvironment() == World.Environment.NORMAL) {   // Don't count players in Nether or The End
+                    if (player.getWorld().equals(world)) {                              // If the player is in the right world
+                        if (!isAfk(player) && !isPlayerBypassed(player))                // If player is not afk and not a bypassed sleeper
+                            numPlayers++;
+                    }
                 }
             }
 
