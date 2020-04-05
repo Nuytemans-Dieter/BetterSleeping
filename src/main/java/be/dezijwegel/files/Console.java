@@ -12,7 +12,7 @@ public class Console implements Reloadable {
     public Console(JavaPlugin plugin)
     {
         this.plugin = plugin;
-        configAPI = new ConfigAPI(ConfigAPI.FileType.CONSOLE, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.CONSOLE, true, plugin);
         // A check on missing options is redundant for this small config file
         //configAPI.reportMissingOptions();
     }
@@ -42,7 +42,7 @@ public class Console implements Reloadable {
 
     @Override
     public void reload() {
-        configAPI = new ConfigAPI(ConfigAPI.FileType.CONSOLE, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.CONSOLE, true, plugin);
         configAPI.reportMissingOptions();
     }
 }

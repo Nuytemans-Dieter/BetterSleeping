@@ -12,7 +12,7 @@ public class EventsConfig implements Reloadable {
     public EventsConfig(JavaPlugin plugin)
     {
         this.plugin = plugin;
-        configAPI = new ConfigAPI(ConfigAPI.FileType.EVENTS, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.EVENTS, true, plugin);
     }
 
 
@@ -41,6 +41,6 @@ public class EventsConfig implements Reloadable {
 
     @Override
     public void reload() {
-        configAPI = new ConfigAPI(ConfigAPI.FileType.EVENTS, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.EVENTS, true, plugin);
     }
 }

@@ -73,7 +73,7 @@ public class Buffs implements Reloadable {
     @Override
     public void reload() {
         //Initialize the start
-        configAPI = new ConfigAPI(ConfigAPI.FileType.BUFFS, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.BUFFS, true, plugin);
         buffs = new LinkedList<PotionEffect>();
 
         //Find all buffs and put them in the list

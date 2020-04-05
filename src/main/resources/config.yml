@@ -27,6 +27,13 @@
 update_checker: true
 
 
+# This option will make BetterSleeping automatically add any options that may be missing from your config file
+# All existing options will remain untouched but all comments will be gone! (except for those at the top of the file)
+# If uncertain about this feature, please join our Discord server and we'll gladly help you
+# Default: false
+auto_add_missing_options: false
+
+
 # --------------- #
 # Sleep settings  |
 # --------------- #

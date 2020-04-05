@@ -38,7 +38,7 @@ public class Lang implements Reloadable {
         this.playSound = playSound;
         this.sleepingOnly = sleepingOnly;
 
-        configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, true, plugin);
         configAPI.reportMissingOptions();
     }
 
@@ -394,7 +394,7 @@ public class Lang implements Reloadable {
 
     @Override
     public void reload() {
-        configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.LANG, true, plugin);
         configAPI.reportMissingOptions();
     }
 }

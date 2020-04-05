@@ -9,12 +9,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 
 public class ConfigAPI {
@@ -36,10 +33,12 @@ public class ConfigAPI {
     }
 
     /**
-     * @param type of file
-     * @param plugin
+     * Create a configAPI instance
+     * @param type the type of config file
+     * @param addMissingOptions choose whether or not to add missing options (if this setting is enabled)
+     * @param plugin instance of the plugin
      */
-    public ConfigAPI(FileType type, JavaPlugin plugin) {
+    public ConfigAPI(FileType type, boolean addMissingOptions, JavaPlugin plugin) {
         this.plugin = plugin;
 
         switch (type)
@@ -74,6 +73,11 @@ public class ConfigAPI {
         } catch (Exception ex) {}
 
         saveDefaultConfig();
+
+        if (addMissingOptions)
+        {
+            addMissingOptions();
+        }
     }
 
     /**
@@ -224,139 +228,197 @@ public class ConfigAPI {
         return configuration.getConfigurationSection(path);
     }
 
+    public List<String> getMissingOptionPaths()
+    {
+        List<String> missingOptions = new ArrayList<>();
+
+        Reader defConfigStream = null;
+        defConfigStream = new InputStreamReader(Objects.requireNonNull(plugin.getResource(fileName)), StandardCharsets.UTF_8);
+
+        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+        for (String path : defConfig.getKeys(true)) {
+            if (!defConfig.isConfigurationSection(path)) {
+                if (!configuration.contains(path)) {
+                    missingOptions.add(path);
+                }
+            }
+        }
+
+        return missingOptions;
+    }
+
+    /**
+     * Add all missing options to the config file, IF enabled
+     * Will fail silently if disabled
+     */
+    public void addMissingOptions()
+    {
+        // Stop execution if auto adding is disabled
+        ConfigAPI config = new ConfigAPI(FileType.CONFIG, false, plugin);
+        boolean autoAdd = config.getBoolean("auto_add_missing_options");
+        if (!autoAdd)
+        {
+            return;
+        }
+
+        List<String> missingOptions = getMissingOptionPaths();
+
+        String missingMessage;
+        if (missingOptions.size() == 0)
+        {
+            return;
+        } else if (missingOptions.size() == 1)
+        {
+            missingMessage = "A missing option has been found in " + fileName + "!";
+        } else {
+            missingMessage = missingOptions.size() + " Missing options have been found in " + fileName + "!";
+        }
+
+        ConsoleLogger.logNegative(missingMessage, ChatColor.DARK_RED);
+        ConsoleLogger.logNegative("Automagically adding missing options...", ChatColor.DARK_RED);
+
+        // Set the defaults and report each setting to the console
+        for (String path : missingOptions)
+        {
+            Object value = defaultConfig.get(path);     // Get the default value
+            configuration.set(path, value);
+            configuration.addDefault(path, value);
+
+            // Report to console
+            // Change formatting if String
+            if (value instanceof String)
+                value = "\"" + value + "\"";
+
+            String newValue = "";
+            if (value != null)
+                newValue = value.toString();
+            ConsoleLogger.logNegative("Setting " + path + " to " + newValue, ChatColor.RED);
+        }
+
+        try {
+            configuration.save(file);
+        } catch (IOException e) {}
+    }
+
+
     /**
      * Compare the default file with the one on the server and report every missing option
      */
     public void reportMissingOptions()
     {
-
         // Get the missing configuration options that are not configuration sections
+        List<String> missingOptions = getMissingOptionPaths();
 
-        Reader defConfigStream = null;
-        try {
-            defConfigStream = new InputStreamReader(plugin.getResource(fileName), "UTF8");
-        } catch (UnsupportedEncodingException ex) {}
+        // Report to console
+        ConsoleCommandSender console = Bukkit.getConsoleSender();
+        Console consoleConfig = new Console(plugin);
 
-        if (defConfigStream != null) {
-            LinkedList<String> missingOptions = new LinkedList<>();
+        // Stop execution if settings are added automatically
+        ConfigAPI config = new ConfigAPI(FileType.CONFIG, false, plugin);
+        boolean autoAdd = config.getBoolean("auto_add_missing_options");
+        if (autoAdd)
+        {
+            return;
+        }
 
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-            for (String path : defConfig.getKeys(true))
-            {
-                if ( ! defConfig.isConfigurationSection(path) )
-                {
-                    if (!configuration.contains(path)) {
-                        missingOptions.add(path);
-                    }
-                }
+        if (missingOptions.size() > 0)
+        {
+            String message1 = "A missing option has been found in " + fileName + "!";
+            String message2 = missingOptions.size() + " Missing options have been found in " + fileName + "!";
+            String message3 = "Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)";
+            String message4 = "The default values will be used until then";
+
+            if (consoleConfig.isNegativeRed()) {
+                if (missingOptions.size() == 1)
+                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message1);
+                else console.sendMessage("[BetterSleeping] " + ChatColor.RED + message2);
+
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message3);
+                console.sendMessage("[BetterSleeping] " + ChatColor.RED + message4);
+            } else {
+                if (missingOptions.size() == 1)
+                    console.sendMessage("[BetterSleeping] " + message1);
+                else console.sendMessage("[BetterSleeping] " + message2);
+
+                console.sendMessage("[BetterSleeping] " + message3);
+                console.sendMessage("[BetterSleeping] " + message4);
             }
 
-            // Report to console
-
-            ConsoleCommandSender console = Bukkit.getConsoleSender();
-
-            Console consoleConfig = new Console(plugin);
-
-            if (missingOptions.size() > 0)
+            ArrayList<String> currentPath = new ArrayList<>();
+            currentPath.add("");
+            for (String path : missingOptions)
             {
+                // Handle value
+                Object value = defaultConfig.get(path);
 
-                String message1 = "A missing option has been found in " + fileName + "!";
-                String message2 = missingOptions.size() + " Missing options have been found in " + fileName + "!";
-                String message3 = "Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)";
-                String message4 = "The default values will be used until then";
 
-                if (consoleConfig.isNegativeRed()) {
-                    if (missingOptions.size() == 1)
-                        console.sendMessage("[BetterSleeping] " + ChatColor.RED + message1);
-                    else console.sendMessage("[BetterSleeping] " + ChatColor.RED + message2);
+                // Change formatting if the setting is a String
+                if (value instanceof String)
+                    value = "\"" + value + "\"";
 
-                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message3);
-                    console.sendMessage("[BetterSleeping] " + ChatColor.RED + message4);
-                } else {
-                    if (missingOptions.size() == 1)
-                        console.sendMessage("[BetterSleeping] " + message1);
-                    else console.sendMessage("[BetterSleeping] " + message2);
 
-                    console.sendMessage("[BetterSleeping] " + message3);
-                    console.sendMessage("[BetterSleeping] " + message4);
+                // Handle path
+                String[] sections = path.split("\\.");   // Split the path in its sections
+                path = "";                                      // Reset the path variable
+
+
+                // Remove part of the path that is a deeper level than this setting can possibly be
+                if (currentPath.size() > sections.length)
+                {
+                    currentPath.subList(sections.length, currentPath.size()).clear();
                 }
 
-                ArrayList<String> currentPath = new ArrayList<>();
-                currentPath.add("");
-                for (String path : missingOptions)
+
+                // Handle subsection logging and indentation
+                int index = 0;                                  // Index of the current path level
+                String indentation = "";                        // Indentation for the current level
+                for (String section : sections)
                 {
-                    // Handle value
-                    Object value = defaultConfig.get(path);
-
-
-                    // Change formatting if the setting is a String
-                    if (value instanceof String)
-                        value = "\"" + value + "\"";
-
-
-                    // Handle path
-                    String[] sections = path.split("\\.");   // Split the path in its sections
-                    path = "";                                      // Reset the path variable
-
-
-                    // Remove part of the path that is a deeper level than this setting can possibly be
-                    if (currentPath.size() > sections.length)
-                    {
-                        currentPath.subList(sections.length, currentPath.size()).clear();
-                    }
-
-
-                    // Handle subsection logging and indentation
-                    int index = 0;                                  // Index of the current path level
-                    String indentation = "";                        // Indentation for the current level
-                    for (String section : sections)
-                    {
-                        if (index+1 != sections.length) {           // Prevents the option name itself to be viewed as part of path
-                            if (index > currentPath.size() || !currentPath.get(index).equals(section))  // If the current option is in a different subsection
+                    if (index+1 != sections.length) {           // Prevents the option name itself to be viewed as part of path
+                        if (index > currentPath.size() || !currentPath.get(index).equals(section))  // If the current option is in a different subsection
+                        {
+                            // Set the path change
+                            if (index > currentPath.size())     // If index does NOT exist
                             {
-                                // Set the path change
-                                if (index > currentPath.size())     // If index does NOT exist
-                                {
-                                    // Add to the end of list
-                                    currentPath.add(section);
-                                } else {                            // If index DOES exist
-                                    // Replace the element at index
-                                    currentPath.set(index, section);
-                                    // Remove deprecated sub-branches
-                                    currentPath.subList(index, currentPath.size()).clear();
-                                }
-
-                                // Print path change
-                                String message = indentation + "In subsection: \'" + section + "\'";
-                                if (consoleConfig.isNegativeRed())
-                                    console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
-                                else
-                                    console.sendMessage("[BetterSleeping] " + message);
+                                // Add to the end of list
+                                currentPath.add(section);
+                            } else {                            // If index DOES exist
+                                // Replace the element at index
+                                currentPath.set(index, section);
+                                // Remove deprecated sub-branches
+                                currentPath.subList(index, currentPath.size()).clear();
                             }
 
-                            indentation += "  ";
-                            index++;
+                            // Print path change
+                            String message = indentation + "In subsection: \'" + section + "\'";
+                            if (consoleConfig.isNegativeRed())
+                                console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
+                            else
+                                console.sendMessage("[BetterSleeping] " + message);
                         }
+
+                        indentation += "  ";
+                        index++;
                     }
-
-                    path += "'" + sections[0] + "'";                 // Get the actual setting name
-
-                    // Print the missing option with its defaul value
-                    String message = indentation + "Missing option: " + path + " with default value: " + value;
-                    if (consoleConfig.isNegativeRed())
-                        console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
-                    else
-                        console.sendMessage("[BetterSleeping] " + message);
                 }
-            } else {
 
-                String message = "No missing options were found in " + fileName + "!";
+                path += "'" + sections[0] + "'";                 // Get the actual setting name
 
-                if (consoleConfig.isPositiveGreen())
-                    console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + message);
+                // Print the missing option with its defaul value
+                String message = indentation + "Missing option: " + path + " with default value: " + value;
+                if (consoleConfig.isNegativeRed())
+                    console.sendMessage("[BetterSleeping] " + ChatColor.DARK_RED + message);
                 else
                     console.sendMessage("[BetterSleeping] " + message);
             }
+        } else {
+
+            String message = "No missing options were found in " + fileName + "!";
+
+            if (consoleConfig.isPositiveGreen())
+                console.sendMessage("[BetterSleeping] " + ChatColor.GREEN + message);
+            else
+                console.sendMessage("[BetterSleeping] " + message);
         }
     }
 }

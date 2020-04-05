@@ -11,7 +11,7 @@ public class Config implements Reloadable {
     public Config(BetterSleeping plugin) {
         this.plugin = plugin;
 
-        configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, true, plugin);
         configAPI.reportMissingOptions();
     }
 
@@ -51,7 +51,7 @@ public class Config implements Reloadable {
 
     @Override
     public void reload() {
-        configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, plugin);
+        configAPI = new ConfigAPI(ConfigAPI.FileType.CONFIG, true, plugin);
         configAPI.reportMissingOptions();
     }
 }
