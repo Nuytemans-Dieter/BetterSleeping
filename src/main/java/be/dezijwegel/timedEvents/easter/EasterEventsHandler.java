@@ -3,6 +3,7 @@ package be.dezijwegel.timedEvents.easter;
 import be.dezijwegel.Runnables.PlaySoundRunnable;
 import be.dezijwegel.Runnables.SendMessageRunnable;
 import be.dezijwegel.management.Management;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -50,7 +51,9 @@ public class EasterEventsHandler implements Listener {
         if (!management.getEventsConfig().getBoolean("easter.enable_jingle"))
             return;
 
-        playBellsJingle(event.getPlayer());
+        if(!event.isCancelled() && ( Bukkit.getVersion().contains("1.12") || event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK )) {
+            playBellsJingle(event.getPlayer());
+        }
     }
 
     /**

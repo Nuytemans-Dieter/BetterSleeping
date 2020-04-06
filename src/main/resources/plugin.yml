@@ -28,7 +28,7 @@ permissions:
         default: true
     bettersleeping.bypass:
         description: Gives access to /bs skip, and this player will be ignored from the required player count
-        default: op
+        default: false
     bettersleeping.help.admin:
         description: Gives access to /bs help, which will give info about all commands the user has access to and permission nodes will be shown as well
         default: op
