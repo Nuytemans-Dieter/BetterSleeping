@@ -7,6 +7,7 @@ import be.dezijwegel.interfaces.TimedEvent;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.timedEvents.AprilFools;
 import be.dezijwegel.timedEvents.Easter;
+import be.dezijwegel.util.ConsoleLogger;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,15 +66,16 @@ public class DateChecker extends BukkitRunnable {
             // >0 : Date1 is after date2
             if (start.compareTo(today) <= 0 && end.compareTo(today) >= 0)
             {
+
+                // Get the name of the event
+                String eventName = type.toString().toLowerCase();
+                eventName = eventName.replace("_", " ");
+                eventName = WordUtils.capitalize(eventName);
+
                 if ( config.isEnabled(type) && ! event.getIsActive()) {   // Activate if the event is not active yet
 
                     // Start the event
                     event.startEvent();
-
-                    // Get the name of the event
-                    String eventName = type.toString().toLowerCase();
-                    eventName = eventName.replace("_", " ");
-                    eventName = WordUtils.capitalize(eventName);
 
                     // Log to the console
                     String message = "A timed event has just started: " + eventName + "!";
@@ -83,6 +85,11 @@ public class DateChecker extends BukkitRunnable {
                     } else {
                         Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + message);
                     }
+                } else if (!event.getIsActive())
+                {
+                    // Log to the console
+                    String message = "A timed event (" + eventName + ") is active but disabled in events.yml!";
+                    ConsoleLogger.logPositive(message, ChatColor.LIGHT_PURPLE);
                 }
             }
             else if (event.getIsActive())       // Not in the right window! Stop event if currently active
