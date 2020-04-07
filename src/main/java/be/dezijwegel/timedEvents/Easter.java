@@ -5,6 +5,7 @@ import be.dezijwegel.management.Management;
 import be.dezijwegel.timedEvents.aprilFools.AprilFoolsEventsHandler;
 import be.dezijwegel.timedEvents.easter.EasterEventsHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Calendar;
@@ -23,12 +24,16 @@ public class Easter extends Timed {
 
     @Override
     public void startEvent() {
+        // Start Easter event listening
+        super.startEvent();
         eHandler = new EasterEventsHandler(management, plugin);
         plugin.getServer().getPluginManager().registerEvents(eHandler, plugin);
     }
 
     @Override
     public void stopEvent() {
-
+        // Remove all Easter events
+        super.stopEvent();
+        HandlerList.unregisterAll(eHandler);
     }
 }

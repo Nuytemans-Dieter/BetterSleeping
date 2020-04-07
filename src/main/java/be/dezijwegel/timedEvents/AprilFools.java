@@ -24,13 +24,16 @@ public class AprilFools extends Timed {
 
     @Override
     public void startEvent() {
-        // Creeper hissing sound prank
+        // Initialise event
+        super.startEvent();
         afHandler = new AprilFoolsEventsHandler(plugin, management);
         plugin.getServer().getPluginManager().registerEvents(afHandler, plugin);
     }
 
     @Override
     public void stopEvent() {
+        // Stop the event
+        super.stopEvent();
         // Remove the creeper hissing effect
         HandlerList.unregisterAll(afHandler);
     }
