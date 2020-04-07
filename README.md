@@ -20,5 +20,5 @@ This plugin is functional and has been tested on several Spigot versions. Bukkit
 | 1.12   | 2.6.0          |
 | 1.13   | 2.6.0          |
 | 1.14   | 2.6.0          |
-| 1.15   | 2.6.0 (latest) |
+| 1.15   | 2.6.1 (latest) |
 | 1.16   | To be tested   |
