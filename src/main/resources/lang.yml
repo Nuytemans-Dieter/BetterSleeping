@@ -171,12 +171,13 @@ not_all_players_bypassed: "&4Not all players in your world have got bypass permi
 
 # --------------------- #
 # Timed events messages | Enable/disable specific timed events in events.yml!
-# --------------------- # Events are disabled by default
+# --------------------- # Events are disabled by default but can only be active during specific dates
 
 # More timed events will be added along the road!
 
 # APRIL FOOLS #
 # ----------- #
+
 
 # People who were pranked with a fake creeper explosion sound will receive this message
 april_fools_creeper_prank: "Gotcha, April Fools! Don't worry, your house is just fine."
@@ -189,13 +190,14 @@ april_fools_time_prank: "April Fools! We set the time to night, just because we 
 # Sent when the event fakes an explosion at the player's location
 april_fools_explosion_prank: "April Fools! It was a fake explosion, everything is fine."
 
+
 # EASTER #
 # ------ #
 
 
-# The message people get when they poop an egg after wakeup
+# The message people get when they receive an (Easter) egg after wakeup
 easter_poopegg: "Happy Easter! You just pooped an egg."
 
 
-# Players get this message when hearing the Easter jingle
+# Players get this message when hearing the Easter jingle, when entering their bed
 easter_jingle: "Enjoy the beautiful Easter bells. Maybe they'll drop an egg soon!"

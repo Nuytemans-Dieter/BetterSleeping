@@ -14,8 +14,8 @@
 
 
 # This file allows you to enable and disable specific timed events
-# These events are time locked, that means they are only active on specific days (even if you set them as enabled)
-# They are all disabled by default but are as lightweight as possible
+# These events are time locked, that means they are only active on specific dates (even if you enable them in this ocnfig)
+# They are all disabled by default but are made as lightweight as possible
 # More timed events will be added in the future
 
 
@@ -26,7 +26,7 @@
 
 # About date formats:
 # Written in a DD/MM format: These dates are the same every year
-# Written in a DD/MM/YYYY format: These dates will change each year
+# Written in a DD/MM/YYYY format: These dates may change each year
 
 
 # Start and stop date (DD/MM)

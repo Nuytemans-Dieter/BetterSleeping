@@ -154,8 +154,7 @@ public class SleepTracker {
             }
 
         int numNeeded = (int) Math.ceil((double)(percentageNeeded * numPlayers) / 100);
-        if (numNeeded > 1) return numNeeded;
-        else return 1;
+        return Math.max(numNeeded, 1);
     }
 
 

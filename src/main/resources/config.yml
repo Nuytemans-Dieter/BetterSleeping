@@ -9,12 +9,20 @@
 
 
 # To reset this file, you can simply delete it and perform /bs reload or restart the server
+# Settings overview:
+# config.yml  :   Generic BetterSleeping settings (sleep settings, bypass settings, messages settings)
+# buffs.yml   :   Sets the buffs that sleeping players will receive
+# console.yml :   Enable/disable coloured console logging
+# lang.yml    :   Customise all BetterSleeping messages
+# events.yml  :   Timed event settings like Easter and April Fools
+
 
 # Useful links:
 # Our Spigot plugin page:                                       https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/
 # For support or suggestions, head over to our Discord server:  https://discord.gg/AS46VGT
 # You can find a live list of upcoming features/bug fixes here: https://github.com/Nuytemans-Dieter/BetterSleeping/issues
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
+# Considered tossing a coin to your developer?                  https://www.paypal.me/vallasPlugins
 
 
 # Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
@@ -22,14 +30,15 @@
 
 
 # Choose whether or not BetterSleeping should check for updates on startup
-# No information from your server is shared or collected in this process.
+# This will not send information about your server anywhere, it will just retrieve the plugin's most recent version
+# The console will be notified on startup
 # Default: true
 update_checker: true
 
 
 # This option will make BetterSleeping automatically add any options that may be missing from your config file
 # All existing options will remain untouched but all comments will be gone! (except for those at the top of the file)
-# If uncertain about this feature, please join our Discord server and we'll gladly help you
+# Please join our Discord server if you're uncertain about this feature, we'd be happy to help you!
 # Default: false
 auto_add_missing_options: false
 
@@ -48,6 +57,7 @@ percentage_needed: 30
 
 # Set the time (in ticks) that players will have to remain in their beds when enough people are sleeping
 # A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds (which roughly equals the single player delay)
+# This delay is ignored if ALL players in a world go to bed, the night is skipped instantly in that case! (Due to default mechanics)
 # Default: 40
 sleep_delay: 40
 
@@ -81,19 +91,17 @@ disable_skip_time: 1
 # --------------- #
 
 
-# Please read this wall of text before editing enable_bypass_permissions!
 # This feature was only added due to popular request.
 # An issue may arise when bypass permissions are disabled and Essentials is installed:
 # When everyone (except for OPs) is sleeping, the night is skipped instantly and BetterSleeping will send a message saying that skipping the night was canceled!
 # If set to true, BetterSleeping will ignore those players and this bug can no longer occur.
 # If you want to prevent this bug AND allow OPs to sleep, please do the following:
-# Add both permissions (below) to all OPs, using a permissions plugin like PermissionsEx, LuckPerms, GroupManager, etc.
+# Add both permissions (below) to all OPs, using a permissions plugin like LuckPerms, GroupManager, etc.
 # Negate bettersleeping.bypass AND essentials.sleepingignored
 #   With permissionsEx, negating is done by adding a '-' in front of the permission
 #   With LuckPerms, negating is done by setting the permission node to false
 #   Other permission management plugins may have a different syntax, please check their documentation
 # Specific gamemodes can still be ignored when this is set to false.
-# Thank you for reading this!
 # Default: true
 enable_bypass_permissions: true
 
@@ -154,6 +162,6 @@ amount_left_sleepingOnly: false
 #   - no_buff_received: "ignored"
 # If you really want to say good morning AND list the amount of buffs received:
 #   - Disable 'good_morning' and add your good morning to the two messages listed above.
-# A faulty configuration will be reported to the console upon startup or reload and will advise you on how to fix the configuration
+# A faulty configuration will be reported to the console upon startup or reload and will advise you on how to fix your configuration
 # Default: true
 messages_in_chat: true

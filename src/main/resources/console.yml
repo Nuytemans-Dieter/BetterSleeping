@@ -21,11 +21,11 @@
 # -------------- #
 
 # Choose whether positive messages should be colored green
-# If set to false, the messages will be white
+# If set to false, the messages will be sent in the default console color
 # Default: true
 positive_green: true
 
 # Choose whether negative messages should be colored red
-# If set to false, the messages will be white
+# If set to false, the messages will be sent in the default console color
 # Default: true
 negative_red: true
