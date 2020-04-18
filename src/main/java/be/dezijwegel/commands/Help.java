@@ -39,7 +39,7 @@ public class Help implements be.dezijwegel.interfaces.Command {
                 {
                     cs.sendMessage(ChatColor.DARK_AQUA + "Permission: " + ChatColor.WHITE + info.permission);
                 }
-                cs.sendMessage(ChatColor.GOLD + "---==---");
+                cs.sendMessage(ChatColor.GOLD + "---------");
             }
         } else {
             management.sendMessage("no_permission", cs);
