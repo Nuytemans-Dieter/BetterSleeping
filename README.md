@@ -29,4 +29,4 @@ Sometimes people ask how they can help, there is a lot you can do.
 - You can make a suggestion (eg. a new feature), join the [Discord server](https://discord.gg/AS46VGT) to let me know or create a [new issue](https://github.com/Nuytemans-Dieter/BetterSleeping/issues)!
 - If you know how to code, feel free to make a pull request and add your feature on your own!
 - Giving a star to this repository is much appreciated
-- I maintain this plugin and provide support whenever someone asks for it, feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins).
+- I maintain this plugin for free and provide support whenever someone asks for it without being paid, feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins).
