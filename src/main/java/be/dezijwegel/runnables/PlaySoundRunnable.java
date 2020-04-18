@@ -1,6 +1,5 @@
-package be.dezijwegel.Runnables;
+package be.dezijwegel.runnables;
 
-import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

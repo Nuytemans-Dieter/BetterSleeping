@@ -1,13 +1,12 @@
 package be.dezijwegel;
 
-import be.dezijwegel.Runnables.DateChecker;
+import be.dezijwegel.runnables.DateChecker;
 import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.events.OnTeleportEvent;
 import be.dezijwegel.files.Console;
-import be.dezijwegel.files.EventsConfig;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;

@@ -1,8 +1,7 @@
-package be.dezijwegel.Runnables;
+package be.dezijwegel.runnables;
 
 import be.dezijwegel.files.Console;
 import be.dezijwegel.files.EventsConfig;
-import be.dezijwegel.files.Lang;
 import be.dezijwegel.interfaces.TimedEvent;
 import be.dezijwegel.management.Management;
 import be.dezijwegel.timedEvents.AprilFools;
@@ -23,7 +22,8 @@ public class DateChecker extends BukkitRunnable {
 
     private EventsConfig config;
     private Console consoleConfig;
-    private Map<EventType, TimedEvent> events = new HashMap<>();
+    private final Map<EventType, TimedEvent> events = new HashMap<>();
+    private final Map<EventType, Boolean> reportedEvents = new HashMap<>();
 
     public enum EventType {
         APRIL_FOOLS,
@@ -85,11 +85,14 @@ public class DateChecker extends BukkitRunnable {
                     } else {
                         Bukkit.getConsoleSender().sendMessage("[BetterSleeping] " + message);
                     }
-                } else if (!event.getIsActive())
+                } // Only report possible event to console if the event is not active, and has not been reported before
+                else if (!event.getIsActive() && ( !reportedEvents.containsKey(type) || !reportedEvents.get(type)))
                 {
                     // Log to the console
                     String message = "A timed event (" + eventName + ") is active but disabled in events.yml!";
                     ConsoleLogger.logPositive(message, ChatColor.LIGHT_PURPLE);
+
+                    reportedEvents.put(type, true);
                 }
             }
             else if (event.getIsActive())       // Not in the right window! Stop event if currently active

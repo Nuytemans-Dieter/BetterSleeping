@@ -1,12 +1,9 @@
-package be.dezijwegel.Runnables;
+package be.dezijwegel.runnables;
 
 import be.dezijwegel.BetterSleeping;
-import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
-import be.dezijwegel.customEvents.TimeSetToDayEvent;
 import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
-import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

@@ -1,7 +1,7 @@
 package be.dezijwegel.events;
 
 import be.dezijwegel.BetterSleeping;
-import be.dezijwegel.Runnables.SetTimeToDay;
+import be.dezijwegel.runnables.SetTimeToDay;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

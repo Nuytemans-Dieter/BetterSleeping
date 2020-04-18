@@ -68,7 +68,7 @@ public class Status implements Command {
                 }
             }
 
-            player.sendMessage(ChatColor.GOLD + "---==---");
+            player.sendMessage(ChatColor.GOLD + "---------");
 
         } else {
             String message = "Only players can perform /bs status!";

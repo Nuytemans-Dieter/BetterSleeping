@@ -1,6 +1,6 @@
 package be.dezijwegel.files;
 
-import be.dezijwegel.Runnables.DateChecker;
+import be.dezijwegel.runnables.DateChecker;
 import be.dezijwegel.interfaces.Reloadable;
 import org.bukkit.plugin.java.JavaPlugin;
 

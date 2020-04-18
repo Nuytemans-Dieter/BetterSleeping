@@ -1,16 +1,12 @@
 package be.dezijwegel.events;
 
-import be.dezijwegel.BetterSleeping;
-import be.dezijwegel.Runnables.EnableSkipWorld;
+import be.dezijwegel.runnables.EnableSkipWorld;
 import be.dezijwegel.management.Management;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public class DisableSkipTracker {
 

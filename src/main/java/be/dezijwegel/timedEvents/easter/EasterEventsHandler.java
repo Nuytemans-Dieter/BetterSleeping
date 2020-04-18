@@ -1,7 +1,6 @@
 package be.dezijwegel.timedEvents.easter;
 
-import be.dezijwegel.Runnables.PlaySoundRunnable;
-import be.dezijwegel.Runnables.SendMessageRunnable;
+import be.dezijwegel.runnables.PlaySoundRunnable;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,8 +14,6 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-
-import java.util.ArrayList;
 
 public class EasterEventsHandler implements Listener {
 
