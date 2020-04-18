@@ -1,6 +1,6 @@
 package be.dezijwegel.commands;
 
-import be.dezijwegel.Runnables.SetTimeToDay;
+import be.dezijwegel.runnables.SetTimeToDay;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;

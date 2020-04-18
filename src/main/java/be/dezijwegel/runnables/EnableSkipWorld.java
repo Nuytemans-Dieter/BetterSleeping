@@ -1,4 +1,4 @@
-package be.dezijwegel.Runnables;
+package be.dezijwegel.runnables;
 
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;

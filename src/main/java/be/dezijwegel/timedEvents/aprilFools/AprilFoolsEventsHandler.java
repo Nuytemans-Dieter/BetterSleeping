@@ -1,10 +1,9 @@
 package be.dezijwegel.timedEvents.aprilFools;
 
-import be.dezijwegel.Runnables.PlaySoundRunnable;
-import be.dezijwegel.Runnables.SendMessageRunnable;
+import be.dezijwegel.runnables.PlaySoundRunnable;
+import be.dezijwegel.runnables.SendMessageRunnable;
 import be.dezijwegel.customEvents.PlayersDidNotSleepEvent;
 import be.dezijwegel.customEvents.TimeSetToDayEvent;
-import be.dezijwegel.files.Lang;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
