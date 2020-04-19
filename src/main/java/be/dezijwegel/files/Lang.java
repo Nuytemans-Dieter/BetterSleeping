@@ -4,9 +4,7 @@ import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.util.ScreenMessageSender;
 import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -200,9 +198,9 @@ public class Lang implements Reloadable {
      * The message must exist in the default lang.yml or lang.yml on disk
      * The placeholders (keys of replacings) will be replaced by their respective values
      * If a [singular.plural] part exists, it will be corrected based on the given boolean
-     * @param messagePath
-     * @param receivers
-     * @param replacings
+     * @param messagePath path to message
+     * @param receivers Players receiving this message
+     * @param replacings strings to be replaced (keys) by other strings (values)
      */
     public void sendMessageToGroup(String messagePath, List<Player> receivers, Map<String,String> replacings, boolean singular)
     {
@@ -231,14 +229,25 @@ public class Lang implements Reloadable {
                 }
                 else if(player.getBedSpawnLocation() != null)
                 {
-                    double distance = player.getLocation().distance( player.getBedSpawnLocation() );
-                    if ( distance < 3 ) {
-                        isProbablySleeping = true;
+                    Location bedSpawnLocation = player.getBedSpawnLocation();
+                    if (bedSpawnLocation != null)
+                    {
+                        World world = bedSpawnLocation.getWorld();
+                        if (world != null)
+                        {
+                            String worldName = world.getName();
+                            if (player.getWorld().getName().equals( worldName )) {
+                                double distance = player.getLocation().distance(player.getBedSpawnLocation());
+                                if (distance < 3) {
+                                    isProbablySleeping = true;
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            if ( doHideMessage == false || isProbablySleeping)
+            if ( !doHideMessage || isProbablySleeping)
                 sendRaw(message, player);
         }
     }
