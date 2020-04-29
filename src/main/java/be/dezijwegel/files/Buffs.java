@@ -49,6 +49,7 @@ public class Buffs implements Reloadable {
      * @return PotionEffectType
      */
     private PotionEffectType getPotionType(String effect) {
+        PotionEffectType.getByName(effect);
         if (effect.equalsIgnoreCase("regeneration")) {
             return PotionEffectType.REGENERATION;
         } else if (effect.equalsIgnoreCase("absorption")) {

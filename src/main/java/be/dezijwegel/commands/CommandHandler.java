@@ -2,6 +2,7 @@ package be.dezijwegel.commands;
 
 import be.dezijwegel.BetterSleeping;
 import be.dezijwegel.events.SleepTracker;
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import org.bukkit.command.Command;
@@ -17,11 +18,11 @@ public class CommandHandler implements CommandExecutor {
     private SleepTracker sleepTracker;
 
     // Subcommands
-    private be.dezijwegel.interfaces.Command reload;
-    private be.dezijwegel.interfaces.Command skipNight;
-    private be.dezijwegel.interfaces.Command help;
-    private be.dezijwegel.interfaces.Command status;
-    private be.dezijwegel.interfaces.Command night;
+    private BsCommand reload;
+    private BsCommand skipNight;
+    private BsCommand help;
+    private BsCommand status;
+    private BsCommand night;
 
 
     /**

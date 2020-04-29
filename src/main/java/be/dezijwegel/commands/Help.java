@@ -1,5 +1,6 @@
 package be.dezijwegel.commands;
 
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.management.Management;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -9,7 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Help implements be.dezijwegel.interfaces.Command {
+public class Help implements BsCommand {
 
     private List<CommandInfo> commandList;
     private Management management;

@@ -1,5 +1,6 @@
 package be.dezijwegel.commands;
 
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.runnables.SetTimeToDay;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.management.Management;
@@ -11,7 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-public class SkipNight implements be.dezijwegel.interfaces.Command{
+public class SkipNight implements BsCommand {
 
     private Management management;
     private SleepTracker sleepTracker;

@@ -3,6 +3,7 @@ package be.dezijwegel.commands;
 import be.dezijwegel.events.DisableSkipTracker;
 import be.dezijwegel.events.SleepTracker;
 import be.dezijwegel.files.Lang;
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.management.Management;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Night implements be.dezijwegel.interfaces.Command {
+public class Night implements BsCommand {
 
     private Management management;
     private SleepTracker sleepTracker;

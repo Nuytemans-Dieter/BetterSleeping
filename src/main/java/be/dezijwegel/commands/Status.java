@@ -1,7 +1,7 @@
 package be.dezijwegel.commands;
 
 import be.dezijwegel.events.SleepTracker;
-import be.dezijwegel.interfaces.Command;
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.management.Management;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Status implements Command {
+public class Status implements BsCommand {
 
     private SleepTracker sleepTracker;
     private Management management;

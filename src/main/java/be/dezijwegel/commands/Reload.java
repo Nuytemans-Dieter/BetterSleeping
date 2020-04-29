@@ -1,6 +1,7 @@
 package be.dezijwegel.commands;
 
 import be.dezijwegel.BetterSleeping;
+import be.dezijwegel.interfaces.BsCommand;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.management.Management;
 import org.bukkit.command.Command;
@@ -15,7 +16,7 @@ import static org.bukkit.Bukkit.getConsoleSender;
  *
  * @author Dieter Nuytemans
  */
-public class Reload implements be.dezijwegel.interfaces.Command {
+public class Reload implements BsCommand {
     
     private LinkedList<Reloadable> reloadables;
 
