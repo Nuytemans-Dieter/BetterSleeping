@@ -1,15 +1,11 @@
 package be.dezijwegel;
 
-import be.dezijwegel.runnables.DateChecker;
 import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.events.OnTeleportEvent;
-import be.dezijwegel.files.Console;
 import be.dezijwegel.interfaces.Reloadable;
-import be.dezijwegel.management.Management;
-import be.dezijwegel.placeholderAPI.BetterSleepingExpansion;
 import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,14 +26,10 @@ import java.util.LinkedList;
  */
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
-    public static boolean debug = false;
-
     // Events
     private OnSleepEvent onSleepEvent;
     private OnPhantomSpawnEvent onPhantomSpawnEvent;
     private OnTeleportEvent onTeleportEvent;
-
-    private DateChecker dateChecker;
 
     // Commands
     private CommandHandler commandHandler;
@@ -53,8 +45,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     @Override
     public void reload() {
 
-        // Reset where needed
-        dateChecker.cancel();
+        // Reset where needed: prevent events being handled twice
         HandlerList.unregisterAll(this);
 
         // Restart all
@@ -63,56 +54,34 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     private void startPlugin()
     {
-        if (BetterSleeping.debug)
-        {
-            Bukkit.getLogger().info("-----");
-            Bukkit.getLogger().info("Starting BetterSleeping in debugging mode...");
-            Bukkit.getLogger().info("-----");
-        }
-        ConsoleLogger.setConfig(new Console(this));
+//        ConsoleLogger.setConfig(new Console(this));
+//
+//        Management management = new Management(this);
+//
+//        onSleepEvent = new OnSleepEvent(management, this);
+//        onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
+//        onTeleportEvent = new OnTeleportEvent( onSleepEvent.getSleepTracker() );
+//        getServer().getPluginManager().registerEvents(onSleepEvent, this);
+//        getServer().getPluginManager().registerEvents(onPhantomSpawnEvent, this);
+//        getServer().getPluginManager().registerEvents(onTeleportEvent, this);
+//
+//        reloadables = new LinkedList<Reloadable>();
+//        reloadables.add(this);
 
-        Management management = new Management(this);
-
-        onSleepEvent = new OnSleepEvent(management, this);
-        onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
-        onTeleportEvent = new OnTeleportEvent( onSleepEvent.getSleepTracker() );
-        getServer().getPluginManager().registerEvents(onSleepEvent, this);
-        getServer().getPluginManager().registerEvents(onPhantomSpawnEvent, this);
-        getServer().getPluginManager().registerEvents(onTeleportEvent, this);
-
-        reloadables = new LinkedList<Reloadable>();
-        reloadables.add(this);
-
-        commandHandler = new CommandHandler(reloadables, management, onSleepEvent.getSleepTracker(), this);
+//        commandHandler = new CommandHandler(reloadables, management, onSleepEvent.getSleepTracker(), this);
 
 
         // If PlaceholderAPI is registered
-        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
-            new BetterSleepingExpansion(this, management, onSleepEvent.getSleepTracker()).register();
-            ConsoleLogger.logPositive("Succesfully hooked into PlaceholderAPI!", ChatColor.GREEN);
-        }
+//        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+//            new BetterSleepingExpansion(this, management, onSleepEvent.getSleepTracker()).register();
+//            ConsoleLogger.logPositive("Succesfully hooked into PlaceholderAPI!", ChatColor.GREEN);
+//        }
 
-        try {
-            this.getCommand("bettersleeping").setExecutor(commandHandler);
-            this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
-        } catch(NullPointerException e)
-        {
-            e.printStackTrace();
-        }
-
-        if (management.getBooleanSetting("update_checker")) {
-            String version = this.getDescription().getVersion();
-            new UpdateChecker( version );
-        }
-
-
-
-        dateChecker = new DateChecker(this, management);
-        // 20x3600 = 72 000 -> Ticks in an hour
-        dateChecker.runTaskTimer(this, 0, 72000);
+        this.getCommand("bettersleeping").setExecutor(commandHandler);
+        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
     }
 
-    private class UpdateChecker extends Thread {
+    private static class UpdateChecker extends Thread {
 
         private String currentVersion;
 
