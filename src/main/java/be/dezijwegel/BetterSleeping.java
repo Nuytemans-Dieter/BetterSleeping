@@ -6,6 +6,7 @@ import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
 import be.dezijwegel.events.OnTeleportEvent;
 import be.dezijwegel.interfaces.Reloadable;
+import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +19,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -77,8 +79,10 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 //            ConsoleLogger.logPositive("Succesfully hooked into PlaceholderAPI!", ChatColor.GREEN);
 //        }
 
+        PlayerMessenger messenger = new PlayerMessenger(new HashMap<>());
+
         this.getCommand("bettersleeping").setExecutor(commandHandler);
-        this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
+        //this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
     }
 
     private static class UpdateChecker extends Thread {

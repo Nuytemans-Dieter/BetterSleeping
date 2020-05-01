@@ -18,7 +18,6 @@ import java.util.*;
 public class OnSleepEvent implements Listener {
 
     private BetterSleeping plugin;
-    private Management management;
     private SleepTracker sleepTracker;
 
     private long sleepDelay;
@@ -26,13 +25,9 @@ public class OnSleepEvent implements Listener {
     private List<SetTimeToDay> pendingTasks;
 
 
-    public OnSleepEvent(Management management, BetterSleeping plugin)
+    public OnSleepEvent(BetterSleeping plugin)
     {
         this.plugin = plugin;
-        this.management = management;
-        sleepTracker = new SleepTracker(plugin, management);
-
-        sleepDelay = management.getIntegerSetting("sleep_delay");
 
         pendingTasks = new LinkedList<SetTimeToDay>();
     }
@@ -41,12 +36,6 @@ public class OnSleepEvent implements Listener {
     public void onSleepEvent(PlayerBedEnterEvent event)
     {
         Player player = event.getPlayer();
-
-        if (BetterSleeping.debug)
-        {
-            Bukkit.getLogger().info("-----");
-            Bukkit.getLogger().info("A player went to bed");
-        }
 
         if(!event.isCancelled() && ( Bukkit.getVersion().contains("1.12") || event.getBedEnterResult() == PlayerBedEnterEvent.BedEnterResult.OK ) ) {
             if (sleepTracker.playerMaySleep(player)) {

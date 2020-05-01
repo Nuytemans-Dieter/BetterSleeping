@@ -1,6 +1,5 @@
 package be.dezijwegel.events;
 
-import be.dezijwegel.management.Management;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import org.bukkit.Bukkit;
@@ -17,16 +16,16 @@ public class SleepTracker {
 
     Plugin plugin;
 
-    private Map<UUID, Long> sleepList;          // Keeps track of when a player went last to sleep
-    private Map<World, Integer> numSleeping;    // Keeps track of the number of sleeping players in each world
-    private Map<World, Long> lastSetToDay;      // Keeps track when the time in each world was last set to day
+    private final Map<UUID, Long> sleepList;          // Keeps track of when a player went last to sleep
+    private final Map<World, Integer> numSleeping;    // Keeps track of the number of sleeping players in each world
+    private final Map<World, Long> lastSetToDay;      // Keeps track when the time in each world was last set to day
 
-    private Management management;
-    private DisableSkipTracker disableSkipTracker;
+    private final Management management;
+    private final DisableSkipTracker disableSkipTracker;
     private Essentials essentials = null;
 
-    private boolean isEssentialsHooked;
-    private int bedEnterDelay;
+    private final boolean isEssentialsHooked;
+    private final int bedEnterDelay;
     private int percentageNeeded;
 
     public SleepTracker(Plugin plugin, Management management)
