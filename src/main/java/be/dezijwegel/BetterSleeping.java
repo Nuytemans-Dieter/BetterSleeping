@@ -1,14 +1,12 @@
 package be.dezijwegel;
 
-import be.dezijwegel.commands.CommandHandler;
-import be.dezijwegel.commands.TabCompletion;
-import be.dezijwegel.events.OnPhantomSpawnEvent;
-import be.dezijwegel.events.OnSleepEvent;
+import be.dezijwegel.eventhandlers.BedEventHandler;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.messenger.PlayerMessenger;
-import be.dezijwegel.util.ConsoleLogger;
+import be.dezijwegel.sleepersneeded.PercentageNeeded;
+import be.dezijwegel.timechange.TimeChanger;
+import be.dezijwegel.timechange.TimeSetter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,7 +17,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 /**
  *
@@ -27,20 +24,13 @@ import java.util.LinkedList;
  */
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
-    // Events
-    private OnSleepEvent onSleepEvent;
-    private OnPhantomSpawnEvent onPhantomSpawnEvent;
 
-    // Commands
-    private CommandHandler commandHandler;
-
-    private LinkedList<Reloadable> reloadables;
-    
     @Override
     public void onEnable()
    {
        startPlugin();
    }
+
 
     @Override
     public void reload() {
@@ -52,36 +42,18 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         startPlugin();
     }
 
+
     private void startPlugin()
     {
-//        ConsoleLogger.setConfig(new Console(this));
-//
-//        Management management = new Management(this);
-//
-//        onSleepEvent = new OnSleepEvent(management, this);
-//        onPhantomSpawnEvent = new OnPhantomSpawnEvent(management);
-//        onTeleportEvent = new OnTeleportEvent( onSleepEvent.getSleepTracker() );
-//        getServer().getPluginManager().registerEvents(onSleepEvent, this);
-//        getServer().getPluginManager().registerEvents(onPhantomSpawnEvent, this);
-//        getServer().getPluginManager().registerEvents(onTeleportEvent, this);
-//
-//        reloadables = new LinkedList<Reloadable>();
-//        reloadables.add(this);
-
-//        commandHandler = new CommandHandler(reloadables, management, onSleepEvent.getSleepTracker(), this);
-
-
-        // If PlaceholderAPI is registered
-//        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
-//            new BetterSleepingExpansion(this, management, onSleepEvent.getSleepTracker()).register();
-//            ConsoleLogger.logPositive("Succesfully hooked into PlaceholderAPI!", ChatColor.GREEN);
-//        }
-
         PlayerMessenger messenger = new PlayerMessenger(new HashMap<>());
+        BedEventHandler beh = new BedEventHandler(this, messenger, TimeChanger.TimeChangeType.SETTER, new PercentageNeeded(30));
+        getServer().getPluginManager().registerEvents(beh, this);
 
-        this.getCommand("bettersleeping").setExecutor(commandHandler);
+        //this.getCommand("bettersleeping").setExecutor(commandHandler);
         //this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
     }
+
+
 
     private static class UpdateChecker extends Thread {
 
@@ -116,11 +88,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 String updateVersion = reader.readLine();
-                if (updateVersion.equals(currentVersion)) {
-                    ConsoleLogger.logInfo("You are using the latest version: " + currentVersion);
-                } else {
-                    ConsoleLogger.logNegative("Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/", ChatColor.RED);
-                }
+//                if (updateVersion.equals(currentVersion)) {
+//                    ConsoleLogger.logInfo("You are using the latest version: " + currentVersion);
+//                } else {
+//                    ConsoleLogger.logNegative("Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/", ChatColor.RED);
+//                }
             } catch (IOException | NullPointerException e) {
                 Bukkit.getLogger().info("[BetterSleeping] An error occurred while retrieving the latest version!");
             }

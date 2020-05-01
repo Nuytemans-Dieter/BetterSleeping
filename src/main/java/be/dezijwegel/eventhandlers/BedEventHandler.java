@@ -1,9 +1,13 @@
 package be.dezijwegel.eventhandlers;
 
+import be.dezijwegel.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.messenger.MsgEntry;
 import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.permissions.SleepDelayChecker;
 import be.dezijwegel.runnables.TimeChangeRunnable;
+import be.dezijwegel.timechange.TimeChanger;
+import be.dezijwegel.timechange.TimeSetter;
+import be.dezijwegel.timechange.TimeSmooth;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -27,7 +31,7 @@ public class BedEventHandler implements Listener {
     private final Map<World, TimeChangeRunnable> runnables;
 
 
-    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger)
+    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, TimeChanger.TimeChangeType timeChangeType, SleepersNeededCalculator sleepCalculator)
     {
         this.plugin = plugin;
 
@@ -37,10 +41,14 @@ public class BedEventHandler implements Listener {
 
         for (World world : Bukkit.getWorlds())
         {
-            TimeChangeRunnable runnable = new TimeChangeRunnable(world);
-            runnables.put(world, runnable);
-            // Wait 40 ticks before starting the runnable
-            runnable.runTaskTimer(plugin, 40L, 1L);
+            // Only check on the overworld
+            if (world.getEnvironment() == World.Environment.NORMAL) {
+                TimeChanger timeChanger = timeChangeType == TimeChanger.TimeChangeType.SETTER ? new TimeSetter(world) : new TimeSmooth(world);
+                TimeChangeRunnable runnable = new TimeChangeRunnable(world, timeChanger, sleepCalculator);
+                runnables.put(world, runnable);
+                // Wait 40 ticks before starting the runnable
+                runnable.runTaskTimer(plugin, 40L, 2L);
+            }
         }
     }
 
