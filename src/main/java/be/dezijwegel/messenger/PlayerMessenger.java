@@ -3,6 +3,7 @@ package be.dezijwegel.messenger;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class PlayerMessenger {
 
@@ -38,8 +39,11 @@ public class PlayerMessenger {
             message = message.replace(entry.getTag(), entry.getReplacement());
         }
 
-        // Get the prefix
+        // Get the prefix and put it before the message
         String prefix = "&6[BetterSleeping] &3";
+        message = prefix + message;
+
+        message = message.replace("<user>", player.getDisplayName());
 
         player.sendMessage(prefix + message);
     }

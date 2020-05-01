@@ -1,27 +1,23 @@
-package be.dezijwegel.placeholderAPI;
+package be.dezijwegel.hooks;
 
 import be.dezijwegel.BetterSleeping;
-import be.dezijwegel.events.SleepTracker;
-import be.dezijwegel.management.Management;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
 
-public class BetterSleepingExpansion extends PlaceholderExpansion {
+public class PapiExpansion extends PlaceholderExpansion {
 
-    private BetterSleeping plugin;
-    private Management management;
-    private SleepTracker sleepTracker;
+
+    private final BetterSleeping plugin;
+
 
     /**
      * @param plugin instance of BetterSleeping
      */
-    public BetterSleepingExpansion(BetterSleeping plugin, Management management, SleepTracker sleepTracker)
+    public PapiExpansion(BetterSleeping plugin)
     {
         this.plugin = plugin;
-        this.management = management;
-        this.sleepTracker = sleepTracker;
     }
+
 
     /**
      * Makes sure this expansion is supported by PAPI
@@ -32,6 +28,7 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
         return true;
     }
 
+
     /**
      * @return Always true since it's an internal class
      */
@@ -40,10 +37,12 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
         return true;
     }
 
+
     @Override
     public String getAuthor() {
         return plugin.getDescription().getAuthors().toString();
     }
+
 
     /**
      * The unique ID for BetterSleeping placeholders
@@ -77,33 +76,31 @@ public class BetterSleepingExpansion extends PlaceholderExpansion {
         }
 
         if(identifier.equals("current_sleepers")){
-            return Integer.toString( sleepTracker.getNumSleepingPlayers( player.getWorld() ));
+
         }
 
         if(identifier.equals("remaining_sleepers")){
-            int numNeeded = sleepTracker.getTotalSleepersNeeded(player.getWorld());
-            int numCurrent = sleepTracker.getNumSleepingPlayers(player.getWorld());
-            return Integer.toString( numNeeded - numCurrent );
+
         }
 
         if(identifier.equals("total_needed_sleepers")){
-            return Integer.toString( sleepTracker.getTotalSleepersNeeded( player.getWorld() ));
+
         }
 
         if(identifier.equals("buffs_amount")){
-            return Integer.toString( management.getNumBuffs() );
+
         }
 
         if(identifier.equals("night_skip_time")){
-            return Integer.toString( management.getConfig().getInt("sleep_delay")/20 );
+
         }
 
         if(identifier.equals("sleep_spam_time")){
-            return Long.toString( sleepTracker.whenCanPlayerSleep( player.getUniqueId() ));
+
         }
 
         if(identifier.equals("receiver")){
-            return ChatColor.stripColor( player.getName() );
+
         }
 
         return null;

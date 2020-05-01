@@ -4,7 +4,6 @@ import be.dezijwegel.commands.CommandHandler;
 import be.dezijwegel.commands.TabCompletion;
 import be.dezijwegel.events.OnPhantomSpawnEvent;
 import be.dezijwegel.events.OnSleepEvent;
-import be.dezijwegel.events.OnTeleportEvent;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.util.ConsoleLogger;
@@ -31,7 +30,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     // Events
     private OnSleepEvent onSleepEvent;
     private OnPhantomSpawnEvent onPhantomSpawnEvent;
-    private OnTeleportEvent onTeleportEvent;
 
     // Commands
     private CommandHandler commandHandler;
