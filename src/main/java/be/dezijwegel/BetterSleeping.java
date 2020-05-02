@@ -46,7 +46,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     private void startPlugin()
     {
         PlayerMessenger messenger = new PlayerMessenger(new HashMap<>());
-        BedEventHandler beh = new BedEventHandler(this, messenger, TimeChanger.TimeChangeType.SETTER, new PercentageNeeded(30));
+        BedEventHandler beh = new BedEventHandler(this, messenger, TimeChanger.TimeChangeType.SMOOTH, new PercentageNeeded(30));
         getServer().getPluginManager().registerEvents(beh, this);
 
         //this.getCommand("bettersleeping").setExecutor(commandHandler);

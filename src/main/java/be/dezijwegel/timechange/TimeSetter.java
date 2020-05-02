@@ -1,5 +1,6 @@
 package be.dezijwegel.timechange;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 public class TimeSetter extends TimeChanger {
@@ -17,15 +18,21 @@ public class TimeSetter extends TimeChanger {
     }
 
     @Override
-    public void tick() {
-        long newTime = world.getTime();
+    public void tick(int numSleeping, int numNeeded) {
 
-        if (newTime < oldTime + 5)
-            counter++;
-        else
+        // Handle the timer
+
+        long newTime = world.getTime();
+        counter = (newTime < oldTime + 5) ? counter + 1 : 0;
+        oldTime = newTime;
+
+        // Handle the time set mechanic
+
+        if (counter >= SLEEP_DELAY) {
+
+            // Reset the counter
             counter = 0;
 
-        if (counter == SLEEP_DELAY) {
             if (world.isThundering())
             {
                 world.setThundering(false);

@@ -24,7 +24,6 @@ public class TimeChangeRunnable extends BukkitRunnable {
     private int numNeeded;
     private long oldTime;
 
-
     /**
      * A runnable that will detect time changes and its cause
      * @param world
@@ -68,10 +67,9 @@ public class TimeChangeRunnable extends BukkitRunnable {
 
 
 
-
-
     @Override
     public void run() {
+
 
         /*
          *  TIME DETECTOR
@@ -81,18 +79,18 @@ public class TimeChangeRunnable extends BukkitRunnable {
         long newTime = world.getTime();
 
         // True if time is set to day
-        if (oldTime < 2350 && newTime < oldTime + 1) {
-            Bukkit.getLogger().info("Time fidd in " + world.getName() + " is " + (newTime-oldTime));
+        if (newTime < oldTime + 1) {
+            Bukkit.getLogger().info("Time diff in " + world.getName() + " is " + (newTime-oldTime));
             Bukkit.getLogger().info("Time set detected in " + world.getName() + "!!");
         }
 
         oldTime = newTime;
 
         // Early return if players can't sleep anyway
-        if (newTime < TimeChanger.TIME_RAIN_NIGHT)
+        if (newTime < TimeChanger.TIME_RAIN_NIGHT && !world.isThundering())
             return;
 
-        /*
+         /*
          *  SLEEP HANDLER
          */
 
@@ -102,7 +100,8 @@ public class TimeChangeRunnable extends BukkitRunnable {
 
         if (sleepers.size() >= numNeeded)
         {
-            timeChanger.tick();
+            timeChanger.tick(sleepers.size(), numNeeded);
+            Bukkit.getLogger().info("Enough sleepers! " + sleepers.size() + "/" + numNeeded);
         }
         
 

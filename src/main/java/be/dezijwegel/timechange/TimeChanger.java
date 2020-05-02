@@ -24,9 +24,13 @@ public abstract class TimeChanger {
 
     /**
      * Tick should advance the time to its next change
+     * This method is executed every tick while enough players are sleeping
      * This can be an internal counter that sets the time at a certain value
      * Or this can be a single time change that appears to move the time smoothly
+     *
+     * @param numSleeping the amount of current sleeping players
+     * @param numNeeded the amount of required sleeping players
      */
-    public abstract void tick();
+    public abstract void tick(int numSleeping, int numNeeded);
 
 }

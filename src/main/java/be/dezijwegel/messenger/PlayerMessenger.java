@@ -44,8 +44,9 @@ public class PlayerMessenger {
         message = prefix + message;
 
         message = message.replace("<user>", player.getDisplayName());
+        message = message.replace('&', '§');
 
-        player.sendMessage(prefix + message);
+        player.sendMessage(message);
     }
 
 }

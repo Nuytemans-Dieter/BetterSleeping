@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -47,7 +48,7 @@ public class BedEventHandler implements Listener {
                 TimeChangeRunnable runnable = new TimeChangeRunnable(world, timeChanger, sleepCalculator);
                 runnables.put(world, runnable);
                 // Wait 40 ticks before starting the runnable
-                runnable.runTaskTimer(plugin, 40L, 2L);
+                runnable.runTaskTimer(plugin, 40L, 1L);
             }
         }
     }
@@ -98,10 +99,10 @@ public class BedEventHandler implements Listener {
 
 
     @EventHandler
-    public void logOutEvent (PlayerDisconnectEvent event)
+    public void logOutEvent (PlayerQuitEvent event)
     {
-        //Player player = event.getPlayer();
-
+        Player player = event.getPlayer();
+        runnables.get(player.getWorld()).playerLeaveBed(player);
     }
 
 }
