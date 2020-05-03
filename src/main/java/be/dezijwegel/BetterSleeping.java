@@ -1,11 +1,10 @@
 package be.dezijwegel;
 
-import be.dezijwegel.eventhandlers.BedEventHandler;
+import be.dezijwegel.events.handlers.BedEventHandler;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.sleepersneeded.PercentageNeeded;
 import be.dezijwegel.timechange.TimeChanger;
-import be.dezijwegel.timechange.TimeSetter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;

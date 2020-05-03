@@ -10,19 +10,12 @@
 
 # To reset a BetterSleeping config file, you can simply delete it and perform /bs reload or restart the server
 
-# Useful links:
-# Our Spigot plugin page:                                       https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/
-# For support or suggestions, head over to our Discord server:  https://discord.gg/AS46VGT
-# You can find a live list of upcoming features/bug fixes here: https://github.com/Nuytemans-Dieter/BetterSleeping/issues
-# The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
-# Considered tossing a coin to your developer?                  https://www.paypal.me/vallasPlugins
-
 # Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
 
-# The default language file to be used
-# Options: en-US (English), nl-BE (Dutch), pt-PT (Portugese)
-lang: "en_us"
-update_notifier: true
-disable_phantoms: true
-auto_add_missing_options: true
+
+# Whether or not essentials afk players will be ignored by the required sleeping count
+essentials_afk_ignored: true
+
+# Whether or not to ignore vanished players
+vanished_ignored: true

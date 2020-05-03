@@ -1,4 +1,4 @@
-package be.dezijwegel.events;
+package be.dezijwegel.events.custom;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;

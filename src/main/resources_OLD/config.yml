@@ -1,0 +1,169 @@
+
+# ____       _   _            _____ _                 _                    ____
+#|  _ \     | | | |          / ____| |               (_)                  |___ \
+#| |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _  __   ____) |
+#|  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` | \ \ / /__ <
+#| |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| |  \ V /___) |
+#|____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, |   \_/|____/
+#                                              | |             __/ |
+#                                              |_|            |___/
+
+
+
+# To reset this file, you can simply delete it and perform /bs reload or restart the server
+# Settings overview:
+# config.yml  :   Generic BetterSleeping settings (sleep settings, bypass settings, messages settings)
+# buffs.yml   :   Sets the buffs that sleeping players will receive
+# console.yml :   Enable/disable coloured console logging
+# lang.yml    :   Customise all BetterSleeping messages
+# events.yml  :   Timed event settings like Easter and April Fools
+
+
+# Useful links:
+# Our Spigot plugin page:                                       https://www.spigotmc.org/resources/bettersleeping-1-12-1-14.60837/
+# For support or suggestions, head over to our Discord server:  https://discord.gg/AS46VGT
+# You can find a live list of upcoming features/bug fixes here: https://github.com/Nuytemans-Dieter/BetterSleeping/issues
+# The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
+# Considered tossing a coin to your developer?                  https://www.paypal.me/vallasPlugins
+
+
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+
+
+# Choose whether or not BetterSleeping should check for updates on startup
+# This will not send information about your server anywhere, it will just retrieve the plugin's most recent version
+# The console will be notified on startup
+# Default: true
+update_checker: true
+
+
+# This option will make BetterSleeping automatically add any options that may be missing from your config file
+# All existing options will remain untouched but all comments will be gone! (except for those at the top of the file)
+# Please join our Discord server if you're uncertain about this feature, we'd be happy to help you!
+# Default: false
+auto_add_missing_options: false
+
+
+# --------------- #
+# Sleep settings  |
+# --------------- #
+
+
+# Set the percentage of online players that need to be sleeping to skip the night/storm
+# The number of players will be rounded up!
+# Example: 2 online players + this is set to 51 => 51% * 2 = 1,02 but it will be rounded up so: 2 players needed!
+# Default: 30
+percentage_needed: 30
+
+
+# Set the time (in ticks) that players will have to remain in their beds when enough people are sleeping
+# A delay of one second is equal to 20 ticks so setting this to 40 means a delay of two seconds (which roughly equals the single player delay)
+# This delay is ignored if ALL players in a world go to bed, the night is skipped instantly in that case! (Due to default mechanics)
+# Default: 40
+sleep_delay: 40
+
+
+# Set the time (in seconds) that players have to wait before they can enter a bed again after getting out of bed
+# This prevents a player's ability to spam the other players
+# Default: 10
+bed_enter_delay: 10
+
+
+# Choose whether or not AFK players (Essentials is required) will be counted towards the amount of sleeping players needed
+# AFK time is not taken into account. Players may abuse this by setting themselves afk to lower the amount of required sleeping players
+# Default: true
+essentials_afk_support: true
+
+
+# Choose whether /bs night is enabled by default (only OP has access by default)
+# /bs night or /bs n will disable skipping the night for a short time (which you can configure below)
+# Players must have the correct permission to use this command!
+# Keep in mind that this feature can allow players to abuse this system and prevent the night from being skipped indefinitely!
+# This setting will have no effect if all players in a world go to bed. Nothing can be done about that as it is a default mechanic (and everyone would want to skip in that case anyway)
+# Default: false
+enable_no_skip_night_command: false
+# Choose for how many minutes the night won't be skipped after executing /bs night (in minutes!)
+# Default: 1
+disable_skip_time: 1
+
+
+# --------------- #
+# Bypass settings |
+# --------------- #
+
+
+# This feature was only added due to popular request.
+# An issue may arise when bypass permissions are disabled and Essentials is installed:
+# When everyone (except for OPs) is sleeping, the night is skipped instantly and BetterSleeping will send a message saying that skipping the night was canceled!
+# If set to true, BetterSleeping will ignore those players and this bug can no longer occur.
+# If you want to prevent this bug AND allow OPs to sleep, please do the following:
+# Add both permissions (below) to all OPs, using a permissions plugin like LuckPerms, GroupManager, etc.
+# Negate bettersleeping.bypass AND essentials.sleepingignored
+#   With permissionsEx, negating is done by adding a '-' in front of the permission
+#   With LuckPerms, negating is done by setting the permission node to false
+#   Other permission management plugins may have a different syntax, please check their documentation
+# Specific gamemodes can still be ignored when this is set to false.
+# Default: true
+enable_bypass_permissions: true
+
+
+# Decide whether or not players with sleeping bypass permissions will get buffs
+# Those players will not be able sleep, even if they want to. This means that they would never be able to get their buffs if this is set to false.
+# Default: true
+buffs_for_bypassing_players: true
+
+
+# Choose whether or not vanished players should be bypassed
+# The plugins on the line below are supported
+# Essentials, Essentials-compatible vanish plugins, PremiumVanish, SuperVanish, VanishNoPacket and even more plugins!
+# Default: true
+ignore_vanished_players: true
+
+
+# Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
+# Default: false
+ignore_survival: false
+ignore_creative: false
+ignore_adventure: false
+
+
+# Choose whether or not phantoms are disabled
+# Setting this to true means that phantoms will never spawn again (this affects ALL phantoms)
+# Phantoms that spawned before setting this to true will still live until despawned or killed
+# Please do not set this to true if you are using a Spigot version below 1.13 as this can cause errors in the console
+# Default: false
+disable_phantoms: false
+
+
+# ----------------- #
+# Messages settings |
+# ----------------- #
+
+
+# Choose whether or not a sound will be played when a player receives a BetterSleeping message
+# Default: false
+message_sound: false
+
+
+# Choose whether or not non-sleeping players should receive the following BetterSleeping messages (see lang.yml)
+# When an option is set to true, that message will only be sent to players that are sleeping.
+# Default: false (for all options)
+enough_sleeping_sleepingOnly: false
+good_morning_sleepingOnly: false
+cancelled_sleepingOnly: false
+amount_left_sleepingOnly: false
+
+
+# Choose where the messages will appear
+# Setting this to true will result in the messages being sent to the chat
+# Setting this to false will result in the messages being shown on screen (read the text below to prevent issues)
+# Sometimes several messages are sent at once. Only the last message will be shown on screen!
+# Please disable the messages below in lang.yml or people may never receive 'good_morning'
+#   - buff_received: "ignored"
+#   - no_buff_received: "ignored"
+# If you really want to say good morning AND list the amount of buffs received:
+#   - Disable 'good_morning' and add your good morning to the two messages listed above.
+# A faulty configuration will be reported to the console upon startup or reload and will advise you on how to fix your configuration
+# Default: true
+messages_in_chat: true

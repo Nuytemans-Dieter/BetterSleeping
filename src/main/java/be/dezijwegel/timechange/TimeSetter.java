@@ -20,14 +20,12 @@ public class TimeSetter extends TimeChanger {
     @Override
     public void tick(int numSleeping, int numNeeded) {
 
-        // Handle the timer
-
+        // Handle the counter
         long newTime = world.getTime();
         counter = (newTime < oldTime + 5) ? counter + 1 : 0;
         oldTime = newTime;
 
-        // Handle the time set mechanic
-
+        // Handle the time set mechanic when the counter reaches their set value
         if (counter >= SLEEP_DELAY) {
 
             // Reset the counter

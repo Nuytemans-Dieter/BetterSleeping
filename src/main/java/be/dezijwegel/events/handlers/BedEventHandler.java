@@ -1,4 +1,4 @@
-package be.dezijwegel.eventhandlers;
+package be.dezijwegel.events.handlers;
 
 import be.dezijwegel.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.messenger.MsgEntry;

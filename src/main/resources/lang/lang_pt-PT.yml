@@ -1,0 +1,117 @@
+# ____       _   _            _____ _                 _                       ____
+#|  _ \     | | | |          / ____| |               (_)                     |___ \
+#| |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _     __   ____) |
+#|  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` |    \ \ / /__ <
+#| |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| |     \ V /___) |
+#|____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, |      \_/|____/
+#                                              | |             __/ |
+#                                              |_|            |___/
+# CONFIGURATION GUIDE:
+# The symbol '&' is used for color codes
+# Any message can be disabled by setting the text to "ignored" or "", an example can be found below
+# some_setting: "ignored"
+# another_setting: ""
+
+
+# BetterSleeping offers support for several placeholders:
+# <current_amount>
+#     Replaced by:      The current amount of something.
+#     Can be used in:   cancelled, amount_left
+#     Example:          When 5 players are sleeping, it will be replaced by 5
+# <amount>
+#     Replaced by:      The correct number in that context.
+#     Can be used in:   cancelled, amount_left, buff_received, no_buff_received
+#     Example:          When 5 players are sleeping and 7 are required, it will be replaced by 2
+#     Example:          When 3 buffs are enabled, it will be replaced by 3
+# <total_amount>
+#     Replaced by:      The correct total amount needed in that context, not considering the current amount
+#     Can be used in:   cancelled, amount_left
+#     Example:          When 7 sleeping players are required, it will be replaced by 7
+# <time>
+#     Replaced by:      The correct time (in seconds)
+#     Can be used in:   enough_sleeping, sleep_spam
+# <receiver>
+#     Replaced by:      The player receiving the message
+#     Can be used in:   Every message!
+# <user>
+#     Replaced by:      The player who did an action (enter or leave a bed for example)
+#     Can be used in:   cancelled, amount_left
+
+
+# Singular/plural nouns are taken in account too!
+# Simply add [singular.plural] in an applicable message and it will be correctly substituted.
+# The <amount> tag is always used as reference. This means that <current_amount> or <total_amount> are not considered in this process.
+# Can be used in:   enough_sleeping, buff_received, no_buff_received, cancelled, amount_left, sleep_spam
+# Example: <amount> more [player.players] [is.are] needed!
+#          When 1 more player is needed, the singular sides will be taken: 1 more player is needed
+#          Otherwise, the plural sides will be chosen: 5 more players are needed
+
+# ---------------- #
+# General messages |
+# ---------------- #
+
+
+# The message people get when enough people are sleeping
+enough_sleeping: "Mínimo de pessoas dormindo alcançado, a noite/tempestade será pulada em <time> [segundo.segundos]!"
+
+
+# The message people receive after the night/storm has been skipped
+good_morning: "Bom dia, <receiver>!"
+
+
+# Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
+cancelled: "<user> levantou da cama! Esperando por mais <amount> [pessoa.pessoas] para dormir. <current_amount>/<total_amount>"
+
+
+# This message indicates how many more people need to rest
+# Will be sent to all online players (or all players in a specific world depending on multiworld_support)
+# Sent when someone enters a bed
+amount_left: "<user> está cochilando. [É.são] necessário mais <amount> [pessoa.pessoas] necessárias para passar a noite. <current_amount>/<total_amount>"
+
+
+# Players that try to enter their bed too quickly after getting out of it
+sleep_spam: "Você precisa esperar mais <time> [segundo.segundos] para que possa dormir novamente!"
+
+# -------------- #
+# Buffs messages |
+# -------------- #
+
+# Players that went to bed will get this message if buffs are enabled
+buff_received: "Você dormiu bem e recebeu <amount> [buff.buffs]!"
+
+
+# Players that didn't sleep will receive this message after the night was skipped if buffs are enabled
+no_buff_received: "Você não dormiu e se sente cançado, você recebeu [um.<amount>] [buff.buffs]!"
+
+
+# ---------------- #
+# Command messages |
+# ---------------- #
+
+
+# The message a player gets when they don't have access to a command and tries to execute it anyway
+no_permission: "&4Você não tem permissão para executar esse comando!"
+
+
+# The message that will be sent to the command sender and console when a BetterSleeping reload is complete
+message_reloaded: "Recarregamento completo!"
+
+
+# --------------- #
+# Bypass messages |
+# --------------- #
+
+# A bypass is given to players with permission bettersleeping.bypass OR essentials.sleepingignored
+# And it is given to players with ignored gamemodes (this can be set in config.yml but is disabled by default)
+
+# This message is sent when a player tries to sleep but they have got a bypass permission
+# Permissions include bettersleeping.bypass and essentials.sleepingignored
+bypass_message: "Você tem permissão para não dormir, <receiver>."
+
+
+# This message is sent when it isn't nighttime yet when performing /bs skip
+not_night_yet: "&4Você ainda não vai se sentir cançado, <receiver>!"
+
+
+# This message is sent when a user performs /bs skip and not all players in that world have bypass permissions
+not_all_players_bypassed: "&4Nem todos os jogadores possuem passelivre para dormir!"
