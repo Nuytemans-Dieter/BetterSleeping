@@ -16,7 +16,6 @@ import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,10 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-/**
- *
- * @author Dieter Nuytemans
- */
+
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
@@ -85,9 +81,10 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
         ConfigLib lang;
-        String filename = "/lang/lang_" + localised + ".txt";
-        // Check if the internal file exists
-        URL internalLangFile = BetterSleeping.class.getResource(filename);
+        localised = localised == null ? "en-us" : localised;
+        String filename = "lang/" + localised.toLowerCase() + ".yml";
+        // Check if the internal file exists (slash must be added or the resource will not be found!)
+        URL internalLangFile = BetterSleeping.class.getResource("/" + filename);
         if (internalLangFile != null)
         {
             logger.log("Using localised lang file for: " + localised);
@@ -95,8 +92,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
         else
         {
-            logger.log("Localised lang file not found! Please make sure " + localised + " exists. Defaulting to en-US...");
-            lang = new ConfigLib("lang/lang_en-US.yml", this);
+            logger.log("Localised lang file not found! Please make sure " + localised + " exists. Defaulting to en-US...", ChatColor.DARK_RED);
+            lang = new ConfigLib("lang/en-us.yml", this);
         }
 
 

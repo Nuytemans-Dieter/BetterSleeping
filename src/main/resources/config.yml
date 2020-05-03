@@ -22,7 +22,7 @@
 
 # The default language file to be used
 # Options: en-US (English), nl-BE (Dutch), pt-PT (Portugese)
-language: "en_us"
+language: "en-US"
 
 # This is ran once on startup when enabled to fetch the latest version
 update_notifier: true

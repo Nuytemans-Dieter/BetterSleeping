@@ -28,11 +28,11 @@ public class ConsoleLogger {
      */
     public void log(String message, @Nullable ChatColor color, boolean isPlural)
     {
-        String fullMessage = "[BetterSleeping]";
+        String fullMessage = "[BetterSleeping] ";
         if (enableColors && color != null)
             fullMessage += color;
         fullMessage += message;
-        Bukkit.getLogger().info(fullMessage);
+        Bukkit.getConsoleSender().sendMessage(fullMessage);
     }
 
 

@@ -149,8 +149,7 @@ public class ConfigLib {
     {
         List<String> missingOptions = new ArrayList<>();
 
-        Reader defConfigStream = null;
-        defConfigStream = new InputStreamReader(Objects.requireNonNull(plugin.getResource(fileName)), StandardCharsets.UTF_8);
+        Reader defConfigStream = new InputStreamReader(plugin.getResource(fileName), StandardCharsets.UTF_8);
 
         YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
         for (String path : defConfig.getKeys(true)) {
@@ -294,7 +293,7 @@ public class ConfigLib {
                 logger.log(message, ChatColor.DARK_RED);
             }
         } else {
-            logger.log("No missing options were found in " + fileName + "!", ChatColor.GREEN);
+            logger.log("No missing options were found in " + fileName + "!");
         }
     }
 }
