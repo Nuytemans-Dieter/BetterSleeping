@@ -81,6 +81,14 @@
             <version>2.10.3</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Annotations -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>18.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

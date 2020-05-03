@@ -24,6 +24,16 @@ public class EssentialsHook {
 
 
     /**
+     * Check whether Essentials is installed on this server
+     * @return true if Essentials is installed and hooked, false otherwise
+     */
+    public boolean isHooked()
+    {
+        return isHooked;
+    }
+
+
+    /**
      * Get whether or not a player is afk
      * Will always return false if Essentials is not hooked
      * @param player the player to be checked
