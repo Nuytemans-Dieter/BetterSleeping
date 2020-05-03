@@ -4,11 +4,10 @@ import be.dezijwegel.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.messenger.MsgEntry;
 import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.permissions.SleepDelayChecker;
-import be.dezijwegel.runnables.TimeChangeRunnable;
+import be.dezijwegel.runnables.SleepersRunnable;
 import be.dezijwegel.timechange.TimeChanger;
 import be.dezijwegel.timechange.TimeSetter;
 import be.dezijwegel.timechange.TimeSmooth;
-import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -29,28 +28,19 @@ public class BedEventHandler implements Listener {
     private final Plugin plugin;
     private final PlayerMessenger playerMessenger;
     private final SleepDelayChecker sleepDelayChecker;
-    private final Map<World, TimeChangeRunnable> runnables;
+    private final Map<World, SleepersRunnable> runnables;
 
 
-    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, TimeChanger.TimeChangeType timeChangeType, SleepersNeededCalculator sleepCalculator)
+    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, Map<World, SleepersRunnable> runnables)
     {
         this.plugin = plugin;
 
         this.playerMessenger = playerMessenger;
         sleepDelayChecker = new SleepDelayChecker(2);
-        runnables = new HashMap<>();
+        this.runnables = runnables;
 
-        for (World world : Bukkit.getWorlds())
-        {
-            // Only check on the overworld
-            if (world.getEnvironment() == World.Environment.NORMAL) {
-                TimeChanger timeChanger = timeChangeType == TimeChanger.TimeChangeType.SETTER ? new TimeSetter(world) : new TimeSmooth(world);
-                TimeChangeRunnable runnable = new TimeChangeRunnable(world, timeChanger, sleepCalculator);
-                runnables.put(world, runnable);
-                // Wait 40 ticks before starting the runnable
-                runnable.runTaskTimer(plugin, 40L, 1L);
-            }
-        }
+        for (SleepersRunnable runnable : runnables.values())
+            runnable.runTaskTimer(plugin, 40L, 1L);
     }
 
 

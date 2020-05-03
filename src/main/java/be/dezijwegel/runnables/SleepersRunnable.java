@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TimeChangeRunnable extends BukkitRunnable {
+public class SleepersRunnable extends BukkitRunnable {
 
     // Final data
     private final World world;
@@ -28,7 +28,7 @@ public class TimeChangeRunnable extends BukkitRunnable {
      * A runnable that will detect time changes and its cause
      * @param world
      */
-    public TimeChangeRunnable(World world, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
+    public SleepersRunnable(World world, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
     {
         this.world = world;
         oldTime = world.getTime();

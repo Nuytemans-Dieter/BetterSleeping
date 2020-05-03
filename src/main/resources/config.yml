@@ -22,7 +22,16 @@
 
 # The default language file to be used
 # Options: en-US (English), nl-BE (Dutch), pt-PT (Portugese)
-lang: "en_us"
+language: "en_us"
+
+# This is ran once on startup when enabled to fetch the latest version
 update_notifier: true
+
+# Whether or not phantoms should be disabled
 disable_phantoms: true
-auto_add_missing_options: true
+
+# Automagically add all missing options in your config (when you delete an option or an update has new features)
+# IMPORTANT NOTE: This will reset all comments above options, except for the header
+# You will have to use each corresponding link to see the documentation
+# Options in this file will never be automatically added
+auto_add_missing_options: false

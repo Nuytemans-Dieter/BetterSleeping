@@ -26,7 +26,7 @@ public class ConfigLib {
     private FileConfiguration configuration;
     private FileConfiguration defaultConfig;
 
-    private String fileName = "";
+    private final String fileName;
 
 
     /**
@@ -37,11 +37,30 @@ public class ConfigLib {
     public ConfigLib(@NotNull String fileName, @NotNull JavaPlugin plugin) {
         this.plugin = plugin;
         this.fileName = fileName;
+        this.logger = new ConsoleLogger(true);
+        initialise(fileName, plugin, false);
+    }
+
+
+    /**
+     * Create a configLib instance for easy config reading / management
+     * @param fileName the name of the configuration file
+     * @param plugin instance of the plugin
+     * @param addMissingOptions whether or not to auto-add missing options to this file
+     */
+    public ConfigLib(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions) {
+        this.plugin = plugin;
+        this.fileName = fileName;
+        this.logger = new ConsoleLogger(true);
+        initialise(fileName, plugin, addMissingOptions);
+    }
+
+
+    public void initialise(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions)
+    {
 
         this.file = new File(plugin.getDataFolder(), fileName);
         this.configuration = YamlConfiguration.loadConfiguration(file);
-
-        this.logger = new ConsoleLogger(true);
 
         //Copy contents of internal config file
         Reader defaultStream = null;
@@ -52,7 +71,10 @@ public class ConfigLib {
 
         saveDefaultConfig();
 
-        reportMissingOptions();
+        if (addMissingOptions)
+            this.addMissingOptions();
+        else
+            this.reportMissingOptions();
 
         // Add missing options to the default config
         for (String path : defaultConfig.getKeys(true))
