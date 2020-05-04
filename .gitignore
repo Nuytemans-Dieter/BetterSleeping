@@ -4,6 +4,7 @@ backup/
 .gitattributes
 BetterSleeping.iml
 build.xml
+.gradle/
 
 versions/production/
 Versions/BetterSleeping.jar

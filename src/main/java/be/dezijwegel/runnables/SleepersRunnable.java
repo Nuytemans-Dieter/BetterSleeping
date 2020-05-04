@@ -1,13 +1,17 @@
 package be.dezijwegel.runnables;
 
 import be.dezijwegel.interfaces.SleepersNeededCalculator;
+import be.dezijwegel.messenger.MsgEntry;
+import be.dezijwegel.messenger.PlayerMessenger;
 import be.dezijwegel.timechange.TimeChanger;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class SleepersRunnable extends BukkitRunnable {
@@ -19,18 +23,22 @@ public class SleepersRunnable extends BukkitRunnable {
     // Utility
     private final SleepersNeededCalculator sleepersCalculator;
     private final TimeChanger timeChanger;
+    private final PlayerMessenger messenger;
 
     // Variables for internal working
     private int numNeeded;
     private long oldTime;
+    private boolean notifyEnoughSleeping = true;
+
 
     /**
      * A runnable that will detect time changes and its cause
      * @param world
      */
-    public SleepersRunnable(World world, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
+    public SleepersRunnable(World world, PlayerMessenger messenger, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
     {
         this.world = world;
+        this.messenger = messenger;
         oldTime = world.getTime();
 
         this.timeChanger = timeChanger;
@@ -51,6 +59,20 @@ public class SleepersRunnable extends BukkitRunnable {
     {
         sleepers.add(player);
         numNeeded = sleepersCalculator.getNumNeeded(world);
+        int remaining = numNeeded > sleepers.size() ? numNeeded - sleepers.size() : 0;
+
+        messenger.sendMessage(player, "bed_enter_message",
+                new MsgEntry("<num_sleeping>",      "" + sleepers.size()),
+                new MsgEntry("<needed_sleeping>",   "" + numNeeded),
+                new MsgEntry("<remaining_sleeping>","" + remaining));
+
+        List<Player> players = world.getPlayers();
+        players.remove(player);
+        messenger.sendMessage(players, "bed_enter_broadcast",
+                new MsgEntry("<player>", player.getDisplayName()),
+                new MsgEntry("<num_sleeping>",      "" + sleepers.size()),
+                new MsgEntry("<needed_sleeping>",   "" + numNeeded),
+                new MsgEntry("<remaining_sleeping>","" + remaining));
     }
 
 
@@ -71,17 +93,17 @@ public class SleepersRunnable extends BukkitRunnable {
     public void run() {
 
 
-        /*
+        /*/
          *  TIME DETECTOR
-         */
+        /*/
+
 
         // Time check subsystem: detect time set to day
         long newTime = world.getTime();
 
         // True if time is set to day
         if (newTime < oldTime + 1) {
-            Bukkit.getLogger().info("Time diff in " + world.getName() + " is " + (newTime-oldTime));
-            Bukkit.getLogger().info("Time set detected in " + world.getName() + "!!");
+            messenger.sendMessage(world.getPlayers(), "morning_message");
         }
 
         oldTime = newTime;
@@ -90,9 +112,10 @@ public class SleepersRunnable extends BukkitRunnable {
         if (newTime < TimeChanger.TIME_RAIN_NIGHT && !world.isThundering())
             return;
 
-         /*
+
+        /*/
          *  SLEEP HANDLER
-         */
+        /*/
 
 
         // Make sure the set does not contain any false sleepers
@@ -101,7 +124,23 @@ public class SleepersRunnable extends BukkitRunnable {
         if (sleepers.size() >= numNeeded)
         {
             timeChanger.tick(sleepers.size(), numNeeded);
-            Bukkit.getLogger().info("Enough sleepers! " + sleepers.size() + "/" + numNeeded);
+
+            if (notifyEnoughSleeping) {
+                int remaining = numNeeded > sleepers.size() ? numNeeded - sleepers.size() : 0;
+                messenger.sendMessage(world.getPlayers(), "enough_sleeping",
+                        new MsgEntry("<num_sleeping>",      "" + sleepers.size()),
+                        new MsgEntry("<needed_sleeping>",   "" + numNeeded),
+                        new MsgEntry("<remaining_sleeping>","" + remaining));
+                notifyEnoughSleeping = false;
+            }
+        } else if (!notifyEnoughSleeping && sleepers.size() > 0)
+        {
+                int remaining = numNeeded - sleepers.size();
+                messenger.sendMessage(world.getPlayers(), "skipping_canceled",
+                        new MsgEntry("<num_sleeping>", "" + sleepers.size()),
+                        new MsgEntry("<needed_sleeping>", "" + numNeeded),
+                        new MsgEntry("<remaining_sleeping>", "" + remaining));
+                notifyEnoughSleeping = true;
         }
         
 

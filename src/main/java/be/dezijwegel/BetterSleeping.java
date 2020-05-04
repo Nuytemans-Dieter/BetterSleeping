@@ -16,6 +16,7 @@ import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -96,6 +97,17 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             lang = new ConfigLib("lang/en-us.yml", this);
         }
 
+        // Read all messages from lang.yml
+
+        Map<String, String> messages = new HashMap<>();
+        FileConfiguration langConfig = lang.getConfiguration();
+        for (String path : langConfig.getKeys(true))
+        {
+            if ( ! langConfig.isConfigurationSection(path))
+                messages.put(path, langConfig.getString(path));
+        }
+
+        PlayerMessenger messenger = new PlayerMessenger(messages);
 
         // Get the time skip mode
 
@@ -132,12 +144,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             // Only check on the overworld
             if (world.getEnvironment() == World.Environment.NORMAL) {
                 TimeChanger timeChanger = timeChangerType == TimeChanger.TimeChangeType.SMOOTH ? new TimeSmooth(world) : new TimeSetter(world);
-                SleepersRunnable runnable = new SleepersRunnable(world, timeChanger, calculator);
+                SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
                 runnables.put(world, runnable);
             }
         }
 
-        PlayerMessenger messenger = new PlayerMessenger(new HashMap<>());
         BedEventHandler beh = new BedEventHandler(this, messenger, runnables);
         getServer().getPluginManager().registerEvents(beh, this);
 

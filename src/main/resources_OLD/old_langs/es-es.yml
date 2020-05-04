@@ -1,16 +1,11 @@
-    
-#  ____       _   _            _____ _                 _              
-# |  _ \     | | | |          / ____| |               (_)             
-# | |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _  
-# |  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` | 
-# | |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| | 
-# |____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, | 
-#                                               | |             __/ | 
-#                                               |_|            |___/  
-
-
-# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/lang.yml
-# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+#  ____       _   _            _____ _                 _
+# |  _ \     | | | |          / ____| |               (_)
+# | |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _
+# |  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` |
+# | |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| |
+# |____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, |
+#                                               | |             __/ |
+#                                               |_|            |___/
 
 
 # CONFIGURATION GUIDE:
@@ -74,25 +69,25 @@ prefix: "&6[BetterSleeping] &3"
 
 
 # The message people get when enough people are sleeping
-enough_sleeping: "Enough players are sleeping now, the night/storm will be skipped in <time> [second.seconds]!"
+enough_sleeping: "¡Suficientes jugadores estan durmiendo ahora, la noche/tormenta se omitira en <time> [segundo.segundos]!"
 
 
 # The message people receive after the night/storm has been skipped
-good_morning: "Good morning! Have a great day, <receiver>!"
+good_morning: "¡Buenos dias! Que tengan un gran dia, <receiver>!"
 
 
 # Players will receive this message if the skipping of the night is cancelled due to someone leaving their bed
-cancelled: "<user> left their bed! Waiting for <amount> more [player.players] to sleep. <current_amount>/<total_amount>"
+cancelled: "¡<user> ha dejado su cama! Esperando por <amount> más [jugador.jugadores] para dormir. <current_amount>/<total_amount>"
 
 
 # This message indicates how many more people need to rest
 # Will be sent to all players in that world
 # Sent when someone enters a bed
-amount_left: "<user> is falling asleep. There [is.are] <amount> more [player.players] needed to skip the night/storm! <current_amount>/<total_amount>"
+amount_left: "<user> se esta quedando dormido. ¡Se [necesita.necesitan] <amount> [jugador.jugadores] más para omitir la noche/tormenta! <current_amount>/<total_amount>"
 
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "You have to wait <time> more [second.seconds] before you can sleep again!"
+sleep_spam: "¡Necesitas esperar <time> más [segundo.segundos] antes de que puedas dormir de nuevo!"
 
 
 # -------------- #
@@ -101,11 +96,11 @@ sleep_spam: "You have to wait <time> more [second.seconds] before you can sleep 
 
 
 # Players that went to bed will get this message if buffs are enabled
-buff_received: "You feel well rested and received <amount> [buff.buffs]!"
+buff_received: "Te sientes bien descansado y recibiste <amount> [pocion.pociones]!"
 
 
 # Players that didn't sleep will receive this message after the night was skipped if buffs are enabled
-no_buff_received: "You didn't sleep and feel tired, so you didn't receive [a.<amount>] [buff.buffs]!"
+no_buff_received: "¡No has dormido y te sientes cansado, por lo que no has recibido [a.<amount>] [pocion.pociones]!"
 
 
 # ---------------- #
@@ -114,25 +109,25 @@ no_buff_received: "You didn't sleep and feel tired, so you didn't receive [a.<am
 
 
 # The message a player gets when they don't have access to a command and tries to execute it anyway
-no_permission: "&4You don't have permission to execute that command!"
+no_permission: "&4¡No tienes permiso para ejecutar ese comando!"
 
 
 # The message that will be sent to the command sender and console when a BetterSleeping reload is complete
-message_reloaded: "Reload complete!"
+message_reloaded: "¡Recarga completa!"
 
 
 # This message is shown when a user tries to execute a disabled command
-command_disabled: "&4This command has been disabled! Please notify an administrator if you believe this is an error."
+command_disabled: "&4¡Este comando ha sido deshabilitado! Por favor notifica a un administrador si piensas que es un error."
 
 
 # This message will be sent to all players in a world when someone disabled skipping the night
-disable_skip: "<user> disabled skipping the night for <time> [minute.minutes]!"
+disable_skip: "¡<user> se ha deshabilitado omitir la noche por <time> [minuto.minutos]!"
 # This message is sent to the relevant players when skipping the night in a world is no longer disabled
-enable_skip: "Sleeping in <world> is now enabled again!"
+enable_skip: "¡Dormir en <world> esta habilitado de nuevo!"
 
 
 # This message is sent when a user tries to disable skipping the night in a world where it is currently already disabled
-already_disabled: "&cSkipping the night in this world is already disabled. Please try again later."
+already_disabled: "&cOmitir la noche en este mundo ya esta deshabilitado. Intenta de nuevo mas tarde."
 
 
 # ------------------------------- #
@@ -141,63 +136,28 @@ already_disabled: "&cSkipping the night in this world is already disabled. Pleas
 
 
 # Sent to every player that enters their bed while skipping their world is disabled
-disabled_amount_left: "Skipping the night is still disabled in this world. Please wait a few moments"
+disabled_amount_left: "Omitir la noche aun esta deshabilitado en este mundo. Por favor espera un momento"
 
 
 # Sent to all relevant players if enough players are sleeping but skipping in their world is disabled
-disabled_enough_sleeping: "Enough players are sleeping but skipping the night is currently disabled!"
+disabled_enough_sleeping: "¡Hay suficientes jugadores durmiendo pero esta deshabilitado el poder omitir la noche!"
 
 
 # --------------- #
 # Bypass messages |
 # --------------- #
 
-
 # A bypass is given to players with permission bettersleeping.bypass OR essentials.sleepingignored
 # And it is given to players with ignored gamemodes (this can be set in config.yml but is disabled by default)
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include bettersleeping.bypass and essentials.sleepingignored
-bypass_message: "You have got bypass permissions so you don't need to sleep, <receiver>."
+bypass_message: "Obtienes el permiso de omisión, por lo que no necesitas dormir, <receiver>."
 
 
 # This message is sent when it isn't nighttime yet when performing /bs skip
-not_night_yet: "&4You don't feel tired yet, <receiver>!"
+not_night_yet: "&4¡Aun no te sientes cansado, <receiver>!"
 
 
 # This message is sent when a user performs /bs skip and not all players in that world have bypass permissions
-not_all_players_bypassed: "&4Not all players in your world have got bypass permissions!"
-
-
-# --------------------- #
-# Timed events messages | Enable/disable specific timed events in events.yml!
-# --------------------- # Events are disabled by default but can only be active during specific dates
-
-# More timed events will be added along the road!
-
-# APRIL FOOLS #
-# ----------- #
-
-
-# People who were pranked with a fake creeper explosion sound will receive this message
-april_fools_creeper_prank: "Gotcha, April Fools! Don't worry, your house is just fine."
-
-
-# When the event messes with the time, people get this message
-april_fools_time_prank: "April Fools! We set the time to night, just because we wanted to."
-
-
-# Sent when the event fakes an explosion at the player's location
-april_fools_explosion_prank: "April Fools! It was a fake explosion, everything is fine."
-
-
-# EASTER #
-# ------ #
-
-
-# The message people get when they receive an (Easter) egg after wakeup
-easter_poopegg: "Happy Easter! You just pooped an egg."
-
-
-# Players get this message when hearing the Easter jingle, when entering their bed
-easter_jingle: "Enjoy the beautiful Easter bells. Maybe they'll drop an egg soon!"
+not_all_players_bypassed: "&4¡No todos los jugadores en tu mundo tienen el permiso de omisión!"

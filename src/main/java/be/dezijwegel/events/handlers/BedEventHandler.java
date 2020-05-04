@@ -60,13 +60,11 @@ public class BedEventHandler implements Listener {
         if (delay > 0)
         {
             event.setCancelled(true);
-            playerMessenger.sendMessage(player, "sleep_delay", new MsgEntry("<delay>", "" + delay));
+            playerMessenger.sendMessage(player, "sleep_spam", new MsgEntry("<time>", "" + delay));
             return;
         }
 
-        playerMessenger.sendMessage(player, "You entered your bed");
-
-        // Notify the subsystems of the player entering their bed
+        // Notify the subsystems of the player entering their bed. Subsystems will handle player messaging
         sleepDelayChecker.bedEnterEvent(player.getUniqueId());
         runnables.get(player.getWorld()).playerEnterBed(player);
     }

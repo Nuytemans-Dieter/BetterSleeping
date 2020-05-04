@@ -224,12 +224,12 @@ public class ConfigLib {
         {
 
             if (missingOptions.size() == 1)
-                logger.log("A missing option has been found in " + fileName + "!", ChatColor.RED);
+                logger.log("A missing option has been found in " + fileName + "!", ChatColor.DARK_RED);
             else
-                 logger.log(missingOptions.size() + " Missing options have been found in " + fileName + "!", ChatColor.RED);
+                 logger.log(missingOptions.size() + " Missing options have been found in " + fileName + "!", ChatColor.DARK_RED);
 
-            logger.log("Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)", ChatColor.RED);
-            logger.log("The default values will be used until then", ChatColor.RED);
+            logger.log("Please add the missing option(s) manually or delete this file and perform a reload (/bs reload)", ChatColor.DARK_RED);
+            logger.log("The default values will be used until then", ChatColor.DARK_RED);
 
             ArrayList<String> currentPath = new ArrayList<>();
             currentPath.add("");
@@ -290,7 +290,7 @@ public class ConfigLib {
 
                 // Print the missing option with its defaul value
                 String message = indentation + "Missing option: " + path + " with default value: " + value;
-                logger.log(message, ChatColor.DARK_RED);
+                logger.log(message, ChatColor.RED);
             }
         } else {
             logger.log("No missing options were found in " + fileName + "!");

@@ -55,27 +55,28 @@
 #     Can be used in:   sleep_spam
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
 #
+
 # ----------------- #
 # Sleeping messages |
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Slaapwel, <user>!"
+bed_enter_message: "Buenas noche, <user>!"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> doet een dutje, [<num_sleeping>.één speler is.<num_sleeping> spelers] zijn nu aan het slapen. Nog [<remaining_sleeping>.één speler.<remaining_sleeping> spelers] nodig."
+bed_enter_broadcast: "<player> se esta quedando dormido. ¡Se [<remaining_sleeping>.necesita.necesitan] <remaining_sleeping> [<remaining_sleeping>.jugador.jugadores] más para omitir la noche! <num_sleeping>/<needed_sleeping>"
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "Iemand is uit bed gegaan dus de nacht wordt niet overgeslagen. Nog <remaining_sleeping> [<remaining_sleeping>.slaper.slapers] nodig!"
+skipping_canceled: "¡Un jugador ha dejado su cama! Esperando por <remaining_sleeping> más [<remaining_sleeping>.jugador.jugadores] para dormir. <num_sleeping>/<needed_sleeping>"
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "Er slapen nu genoeg spelers, de nacht is zo voorbij."
+enough_sleeping: "¡Suficientes jugadores estan durmiendo ahora, la noche se omitira en <time> [<time>.segundo.segundos]!"
 
 # Players receive this message in the morning
-morning_message: "Goeiemorgen, <user>. Geniet van je dag!"
+morning_message: "¡Buenos dias! Que tengan un gran dia, <user>!"
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "Je moet nog <time> [<time>.seconde.seconden] wachten voor je weer kan slapen!"
+sleep_spam: "¡Necesitas esperar <time> más [<time>.segundo.segundos] antes de que puedas dormir de nuevo!"
 
 
 # -------------------- #
@@ -83,14 +84,14 @@ sleep_spam: "Je moet nog <time> [<time>.seconde.seconden] wachten voor je weer k
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&4Je hebt geen toestemming tot dat commando!"
+no_permission: "&4¡No tienes permiso para ejecutar ese comando!"
 
 # The message that will be sent to the admin that does a reload
-message_reloaded: "&2Klaar met herladen!"
+message_reloaded: "&2¡Recarga completa!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
 #     - having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "Je hebt omzeiltoestemming dus je kan niet slapen, <user>."
+bypass_message: "Obtienes el permiso de omisión, por lo que no necesitas dormir, <user>."
