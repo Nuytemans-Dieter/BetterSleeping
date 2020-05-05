@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>be.dezijwegel</groupId>
+    <groupId>be.dezijwegel.bettersleeping</groupId>
     <artifactId>BetterSleeping</artifactId>
     <version>3.0.0</version>
 
@@ -38,6 +38,12 @@
         <repository>
             <id>placeholderapi</id>
             <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+
+        <!-- bStats -->
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
     </repositories>
 
@@ -90,6 +96,41 @@
             <version>18.0.0</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- bStats -->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.7</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
+    <!-- Shade bStats into BetterSleeping -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>be.dezijwegel.bettersleeping</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
