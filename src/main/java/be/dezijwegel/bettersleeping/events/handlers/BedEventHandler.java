@@ -29,14 +29,14 @@ public class BedEventHandler implements Listener {
     private final Map<World, SleepersRunnable> runnables;
 
 
-    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, Map<World, SleepersRunnable> runnables)
+    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, int bedEnterDelay, Map<World, SleepersRunnable> runnables)
     {
         this.plugin = plugin;
 
         this.playerMessenger = playerMessenger;
         this.bypassChecker = bypassChecker;
         this.essentialsHook = essentialsHook;
-        sleepDelayChecker = new SleepDelayChecker(2);
+        sleepDelayChecker = new SleepDelayChecker(bedEnterDelay);
         this.runnables = runnables;
 
         for (SleepersRunnable runnable : runnables.values())

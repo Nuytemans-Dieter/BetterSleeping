@@ -15,6 +15,8 @@ import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.util.ConsoleLogger;
+import be.dezijwegel.bettersleeping.util.MetricsHandler;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -59,10 +61,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // Load configuration
 
         ConfigLib config = new ConfigLib("config.yml", this);
-        boolean autoAddOptions  = config.getConfiguration().getBoolean("auto_add_missing_options");
-        boolean disablePhantoms = config.getConfiguration().getBoolean("disable_phantoms");
-        boolean checkUpdate     = config.getConfiguration().getBoolean("update_notifier");
-        String  localised       = config.getConfiguration().getString("language");
+        FileConfiguration fileConfig = config.getConfiguration();
+        boolean autoAddOptions  = fileConfig.getBoolean("auto_add_missing_options");
+        boolean disablePhantoms = fileConfig.getBoolean("disable_phantoms");
+        boolean checkUpdate     = fileConfig.getBoolean("update_notifier");
+        String  localised       = fileConfig.getString("language");
 
         ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions);
         ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
@@ -193,8 +196,14 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             }
         }
 
-        BedEventHandler beh = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, runnables);
+        BedEventHandler beh = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
         getServer().getPluginManager().registerEvents(beh, this);
+
+        logger.log("Starting bStats metrics collection. Opt-out at bStats/config.yml");
+        
+        new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
+                            sleepConfig.getInt("percentage_needed"), sleepConfig.getInt("absolute_needed"),
+                            enableBypass, bypassConfig);
 
         //this.getCommand("bettersleeping").setExecutor(commandHandler);
         //this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
