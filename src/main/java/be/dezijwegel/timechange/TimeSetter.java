@@ -5,16 +5,19 @@ import org.bukkit.World;
 
 public class TimeSetter extends TimeChanger {
 
-    private final static int SLEEP_DELAY = 20;
+    private final int sleepDelay;
 
     private int counter = 0;
     private long oldTime;
 
 
-    public TimeSetter(World world)
+    public TimeSetter(World world, int delay)
     {
         super(world);
         oldTime = world.getTime();
+
+        // * 20 to convert seconds into ticks
+        sleepDelay = 20 * delay;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class TimeSetter extends TimeChanger {
         oldTime = newTime;
 
         // Handle the time set mechanic when the counter reaches their set value
-        if (counter >= SLEEP_DELAY) {
+        if (counter >= sleepDelay) {
 
             // Reset the counter
             counter = 0;

@@ -1,8 +1,10 @@
 package be.dezijwegel.events.handlers;
 
+import be.dezijwegel.hooks.EssentialsHook;
 import be.dezijwegel.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.messenger.MsgEntry;
 import be.dezijwegel.messenger.PlayerMessenger;
+import be.dezijwegel.permissions.BypassChecker;
 import be.dezijwegel.permissions.SleepDelayChecker;
 import be.dezijwegel.runnables.SleepersRunnable;
 import be.dezijwegel.timechange.TimeChanger;
@@ -27,15 +29,19 @@ public class BedEventHandler implements Listener {
 
     private final Plugin plugin;
     private final PlayerMessenger playerMessenger;
+    private final BypassChecker bypassChecker;
+    private final EssentialsHook essentialsHook;
     private final SleepDelayChecker sleepDelayChecker;
     private final Map<World, SleepersRunnable> runnables;
 
 
-    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, Map<World, SleepersRunnable> runnables)
+    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, Map<World, SleepersRunnable> runnables)
     {
         this.plugin = plugin;
 
         this.playerMessenger = playerMessenger;
+        this.bypassChecker = bypassChecker;
+        this.essentialsHook = essentialsHook;
         sleepDelayChecker = new SleepDelayChecker(2);
         this.runnables = runnables;
 

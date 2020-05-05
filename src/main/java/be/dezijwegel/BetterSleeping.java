@@ -3,9 +3,11 @@ package be.dezijwegel;
 import be.dezijwegel.configuration.ConfigLib;
 import be.dezijwegel.events.handlers.BedEventHandler;
 import be.dezijwegel.events.handlers.PhantomHandler;
+import be.dezijwegel.hooks.EssentialsHook;
 import be.dezijwegel.interfaces.Reloadable;
 import be.dezijwegel.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.messenger.PlayerMessenger;
+import be.dezijwegel.permissions.BypassChecker;
 import be.dezijwegel.runnables.SleepersRunnable;
 import be.dezijwegel.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.sleepersneeded.PercentageNeeded;
@@ -15,6 +17,7 @@ import be.dezijwegel.timechange.TimeSmooth;
 import be.dezijwegel.util.ConsoleLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
@@ -26,9 +29,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 
 public class BetterSleeping extends JavaPlugin implements Reloadable {
@@ -67,6 +68,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
+
         // Handle configuration
 
         ConsoleLogger logger = new ConsoleLogger(true);
@@ -79,7 +81,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
         // Get the correct lang file
-
 
         ConfigLib lang;
         localised = localised == null ? "en-us" : localised;
@@ -97,6 +98,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             lang = new ConfigLib("lang/en-us.yml", this);
         }
 
+
         // Read all messages from lang.yml
 
         Map<String, String> messages = new HashMap<>();
@@ -109,6 +111,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         PlayerMessenger messenger = new PlayerMessenger(messages);
 
+
         // Get the time skip mode
 
         TimeChanger.TimeChangeType timeChangerType;
@@ -118,6 +121,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         else
             timeChangerType = TimeChanger.TimeChangeType.SMOOTH;
         logger.log("Using '" + timeChangerType.toString().toLowerCase() + "' as night skip mode");
+
 
         // Get the num sleeping players needed calculator
 
@@ -136,20 +140,60 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             logger.log("Using required sleepers counter 'percentage' which is set to " + needed + "% of players required");
         }
 
+
+        // Read hooks settings
+
+        FileConfiguration hooksConfig = hooks.getConfiguration();
+        EssentialsHook essentialsHook = new EssentialsHook(hooksConfig.getBoolean("essentials_afk_ignored"), hooksConfig.getBoolean("vanished_ignored"));
+
+
+
+        // Read bypass settings
+
+        FileConfiguration bypassConfig = bypassing.getConfiguration();
+        boolean enableBypass = bypassConfig.getBoolean("enable_bypass_permissions");
+        List<GameMode> bypassedGamemodes = new ArrayList<>();
+        for (String path : bypassConfig.getKeys(false))
+        {
+            if (path.contains("ignore_") && bypassConfig.getBoolean(path))
+            {
+                path = path.replace("ignore_", "");
+                bypassedGamemodes.add( GameMode.valueOf(path) );
+            }
+        }
+        BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
+
+
         // get a runnable for each world
+
+        FileConfiguration sleepConfig = sleeping.getConfiguration();
 
         Map<World, SleepersRunnable> runnables = new HashMap<>();
         for (World world : Bukkit.getWorlds())
         {
             // Only check on the overworld
             if (world.getEnvironment() == World.Environment.NORMAL) {
-                TimeChanger timeChanger = timeChangerType == TimeChanger.TimeChangeType.SMOOTH ? new TimeSmooth(world) : new TimeSetter(world);
+
+                TimeChanger timeChanger;
+
+                if (timeChangerType == TimeChanger.TimeChangeType.SMOOTH)
+                {
+                    int baseSpeedup      = sleepConfig.getInt("smooth.base_speedup");
+                    int speedupPerPlayer = sleepConfig.getInt("smooth.speedup_per_player");
+                    int maxSpeedup       = sleepConfig.getInt("smooth.max_speedup");
+                    timeChanger = new TimeSmooth(world, baseSpeedup, speedupPerPlayer, maxSpeedup);
+                }
+                else
+                {
+                    int sleepDelay = sleepConfig.getInt("setter.delay");
+                    timeChanger = new TimeSetter(world, sleepDelay);
+                }
                 SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
                 runnables.put(world, runnable);
             }
         }
 
-        BedEventHandler beh = new BedEventHandler(this, messenger, runnables);
+        BedEventHandler beh = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, runnables);
         getServer().getPluginManager().registerEvents(beh, this);
 
         //this.getCommand("bettersleeping").setExecutor(commandHandler);

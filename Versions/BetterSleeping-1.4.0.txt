@@ -1,2 +1,0 @@
-This is a placeholder for the missing BetterSleeping v1.4.0 file.
-Due to a wrong version number in v1.3.2, this version will be called v1.4.1 instead of v1.4.0.

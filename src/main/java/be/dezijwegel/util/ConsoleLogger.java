@@ -1,8 +1,8 @@
 package be.dezijwegel.util;
 
-import jdk.internal.jline.internal.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.jetbrains.annotations.Nullable;
 
 public class ConsoleLogger {
 

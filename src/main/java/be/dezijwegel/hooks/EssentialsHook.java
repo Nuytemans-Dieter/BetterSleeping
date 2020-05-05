@@ -1,14 +1,16 @@
 package be.dezijwegel.hooks;
 
 import com.earth2me.essentials.Essentials;
-import jdk.internal.jline.internal.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 public class EssentialsHook {
 
 
     private final boolean isHooked;
+    private final boolean isAfkIgnored;
+    private final boolean isVanishedIgnored;
     private final @Nullable Essentials essentials;
 
 
@@ -16,10 +18,13 @@ public class EssentialsHook {
      * A class for interaction through a possible Essentials hook
      * This can be safely used when Essentials is not installed
      */
-    public EssentialsHook()
+    public EssentialsHook(boolean isAfkIgnored, boolean isVanishedIgnored)
     {
-        isHooked = Bukkit.getPluginManager().isPluginEnabled("Essentials");
-        essentials = isHooked ? (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials") : null;
+        essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
+        isHooked = essentials != null;
+
+        this.isAfkIgnored = isAfkIgnored;
+        this.isVanishedIgnored = isVanishedIgnored;
     }
 
 
@@ -41,7 +46,7 @@ public class EssentialsHook {
      */
     public boolean isAfk(Player player)
     {
-        return isHooked && essentials.getUser(player).isAfk();
+        return isHooked && isAfkIgnored && essentials!=null && essentials.getUser(player).isAfk();
     }
 
 
@@ -52,7 +57,7 @@ public class EssentialsHook {
      */
     public boolean isVanished(Player player)
     {
-        return isHooked && essentials.getUser(player).isHidden();
+        return isHooked && isVanishedIgnored && essentials!=null && essentials.getUser(player).isHidden();
     }
 
 }

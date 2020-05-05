@@ -1,3 +1,0 @@
-Please refer to the milestones on GitHub (link below) to see what changes were made in each update.
-
-https://github.com/Nuytemans-Dieter/BetterSleeping/milestones?state=closed

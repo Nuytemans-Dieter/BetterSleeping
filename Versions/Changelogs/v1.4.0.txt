@@ -1,2 +1,0 @@
-This version will be called v1.4.1 instead of v1.4.0 due to a wrong version number in v1.3.2.
-This has been done to prevent confusion if any bug reports are submitted.

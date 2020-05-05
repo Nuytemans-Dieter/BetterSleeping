@@ -1,1 +1,0 @@
--Fixed a number rounding issue when the plugin reported 0 players needed to be sleeping while it actually thought more players were needed

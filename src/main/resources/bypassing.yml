@@ -16,6 +16,7 @@
 # Having trouble with bypass permissions? Join our Discord server: https://discord.gg/AS46VGT
 # If all else fails, feel free to set this to false
 # This option will be removed once Essentials updates (around 1.16 release)
+# Bypassing based on gamemode won't work if this is set to false!
 enable_bypass_permissions: true
 
 # Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode

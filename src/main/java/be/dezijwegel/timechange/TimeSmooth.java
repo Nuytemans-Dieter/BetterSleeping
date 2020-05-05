@@ -5,13 +5,17 @@ import org.bukkit.World;
 public class TimeSmooth extends TimeChanger {
 
 
-    private final static int SPEEDUP_PER_PLAYER = 1;   // How much extra speedup there is per extra sleeping player
-    private final static int BASE_SPEEDUP = 5;         // Amount of extra executed every tick
-    private final static int MAX_SPEEDUP = 15;         // The highest allowed speedup
+    private final int baseSpeedup;      // Amount of extra executed every tick
+    private final int speedupPerPlayer; // How much extra speedup there is per extra sleeping player
+    private final int maxSpeedup;       // The highest allowed speedup
 
 
-    public TimeSmooth(World world) {
+    public TimeSmooth(World world, int baseSpeedup, int speedupPerPlayer, int maxSpeedup) {
         super(world);
+
+        this.baseSpeedup      = baseSpeedup;
+        this.speedupPerPlayer = speedupPerPlayer;
+        this.maxSpeedup       = maxSpeedup;
     }
 
 
@@ -20,14 +24,14 @@ public class TimeSmooth extends TimeChanger {
 
         // Redundant negative check, just to be safe
         int extraSleeping = Math.max(numSleeping - numNeeded, 0);
-        long newTime = world.getTime() + BASE_SPEEDUP + (extraSleeping * SPEEDUP_PER_PLAYER);
+        long newTime = world.getTime() + baseSpeedup + (extraSleeping * speedupPerPlayer);
 
         // Reset any number exceeding the max number of ticks
         newTime = newTime % 24000;
 
         // If time difference exceeds the max speedup
-        if (Math.abs(newTime - world.getTime()) > MAX_SPEEDUP)
-            newTime = world.getTime() + MAX_SPEEDUP;
+        if (Math.abs(newTime - world.getTime()) > maxSpeedup)
+            newTime = world.getTime() + maxSpeedup;
 
         // make sure no part of the day is skipped
         if (newTime < world.getTime())
