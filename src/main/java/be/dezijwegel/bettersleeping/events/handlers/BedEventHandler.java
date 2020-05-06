@@ -97,7 +97,8 @@ public class BedEventHandler implements Listener, Reloadable {
     public void teleportEvent (PlayerTeleportEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get( event.getFrom().getWorld() ).playerLeaveBed(player);
+        SleepersRunnable runnable = runnables.get( event.getFrom().getWorld() );
+        if (runnable != null) runnable.playerLeaveBed(player);
     }
 
 
