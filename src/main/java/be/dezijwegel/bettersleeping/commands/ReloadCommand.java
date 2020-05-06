@@ -1,9 +1,8 @@
 package be.dezijwegel.bettersleeping.commands;
 
-import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

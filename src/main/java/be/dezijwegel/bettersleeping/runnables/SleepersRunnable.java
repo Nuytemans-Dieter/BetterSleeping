@@ -1,15 +1,17 @@
 package be.dezijwegel.bettersleeping.runnables;
 
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.messenger.MsgEntry;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.MsgEntry;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
+import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
+import be.dezijwegel.bettersleeping.timechange.TimeSetter;
+import be.dezijwegel.bettersleeping.util.SleepStatus;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -72,6 +74,16 @@ public class SleepersRunnable extends BukkitRunnable {
                 new MsgEntry("<num_sleeping>",      "" + sleepers.size()),
                 new MsgEntry("<needed_sleeping>",   "" + numNeeded),
                 new MsgEntry("<remaining_sleeping>","" + remaining));
+    }
+
+
+    public SleepStatus getSleepStatus()
+    {
+        int set = sleepersCalculator.getSetting();
+        String setting = (sleepersCalculator instanceof AbsoluteNeeded) ?   "An absolute amount of players has to sleep: " + set :
+                                                                            set + "% of players needs to sleep";
+
+        return new SleepStatus(sleepers.size(), numNeeded, world, timeChanger.getType(), setting);
     }
 
 

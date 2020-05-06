@@ -1,6 +1,5 @@
-package be.dezijwegel.bettersleeping.messenger;
+package be.dezijwegel.bettersleeping.messaging;
 
-import be.dezijwegel.bettersleeping.util.ConsoleLogger;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -57,14 +56,14 @@ public class Messenger {
             for (int i = 0; i < replaceThis.length; i++)
             {
                 String[] options = replaceThis[i].split("\\.");
-                if (options.length == 3)
+                if (options.length >= 3)
                 {
                     double amount = Double.parseDouble(options[0]);
                     replaceBy[i] = amount == 1 ? options[1] : options[2];
                 }
-                else
+                else if (options.length >= 1)
                 {
-                    replaceBy[i] = options[1];
+                    replaceBy[i] = options[options.length - 1];
                 }
             }
 

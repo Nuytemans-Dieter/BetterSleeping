@@ -18,9 +18,7 @@ permissions:
             bettersleeping.help: true
             bettersleeping.reload: true
             bettersleeping.status: true
-            bettersleeping.help.user: true
             bettersleeping.help.admin: true
-            bettersleeping.night: true
     bettersleeping.reload:
         description: Gives access to /bs reload, which will reload the BetterSleeping config files
         default: op
@@ -28,14 +26,11 @@ permissions:
         description: Gives access to /bs status or /bs s, which will display info about the sleeping players
         default: true
     bettersleeping.bypass:
-        description: Gives access to /bs skip, and this player will be ignored from the required player count
+        description: This player will be ignored from the required player count and will not be able to sleep
         default: false
     bettersleeping.help.admin:
         description: Gives access to /bs help, which will give info about all commands the user has access to and permission nodes will be shown as well
         default: op
-    bettersleeping.help.user:
+    bettersleeping.help:
         description: Gives access to /bs help, which will give info about all commands a user has access to
         default: true
-    bettersleeping.night:
-        description: Gives access to /bs night or /bs n, which will disable night skipping for a while (see config.yml)
-        default: op

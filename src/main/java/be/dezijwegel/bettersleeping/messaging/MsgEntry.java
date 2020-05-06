@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.messenger;
+package be.dezijwegel.bettersleeping.messaging;
 
 public class MsgEntry {
 

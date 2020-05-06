@@ -7,7 +7,7 @@ import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
@@ -15,7 +15,7 @@ import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
-import be.dezijwegel.bettersleeping.util.ConsoleLogger;
+import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -212,6 +212,15 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         this.getCommand("bettersleeping").setExecutor(new CommandHandler(this, messenger));
     }
 
+
+    /**
+     * Package private on purpose.
+     * @return get the BedEventHandler
+     */
+    public BedEventHandler getBedEventHandler()
+    {
+        return bedEventHandler;
+    }
 
 
     private static class UpdateChecker extends Thread {

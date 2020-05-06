@@ -2,13 +2,12 @@ package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -27,20 +26,22 @@ public class CommandHandler implements CommandExecutor {
     {
         this.messenger = messenger;
 
-        playerCommands = new HashMap<>();
+        playerCommands  = new HashMap<>();
         consoleCommands = new HashMap<>();
 
-        BsCommand version = new VersionCommand(plugin, messenger);
-        BsCommand help = new HelpCommand(messenger, playerCommands);
-        BsCommand reload = new ReloadCommand(plugin, messenger);
+        BsCommand version   = new VersionCommand(plugin, messenger);
+        BsCommand help      = new HelpCommand(messenger, playerCommands);
+        BsCommand reload    = new ReloadCommand(plugin, messenger);
+        BsCommand status    = new StatusCommand(messenger, plugin.getBedEventHandler());
 
-        playerCommands.put("version",   version);
-        playerCommands.put("help",      help);
-        playerCommands.put("reload",    reload);
+        playerCommands.put("version",   version );
+        playerCommands.put("help",      help    );
+        playerCommands.put("reload",    reload  );
+        playerCommands.put("status",    status  );
 
-        consoleCommands.put("version",  version);
-        consoleCommands.put("help",     help);
-        consoleCommands.put("reload",   reload);
+        consoleCommands.put("version",  version );
+        consoleCommands.put("help",     help    );
+        consoleCommands.put("reload",   reload  );
 
         plugin.getCommand("bettersleeping").setTabCompleter(new TabCompleter(playerCommands));
     }
@@ -71,7 +72,12 @@ public class CommandHandler implements CommandExecutor {
 
         if (commandMap.containsKey( cmd ))
         {
-            return commandMap.get(cmd).execute(commandSender, command, alias, arguments);
+            BsCommand bsCommand = commandMap.get(cmd);
+            if (commandSender.hasPermission( bsCommand.getPermission() ))
+                return bsCommand.execute(commandSender, command, alias, arguments);
+            else
+                messenger.sendMessage(commandSender, "no_permission");
+            return true;
         }
         else
         {

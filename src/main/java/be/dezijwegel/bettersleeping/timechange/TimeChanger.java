@@ -21,6 +21,11 @@ public abstract class TimeChanger {
         this.world = world;
     }
 
+    /**
+     * Get the type of this time changer
+     * @return the TimeChangerType of this object
+     */
+    public abstract TimeChangeType getType();
 
     /**
      * Tick should advance the time to its next change

@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.configuration;
 
-import be.dezijwegel.bettersleeping.util.ConsoleLogger;
+import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

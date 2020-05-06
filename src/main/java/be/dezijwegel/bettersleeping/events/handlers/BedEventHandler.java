@@ -2,11 +2,12 @@ package be.dezijwegel.bettersleeping.events.handlers;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
-import be.dezijwegel.bettersleeping.messenger.MsgEntry;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.MsgEntry;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.permissions.SleepDelayChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
+import be.dezijwegel.bettersleeping.util.SleepStatus;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,6 +17,7 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -42,6 +44,18 @@ public class BedEventHandler implements Listener, Reloadable {
 
         for (SleepersRunnable runnable : runnables.values())
             runnable.runTaskTimer(plugin, 40L, 1L);
+    }
+
+
+    /**
+     * Get the sleep status in a given world
+     * @param world the chosen world
+     * @return the SleepStatus containing all kinds of information on the current sleep status
+     */
+    @Nullable
+    public SleepStatus getSleepStatus(World world)
+    {
+        return runnables.containsKey(world) ? runnables.get(world).getSleepStatus() : null;
     }
 
 
@@ -75,7 +89,7 @@ public class BedEventHandler implements Listener, Reloadable {
     public void bedLeaveEvent (PlayerBedLeaveEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get(player.getWorld()).playerLeaveBed(player);
+        runnables.get( player.getWorld() ).playerLeaveBed(player);
     }
 
 
@@ -83,7 +97,7 @@ public class BedEventHandler implements Listener, Reloadable {
     public void teleportEvent (PlayerTeleportEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get(event.getFrom().getWorld()).playerLeaveBed(player);
+        runnables.get( event.getFrom().getWorld() ).playerLeaveBed(player);
     }
 
 
@@ -91,8 +105,9 @@ public class BedEventHandler implements Listener, Reloadable {
     public void logOutEvent (PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get(player.getWorld()).playerLeaveBed(player);
+        runnables.get( player.getWorld() ).playerLeaveBed(player);
     }
+
 
     @Override
     public void reload()

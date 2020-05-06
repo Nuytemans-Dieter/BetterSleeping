@@ -20,6 +20,12 @@ public class TimeSmooth extends TimeChanger {
 
 
     @Override
+    public TimeChangeType getType()
+    {
+        return TimeChangeType.SMOOTH;
+    }
+
+    @Override
     public void tick(int numSleeping, int numNeeded) {
 
         // Redundant negative check, just to be safe

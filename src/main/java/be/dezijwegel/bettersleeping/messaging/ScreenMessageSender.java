@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.util;
+package be.dezijwegel.bettersleeping.messaging;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;

@@ -20,6 +20,12 @@ public class TimeSetter extends TimeChanger {
     }
 
     @Override
+    public TimeChangeType getType()
+    {
+        return TimeChangeType.SETTER;
+    }
+
+    @Override
     public void tick(int numSleeping, int numNeeded) {
 
         // Handle the counter

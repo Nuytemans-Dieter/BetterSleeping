@@ -41,4 +41,10 @@ public class PercentageNeeded implements SleepersNeededCalculator {
 
         return Math.max((int) Math.ceil(percentage * numPlayers / 100f), 1);
     }
+
+    @Override
+    public int getSetting()
+    {
+        return percentage;
+    }
 }

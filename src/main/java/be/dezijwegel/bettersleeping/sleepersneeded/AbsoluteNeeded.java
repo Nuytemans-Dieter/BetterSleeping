@@ -23,4 +23,10 @@ public class AbsoluteNeeded implements SleepersNeededCalculator {
         return numNeeded;
     }
 
+    @Override
+    public int getSetting()
+    {
+        return numNeeded;
+    }
+
 }

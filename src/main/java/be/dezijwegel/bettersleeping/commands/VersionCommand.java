@@ -1,12 +1,10 @@
 package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
-import be.dezijwegel.bettersleeping.messenger.Messenger;
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
 
 public class VersionCommand implements BsCommand {
 
