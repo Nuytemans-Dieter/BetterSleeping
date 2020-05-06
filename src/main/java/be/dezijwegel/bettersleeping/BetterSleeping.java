@@ -1,12 +1,13 @@
 package be.dezijwegel.bettersleeping;
 
+import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.configuration.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.messenger.PlayerMessenger;
+import be.dezijwegel.bettersleeping.messenger.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
@@ -16,7 +17,6 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.util.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -112,7 +112,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 messages.put(path, langConfig.getString(path));
         }
 
-        PlayerMessenger messenger = new PlayerMessenger(messages);
+        Messenger messenger = new Messenger(messages);
 
 
         // Get the time skip mode
@@ -202,11 +202,10 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         logger.log("Starting bStats metrics collection. Opt-out at bStats/config.yml");
         
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
-                            sleepConfig.getInt("percentage_needed"), sleepConfig.getInt("absolute_needed"),
+                            sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
                             enableBypass, bypassConfig);
 
-        //this.getCommand("bettersleeping").setExecutor(commandHandler);
-        //this.getCommand("bettersleeping").setTabCompleter(new TabCompletion(onSleepEvent.getSleepTracker()));
+        this.getCommand("bettersleeping").setExecutor(new CommandHandler(this, messenger));
     }
 
 

@@ -14,4 +14,9 @@ public interface BsCommand {
      */
     boolean execute(CommandSender cs, org.bukkit.command.Command cmnd, String string, String[] strings);
 
+    /**
+     * Get the permission required for this command
+     * @return permission node
+     */
+    String getPermission();
 }

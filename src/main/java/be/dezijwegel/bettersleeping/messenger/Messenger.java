@@ -2,13 +2,14 @@ package be.dezijwegel.bettersleeping.messenger;
 
 import be.dezijwegel.bettersleeping.util.ConsoleLogger;
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerMessenger {
+public class Messenger {
 
 
     private final Map<String, String> messages;     // Contains the messages in lang.yml by mapping path to value
@@ -18,7 +19,7 @@ public class PlayerMessenger {
      * Creates a messenger for player output
      * @param messages the messages from lang.yml, mapping path to message
      */
-    public PlayerMessenger(Map<String, String> messages)
+    public Messenger(Map<String, String> messages)
     {
         this.messages = messages;
         this.consoleLogger = new ConsoleLogger(true);
@@ -29,12 +30,12 @@ public class PlayerMessenger {
      * Send a message from lang.yml to a player
      * If the message does not exist, it will be sent to the player in its raw form
      * As optional parameter, a list or several MsgEntries can be given as parameter
-     * @param player the player
+     * @param receiver the player
      * @param messageID the id of the message
      */
-    public void sendMessage(Player player, String messageID, MsgEntry... replacements)
+    public void sendMessage(CommandSender receiver, String messageID, MsgEntry... replacements)
     {
-        sendMessage(Collections.singletonList(player), messageID, replacements);
+        sendMessage(Collections.singletonList(receiver), messageID, replacements);
     }
 
 
@@ -42,10 +43,10 @@ public class PlayerMessenger {
      * Send a message from lang.yml to a list of players
      * If the message does not exist, it will be sent to the player in its raw form
      * As optional parameter, a list or several MsgEntries can be given as parameter
-     * @param players the list of players
+     * @param receivers the list of players
      * @param messageID the id of the message
      */
-    public void sendMessage(List<Player> players, String messageID, MsgEntry... replacements)
+    public void sendMessage(List<CommandSender> receivers, String messageID, MsgEntry... replacements)
     {
         // Get the message from lang.yml OR if non existent, get the raw message
         String message = messages.getOrDefault(messageID, messageID);
@@ -88,10 +89,18 @@ public class PlayerMessenger {
         message = prefix + message;
         message = message.replace('&', '§');
 
-        for (Player player : players)
+        for (CommandSender receiver : receivers)
         {
-            message = message.replace("<user>", player.getDisplayName());
-            player.sendMessage(message);
+            if (receiver instanceof Player)
+            {
+                Player player = (Player)receiver;
+                message = message.replace("<user>", player.getDisplayName());
+            }
+            else
+            {
+                message = message.replace("<user>", receiver.getName());
+            }
+            receiver.sendMessage(message);
         }
     }
 }

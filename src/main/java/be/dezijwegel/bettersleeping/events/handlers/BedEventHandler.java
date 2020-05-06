@@ -2,7 +2,7 @@ package be.dezijwegel.bettersleeping.events.handlers;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.messenger.MsgEntry;
-import be.dezijwegel.bettersleeping.messenger.PlayerMessenger;
+import be.dezijwegel.bettersleeping.messenger.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.permissions.SleepDelayChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
@@ -22,18 +22,18 @@ public class BedEventHandler implements Listener {
 
 
     private final Plugin plugin;
-    private final PlayerMessenger playerMessenger;
+    private final Messenger messenger;
     private final BypassChecker bypassChecker;
     private final EssentialsHook essentialsHook;
     private final SleepDelayChecker sleepDelayChecker;
     private final Map<World, SleepersRunnable> runnables;
 
 
-    public BedEventHandler(Plugin plugin, PlayerMessenger playerMessenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, int bedEnterDelay, Map<World, SleepersRunnable> runnables)
+    public BedEventHandler(Plugin plugin, Messenger messenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, int bedEnterDelay, Map<World, SleepersRunnable> runnables)
     {
         this.plugin = plugin;
 
-        this.playerMessenger = playerMessenger;
+        this.messenger = messenger;
         this.bypassChecker = bypassChecker;
         this.essentialsHook = essentialsHook;
         sleepDelayChecker = new SleepDelayChecker(bedEnterDelay);
@@ -60,7 +60,7 @@ public class BedEventHandler implements Listener {
         if (delay > 0)
         {
             event.setCancelled(true);
-            playerMessenger.sendMessage(player, "sleep_spam", new MsgEntry("<time>", "" + delay));
+            messenger.sendMessage(player, "sleep_spam", new MsgEntry("<time>", "" + delay));
             return;
         }
 

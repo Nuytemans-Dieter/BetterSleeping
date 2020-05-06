@@ -2,7 +2,7 @@ package be.dezijwegel.bettersleeping.runnables;
 
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.messenger.MsgEntry;
-import be.dezijwegel.bettersleeping.messenger.PlayerMessenger;
+import be.dezijwegel.bettersleeping.messenger.Messenger;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class SleepersRunnable extends BukkitRunnable {
     // Utility
     private final SleepersNeededCalculator sleepersCalculator;
     private final TimeChanger timeChanger;
-    private final PlayerMessenger messenger;
+    private final Messenger messenger;
 
     // Variables for internal working
     private int numNeeded;
@@ -33,7 +33,7 @@ public class SleepersRunnable extends BukkitRunnable {
      * A runnable that will detect time changes and its cause
      * @param world
      */
-    public SleepersRunnable(World world, PlayerMessenger messenger, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
+    public SleepersRunnable(World world, Messenger messenger, TimeChanger timeChanger, SleepersNeededCalculator sleepersCalculator)
     {
         this.world = world;
         this.messenger = messenger;
