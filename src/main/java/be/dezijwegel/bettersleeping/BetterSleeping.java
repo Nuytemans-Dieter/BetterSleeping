@@ -36,6 +36,7 @@ import java.util.*;
 
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
+    BedEventHandler bedEventHandler;
 
     @Override
     public void onEnable()
@@ -46,6 +47,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     @Override
     public void reload() {
+
+        // Cancels all internal Runnables
+        bedEventHandler.reload();
 
         // Reset where needed: prevent events being handled twice
         HandlerList.unregisterAll(this);
@@ -81,7 +85,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         if (checkUpdate)
             new UpdateChecker(this.getDescription().getVersion(), logger).start();
-
+        new MessageGetter(logger).start();
 
         // Get the correct lang file
 
@@ -196,8 +200,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             }
         }
 
-        BedEventHandler beh = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
-        getServer().getPluginManager().registerEvents(beh, this);
+        bedEventHandler = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
+        getServer().getPluginManager().registerEvents(bedEventHandler, this);
 
         logger.log("Starting bStats metrics collection. Opt-out at bStats/config.yml");
         
@@ -254,5 +258,46 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
 
     }
+
+    private static class MessageGetter extends Thread {
+
+        private final ConsoleLogger logger;
+
+
+        MessageGetter(ConsoleLogger logger)
+        {
+            this.logger = logger;
+        }
+
+
+        @Override
+        public void run()
+        {
+            URL url = null;
+            try {
+                url = new URL("https://raw.githubusercontent.com/Nuytemans-Dieter/BetterSleeping/master/Versions/Changelogs/test");
+            } catch (MalformedURLException ignored) {}
+
+            URLConnection conn = null;
+            try {
+                conn = Objects.requireNonNull(url).openConnection();
+            } catch (IOException | NullPointerException e) {
+                logger.log("An error occurred while connecting to the messages server!");
+            }
+
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream()));
+                String line;
+                while ((line = reader.readLine() )!= null)
+                {
+                    logger.log(line);
+                }
+            } catch (IOException | NullPointerException e) {
+                logger.log("An error occurred while retrieving the developer message!");
+            }
+        }
+
+    }
+
 
 }

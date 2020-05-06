@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.events.handlers;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
+import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.messenger.MsgEntry;
 import be.dezijwegel.bettersleeping.messenger.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
@@ -18,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 
-public class BedEventHandler implements Listener {
+public class BedEventHandler implements Listener, Reloadable {
 
 
     private final Plugin plugin;
@@ -93,4 +94,10 @@ public class BedEventHandler implements Listener {
         runnables.get(player.getWorld()).playerLeaveBed(player);
     }
 
+    @Override
+    public void reload()
+    {
+        for(SleepersRunnable runnable : runnables.values())
+            runnable.cancel();
+    }
 }

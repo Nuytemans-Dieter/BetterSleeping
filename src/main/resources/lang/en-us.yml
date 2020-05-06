@@ -55,6 +55,13 @@
 #     Can be used in:   sleep_spam
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
 #
+# <var>
+#     Replaced by:      No_permission: the used command,
+#     Can be used in:   no_permission
+#     Example:          n
+#
+
+
 # ----------------- #
 # Sleeping messages |
 # ----------------- #
@@ -83,7 +90,7 @@ sleep_spam: "You have to wait <time> more [<time>.second.seconds] before you can
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&4You don't have permission to execute that command!"
+no_permission: "&4You don't have permission to execute <var>!"
 
 # The message that will be sent to the admin that does a reload
 message_reloaded: "&2Reload complete!"

@@ -1,5 +1,6 @@
 package be.dezijwegel.bettersleeping.commands;
 
+import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messenger.Messenger;
 import org.bukkit.command.Command;
@@ -22,12 +23,24 @@ public class CommandHandler implements CommandExecutor {
     private final Map<String, BsCommand> consoleCommands;
 
 
-    public CommandHandler(JavaPlugin plugin, Messenger messenger)
+    public CommandHandler(BetterSleeping plugin, Messenger messenger)
     {
         this.messenger = messenger;
 
         playerCommands = new HashMap<>();
         consoleCommands = new HashMap<>();
+
+        BsCommand version = new VersionCommand(plugin, messenger);
+        BsCommand help = new HelpCommand(messenger, playerCommands);
+        BsCommand reload = new ReloadCommand(plugin, messenger);
+
+        playerCommands.put("version",   version);
+        playerCommands.put("help",      help);
+        playerCommands.put("reload",    reload);
+
+        consoleCommands.put("version",  version);
+        consoleCommands.put("help",     help);
+        consoleCommands.put("reload",   reload);
 
         plugin.getCommand("bettersleeping").setTabCompleter(new TabCompleter(playerCommands));
     }
@@ -45,7 +58,7 @@ public class CommandHandler implements CommandExecutor {
         else
         {
             // No support for command blocks
-            messenger.sendMessage(commandSender, "&4Only players and the console can execute BetterSleeping commands!");
+            messenger.sendMessage(commandSender, "&cOnly players and the console can execute BetterSleeping commands!");
             return true;
         }
 
@@ -56,7 +69,14 @@ public class CommandHandler implements CommandExecutor {
         else
             cmd = arguments[0];
 
-        return commandMap.get( cmd ).execute(commandSender, command, alias, arguments);
-
+        if (commandMap.containsKey( cmd ))
+        {
+            return commandMap.get(cmd).execute(commandSender, command, alias, arguments);
+        }
+        else
+        {
+            messenger.sendMessage(commandSender, "&cThe command '/bs " + cmd + "' is not recognised! Execute /bs help to see a list of commands");
+            return true;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -48,18 +49,19 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
         }
 
 
+        List<String> matches = new ArrayList<>();
         // Only keep the matches
         if (partialMatch != null)
         {
-            StringUtil.copyPartialMatches( partialMatch, options, options );
+            StringUtil.copyPartialMatches( partialMatch, options, matches );
         }
 
 
         // Sort the result
-        Collections.sort(options);
+        Collections.sort(matches);
 
 
-        return options;
+        return matches;
     }
 
 
@@ -80,7 +82,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
     {
 
         // Only support console and player
-        if ( !(commandSender instanceof Player) || !(commandSender instanceof ConsoleCommandSender))
+        if ( !(commandSender instanceof Player) && !(commandSender instanceof ConsoleCommandSender))
             return null;
 
         // Return the correct list of possible commands
@@ -89,7 +91,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
         else if (arguments.length == 1)
             return getAllowedCommands(commandSender, arguments[0]);
         else
-            return null;
+            return new ArrayList<>();
     }
 
 }
