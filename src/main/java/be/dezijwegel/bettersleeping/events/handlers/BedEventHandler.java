@@ -68,7 +68,11 @@ public class BedEventHandler implements Listener, Reloadable {
 
         Player player = event.getPlayer();
 
-        // TODO Check bypass permissions, afk status(use EssentialsHook) and bypassed gamemode
+        if ( bypassChecker.isPlayerBypassed( player ) )
+        {
+            messenger.sendMessage(player, "bypass_message");
+            return;
+        }
 
         // Check sleep delay
         long delay = sleepDelayChecker.whenCanPlayerSleep(player.getUniqueId());

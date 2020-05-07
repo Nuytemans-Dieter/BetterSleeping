@@ -130,24 +130,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         logger.log("Using '" + timeChangerType.toString().toLowerCase() + "' as night skip mode");
 
 
-        // Get the num sleeping players needed calculator
-
-        SleepersNeededCalculator calculator;
-        String counter = sleeping.getConfiguration().getString("sleeper_counter");
-        if (counter != null && counter.equalsIgnoreCase("absolute"))
-        {
-            int needed = sleeping.getConfiguration().getInt("absolute.needed");
-            calculator = new AbsoluteNeeded(needed);
-            logger.log("Using required sleepers counter 'absolute' which is set to " + needed + " players required");
-        }
-        else
-        {
-            int needed = sleeping.getConfiguration().getInt("percentage.needed");
-            calculator = new PercentageNeeded(needed);
-            logger.log("Using required sleepers counter 'percentage' which is set to " + needed + "% of players required");
-        }
-
-
         // Read hooks settings
 
         FileConfiguration hooksConfig = hooks.getConfiguration();
@@ -169,6 +151,24 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             }
         }
         BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
+
+
+        // Get the num sleeping players needed calculator
+
+        SleepersNeededCalculator calculator;
+        String counter = sleeping.getConfiguration().getString("sleeper_counter");
+        if (counter != null && counter.equalsIgnoreCase("absolute"))
+        {
+            int needed = sleeping.getConfiguration().getInt("absolute.needed");
+            calculator = new AbsoluteNeeded(needed);
+            logger.log("Using required sleepers counter 'absolute' which is set to " + needed + " players required");
+        }
+        else
+        {
+            int needed = sleeping.getConfiguration().getInt("percentage.needed");
+            calculator = new PercentageNeeded(needed, bypassChecker, essentialsHook);
+            logger.log("Using required sleepers counter 'percentage' which is set to " + needed + "% of players required");
+        }
 
 
         // get a runnable for each world
