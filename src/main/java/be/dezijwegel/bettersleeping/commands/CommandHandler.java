@@ -43,19 +43,19 @@ public class CommandHandler implements CommandExecutor {
         consoleCommands.put("help",     help    );
         consoleCommands.put("reload",   reload  );
 
-        plugin.getCommand("bettersleeping").setTabCompleter(new TabCompleter(playerCommands));
+        plugin.getCommand("bettersleeping").setTabCompleter(new TabCompleter(playerCommands, consoleCommands));
     }
 
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String alias, @NotNull String[] arguments) {
 
+        // Get user commands or console commands
         Map<String, BsCommand> commandMap;
         if (commandSender instanceof Player)
             commandMap = playerCommands;
         else if (commandSender instanceof ConsoleCommandSender)
             commandMap = consoleCommands;
-
         else
         {
             // No support for command blocks
@@ -70,6 +70,7 @@ public class CommandHandler implements CommandExecutor {
         else
             cmd = arguments[0];
 
+
         if (commandMap.containsKey( cmd ))
         {
             BsCommand bsCommand = commandMap.get(cmd);
@@ -77,12 +78,12 @@ public class CommandHandler implements CommandExecutor {
                 return bsCommand.execute(commandSender, command, alias, arguments);
             else
                 messenger.sendMessage(commandSender, "no_permission");
-            return true;
         }
         else
         {
             messenger.sendMessage(commandSender, "&cThe command '/bs " + cmd + "' is not recognised! Execute /bs help to see a list of commands");
-            return true;
         }
+
+        return true;
     }
 }
