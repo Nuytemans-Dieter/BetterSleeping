@@ -85,7 +85,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         if (checkUpdate)
             new UpdateChecker(this.getDescription().getVersion(), logger).start();
-        new MessageGetter(logger).start();
 
         // Get the correct lang file
 
@@ -271,42 +270,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             } catch (IOException | NullPointerException e) {
                 logger.log("An error occurred while retrieving the latest version!");
             }
-        }
-
-    }
-
-    private static class MessageGetter extends Thread {
-
-        private final ConsoleLogger logger;
-
-
-        MessageGetter(ConsoleLogger logger)
-        {
-            this.logger = logger;
-        }
-
-
-        @Override
-        public void run()
-        {
-            URL url = null;
-            try {
-                url = new URL("https://raw.githubusercontent.com/Nuytemans-Dieter/BetterSleeping/master/Versions/Changelogs/test");
-            } catch (MalformedURLException ignored) {}
-
-            URLConnection conn = null;
-            try {
-                conn = Objects.requireNonNull(url).openConnection();
-            } catch (IOException | NullPointerException ignored) {}
-
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream()));
-                String line;
-                while ((line = reader.readLine() )!= null)
-                {
-                    logger.log(line);
-                }
-            } catch (IOException | NullPointerException ignored) {}
         }
 
     }
