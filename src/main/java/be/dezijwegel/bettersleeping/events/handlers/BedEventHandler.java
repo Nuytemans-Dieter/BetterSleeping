@@ -71,7 +71,8 @@ public class BedEventHandler implements Listener, Reloadable {
         if ( bypassChecker.isPlayerBypassed( player ) )
         {
             messenger.sendMessage(player, "bypass_message");
-            return;
+            // Don't return, allow the player to sleep
+            //return;
         }
 
         // Check sleep delay

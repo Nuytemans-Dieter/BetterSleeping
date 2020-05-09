@@ -13,12 +13,20 @@
 # Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
 
+# Players with bypass permissions won't be counted towards the sleeping count but CAN still sleep
+# How to give bypass permissions? (meeting one of the points below is enough)
+#     - Give permission bettersleeping.bypass
+#     - Give permission essentials.sleepingingored
+#     - Ignore a game mode below and be in that gamemode
+
 # Having trouble with bypass permissions? Join our Discord server: https://discord.gg/AS46VGT
 # If all else fails, feel free to set this to false
 # This option will be removed once Essentials updates (around 1.16 release)
-# Bypassing based on gamemode won't work if this is set to false!
+# Bypassing based on game mode will still work when set to false
 enable_bypass_permissions: true
 
 # Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
 ignore_survival: false
 ignore_creative: false
+ignore_adventure: false
+ignore_spectator: true
