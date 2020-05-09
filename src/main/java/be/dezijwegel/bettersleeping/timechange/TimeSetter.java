@@ -9,7 +9,6 @@ public class TimeSetter extends TimeChanger {
     private int counter = 0;
     private long oldTime;
 
-
     public TimeSetter(World world, int delay)
     {
         super(world);
@@ -54,7 +53,9 @@ public class TimeSetter extends TimeChanger {
                 world.setTime(TIME_MORNING);
                 world.setStorm(false);
             }
-        }
 
+            // Mark time as set to day for parent
+            wasSetToDay = true;
+        }
     }
 }

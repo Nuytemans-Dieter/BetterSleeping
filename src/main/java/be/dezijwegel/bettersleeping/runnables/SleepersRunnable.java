@@ -1,5 +1,6 @@
 package be.dezijwegel.bettersleeping.runnables;
 
+import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
@@ -7,11 +8,13 @@ import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -113,8 +116,33 @@ public class SleepersRunnable extends BukkitRunnable {
         long newTime = world.getTime();
 
         // True if time is set to day
-        if (newTime < oldTime + 1) {
-            messenger.sendMessage(world.getPlayers(), "morning_message");
+        if (newTime < 10 && newTime < oldTime + 1) {
+
+            // Find the skip cause
+            TimeSetToDayEvent.Cause cause;
+
+            // Caused by BetterSleeping?
+            if ( timeChanger.wasTimeSetToDay() )
+                cause = TimeSetToDayEvent.Cause.SLEEPING;
+            // Natural passing of time?
+            else if ( newTime == 0 && oldTime == 23999 )
+                cause = TimeSetToDayEvent.Cause.NATURAL;
+            // Caused by some time setter?
+            else
+                cause = TimeSetToDayEvent.Cause.OTHER;
+
+
+            if (cause == TimeSetToDayEvent.Cause.SLEEPING)
+            {
+                // Send good morning, only when the players slept
+                messenger.sendMessage(world.getPlayers(), "morning_message");
+            }
+
+
+            // Throw event for dev APIs
+            List<Player> nonSleepers = world.getPlayers();
+            nonSleepers.removeAll( sleepers );
+            new TimeSetToDayEvent(world, cause, new ArrayList<>(sleepers), nonSleepers);
         }
 
         oldTime = newTime;

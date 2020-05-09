@@ -4,16 +4,20 @@ import org.bukkit.World;
 
 public abstract class TimeChanger {
 
+
     public enum TimeChangeType {
         SETTER,
         SMOOTH
     }
 
-    final World world;
 
     public final static int TIME_MORNING = 0;          // Morning time
     public final static int TIME_RAIN_NIGHT = 12010;   // Time at which players can enter their bed during rain
     public final static int TIME_NIGHT = 12542;        // Time at which players can enter their bed
+
+
+    final World world;
+    boolean wasSetToDay = false;
 
 
     public TimeChanger(World world)
@@ -21,11 +25,26 @@ public abstract class TimeChanger {
         this.world = world;
     }
 
+
+    /**
+     * Checks whether or not this object has set the time to day
+     * Will only return true ONCE until the time has been set to day again
+     * @return whether or not this object caused the time to be day
+     */
+    public boolean wasTimeSetToDay()
+    {
+        boolean old = wasSetToDay;
+        wasSetToDay = false;
+        return old;
+    }
+
+
     /**
      * Get the type of this time changer
      * @return the TimeChangerType of this object
      */
     public abstract TimeChangeType getType();
+
 
     /**
      * Tick should advance the time to its next change

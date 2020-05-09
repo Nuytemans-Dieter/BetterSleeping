@@ -1,5 +1,6 @@
 package be.dezijwegel.bettersleeping.timechange;
 
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 public class TimeSmooth extends TimeChanger {
@@ -8,7 +9,6 @@ public class TimeSmooth extends TimeChanger {
     private final int baseSpeedup;      // Amount of extra executed every tick
     private final int speedupPerPlayer; // How much extra speedup there is per extra sleeping player
     private final int maxSpeedup;       // The highest allowed speedup
-
 
     public TimeSmooth(World world, int baseSpeedup, int speedupPerPlayer, int maxSpeedup) {
         super(world);
@@ -42,6 +42,12 @@ public class TimeSmooth extends TimeChanger {
         // make sure no part of the day is skipped
         if (newTime < world.getTime())
             newTime = 0;
+
+        // Sometimes players are kicked out of bed before time == 0, this happens around time 23460
+        if (newTime > 23450)
+            newTime = 0;
+
+        wasSetToDay = newTime == 0;
 
         world.setTime(newTime);
     }
