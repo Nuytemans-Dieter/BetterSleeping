@@ -297,9 +297,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             URLConnection conn = null;
             try {
                 conn = Objects.requireNonNull(url).openConnection();
-            } catch (IOException | NullPointerException e) {
-                logger.log("An error occurred while connecting to the messages server!");
-            }
+            } catch (IOException | NullPointerException ignored) {}
 
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream()));
@@ -308,9 +306,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 {
                     logger.log(line);
                 }
-            } catch (IOException | NullPointerException e) {
-                logger.log("An error occurred while retrieving the developer message!");
-            }
+            } catch (IOException | NullPointerException ignored) {}
         }
 
     }
