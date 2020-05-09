@@ -147,7 +147,14 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             if (path.contains("ignore_") && bypassConfig.getBoolean(path))
             {
                 path = path.replace("ignore_", "");
-                bypassedGamemodes.add( GameMode.valueOf(path) );
+                try
+                {
+                    GameMode gm = GameMode.valueOf(path.toUpperCase());
+                    bypassedGamemodes.add( gm );
+                } catch(IllegalArgumentException e)
+                {
+                    logger.log("Unknown gamemode in bypassing.yml: " + path);
+                }
             }
         }
         BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
