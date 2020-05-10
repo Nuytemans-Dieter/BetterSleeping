@@ -8,6 +8,7 @@ import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -79,7 +80,7 @@ public class SleepersRunnable extends BukkitRunnable {
         List<Player> players = world.getPlayers();
         players.remove(player);
         messenger.sendMessage(players, "bed_enter_broadcast",
-                new MsgEntry("<player>", player.getDisplayName()),
+                new MsgEntry("<player>", ChatColor.stripColor( player.getDisplayName() )),
                 new MsgEntry("<num_sleeping>",      "" + sleepers.size()),
                 new MsgEntry("<needed_sleeping>",   "" + numNeeded),
                 new MsgEntry("<remaining_sleeping>","" + remaining));

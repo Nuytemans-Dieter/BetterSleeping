@@ -29,16 +29,16 @@ absolute:
 mode: "smooth"
 smooth:
   # The amount of time units that will pass each tick when enough people are sleeping
-  base_speedup: 15
+  base_speedup: 60
   # For every EXTRA sleeping player, an extra speedup time can be added
-  speedup_per_player: 2
+  speedup_per_player: 10
   # The max amount of time that can be moved forward in one tick
-  max_speedup: 30
+  max_speedup: 500
 setter:
   # The time in seconds that players have to stay in bed before the time is set to day
   delay: 3
 
 
 # The time in seconds that players need to wait before they can enter the bed again after leaving it
-bed_enter_delay: 5
+bed_enter_delay: 10
 
