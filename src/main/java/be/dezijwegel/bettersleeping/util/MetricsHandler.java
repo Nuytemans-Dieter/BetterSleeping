@@ -3,13 +3,15 @@ package be.dezijwegel.bettersleeping.util;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MetricsHandler {
 
     public MetricsHandler(JavaPlugin plugin, String localised, boolean autoAddMissingOptions, EssentialsHook essentialsHook, String sleeperCalculatorType,
-                          TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, boolean enableBypassing, FileConfiguration bypassing)
+                          TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, boolean enableBypassing, FileConfiguration bypassing,
+                          FileConfiguration buffsConfig)
     {
 
         // Report plugin and server metrics
@@ -42,11 +44,19 @@ public class MetricsHandler {
 
         metrics.addCustomChart(new Metrics.SimplePie("time_changer_type", () -> timeChangerType.name().toLowerCase()));
 
-        metrics.addCustomChart(new Metrics.SimplePie("enable_bypass", () -> String.valueOf(bypassing.getBoolean("enable_bypass_permissions"))));
+        metrics.addCustomChart(new Metrics.SimplePie("enable_bypass", () -> String.valueOf( enableBypassing )));
 
         metrics.addCustomChart(new Metrics.SimplePie("bypass_survival", () -> String.valueOf( bypassing.getBoolean("ignore_survival") )));
 
         metrics.addCustomChart(new Metrics.SimplePie("bypass_creative", () -> String.valueOf( bypassing.getBoolean("ignore_creative") )));
+
+        ConfigurationSection sectionBuffs = buffsConfig.getConfigurationSection("sleeper_buffs");
+        boolean usesBuffs = sectionBuffs != null && sectionBuffs.getKeys(false).size() == 0;
+        metrics.addCustomChart(new Metrics.SimplePie("uses_buffs", () -> usesBuffs ? "Yes" : "No"));
+
+        ConfigurationSection sectionDebuffs = buffsConfig.getConfigurationSection("non_sleeper_debuffs");
+        boolean usesDebuffs = sectionDebuffs != null && sectionDebuffs.getKeys(false).size() == 0;
+        metrics.addCustomChart(new Metrics.SimplePie("uses_debuffs", () -> usesDebuffs ? "Yes" : "No" ));
 
         metrics.addCustomChart(new Metrics.SimplePie("is_premium", () -> "No" ));
 
