@@ -6,7 +6,6 @@ import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
-import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -15,16 +14,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class SleepersRunnable extends BukkitRunnable {
 
     // Final data
     private final World world;
     private final Set<Player> sleepers;
+    private final HashMap<Player, Long> bedLeaveTracker;
 
     // Utility
     private final SleepersNeededCalculator sleepersCalculator;
@@ -53,6 +50,7 @@ public class SleepersRunnable extends BukkitRunnable {
         numNeeded = sleepersCalculator.getNumNeeded(world);
 
         this.sleepers = new HashSet<>();
+        this.bedLeaveTracker = new HashMap<>();
     }
 
 
@@ -64,6 +62,7 @@ public class SleepersRunnable extends BukkitRunnable {
     public void playerEnterBed(Player player)
     {
         sleepers.add(player);
+        bedLeaveTracker.remove(player);
 
         // Check whether all players are sleeping
         if (sleepers.size() == world.getPlayers().size())
@@ -108,9 +107,21 @@ public class SleepersRunnable extends BukkitRunnable {
             return;
 
         sleepers.remove(player);
+        bedLeaveTracker.put(player, world.getTime());
+
         numNeeded = sleepersCalculator.getNumNeeded(world);
     }
 
+
+    /**
+     * Delete the player from all internal lists
+     * @param player the player to be deleted
+     */
+    public void playerLogout(Player player)
+    {
+        playerLeaveBed(player);
+        bedLeaveTracker.remove(player);
+    }
 
 
     @Override
@@ -127,6 +138,14 @@ public class SleepersRunnable extends BukkitRunnable {
 
         // True if time is set to day
         if (newTime < 10 && newTime < oldTime + 1) {
+
+            // Find players who slept
+            for (Map.Entry<Player, Long> entry : bedLeaveTracker.entrySet())
+            {
+                if ( (entry.getValue() < 10)  || (entry.getValue() >= 23450) )
+                    sleepers.add( entry.getKey() );
+            }
+
 
             // Find the skip cause
             TimeSetToDayEvent.Cause cause;
@@ -160,6 +179,7 @@ public class SleepersRunnable extends BukkitRunnable {
 
             // Reset state
             areAllPlayersSleeping = false;
+            bedLeaveTracker.clear();
             sleepers.clear();
         }
 

@@ -111,7 +111,7 @@ public class BedEventHandler implements Listener, Reloadable {
     public void logOutEvent (PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get( player.getWorld() ).playerLeaveBed(player);
+        runnables.get( player.getWorld() ).playerLogout(player);
     }
 
 
