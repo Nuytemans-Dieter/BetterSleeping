@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class SleepersRunnable extends BukkitRunnable {
     private int numNeeded;
     private long oldTime;
     private boolean notifyEnoughSleeping = true;
+    private boolean areAllPlayersSleeping = false;
 
 
     /**
@@ -62,6 +64,11 @@ public class SleepersRunnable extends BukkitRunnable {
     public void playerEnterBed(Player player)
     {
         sleepers.add(player);
+
+        // Check whether all players are sleeping
+        if (sleepers.size() == world.getPlayers().size())
+            areAllPlayersSleeping = true;
+
         numNeeded = sleepersCalculator.getNumNeeded(world);
         int remaining = numNeeded > sleepers.size() ? numNeeded - sleepers.size() : 0;
 
@@ -97,6 +104,9 @@ public class SleepersRunnable extends BukkitRunnable {
      */
     public void playerLeaveBed(Player player)
     {
+        if(areAllPlayersSleeping)
+            return;
+
         sleepers.remove(player);
         numNeeded = sleepersCalculator.getNumNeeded(world);
     }
@@ -127,6 +137,9 @@ public class SleepersRunnable extends BukkitRunnable {
             // Natural passing of time?
             else if ( newTime == 0 && oldTime == 23999 )
                 cause = TimeSetToDayEvent.Cause.NATURAL;
+            // Caused by all players in a world sleeping -> Time is set to day instantly
+            else if ( areAllPlayersSleeping )
+                cause = TimeSetToDayEvent.Cause.SLEEPING;
             // Caused by some time setter?
             else
                 cause = TimeSetToDayEvent.Cause.OTHER;
@@ -139,10 +152,15 @@ public class SleepersRunnable extends BukkitRunnable {
             }
 
 
-            // Throw event for dev APIs
+            // Throw event for other devs to handle (and to handle buffs internally)
             List<Player> nonSleepers = world.getPlayers();
             nonSleepers.removeAll( sleepers );
-            new TimeSetToDayEvent(world, cause, new ArrayList<>(sleepers), nonSleepers);
+            Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, new ArrayList<>(sleepers), nonSleepers);
+            Bukkit.getPluginManager().callEvent( timeSetToDayEvent );
+
+            // Reset state
+            areAllPlayersSleeping = false;
+            sleepers.clear();
         }
 
         oldTime = newTime;

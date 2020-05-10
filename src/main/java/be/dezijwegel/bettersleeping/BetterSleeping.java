@@ -3,6 +3,7 @@ package be.dezijwegel.bettersleeping;
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.configuration.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
+import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
@@ -24,6 +25,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -206,11 +208,19 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             }
         }
 
+        // Read buffs config and register event handler
+        FileConfiguration buffsConfig = new ConfigLib(false, "buffs.yml", this).getConfiguration();
+        BuffsHandler buffsHandler = new BuffsHandler(logger, messenger, buffsConfig);
+        getServer().getPluginManager().registerEvents(buffsHandler, this);
+
+        // Register bed event handler
         bedEventHandler = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
         getServer().getPluginManager().registerEvents(bedEventHandler, this);
 
-        logger.log("Starting bStats metrics collection. Opt-out at bStats/config.yml");
-        
+        logger.log("The message below is always shown, even if collecting data is disabled: ");
+        logger.log("BetterSleeping collects statistics every 30 minutes. Opt-out at bStats/config.yml");
+
+        // bStats handles enabling/disabling metrics collection, no check required
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
                             sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
                             enableBypass, bypassConfig);

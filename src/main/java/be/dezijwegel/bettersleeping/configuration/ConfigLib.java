@@ -34,11 +34,24 @@ public class ConfigLib {
      * @param fileName the name of the configuration file
      * @param plugin instance of the plugin
      */
+    public ConfigLib(boolean reportMissingOptions, @NotNull String fileName, @NotNull JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.fileName = fileName;
+        this.logger = new ConsoleLogger(true);
+        initialise(fileName, plugin, false, reportMissingOptions);
+    }
+
+
+    /**
+     * Create a configLib instance for easy config reading / management
+     * @param fileName the name of the configuration file
+     * @param plugin instance of the plugin
+     */
     public ConfigLib(@NotNull String fileName, @NotNull JavaPlugin plugin) {
         this.plugin = plugin;
         this.fileName = fileName;
         this.logger = new ConsoleLogger(true);
-        initialise(fileName, plugin, false);
+        initialise(fileName, plugin, false, true);
     }
 
 
@@ -52,11 +65,11 @@ public class ConfigLib {
         this.plugin = plugin;
         this.fileName = fileName;
         this.logger = new ConsoleLogger(true);
-        initialise(fileName, plugin, addMissingOptions);
+        initialise(fileName, plugin, addMissingOptions, true);
     }
 
 
-    public void initialise(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions)
+    public void initialise(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions, boolean reportMissingOptions)
     {
 
         this.file = new File(plugin.getDataFolder(), fileName);
@@ -73,7 +86,7 @@ public class ConfigLib {
 
         if (addMissingOptions)
             this.addMissingOptions();
-        else
+        else if (reportMissingOptions)
             this.reportMissingOptions();
 
         // Add missing options to the default config

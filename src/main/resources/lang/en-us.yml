@@ -56,9 +56,9 @@
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
 #
 # <var>
-#     Replaced by:      No_permission: the used command,
-#     Can be used in:   no_permission
-#     Example:          n
+#     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
+#     Can be used in:   no_permission, buff_received, debuff_received
+#     Example:          User executes /bs reload but has no access. <var> will be replaced by '/bs reload'
 #
 
 
@@ -83,6 +83,17 @@ morning_message: "Good morning, <user>. Have a great day!"
 
 # Players that try to enter their bed too quickly after getting out of it
 sleep_spam: "You have to wait <time> more [<time>.second.seconds] before you can sleep again!"
+
+
+# --------------- #
+# Buffs & debuffs |
+# --------------- #
+
+# Players who slept AND receive buffs will get this message
+buff_received: "You feel well rested and received [<var>.a buff.<var> buffs]."
+
+# Players who did not sleep AND receive debuffs will get this message
+debuff_received: "You did not sleep and feel tired, you got [<var>.a debuff.<var> debuffs]."
 
 
 # -------------------- #
