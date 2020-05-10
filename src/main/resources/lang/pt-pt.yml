@@ -55,6 +55,12 @@
 #     Can be used in:   sleep_spam
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
 #
+# <var>
+#     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
+#     Can be used in:   no_permission, buff_received, debuff_received
+#     Example:          User executes /bs reload but has no access. <var> will be replaced by '/bs reload'
+
+
 # ----------------- #
 # Sleeping messages |
 # ----------------- #
@@ -78,12 +84,23 @@ morning_message: "Bom dia, <user>!"
 sleep_spam: "Você precisa esperar mais <time> [<time>.segundo.segundos] para que possa dormir novamente!"
 
 
+# --------------- #
+# Buffs & debuffs |
+# --------------- #
+
+# Players who slept AND receive buffs will get this message
+buff_received: "Você dormiu bem e recebeu [<var>.um buff.<var> buffs]!"
+
+# Players who did not sleep AND receive debuffs will get this message
+debuff_received: "Você não dormiu e se sente cançado, você recebeu [<var>.um buff.<var> buffs]!"
+
+
 # -------------------- #
 # Commands/Permissions |
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&4Você não tem permissão para executar esse comando!"
+no_permission: "&cVocê não tem permissão para executar esse comando!"
 
 # The message that will be sent to the admin that does a reload
 message_reloaded: "&2Recarregamento completo!"
@@ -93,4 +110,4 @@ message_reloaded: "&2Recarregamento completo!"
 #     - having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "Você tem permissão para não dormir, <user>."
+bypass_message: "&cVocê tem permissão para não dormir, <user>."

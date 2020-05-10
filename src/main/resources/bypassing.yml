@@ -14,6 +14,7 @@
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
 
 # Players with bypass permissions won't be counted towards the sleeping count but CAN still sleep
+# They can get buffs if they sleep but not sleeping won't give them debuffs
 # How to give bypass permissions? (meeting one of the points below is enough)
 #     - Give permission bettersleeping.bypass
 #     - Give permission essentials.sleepingingored (works only if Essentials is installed on the server)

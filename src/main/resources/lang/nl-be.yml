@@ -55,12 +55,18 @@
 #     Can be used in:   sleep_spam
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
 #
+# <var>
+#     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
+#     Can be used in:   no_permission, buff_received, debuff_received
+#     Example:          User executes /bs reload but has no access. <var> will be replaced by '/bs reload'
+
+
 # ----------------- #
 # Sleeping messages |
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Slaapwel, <user>!"
+bed_enter_message: "Slaapwel, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
 bed_enter_broadcast: "<player> doet een dutje, [<num_sleeping>.één speler is.<num_sleeping> spelers] zijn nu aan het slapen. Nog [<remaining_sleeping>.één speler.<remaining_sleeping> spelers] nodig."
@@ -78,12 +84,23 @@ morning_message: "Goeiemorgen, <user>. Geniet van je dag!"
 sleep_spam: "Je moet nog <time> [<time>.seconde.seconden] wachten voor je weer kan slapen!"
 
 
+# --------------- #
+# Buffs & debuffs |
+# --------------- #
+
+# Players who slept AND receive buffs will get this message
+buff_received: "Je voelt je uitgerust en krijgt daardoor [<var>.een verbetering.<var> verbeteringen]."
+
+# Players who did not sleep AND receive debuffs will get this message
+debuff_received: "Je hebt niet geslapen en bent moe, hierdoor krijg je [<var>.een nadeel.<var> nadelen]."
+
+
 # -------------------- #
 # Commands/Permissions |
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&4Je hebt geen toestemming tot dat commando!"
+no_permission: "&cJe hebt geen toestemming tot dat commando!"
 
 # The message that will be sent to the admin that does a reload
 message_reloaded: "&2Klaar met herladen!"
@@ -93,4 +110,4 @@ message_reloaded: "&2Klaar met herladen!"
 #     - having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "Je hebt omzeiltoestemming dus je kan niet slapen, <user>."
+bypass_message: "&cJe hebt omzeiltoestemming dus je kan niet slapen, <user>."
