@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.messaging;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,7 +42,6 @@ public class Messenger {
         // Early return if the message is disabled
         if (message.equals(""))
             return "";
-
         // Perform variable replacements
         for (MsgEntry entry : replacements)
         {
@@ -122,9 +122,8 @@ public class Messenger {
             {
                 name = receiver.getName();
             }
-
-            message = message.replace("<user>", ChatColor.stripColor( name ));
-            receiver.sendMessage(message);
+            String finalMessage = message.replace("<user>", ChatColor.stripColor( name ));
+            receiver.sendMessage(finalMessage);
         }
     }
 }
