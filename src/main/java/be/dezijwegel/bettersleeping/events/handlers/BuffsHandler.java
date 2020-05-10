@@ -106,8 +106,8 @@ public class BuffsHandler implements Listener {
 
 
             // Only add if all fields are valid
-            if (type != null && time != 0 && level != 0)
-                potions.add(new PotionEffect(type, 20*time, level) );
+            if (type != null && time > 0 && level > 0)
+                potions.add(new PotionEffect(type, 20*time, level-1) );
             else
                 logger.log("Faulty potion effect: '" + path + "' of duration '" + time + "' and level '" + level + "'");
         }
