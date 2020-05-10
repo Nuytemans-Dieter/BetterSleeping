@@ -1,6 +1,5 @@
 package be.dezijwegel.bettersleeping.timechange;
 
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 
 public class TimeSmooth extends TimeChanger {

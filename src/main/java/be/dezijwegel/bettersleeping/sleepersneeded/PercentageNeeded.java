@@ -3,7 +3,6 @@ package be.dezijwegel.bettersleeping.sleepersneeded;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
-import com.google.gson.internal.$Gson$Preconditions;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
