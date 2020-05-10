@@ -5,6 +5,7 @@ backup/
 BetterSleeping.iml
 build.xml
 .gradle/
+dependency-reduced-pom.xml
 
 versions/production/
 Versions/BetterSleeping.jar
