@@ -221,6 +221,9 @@ public class ConfigLib {
             logger.log("Setting " + path + " to " + newValue, ChatColor.RED);
         }
 
+        configuration.options().header("Your Comment");
+        configuration.options().copyHeader(true);
+
         try {
             configuration.save(file);
         } catch (IOException ignored) {}
