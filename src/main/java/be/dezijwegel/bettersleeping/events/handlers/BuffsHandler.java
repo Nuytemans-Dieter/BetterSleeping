@@ -4,6 +4,7 @@ import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
+import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,7 @@ public class BuffsHandler implements Listener {
 
     private final ConsoleLogger logger;
     private final Messenger messenger;
+    private final BypassChecker bypassChecker;
 
     private final Set<PotionEffect> sleepingBuffs;
     private final Set<PotionEffect> sleepingDebuffs;
@@ -30,10 +33,11 @@ public class BuffsHandler implements Listener {
      * @param sleepingBuffs players that slept will get these buffs
      * @param nonSleepingDebuffs players that did not sleep will get these debuffs
      */
-    public BuffsHandler(ConsoleLogger logger, Messenger messenger, Set<PotionEffect> sleepingBuffs, Set<PotionEffect> nonSleepingDebuffs)
+    public BuffsHandler(ConsoleLogger logger, Messenger messenger, BypassChecker bypassChecker, Set<PotionEffect> sleepingBuffs, Set<PotionEffect> nonSleepingDebuffs)
     {
         this.logger = logger;
         this.messenger = messenger;
+        this.bypassChecker = bypassChecker;
 
         this.sleepingBuffs = sleepingBuffs;
         this.sleepingDebuffs = nonSleepingDebuffs;
@@ -44,10 +48,11 @@ public class BuffsHandler implements Listener {
      * Event handler for {@link TimeSetToDayEvent}
      * @param buffsConfig the config file containing all buffs and debuffs
      */
-    public BuffsHandler(ConsoleLogger logger, Messenger messenger, FileConfiguration buffsConfig)
+    public BuffsHandler(ConsoleLogger logger, Messenger messenger, BypassChecker bypassChecker, FileConfiguration buffsConfig)
     {
         this.logger = logger;
         this.messenger = messenger;
+        this.bypassChecker = bypassChecker;
 
         this.sleepingBuffs   = readPotions(buffsConfig, "sleeper_buffs");
         this.sleepingDebuffs = readPotions(buffsConfig, "non_sleeper_debuffs");
@@ -70,8 +75,15 @@ public class BuffsHandler implements Listener {
 
         if (sleepingDebuffs.size() > 0)
         {
-            messenger.sendMessage(event.getPlayersWhoDidNotSleep(), "debuff_received", new MsgEntry("<var>", "" + sleepingDebuffs.size()));
-            giveEffects(event.getPlayersWhoDidNotSleep(), sleepingDebuffs);
+            List<Player> nonSleepers = new ArrayList<>();
+            for (Player player : event.getPlayersWhoDidNotSleep())
+            {
+                if ( ! bypassChecker.isPlayerBypassed( player ))
+                    nonSleepers.add( player );
+            }
+
+            messenger.sendMessage(nonSleepers, "debuff_received", new MsgEntry("<var>", "" + sleepingDebuffs.size()));
+            giveEffects(nonSleepers, sleepingDebuffs);
         }
     }
 

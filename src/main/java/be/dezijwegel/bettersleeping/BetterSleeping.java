@@ -209,7 +209,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         // Read buffs config and register event handler
         FileConfiguration buffsConfig = new ConfigLib(false, "buffs.yml", this).getConfiguration();
-        BuffsHandler buffsHandler = new BuffsHandler(logger, messenger, buffsConfig);
+        BuffsHandler buffsHandler = new BuffsHandler(logger, messenger, bypassChecker, buffsConfig);
         getServer().getPluginManager().registerEvents(buffsHandler, this);
 
         // Register bed event handler
