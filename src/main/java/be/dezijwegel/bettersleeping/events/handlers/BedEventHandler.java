@@ -68,6 +68,7 @@ public class BedEventHandler implements Listener, Reloadable {
 
         Player player = event.getPlayer();
 
+        // Checks any reason for bypassing, including afk players and vanished players
         if ( bypassChecker.isPlayerBypassed( player ) )
         {
             messenger.sendMessage(player, "bypass_message");

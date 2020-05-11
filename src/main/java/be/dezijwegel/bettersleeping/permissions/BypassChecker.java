@@ -58,11 +58,18 @@ public class BypassChecker {
      */
     public boolean isPlayerBypassed(Player player)
     {
+        // Permission based bypassing
         boolean hasPermission       = player.hasPermission("bettersleeping.bypass") && isEnabled;
         boolean essentialsBypass    = player.hasPermission("essentials.sleepingignored") && essentialsHook.isHooked() && isEnabled;
+
+        // Gamemode based bypassing
         boolean gamemodeBypass      = bypassedGamemodes.contains( player.getGameMode() );
 
-        return hasPermission || essentialsBypass || gamemodeBypass;
+        // State based bypassing (internally handles the config settings)
+        boolean isAfk       = essentialsHook.isAfk( player );
+        boolean isVanished  = essentialsHook.isVanished( player );
+
+        return hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
     }
 
 }

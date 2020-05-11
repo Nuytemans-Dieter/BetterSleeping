@@ -41,7 +41,8 @@ public class PercentageNeeded implements SleepersNeededCalculator {
         int numPlayers = 0;     // Num players in the world
         for (Player player : Bukkit.getOnlinePlayers())
         {
-            if ( ! bypassChecker.isPlayerBypassed( player ) && ! essentialsHook.isAfk( player ))
+            // Internally checks Essentials bypass causes like /afk and /vanish
+            if ( ! bypassChecker.isPlayerBypassed( player ))
             {
                 World playerWorld = player.getWorld();
                 if (playerWorld.equals(world) && world.getEnvironment() == World.Environment.NORMAL)
