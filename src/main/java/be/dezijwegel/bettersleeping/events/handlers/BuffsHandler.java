@@ -73,8 +73,8 @@ public class BuffsHandler implements Listener {
     @EventHandler
     public void onSetToDay(TimeSetToDayEvent event)
     {
-        // Only handle buffs if players slept
-        if (event.getCause() != TimeSetToDayEvent.Cause.SLEEPING)
+        // Only handle buffs if players (possibly) slept
+        if (event.getCause() == TimeSetToDayEvent.Cause.OTHER)
             return;
 
         if (sleepingBuffs.size() > 0)

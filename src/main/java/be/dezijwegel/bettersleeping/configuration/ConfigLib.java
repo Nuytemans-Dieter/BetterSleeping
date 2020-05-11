@@ -89,6 +89,9 @@ public class ConfigLib {
         else if (reportMissingOptions)
             this.reportMissingOptions();
 
+        if (!reportMissingOptions && !addMissingOptions)
+            return;
+
         // Add missing options to the default config
         for (String path : defaultConfig.getKeys(true))
         {

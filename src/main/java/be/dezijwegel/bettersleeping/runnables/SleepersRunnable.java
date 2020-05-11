@@ -165,7 +165,7 @@ public class SleepersRunnable extends BukkitRunnable {
                 cause = TimeSetToDayEvent.Cause.OTHER;
 
 
-            if (cause == TimeSetToDayEvent.Cause.SLEEPING)
+            if (cause != TimeSetToDayEvent.Cause.NATURAL)
             {
                 // Send good morning, only when the players slept
                 messenger.sendMessage(world.getPlayers(), "morning_message");
