@@ -222,7 +222,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // bStats handles enabling/disabling metrics collection, no check required
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
                             sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
-                            enableBypass, bypassConfig, buffsConfig);
+                            bypassChecker, buffsConfig);
 
         this.getCommand("bettersleeping").setExecutor(new CommandHandler(this, messenger));
     }

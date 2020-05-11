@@ -31,6 +31,26 @@ public class BypassChecker {
 
 
     /**
+     * Get whether or not bypass permissions are enabled or disabled
+     * @return true of they are enabled
+     */
+    public boolean isEnabled()
+    {
+        return isEnabled;
+    }
+
+
+    /**
+     * Get the Set of bypassed gamemodes
+     * @return the gamemodes that are bypassed
+     */
+    public Set<GameMode> getBypassedGamemodes()
+    {
+        return bypassedGamemodes;
+    }
+
+
+    /**
      * Returns whether a player has bypass permissions or not
      * Can be based on a permission node or gamemode
      * @param player the player to be checked
