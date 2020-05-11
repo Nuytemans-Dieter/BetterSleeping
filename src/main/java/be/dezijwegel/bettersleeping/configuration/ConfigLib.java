@@ -302,9 +302,9 @@ public class ConfigLib {
                     }
                 }
 
-                path += "'" + sections[0] + "'";                 // Get the actual setting name
+                path += "'" + sections[sections.length-1] + "'";                 // Get the actual setting name
 
-                // Print the missing option with its defaul value
+                // Print the missing option with its default value
                 String message = indentation + "Missing option: " + path + " with default value: " + value;
                 logger.log(message, ChatColor.RED);
             }
