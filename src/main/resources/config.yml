@@ -32,7 +32,6 @@ update_notifier: true
 disable_phantoms: true
 
 # Automagically add all missing options in your config (when you delete an option or an update has new features)
-# IMPORTANT NOTE: This will reset all comments above options, except for the header
-# You will have to use each corresponding link to see the documentation
-# Options in this file will never be automatically added
+# IMPORTANT NOTE: This will reset all comments above options, except for a link to the documentation
+# Options in this file will never be automatically added due to the importance of some information
 auto_add_missing_options: false

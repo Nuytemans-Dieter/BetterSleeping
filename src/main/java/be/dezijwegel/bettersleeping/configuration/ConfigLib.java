@@ -203,30 +203,38 @@ public class ConfigLib {
         logger.log(missingMessage, ChatColor.DARK_RED);
         logger.log("Automagically adding missing options...", ChatColor.DARK_RED);
 
-        // Set the defaults and report each setting to the console
-        for (String path : missingOptions)
+        FileConfiguration newConfig = new YamlConfiguration();
+
+        for (String path : defaultConfig.getKeys(true))
         {
-            Object value = defaultConfig.get(path);     // Get the default value
-            configuration.set(path, value);
-            configuration.addDefault(path, value);
+            if ( ! defaultConfig.isConfigurationSection(path))
+            {
+                // Get the default or current option
+                Object value = (getMissingOptionPaths().contains( path )) ? defaultConfig.get(path) : configuration.get(path);
 
-            // Report to console
-            // Change formatting if String
-            if (value instanceof String)
-                value = "\"" + value + "\"";
+                newConfig.set(path, value);
+                newConfig.addDefault(path, value);
 
-            String newValue = "";
-            if (value != null)
-                newValue = value.toString();
-            logger.log("Setting " + path + " to " + newValue, ChatColor.RED);
+                // Report to console
+                // Change formatting if String
+                if (value instanceof String)
+                    value = "\"" + value + "\"";
+
+                String newValue = "";
+                if (value != null)
+                    newValue = value.toString();
+                logger.log("Setting " + path + " to " + newValue, ChatColor.RED);
+            }
         }
 
-        configuration.options().header("Your Comment");
-        configuration.options().copyHeader(true);
+        newConfig.options().header("For documentation, check out https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources");
+        newConfig.options().copyHeader(true);
 
         try {
-            configuration.save(file);
+            newConfig.save(file);
         } catch (IOException ignored) {}
+
+        this.configuration = newConfig;
     }
 
 
