@@ -17,8 +17,8 @@
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
 # Considered tossing a coin to your developer?                  https://www.paypal.me/vallasPlugins
 
-# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
-# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/config.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
 
 # The default language file to be used
 # Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese)

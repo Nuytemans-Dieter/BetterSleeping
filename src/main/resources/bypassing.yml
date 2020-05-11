@@ -10,8 +10,8 @@
 
 # To reset a BetterSleeping config file, you can simply delete it and perform /bs reload or restart the server
 
-# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/master/src/main/resources/config.yml
-# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
+# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/bypassing.yml
+# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
 
 # Players with bypass permissions won't be counted towards the sleeping count but CAN still sleep
 # They can get buffs if they sleep but not sleeping won't give them debuffs
