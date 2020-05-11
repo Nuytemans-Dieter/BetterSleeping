@@ -121,7 +121,7 @@ public class BuffsHandler implements Listener {
             if (type != null && time > 0 && level > 0)
                 potions.add(new PotionEffect(type, 20*time, level-1) );
             else
-                logger.log("Faulty potion effect: '" + path + "' of duration '" + time + "' and level '" + level + "'");
+                logger.log("Faulty (de)buff: '" + path + "' of duration '" + time + "' and level '" + level + "'");
         }
 
         return potions;

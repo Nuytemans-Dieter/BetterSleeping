@@ -32,7 +32,7 @@ public class MetricsHandler {
 
         metrics.addCustomChart(new Metrics.SimplePie("auto_add_missing_options", () -> String.valueOf(autoAddMissingOptions)));
 
-        metrics.addCustomChart(new Metrics.SimplePie("server_has_essentials", () -> String.valueOf(essentialsHook.isHooked())));
+        metrics.addCustomChart(new Metrics.SimplePie("server_has_essentials", () -> essentialsHook.isHooked() ? "Yes" : "No"));
 
         if (sleeperCalculatorType != null)
         {

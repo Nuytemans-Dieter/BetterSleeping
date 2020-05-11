@@ -217,7 +217,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         getServer().getPluginManager().registerEvents(bedEventHandler, this);
 
         logger.log("The message below is always shown, even if collecting data is disabled: ");
-        logger.log("BetterSleeping collects statistics every 30 minutes. Opt-out at bStats/config.yml");
+        logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");
 
         // bStats handles enabling/disabling metrics collection, no check required
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
