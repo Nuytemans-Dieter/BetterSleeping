@@ -107,7 +107,7 @@ message_reloaded: "&2Reload complete!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
-#     - having the node bettersleeping.bypass OR essentials.sleepingignored
+#     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cYou have got bypass permissions so you are not counted towards the required sleepers, <user>."
+bypass_message: "&cYou are bypassed so you don't need to sleep, <user>."

@@ -107,7 +107,7 @@ message_reloaded: "&2Klaar met herladen!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
-#     - having the node bettersleeping.bypass OR essentials.sleepingignored
+#     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cJe hebt omzeiltoestemming dus je kan niet slapen, <user>."
+bypass_message: "&cJe hebt omzeiltoestemming dus je hoeft niet te slapen, <user>."
