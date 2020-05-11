@@ -21,7 +21,8 @@
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/src/main/resources
 
 # The default language file to be used
-# Options: en-US (English), nl-BE (Dutch), pt-PT (Portugese)
+# Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese)
+# Up-to-date list here: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 language: "en-US"
 
 # This is ran once on startup when enabled to fetch the latest version
