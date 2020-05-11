@@ -18,7 +18,27 @@ permissions:
             bettersleeping.help: true
             bettersleeping.reload: true
             bettersleeping.status: true
+            bettersleeping.buffs: true
             bettersleeping.help.admin: true
+            bettersleeping.version: true
+    bettersleeping.user:
+        description: Collection of commands that default users may want access to
+        children:
+            bettersleeping.reload: false
+            bettersleeping.status: true
+            bettersleeping.help: true
+            bettersleeping.help.admin: false
+            bettersleeping.buffs: true
+            bettersleeping.version: false
+    bettersleeping.admin:
+        description: Collection of commands that admins may want access to (all permissions except bypass)
+        children:
+            bettersleeping.reload: true
+            bettersleeping.status: true
+            bettersleeping.help: true
+            bettersleeping.help.admin: true
+            bettersleeping.buffs: true
+            bettersleeping.version: true
     bettersleeping.reload:
         description: Gives access to /bs reload, which will reload the BetterSleeping config files
         default: op
@@ -33,4 +53,10 @@ permissions:
         default: op
     bettersleeping.help:
         description: Gives access to /bs help, which will give info about all commands a user has access to
+        default: true
+    bettersleeping.version:
+        description: Gives access to /bs version, which will show the version of BetterSleeping
+        default: op
+    bettersleeping.buffs:
+        description: Gives access to /bs buffs, which will show the (de)buffs this user will receive
         default: true

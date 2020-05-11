@@ -43,7 +43,7 @@ public class StatusCommand implements BsCommand {
             return true;
         }
 
-        messenger.sendMessage(player, ChatColor.GOLD + "---==BetterSleeping Status==---");
+        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping status}==--");
         messenger.sendMessage(player, ChatColor.GOLD + "Showing satus of world: " + ChatColor.DARK_AQUA + status.getWorld().getName());
 
         int left = status.getNumLeft();

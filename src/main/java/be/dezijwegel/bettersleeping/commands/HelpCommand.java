@@ -31,7 +31,7 @@ public class HelpCommand implements BsCommand {
         }
 
         // Not using the Messenger class because of optimizations. No checks are needed for these messages
-        commandSender.sendMessage(ChatColor.GOLD + "--==[BetterSleeping help]==--");
+        commandSender.sendMessage(ChatColor.GOLD + "--=={BetterSleeping help}==--");
 
         if (arguments.length < 2)
         {

@@ -1,5 +1,6 @@
 package be.dezijwegel.bettersleeping.util;
 
+import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
@@ -17,7 +18,7 @@ public class MetricsHandler {
 
     public MetricsHandler(JavaPlugin plugin, String localised, boolean autoAddMissingOptions, EssentialsHook essentialsHook, String sleeperCalculatorType,
                           TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, BypassChecker bypassChecker,
-                          FileConfiguration buffsConfig)
+                          BuffsHandler buffsHandler)
     {
 
         // Report plugin and server metrics
@@ -68,13 +69,9 @@ public class MetricsHandler {
             return valueMap;
         }));
 
-        ConfigurationSection sectionBuffs = buffsConfig.getConfigurationSection("sleeper_buffs");
-        boolean usesBuffs = sectionBuffs != null && sectionBuffs.getKeys(false).size() != 0;
-        metrics.addCustomChart(new Metrics.SimplePie("uses_buffs", () -> usesBuffs ? "Yes" : "No"));
+        metrics.addCustomChart(new Metrics.SimplePie("uses_buffs", () -> buffsHandler.getBuffs().size() != 0 ? "Yes" : "No"));
 
-        ConfigurationSection sectionDebuffs = buffsConfig.getConfigurationSection("non_sleeper_debuffs");
-        boolean usesDebuffs = sectionDebuffs != null && sectionDebuffs.getKeys(false).size() != 0;
-        metrics.addCustomChart(new Metrics.SimplePie("uses_debuffs", () -> usesDebuffs ? "Yes" : "No" ));
+        metrics.addCustomChart(new Metrics.SimplePie("uses_debuffs", () -> buffsHandler.getDebuffs().size() != 0 ? "Yes" : "No" ));
 
         metrics.addCustomChart(new Metrics.SimplePie("is_premium", () -> "No" ));
 

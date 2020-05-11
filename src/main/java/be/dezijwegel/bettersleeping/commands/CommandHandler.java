@@ -1,8 +1,10 @@
 package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
+import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +24,7 @@ public class CommandHandler implements CommandExecutor {
     private final Map<String, BsCommand> consoleCommands;
 
 
-    public CommandHandler(BetterSleeping plugin, Messenger messenger)
+    public CommandHandler(BetterSleeping plugin, Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker)
     {
         this.messenger = messenger;
 
@@ -33,11 +35,13 @@ public class CommandHandler implements CommandExecutor {
         BsCommand help      = new HelpCommand(messenger, playerCommands);
         BsCommand reload    = new ReloadCommand(plugin, messenger);
         BsCommand status    = new StatusCommand(messenger, plugin.getBedEventHandler());
+        BsCommand buffs     = new BuffsCommand(messenger, buffsHandler, bypassChecker);
 
         playerCommands.put("version",   version );
-        playerCommands.put("help",      help    );
-        playerCommands.put("reload",    reload  );
-        playerCommands.put("status",    status  );
+        playerCommands.put("help"   ,   help    );
+        playerCommands.put("reload" ,   reload  );
+        playerCommands.put("status" ,   status  );
+        playerCommands.put("buffs"  ,   buffs   );
 
         consoleCommands.put("version",  version );
         consoleCommands.put("help",     help    );
@@ -64,11 +68,7 @@ public class CommandHandler implements CommandExecutor {
         }
 
 
-        String cmd;
-        if (arguments.length == 0)
-            cmd = "help";
-        else
-            cmd = arguments[0];
+        String cmd = (arguments.length == 0) ? "help" : arguments[0];
 
 
         if (commandMap.containsKey( cmd ))

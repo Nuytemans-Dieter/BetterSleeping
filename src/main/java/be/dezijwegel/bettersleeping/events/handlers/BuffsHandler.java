@@ -59,6 +59,16 @@ public class BuffsHandler implements Listener {
     }
 
 
+    public Set<PotionEffect> getBuffs()
+    {
+        return sleepingBuffs;
+    }
+
+    public Set<PotionEffect> getDebuffs()
+    {
+        return sleepingDebuffs;
+    }
+
 
     @EventHandler
     public void onSetToDay(TimeSetToDayEvent event)
