@@ -53,7 +53,7 @@ public class BuffsCommand implements BsCommand {
 
         if (buffsHandler.getDebuffs().size() == 0)
         {
-            messenger.sendMessage(player, "There are no enabled sleeping debuffs!" );
+            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping debuffs!" );
         }
         else if (bypassChecker.isPlayerBypassed( player ))
         {
