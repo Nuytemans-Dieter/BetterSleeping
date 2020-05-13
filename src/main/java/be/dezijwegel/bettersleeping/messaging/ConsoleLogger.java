@@ -28,7 +28,7 @@ public class ConsoleLogger {
      */
     public void log(String message, @Nullable ChatColor color, boolean isPlural)
     {
-        String fullMessage = "[BetterSleeping] ";
+        String fullMessage = "[BetterSleeping3] ";
         if (enableColors && color != null)
             fullMessage += color;
         fullMessage += message;

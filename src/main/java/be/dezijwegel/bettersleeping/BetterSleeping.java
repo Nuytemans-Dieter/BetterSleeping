@@ -18,12 +18,14 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
+import com.earth2me.essentials.Essentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
@@ -62,6 +64,27 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     private void startPlugin()
     {
+        ConsoleLogger logger = new ConsoleLogger(true);
+
+        // Handle multiworld support
+        List<String> multiworldPlugins = new ArrayList<String>() {{
+            add("Multiverse-Core");
+            add("MultiWorld");
+        }};
+
+        boolean isMultiWorldServer;
+        int index = 0;
+        do
+        {
+            isMultiWorldServer = Bukkit.getServer().getPluginManager().getPlugin( multiworldPlugins.get(index) ) != null;
+            index++;
+        } while(!isMultiWorldServer && index < multiworldPlugins.size());
+
+        if (isMultiWorldServer)
+        {
+            String mwPlugin = multiworldPlugins.get(index-1);
+            logger.log("Detected " + mwPlugin +". Delayed detection of worlds until " + mwPlugin + " loaded them into memory.");
+        }
 
         // Load configuration
 
@@ -78,8 +101,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
         // Handle configuration
-
-        ConsoleLogger logger = new ConsoleLogger(true);
 
         if (disablePhantoms)
             getServer().getPluginManager().registerEvents(new PhantomHandler(), this);
@@ -182,6 +203,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         FileConfiguration sleepConfig = sleeping.getConfiguration();
 
+        int numWorlds = 0;      // The amount of detected worlds
         Map<World, SleepersRunnable> runnables = new HashMap<>();
         for (World world : Bukkit.getWorlds())
         {
@@ -204,8 +226,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 }
                 SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
                 runnables.put(world, runnable);
+                numWorlds++;
             //}
         }
+
+        if (isMultiWorldServer)
+            logger.log("Found " + numWorlds + " worlds in memory.");
 
         // Read buffs config and register event handler
         FileConfiguration buffsConfig = new ConfigLib(false, "buffs.yml", this).getConfiguration();
