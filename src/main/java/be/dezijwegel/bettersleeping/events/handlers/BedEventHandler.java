@@ -62,6 +62,10 @@ public class BedEventHandler implements Listener, Reloadable {
     @EventHandler
     public void onBedEnter (PlayerBedEnterEvent event)
     {
+        // Only handle checked worlds
+        if ( ! runnables.containsKey( event.getPlayer().getWorld() ))
+            return;
+
         // Check event status
         if (event.isCancelled() || event.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK)
             return;
@@ -95,7 +99,8 @@ public class BedEventHandler implements Listener, Reloadable {
     public void bedLeaveEvent (PlayerBedLeaveEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get( player.getWorld() ).playerLeaveBed(player);
+        if (runnables.containsKey( player.getWorld() ))
+            runnables.get( player.getWorld() ).playerLeaveBed(player);
     }
 
 
@@ -112,7 +117,8 @@ public class BedEventHandler implements Listener, Reloadable {
     public void logOutEvent (PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        runnables.get( player.getWorld() ).playerLogout(player);
+        if (runnables.containsKey( player.getWorld() ))
+            runnables.get( player.getWorld() ).playerLogout(player);
     }
 
 

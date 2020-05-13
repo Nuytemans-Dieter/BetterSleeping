@@ -186,7 +186,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         for (World world : Bukkit.getWorlds())
         {
             // Only check on the overworld
-            if (world.getEnvironment() == World.Environment.NORMAL) {
+            //if (world.getEnvironment() == World.Environment.NORMAL) {
 
                 TimeChanger timeChanger;
 
@@ -204,7 +204,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 }
                 SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
                 runnables.put(world, runnable);
-            }
+            //}
         }
 
         // Read buffs config and register event handler

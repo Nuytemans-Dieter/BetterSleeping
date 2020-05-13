@@ -4,7 +4,7 @@ version: 3.0.0
 api-version: "1.13"
 main: be.dezijwegel.bettersleeping.BetterSleeping
 description: A plugin that makes sleeping in multiplayer fun again!
-softdepend: [Essentials, PlaceholderAPI]
+softdepend: [Essentials, PlaceholderAPI, MultiWorld, Multiverse, Multiverse-Core]
 commands:
     bettersleeping:
         description: See all BetterSleeping commands
