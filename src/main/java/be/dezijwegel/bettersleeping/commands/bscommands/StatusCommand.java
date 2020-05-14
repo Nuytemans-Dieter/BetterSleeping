@@ -1,7 +1,6 @@
-package be.dezijwegel.bettersleeping.commands;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
@@ -11,16 +10,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class StatusCommand implements BsCommand {
+public class StatusCommand extends BsCommand {
 
 
-    private final Messenger messenger;
     private final BedEventHandler bedEventHandler;
 
 
     public StatusCommand(Messenger messenger, BedEventHandler bedEventHandler)
     {
-        this.messenger = messenger;
+        super( messenger );
+
         this.bedEventHandler = bedEventHandler;
     }
 

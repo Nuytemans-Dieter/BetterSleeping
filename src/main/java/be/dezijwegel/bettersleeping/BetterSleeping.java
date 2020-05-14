@@ -1,7 +1,7 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
-import be.dezijwegel.bettersleeping.configuration.ConfigLib;
+import be.dezijwegel.bettersleeping.util.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
@@ -18,14 +18,12 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
-import com.earth2me.essentials.Essentials;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;

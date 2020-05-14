@@ -14,7 +14,6 @@ public class Messenger {
 
 
     private final Map<String, String> messages;     // Contains the messages in lang.yml by mapping path to value
-    private final ConsoleLogger consoleLogger;
 
 
     /**
@@ -24,7 +23,6 @@ public class Messenger {
     public Messenger(Map<String, String> messages)
     {
         this.messages = messages;
-        this.consoleLogger = new ConsoleLogger(true);
     }
 
 

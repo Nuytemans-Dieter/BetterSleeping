@@ -1,8 +1,8 @@
 package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.bettersleeping.commands.bscommands.*;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.command.Command;

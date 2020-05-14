@@ -1,7 +1,6 @@
-package be.dezijwegel.bettersleeping.commands;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.ChatColor;
@@ -10,17 +9,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
-public class BuffsCommand implements BsCommand {
+public class BuffsCommand extends BsCommand {
 
 
-    private final Messenger messenger;
     private final BuffsHandler buffsHandler;
     private final BypassChecker bypassChecker;
 
 
     public BuffsCommand(Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker)
     {
-        this.messenger = messenger;
+        super( messenger );
+
         this.buffsHandler = buffsHandler;
         this.bypassChecker = bypassChecker;
     }

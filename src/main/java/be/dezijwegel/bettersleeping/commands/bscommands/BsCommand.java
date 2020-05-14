@@ -1,9 +1,18 @@
-package be.dezijwegel.bettersleeping.interfaces;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
+import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.CommandSender;
 
-public interface BsCommand {
+public abstract class BsCommand {
 
+
+    final Messenger messenger;
+
+
+    public BsCommand( Messenger messenger )
+    {
+        this.messenger = messenger;
+    }
 
     /**
      * Should contain the correct actions to execute the command
@@ -13,19 +22,19 @@ public interface BsCommand {
      * @param arguments parameters of the command
      * @return whether or not execution was successful
      */
-    boolean execute(CommandSender commandSender, org.bukkit.command.Command command, String alias, String[] arguments);
+    abstract public boolean execute(CommandSender commandSender, org.bukkit.command.Command command, String alias, String[] arguments);
 
 
     /**
      * Get the permission required for this command
      * @return permission node
      */
-    String getPermission();
+    abstract public String getPermission();
 
 
     /**
      * Get a description for this command
      * @return decription for this command
      */
-    String getDescription();
+    abstract public String getDescription();
 }

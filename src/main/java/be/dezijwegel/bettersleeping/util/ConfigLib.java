@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.configuration;
+package be.dezijwegel.bettersleeping.util;
 
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import org.bukkit.ChatColor;

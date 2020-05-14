@@ -6,13 +6,10 @@ import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.GameMode;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class MetricsHandler {
 

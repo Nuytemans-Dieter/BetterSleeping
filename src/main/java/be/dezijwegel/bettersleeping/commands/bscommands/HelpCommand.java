@@ -1,6 +1,5 @@
-package be.dezijwegel.bettersleeping.commands;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import org.bukkit.ChatColor;
@@ -9,14 +8,16 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Map;
 
-public class HelpCommand implements BsCommand {
+public class HelpCommand extends BsCommand {
+
 
     private final Map<String, BsCommand> commands;
-    private final Messenger messenger;
+
 
     public HelpCommand(Messenger messenger, Map<String, BsCommand> commands)
     {
-        this.messenger = messenger;
+        super( messenger );
+
         this.commands = commands;
     }
 

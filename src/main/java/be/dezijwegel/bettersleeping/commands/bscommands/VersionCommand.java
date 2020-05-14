@@ -1,20 +1,20 @@
-package be.dezijwegel.bettersleeping.commands;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class VersionCommand implements BsCommand {
+public class VersionCommand extends BsCommand {
 
-    private final Messenger messenger;
+
     private final String version;
 
 
-    VersionCommand(JavaPlugin plugin, Messenger messenger)
+    public VersionCommand(JavaPlugin plugin, Messenger messenger)
     {
-        this.messenger = messenger;
+        super( messenger );
+
         version = plugin.getDescription().getVersion();
     }
 

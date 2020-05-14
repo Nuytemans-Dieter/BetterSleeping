@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.commands;
 
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
+import be.dezijwegel.bettersleeping.commands.bscommands.BsCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class TabCompleter implements org.bukkit.command.TabCompleter {
 
 
-    private final Map<String, BsCommand> playerCommands;       // Every Player subcommand mapped to its BsCommand object
+    private final Map<String, BsCommand> playerCommands;    // Every Player subcommand mapped to its BsCommand object
     private final Map<String, BsCommand> consoleCommands;   // Every console subcommand mapped to its BsCommand object
 
 

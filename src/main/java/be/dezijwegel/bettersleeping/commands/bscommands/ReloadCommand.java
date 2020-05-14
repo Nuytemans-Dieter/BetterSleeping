@@ -1,16 +1,14 @@
-package be.dezijwegel.bettersleeping.commands;
+package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.interfaces.BsCommand;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ReloadCommand implements BsCommand {
+public class ReloadCommand extends BsCommand {
 
 
     private final Reloadable plugin;
-    private final Messenger messenger;
 
 
     /**
@@ -20,8 +18,9 @@ public class ReloadCommand implements BsCommand {
      */
     public ReloadCommand(Reloadable plugin, Messenger messenger)
     {
+        super( messenger );
+
         this.plugin = plugin;
-        this.messenger = messenger;
     }
 
     @Override
