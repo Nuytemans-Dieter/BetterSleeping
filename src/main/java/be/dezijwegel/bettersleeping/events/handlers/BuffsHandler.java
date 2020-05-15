@@ -77,6 +77,10 @@ public class BuffsHandler implements Listener {
         if (event.getCause() == TimeSetToDayEvent.Cause.OTHER)
             return;
 
+        // Only handle (de)buffs if someone slept
+        if (event.getPlayersWhoSlept().size() == 0)
+            return;
+
         if (sleepingBuffs.size() > 0)
         {
             messenger.sendMessage(event.getPlayersWhoSlept(), "buff_received", new MsgEntry("<var>", "" + sleepingBuffs.size()));
