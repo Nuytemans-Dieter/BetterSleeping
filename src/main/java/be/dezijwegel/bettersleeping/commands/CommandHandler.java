@@ -23,6 +23,7 @@ public class CommandHandler implements CommandExecutor {
     private final Map<String, BsCommand> playerCommands;
     private final Map<String, BsCommand> consoleCommands;
 
+    private final Map<String, String> shortcuts;
 
     public CommandHandler(BetterSleeping plugin, Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker)
     {
@@ -47,6 +48,13 @@ public class CommandHandler implements CommandExecutor {
         consoleCommands.put("help",     help    );
         consoleCommands.put("reload",   reload  );
 
+        shortcuts = new HashMap<>();
+        shortcuts.put("v", "version");
+        shortcuts.put("h", "help");
+        shortcuts.put("r", "reload");
+        shortcuts.put("s", "status");
+        shortcuts.put("b", "buffs");
+
         plugin.getCommand("bettersleeping").setTabCompleter(new TabCompleter(playerCommands, consoleCommands));
     }
 
@@ -67,9 +75,12 @@ public class CommandHandler implements CommandExecutor {
             return true;
         }
 
-
+        // Default to /bs help if no argument given
         String cmd = (arguments.length == 0) ? "help" : arguments[0];
 
+        // Check for shortcut
+        if (shortcuts.containsKey( cmd ))
+            cmd = shortcuts.get( cmd );
 
         if (commandMap.containsKey( cmd ))
         {
