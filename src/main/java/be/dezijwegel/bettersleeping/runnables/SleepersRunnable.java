@@ -122,6 +122,10 @@ public class SleepersRunnable extends BukkitRunnable {
 
         numNeeded = sleepersCalculator.getNumNeeded(world);
 
+        // Don't send cancelled messages when the time is not right
+        if (world.getTime() < 20 || world.getTime() > 23450)
+            return;
+
         // Check if enough players WERE sleeping but now not anymore
         if (sleepers.size() < previousSize && previousSize >= numNeeded && sleepers.size() < numNeeded)
         {
