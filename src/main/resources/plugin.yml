@@ -13,7 +13,7 @@ commands:
         aliases: [bs]
 permissions:
     bettersleeping.*:
-        description: Gives access to all BetterSleeping commands (/bs skip not included so you may want to add acces through bettersleeping.bypass)
+        description: Gives access to all BetterSleeping commands
         children:
             bettersleeping.help: true
             bettersleeping.reload: true
