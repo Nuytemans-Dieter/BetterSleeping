@@ -32,6 +32,8 @@ public class MetricsHandler {
 
         metrics.addCustomChart(new Metrics.SimplePie("server_has_essentials", () -> essentialsHook.isHooked() ? "Yes" : "No"));
 
+        metrics.addCustomChart(new Metrics.SimplePie("server_has_placeholderapi", () -> plugin.getServer().getPluginManager().getPlugin("PlaceholderAPI")!=null ? "Yes" : "No"));
+
         if (sleeperCalculatorType != null)
         {
             metrics.addCustomChart(new Metrics.SimplePie("sleepers_calculator", sleeperCalculatorType::toLowerCase));
