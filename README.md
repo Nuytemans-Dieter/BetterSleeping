@@ -1,5 +1,5 @@
-# BetterSleeping (27.000+ downloads)
-This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). For a guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki).
+# BetterSleeping (28.000+ downloads)
+This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). For a guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki). Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/).
 
 ## What this plugin does
 Usually all players must sleep before a night/storm can be skipped on a multiplayer server.
@@ -27,7 +27,8 @@ This plugin is functional and has been tested on several Spigot versions. Bukkit
 ## How to contribute
 Sometimes people ask how they can help, there is a lot you can do.
 - Leaving a review on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/) helps a ton! You'd make me happy and help future visitors make the right decision.
+- Grab the [premium version](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/)
 - Starring this repository is much appreciated (on the top right of this screen)
-- You can make a suggestion (eg. a new feature), join the [Discord server](https://discord.gg/AS46VGT) to let me know or create a [new issue](https://github.com/Nuytemans-Dieter/BetterSleeping/issues)!
+- You can make a suggestion (eg. a new feature). Join the [Discord server](https://discord.gg/AS46VGT) to let me know or create a [new issue](https://github.com/Nuytemans-Dieter/BetterSleeping/issues)!
 - If you know how to code, feel free to make a pull request and add your feature on your own!
-- I maintain this plugin for free and provide support whenever someone asks for it, feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins).
+- Feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins) so I can crack a cold one with the boys.
