@@ -67,7 +67,7 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Buenas noche, <user>!"
+bed_enter_message: "Buenas noche, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
 bed_enter_broadcast: "<player> se esta quedando dormido. ¡Se [<remaining_sleeping>.necesita.necesitan] <remaining_sleeping> [<remaining_sleeping>.jugador.jugadores] más para omitir la noche! <num_sleeping>/<needed_sleeping>"
@@ -76,7 +76,7 @@ bed_enter_broadcast: "<player> se esta quedando dormido. ¡Se [<remaining_sleepi
 skipping_canceled: "¡Un jugador ha dejado su cama! Esperando por <remaining_sleeping> más [<remaining_sleeping>.jugador.jugadores] para dormir. <num_sleeping>/<needed_sleeping>"
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "¡Suficientes jugadores estan durmiendo ahora, la noche se omitira en <time> [<time>.segundo.segundos]!"
+enough_sleeping: "¡Suficientes jugadores estan durmiendo ahora, la noche se omitira pronto!"
 
 # Players receive this message in the morning
 morning_message: "¡Buenos dias! Que tengan un gran dia, <user>!"
