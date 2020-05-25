@@ -67,22 +67,22 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Buenas noche, <user>! (<num_sleeping>/<needed_sleeping>)"
+bed_enter_message:  "Que pases buenas noches, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> se esta quedando dormido. ¡Se [<remaining_sleeping>.necesita.necesitan] <remaining_sleeping> [<remaining_sleeping>.jugador.jugadores] más para omitir la noche! <num_sleeping>/<needed_sleeping>"
+bed_enter_broadcast: "<player> esta tomando una siesta, [<num_sleeping>.un jugador esta.<num_sleeping> jugadores están] durmiendo ahora. <remaining_sleeping> [<remaining_sleeping>.dormilon es necesario.dormilones son necesarios]."
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "¡Un jugador ha dejado su cama! Esperando por <remaining_sleeping> más [<remaining_sleeping>.jugador.jugadores] para dormir. <num_sleeping>/<needed_sleeping>"
+skipping_canceled: "¡Alguien ha dejado su cama por lo que la noche no se omitira! ¡Se necesitan <remaining_sleeping> [<remaining_sleeping>.jugador.jugadores] más!"
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "¡Suficientes jugadores estan durmiendo ahora, la noche se omitira pronto!"
+enough_sleeping: "¡Hay suficientes jugadores durmiendo plácidamente ahora, la noche/tormenta se omitira en breve!"
 
 # Players receive this message in the morning
-morning_message: "¡Buenos dias! Que tengan un gran dia, <user>!"
+morning_message: "¡Buenos días, <user>. Que tengas un día hermoso!"
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "¡Necesitas esperar <time> más [<time>.segundo.segundos] antes de que puedas dormir de nuevo!"
+sleep_spam: "¡Debes esperar <time> [<time>.segundo.segundos] más antes de que puedas dormir de nuevo!"
 
 
 # --------------- #
@@ -90,10 +90,10 @@ sleep_spam: "¡Necesitas esperar <time> más [<time>.segundo.segundos] antes de 
 # --------------- #
 
 # Players who slept AND receive buffs will get this message
-buff_received: "Te sientes bien descansado y recibiste <var> [<var>.pocion.pociones]!"
+buff_received: "Te sientes lleno de energia, recibiste [<var>.un efecto positivo.<var> efectos positivos]."
 
 # Players who did not sleep AND receive debuffs will get this message
-debuff_received: "¡No has dormido y te sientes cansado, por lo que no has recibido [<var>.a pocion.<var> pociones]!"
+debuff_received: "No has dormido y te sientes cansado, recibiste [<var>.un efecto negativo.<var> efectos negativos]."
 
 
 # -------------------- #
@@ -101,7 +101,7 @@ debuff_received: "¡No has dormido y te sientes cansado, por lo que no has recib
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&c¡No tienes permiso para ejecutar ese comando!"
+no_permission: "&c¡No tienes permiso para ejecutar <var>!"
 
 # The message that will be sent to the admin that does a reload
 message_reloaded: "&2¡Recarga completa!"
@@ -111,4 +111,4 @@ message_reloaded: "&2¡Recarga completa!"
 #     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cObtienes el permiso de omisión, por lo que no necesitas dormir, <user>."
+bypass_message: "&cEstas en modo bypassed por lo que no necesitas dormir, <user>."
