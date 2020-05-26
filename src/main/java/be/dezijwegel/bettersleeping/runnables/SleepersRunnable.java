@@ -162,8 +162,7 @@ public class SleepersRunnable extends BukkitRunnable {
         long newTime = world.getTime();
 
         // True if time is set to day
-        if (newTime < 10 && newTime < oldTime + 1) {
-
+        if (newTime < 10 && newTime < oldTime) {
             // Find players who slept
             if (areAllPlayersSleeping)
             {
