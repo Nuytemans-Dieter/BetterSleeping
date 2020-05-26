@@ -56,8 +56,16 @@ public class Messenger {
                 String[] options = replaceThis[i].split("\\.");
                 if (options.length >= 3)
                 {
-                    double amount = Double.parseDouble(options[0]);
-                    replaceBy[i] = amount == 1 ? options[1] : options[2];
+                    try
+                    {
+                        double amount = Double.parseDouble(options[0]);
+                        replaceBy[i] = amount == 1 ? options[1] : options[2];
+                    }
+                    catch(NumberFormatException exception)
+                    {
+                        new ConsoleLogger(true).log("A tag was not recognised: '" + options[0] + "'. Please check your language configuration.", ChatColor.RED);
+                        replaceBy[i] = options[1];
+                    }
                 }
                 else if (options.length >= 1)
                 {
