@@ -72,14 +72,6 @@ public class BedEventHandler implements Listener, Reloadable {
 
         Player player = event.getPlayer();
 
-        // Checks any reason for bypassing, including afk players and vanished players
-        if ( bypassChecker.isPlayerBypassed( player ) )
-        {
-            messenger.sendMessage(player, "bypass_message");
-            // Don't return, allow the player to sleep
-            //return;
-        }
-
         // Check sleep delay
         long delay = sleepDelayChecker.whenCanPlayerSleep(player.getUniqueId());
         if (delay > 0)
@@ -87,6 +79,14 @@ public class BedEventHandler implements Listener, Reloadable {
             event.setCancelled(true);
             messenger.sendMessage(player, "sleep_spam", new MsgEntry("<time>", "" + delay));
             return;
+        }
+
+        // Checks any reason for bypassing, including afk players and vanished players
+        if ( bypassChecker.isPlayerBypassed( player ) )
+        {
+            messenger.sendMessage(player, "bypass_message");
+            // Don't return, always allow the player to sleep
+            //return;
         }
 
         // Notify the subsystems of the player entering their bed. Subsystems will handle player messaging
