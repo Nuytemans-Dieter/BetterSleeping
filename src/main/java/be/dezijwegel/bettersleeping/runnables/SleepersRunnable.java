@@ -127,7 +127,10 @@ public class SleepersRunnable extends BukkitRunnable {
             return;
 
         // Check if enough players WERE sleeping but now not anymore
-        if (sleepers.size() < previousSize && previousSize >= numNeeded && sleepers.size() < numNeeded)
+        if (   sleepers.size() < previousSize
+            && previousSize >= numNeeded
+            && sleepers.size() < numNeeded
+            && !timeChanger.removedStorm(false))
         {
             int remaining = numNeeded - sleepers.size();
             messenger.sendMessage(world.getPlayers(), "skipping_canceled",
@@ -161,8 +164,8 @@ public class SleepersRunnable extends BukkitRunnable {
         // Time check subsystem: detect time set to day
         long newTime = world.getTime();
 
-        // True if time is set to day
-        if (newTime < 10 && newTime < oldTime) {
+        // True if time is set to day OR the storm was skipped during the day
+        if ((newTime < 10 && newTime < oldTime) || (timeChanger.removedStorm(true) && newTime < 12000)) {
             // Find players who slept
             if (areAllPlayersSleeping)
             {

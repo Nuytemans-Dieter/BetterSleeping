@@ -42,6 +42,7 @@ public class TimeSetter extends TimeChanger {
             {
                 world.setThundering(false);
                 world.setStorm(false);
+                removedStorm = true;
             }
 
             if(newTime >= TIME_NIGHT)

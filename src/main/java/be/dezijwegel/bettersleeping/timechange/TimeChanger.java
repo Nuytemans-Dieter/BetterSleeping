@@ -18,6 +18,7 @@ public abstract class TimeChanger {
 
     final World world;
     boolean wasSetToDay = false;
+    boolean removedStorm = false;
 
 
     public TimeChanger(World world)
@@ -36,6 +37,19 @@ public abstract class TimeChanger {
         boolean old = wasSetToDay;
         wasSetToDay = false;
         return old;
+    }
+
+
+    /**
+     * Checks whether or not this TimeChanger recently removed a storm
+     * @param doReset when set to true, the removedStorm boolean will be reset
+     * @return the current value of removedStorm
+     */
+    public boolean removedStorm(boolean doReset)
+    {
+        boolean value = removedStorm;
+        removedStorm = !doReset && removedStorm;
+        return value;
     }
 
 
