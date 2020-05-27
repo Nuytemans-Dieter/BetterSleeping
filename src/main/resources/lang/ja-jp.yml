@@ -1,0 +1,114 @@
+# ____       _   _            _____ _                 _                       ____
+#|  _ \     | | | |          / ____| |               (_)                     |___ \
+#| |_) | ___| |_| |_ ___ _ _| (___ | | ___  ___ _ __  _ _ __   __ _     __   ____) |
+#|  _ < / _ \ __| __/ _ \ '__\___ \| |/ _ \/ _ \ '_ \| | '_ \ / _` |    \ \ / /__ <
+#| |_) |  __/ |_| ||  __/ |  ____) | |  __/  __/ |_) | | | | | (_| |     \ V /___) |
+#|____/ \___|\__|\__\___|_| |_____/|_|\___|\___| .__/|_|_| |_|\__, |      \_/|____/
+#                                              | |             __/ |
+#                                              |_|            |___/
+
+# Default lang files: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
+
+# CONFIGURATION GUIDE:
+# The symbol '&' is used for color codes
+# Any message can be disabled by setting the text to "ignored" or "", an example can be found below
+# some_setting: "ignored"
+# another_setting: ""
+
+
+# SINGULAR / PLURAL
+# BetterSleeping supports singular and plural nouns
+# This requires 3 contents: a (supported!) placeholder that will be replaced by a number - the singular form - the plural form
+# Example: [<num_sleeping>.player.players] -> <num_sleeping> must be supported by the message and will be replaced by the corresponding amount
+#     When <num_sleeping> is equal to 1: everything between the [] will be replaced by player
+#     When <num_sleeping> is NOT equal to 1: everything between the [] will be replaced by players
+# Hint: You CAN use other placeholders (see below) in these singular/plural messages
+
+
+# PLACEHOLDERS
+# <user>
+#     Replaced by:      The player who receives the message
+#     Can be used in:   All messages support this
+#     Example:          When user Freddy_Krueger receives any message, <user> is replaced by Freddy_Krueger
+#
+# <player>
+#     Replaced by:      The player who did an action
+#     Can be used in:   bed_enter_broadcast
+#     Example:          When user Freddy_Krueger goes to bed, <player> is replaced by Freddy_Krueger
+#
+# <num_sleeping>
+#     Replaced by:      The amount of sleeping players
+#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Example:          When user Freddy_Krueger receives any message, <user> is replaced by Freddy_Krueger
+#
+# <needed_sleeping>
+#     Replaced by:      The amount of sleeping players that have to sleep in order to skip the night
+#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Example:          When 4 players need to sleep, <needed_sleeping> is replaced by 4
+#
+# <remaining_sleeping>
+#     Replaced by:      The amount of extra sleeping players that are needed
+#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Example:          When 4 players are sleeping but 6 are needed, <remaining_sleeping> is replaced by 2
+#
+# <time>
+#     Replaced by:      The amount of time in a context
+#     Can be used in:   sleep_spam
+#     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
+#
+# <var>
+#     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
+#     Can be used in:   no_permission, buff_received, debuff_received
+#     Example:          User executes /bs reload but has no access. <var> will be replaced by '/bs reload'
+
+
+# ----------------- #
+# Sleeping messages |
+# ----------------- #
+
+# A player receives this message when entering their bed
+bed_enter_message: "<user>さん、おやすみなさい！ (<num_sleeping>/<needed_sleeping>)"
+
+# All players in the same world get this message when someone enters their bed
+bed_enter_broadcast: "<player>さんがベッドに入りました。 現在<num_sleeping>人が寝ています。 あと<remaining_sleeping>人必要です。"
+
+# When not enough people are sleeping due to someone leaving their bed
+skipping_canceled: "誰かがベッドを抜け出したので夜をスキップできません。 あと<remaining_sleeping>人必要です。"
+
+# This message is sent to all players in a world where enough players are sleeping
+enough_sleeping: "十分な数のプレーヤーがベッドに入ったので、まもなく夜が終わります。"
+
+# Players receive this message in the morning
+morning_message: "<user>さん、おはようございます！ 良い一日をお過ごしください。"
+
+# Players that try to enter their bed too quickly after getting out of it
+sleep_spam: "再度ベッドに入るにはあと<time>秒待ってください。"
+
+
+# --------------- #
+# Buffs & debuffs |
+# --------------- #
+
+# Players who slept AND receive buffs will get this message
+buff_received: "よく休んだので<var>のバフがかかりました。"
+
+# Players who did not sleep AND receive debuffs will get this message
+debuff_received: "徹夜で疲れたので<var>のデバフがかかりました。"
+
+
+# -------------------- #
+# Commands/Permissions |
+# -------------------- #
+
+# The message a player gets when they don't have access to a command
+no_permission: "&c<var>を実行する権限がありません。"
+
+# The message that will be sent to the admin that does a reload
+message_reloaded: "&2リロード完了。"
+
+# This message is sent when a player tries to sleep but they have got a bypass permission
+# Permissions include:
+#     - Having the node bettersleeping.bypass OR essentials.sleepingignored
+#     - Being in a bypassed gamemode
+#     - Being afk / vanished
+bypass_message: "&c<user>さんはバイパス権限があるので寝る必要はありません。"
