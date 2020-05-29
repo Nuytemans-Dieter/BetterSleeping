@@ -1,7 +1,9 @@
 # BetterSleeping (28.000+ downloads)
 This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). For a guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki). Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/).
 
-Check out BetterSleeping's [stats](https://bstats.org/plugin/bukkit/BetterSleeping/7414)!
+![BetterSleeping stats graph](https://bstats.org/signatures/bukkit/BetterSleeping.svg)
+
+Check out BetterSleeping's [complete stats](https://bstats.org/plugin/bukkit/BetterSleeping/7414)!
 
 ## What this plugin does
 Usually all players must sleep before a night/storm can be skipped on a multiplayer server.
