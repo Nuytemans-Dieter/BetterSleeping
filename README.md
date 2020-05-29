@@ -1,4 +1,4 @@
-# BetterSleeping (28.000+ downloads)
+# BetterSleeping (29.000+ downloads)
 This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. More information can be found on the [Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). For a guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki). Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/).
 
 ![BetterSleeping stats graph](https://bstats.org/signatures/bukkit/BetterSleeping.svg)
