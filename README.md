@@ -19,7 +19,7 @@ Quite extensive configuration is included to suit your needs. The configuration 
  - ... And **so much more**! Check the [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki) to see all options. 
 
 ## Tested Spigot versions
-This plugin is functional and has been tested on several Spigot versions. Bukkit should be compatible too but no extensive testing has been done. You can see the **latest** and **tested** BetterSleeping version for every supported Spigot version in the table below. Newer updates than the mentioned BetterSleeping versions may still be fully compatible but have not been tested (yet). Previous versions of BetterSleeping can be found in the [Versions folder](https://github.com/Nuytemans-Dieter/BetterSleeping/tree/master/Versions).
+This plugin is functional and has been tested on several Spigot versions. Bukkit should be compatible too but no extensive testing has been done. You can see the **latest** and **tested** BetterSleeping version for every supported Spigot version in the table below. Newer updates than the mentioned BetterSleeping versions may still be fully compatible but have not been tested (yet). Previous versions of BetterSleeping can be found under [Releases](https://github.com/Nuytemans-Dieter/BetterSleeping/releases).
 
 | Spigot | BetterSleeping |
 | :----: | :------------: |
@@ -36,4 +36,4 @@ Sometimes people ask how they can help, there is a lot you can do.
 - Starring this repository is much appreciated (on the top right of this screen)
 - You can make a suggestion (eg. a new feature). Join the [Discord server](https://discord.gg/AS46VGT) to let me know or create a [new issue](https://github.com/Nuytemans-Dieter/BetterSleeping/issues)!
 - If you know how to code, feel free to make a pull request and add your feature on your own!
-- Feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins) so I can crack a cold one with the boys.
+- Feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins).
