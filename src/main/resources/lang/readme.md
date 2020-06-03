@@ -7,4 +7,4 @@ Confused which one to use for your server? Use the table below.
 | Spanish   | es-ES |
 | Portuguese| pt-PT |
 | Dutch     | nl-BE |
-| Japanese  | jp-JP |
+| Japanese  | ja-JP |
