@@ -1,7 +1,7 @@
 # BetterSleeping (30.000+ downloads)
 This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. Useful links: 
 
-- More information can be found on the [(free) Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). Additional places to download the free version are the PaperMC forums, MC-market and Bukkit.
+- More information can be found on the [(free) Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). Additional places to download the free version are the [PaperMC forums](https://papermc.io/forums/t/1-13-1-15-bettersleeping/3675), [MC-market](https://www.mc-market.org/resources/15791/) and [Bukkit](https://dev.bukkit.org/projects/bettersleeping-1-13-1-15).
  - For a setup/configuration guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki)
  - Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/).
 
