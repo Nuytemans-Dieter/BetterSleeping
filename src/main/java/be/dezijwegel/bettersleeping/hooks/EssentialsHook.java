@@ -25,7 +25,7 @@ public class EssentialsHook {
         essentials = (Essentials) Bukkit.getServer().getPluginManager().getPlugin("Essentials");
         isHooked = essentials != null;
 
-        this.isAfkIgnored = isAfkIgnored;
+        this.isAfkIgnored = isAfkIgnored && minAfkSeconds >= 0;
         this.isVanishedIgnored = isVanishedIgnored;
         this.minAfkMilliseconds = minAfkSeconds * 1000;
     }
