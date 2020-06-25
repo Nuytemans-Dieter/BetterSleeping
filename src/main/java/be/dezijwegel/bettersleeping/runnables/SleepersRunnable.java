@@ -149,6 +149,9 @@ public class SleepersRunnable extends BukkitRunnable {
     {
         playerLeaveBed(player);
         bedLeaveTracker.remove(player);
+
+        // Update the needed count when players leave their bed so that the count is adjusted
+        numNeeded = sleepersCalculator.getNumNeeded(world);
     }
 
 
