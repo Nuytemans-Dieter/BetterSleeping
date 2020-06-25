@@ -14,15 +14,17 @@ public class Messenger {
 
 
     private final Map<String, String> messages;     // Contains the messages in lang.yml by mapping path to value
+    private final boolean doShortenPrefix;
 
 
     /**
      * Creates a messenger for player output
      * @param messages the messages from lang.yml, mapping path to message
      */
-    public Messenger(Map<String, String> messages)
+    public Messenger(Map<String, String> messages, boolean doShortenPrefix)
     {
         this.messages = messages;
+        this.doShortenPrefix = doShortenPrefix;
     }
 
 
@@ -78,7 +80,7 @@ public class Messenger {
         }
 
         // Get the prefix and put it before the message
-        String prefix = "&6[BetterSleeping] &3";
+        String prefix = doShortenPrefix ? "&6[BS] &3" : "&6[BetterSleeping] &3";
         message = prefix + message;
         message = message.replace('&', '§');
 

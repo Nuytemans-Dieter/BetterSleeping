@@ -136,7 +136,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 messages.put(path, langConfig.getString(path));
         }
 
-        Messenger messenger = new Messenger(messages);
+        Messenger messenger = new Messenger(messages, fileConfig.getBoolean("shorten_prefix"));
 
 
         // Get the time skip mode
