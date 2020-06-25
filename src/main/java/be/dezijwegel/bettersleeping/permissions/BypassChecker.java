@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.permissions;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 

@@ -29,7 +29,7 @@ language: "en-US"
 update_notifier: true
 
 # Whether or not phantoms should be disabled
-disable_phantoms: true
+disable_phantoms: false
 
 # Automagically add all missing options in your config (when you delete an option or an update has new features)
 # IMPORTANT NOTE: This will reset all comments above options, except for a link to the documentation

@@ -17,5 +17,8 @@
 # Whether or not essentials afk players will be ignored by the required sleeping count
 essentials_afk_ignored: true
 
+# The amount of seconds a player should be afk before they are ignored (this prevents /afk abuse)
+minimum_afk_time: 60
+
 # Whether or not to ignore vanished players
 vanished_ignored: true

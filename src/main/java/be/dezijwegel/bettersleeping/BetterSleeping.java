@@ -25,6 +25,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -152,8 +153,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // Read hooks settings
 
         FileConfiguration hooksConfig = hooks.getConfiguration();
-        EssentialsHook essentialsHook = new EssentialsHook(hooksConfig.getBoolean("essentials_afk_ignored"), hooksConfig.getBoolean("vanished_ignored"));
-
+        EssentialsHook essentialsHook = new EssentialsHook( hooksConfig.getBoolean("essentials_afk_ignored"),
+                                                            hooksConfig.getBoolean("vanished_ignored"),
+                                                            hooksConfig.getInt("minimum_afk_time"));
 
 
         // Read bypass settings
@@ -192,7 +194,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         else
         {
             int needed = sleeping.getConfiguration().getInt("percentage.needed");
-            calculator = new PercentageNeeded(needed, bypassChecker, essentialsHook);
+            calculator = new PercentageNeeded(needed, bypassChecker);
             logger.log("Using required sleepers counter 'percentage' which is set to " + needed + "% of players required");
         }
 
