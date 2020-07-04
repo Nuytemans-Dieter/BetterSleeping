@@ -60,7 +60,7 @@ public class SleepersRunnable extends BukkitRunnable {
             this.areAllPlayersSleeping = true;
         }
 
-        this.numNeeded = sleepersCalculator.getNumNeeded(this.world);
+        this.numNeeded = this.sleepersCalculator.getNumNeeded(this.world);
 
         int remaining = Math.max(this.numNeeded - this.sleepers.size() , 0);
 
@@ -76,15 +76,14 @@ public class SleepersRunnable extends BukkitRunnable {
             this.messenger.sendMessage(
                 this.world.getPlayers(),
                 "enough_sleeping",
+                new MsgEntry("<player>", ChatColor.stripColor(player.getDisplayName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
                 new MsgEntry("<remaining_sleeping>", "" + remaining)
             );
         } else if (this.sleepers.size() < this.numNeeded) {
-            List<Player> players = this.world.getPlayers();
-            players.remove(player);
             messenger.sendMessage(
-                players,
+                this.world.getPlayers(),
                 "bed_enter_broadcast",
                 new MsgEntry("<player>", ChatColor.stripColor(player.getDisplayName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
@@ -137,6 +136,7 @@ public class SleepersRunnable extends BukkitRunnable {
             this.messenger.sendMessage(
                 this.world.getPlayers(),
                 "skipping_canceled",
+                new MsgEntry("<player>", ChatColor.stripColor(player.getDisplayName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
                 new MsgEntry("<remaining_sleeping>", "" + remaining)
