@@ -67,22 +67,22 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Boa noite, <user>!"
+bed_enter_message: "Schlaf schön <user>. (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> está cochilando. [<remaining_sleeping>.É.são] necessário mais <remaining_sleeping> [<remaining_sleeping>.pessoa.pessoas] necessárias para passar a noite. <num_sleeping>/<needed_sleeping>"
+bed_enter_broadcast: "<player> begab sich ins Bett, [<num_sleeping>.ein Spieler schläft nun.<num_sleeping> Spieler schlafen nun.]. <remaining_sleeping> [<remaining_sleeping>.weiterer Spieler wird.weitere Spieler werden] benötigt."
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "Um jogador levantou da cama! Esperando por mais <remaining_sleeping> [<remaining_sleeping>.pessoa.pessoas] para dormir. <num_sleeping>/<needed_sleeping>"
+skipping_canceled: "Jemand hat sein Bett verlassen. <remaining_sleeping> [<remaining_sleeping>.weiterer Spieler wird.weitere Spieler werden] benötigt."
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "Mínimo de pessoas dormindo alcançado, a noite será pulada em breve!"
+enough_sleeping: "Es schlafen genügend Spieler. Die Nacht wird in Kürze vorbei sein."
 
 # Players receive this message in the morning
-morning_message: "Bom dia, <user>!"
+morning_message: "Guten Morgen <user>."
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "Você precisa esperar mais <time> [<time>.segundo.segundos] para que possa dormir novamente!"
+sleep_spam: "Du musst weitere <time> [<time>.Sekunde.Sekunden] warten, bevor du wieder schlafen kannst."
 
 
 # --------------- #
@@ -90,10 +90,10 @@ sleep_spam: "Você precisa esperar mais <time> [<time>.segundo.segundos] para qu
 # --------------- #
 
 # Players who slept AND receive buffs will get this message
-buff_received: "Você dormiu bem e recebeu [<var>.um buff.<var> buffs]!"
+buff_received: "Du fühlst dich ausgeruht und erhälst [<var>.einen Buff.<var> mehrere Buffs]."
 
 # Players who did not sleep AND receive debuffs will get this message
-debuff_received: "Você não dormiu e se sente cançado, você recebeu [<var>.um buff.<var> buffs]!"
+debuff_received: "Du fühlst dich müde und erhälst [<var>.einen Debuff.<var> mehrere Debuffs]."
 
 
 # -------------------- #
@@ -101,14 +101,14 @@ debuff_received: "Você não dormiu e se sente cançado, você recebeu [<var>.um
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&cVocê não tem permissão para executar esse comando!"
+no_permission: "&cDu hast keine Berechtigung den Befehl <var> auszuführen!"
 
 # The message that will be sent to the admin that does a reload
-message_reloaded: "&2Recarregamento completo!"
+message_reloaded: "&2Aktualisierung abgeschlossen!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
 #     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cVocê não precisa dormir, <user>."
+bypass_message: "&cDu brauchst nicht schlafen gehen."

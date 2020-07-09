@@ -15,13 +15,13 @@
 # For support or suggestions, head over to our Discord server:  https://discord.gg/AS46VGT
 # You can find a live list of upcoming features/bug fixes here: https://github.com/Nuytemans-Dieter/BetterSleeping/issues
 # The progress of the next release can be found here:           https://github.com/Nuytemans-Dieter/BetterSleeping/milestones
-# Considered tossing a coin to your developer?                  https://www.paypal.me/vallasPlugins
+# Considered buying the premium version? (Spigot account needed)https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-16.78951/
 
 # Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/config.yml
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
 
 # The default language file to be used
-# Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese)
+# Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese), de-DE.yml (German)
 # Up-to-date list here: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 language: "en-US"
 
