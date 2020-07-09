@@ -106,8 +106,12 @@
         </dependency>
     </dependencies>
 
-    <!-- Shade bStats into BetterSleeping -->
     <build>
+
+        <!-- No longer include the version in the build name -->
+        <finalName>${project.artifactId}</finalName>
+
+        <!-- Shade bStats into BetterSleeping -->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
