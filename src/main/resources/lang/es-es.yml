@@ -11,6 +11,7 @@
 
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
+# For SPIGOT ONLY in 1.16+: RGB support in the format: $(RED,GREEN,BLUE)$
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below
 # some_setting: "ignored"
 # another_setting: ""

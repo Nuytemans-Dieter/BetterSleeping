@@ -1,5 +1,6 @@
 package be.dezijwegel.bettersleeping.util;
 
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 public class Version implements Comparable<Version>{
@@ -31,7 +32,7 @@ public class Version implements Comparable<Version>{
      */
     public Version(String versionString)
     {
-        String[] subs = versionString.split("/.");
+        String[] subs = versionString.split("\\.");
         if (subs.length != 3)
         {
             prefix = 1;
@@ -76,6 +77,11 @@ public class Version implements Comparable<Version>{
         return minor;
     }
 
+    @Override
+    public String toString()
+    {
+        return prefix + "." + major + "." + minor;
+    }
 
     @Override
     public int compareTo(@NotNull Version version)

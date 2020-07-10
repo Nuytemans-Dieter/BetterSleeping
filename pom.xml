@@ -6,7 +6,7 @@
 
     <groupId>be.dezijwegel.bettersleeping</groupId>
     <artifactId>BetterSleeping</artifactId>
-    <version>3.0.1</version>
+    <version>3.0.2</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -53,7 +53,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15-R0.1-SNAPSHOT</version>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 

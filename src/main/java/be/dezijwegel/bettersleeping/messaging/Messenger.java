@@ -1,11 +1,20 @@
 package be.dezijwegel.bettersleeping.messaging;
 
+import be.dezijwegel.bettersleeping.util.Version;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.protocol.packet.Chat;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -83,8 +92,53 @@ public class Messenger {
         String prefix = doShortenPrefix ? "&6[BS] &3" : "&6[BetterSleeping] &3";
         message = prefix + message;
         message = message.replace('&', '§');
+        message = replaceRGBFormatByColor( message );
 
         return message;
+    }
+
+
+    private String replaceRGBFormatByColor(String string)
+    {
+        String[] rgbList = StringUtils.substringsBetween(string, "$(", ")$");
+
+        if (rgbList == null)
+            return string;
+
+        // Get Spigot and required version
+        String spigotVersionStr = Bukkit.getServer().getBukkitVersion().split("-")[0];
+        Version spigotVersion = new Version( spigotVersionStr );
+        Version rgbVersion = new Version(1, 16, 0);
+
+        // If 1.16+, use rgb
+        if ( spigotVersion.compareTo(rgbVersion) >= 0 )
+        {
+            for (String s : rgbList)
+            {
+                net.md_5.bungee.api.ChatColor chatColor = null;
+
+                String[] colors = s.split(",");
+                if (colors != null && colors.length == 3)
+                {
+                    try
+                    {
+                        int r = Integer.parseInt(colors[0].replaceAll(" ", ""));
+                        int g = Integer.parseInt(colors[1].replaceAll(" ", ""));
+                        int b = Integer.parseInt(colors[2].replaceAll(" ", ""));
+                        Color color = new Color(r, g, b);
+                        chatColor = net.md_5.bungee.api.ChatColor.of(color);
+                    } catch (NumberFormatException ignored) {}
+                }
+
+                if (chatColor != null)
+                    string = string.replaceFirst("\\$\\(.*?\\)\\$", "" + chatColor);
+            }
+        }
+
+        // Remove remaining tags
+        string = string.replaceAll("\\$\\(.*?\\)\\$", "");
+
+        return string;
     }
 
 
@@ -130,8 +184,18 @@ public class Messenger {
             {
                 name = receiver.getName();
             }
+
             String finalMessage = message.replace("<user>", ChatColor.stripColor( name ));
-            receiver.sendMessage(finalMessage);
+
+            if (receiver instanceof Player)
+            try
+            {
+                Class.forName("org.spigotmc.SpigotConfig");
+                ((Player)receiver).spigot().sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(finalMessage));
+                return;
+            } catch (ClassNotFoundException ignored) {}
+
+            receiver.sendMessage( finalMessage );
         }
     }
 }
