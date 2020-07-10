@@ -27,6 +27,9 @@ public class TimeSmooth extends TimeChanger {
     @Override
     public void tick(int numSleeping, int numNeeded) {
 
+        if (numSleeping < numNeeded)
+            return;
+
         if (world.isThundering() || world.hasStorm())
         {
             world.setThundering( false );
@@ -36,7 +39,7 @@ public class TimeSmooth extends TimeChanger {
         }
 
         // Redundant negative check, just to be safe
-        int extraSleeping = Math.max(numSleeping - numNeeded, 0);
+        int extraSleeping = numSleeping - numNeeded;
         long newTime = world.getTime() + baseSpeedup + (extraSleeping * speedupPerPlayer);
 
         // Reset any number exceeding the max number of ticks

@@ -34,7 +34,7 @@
 #
 # <player>
 #     Replaced by:      The player who did an action
-#     Can be used in:   bed_enter_broadcast
+#     Can be used in:   bed_enter_broadcast, enough_sleeping, skipping_canceled
 #     Example:          When user Freddy_Krueger goes to bed, <player> is replaced by Freddy_Krueger
 #
 # <num_sleeping>
