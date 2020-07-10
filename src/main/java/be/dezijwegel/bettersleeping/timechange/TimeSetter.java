@@ -3,60 +3,44 @@ package be.dezijwegel.bettersleeping.timechange;
 import org.bukkit.World;
 
 public class TimeSetter extends TimeChanger {
-
     private final int sleepDelay;
-
     private int counter = 0;
     private long oldTime;
 
-    public TimeSetter(World world, int delay)
-    {
+    public TimeSetter(World world, int delay) {
         super(world);
-        oldTime = world.getTime();
+        this.oldTime = world.getTime();
 
         // * 20 to convert seconds into ticks
-        sleepDelay = 20 * delay;
+        this.sleepDelay = 20 * delay;
     }
 
     @Override
-    public TimeChangeType getType()
-    {
+    public TimeChangeType getType() {
         return TimeChangeType.SETTER;
     }
 
     @Override
     public void tick(int numSleeping, int numNeeded) {
+        long currentTime = world.getTime();
 
-        // Handle the counter
-        long newTime = world.getTime();
-        counter = (newTime < oldTime + 5) ? counter + 1 : 0;
-        oldTime = newTime;
+        // Only increment counter when this tick is at most 5 ticks from the previous one. Reset otherwise.
+        this.counter = (currentTime < this.oldTime + 5) ? this.counter + 1 : 0;
+        this.oldTime = currentTime;
 
-        // Handle the time set mechanic when the counter reaches their set value
-        if (counter >= sleepDelay) {
-
-            // Reset the counter
-            counter = 0;
-
-            if (world.isThundering())
-            {
-                world.setThundering(false);
-                world.setStorm(false);
-                removedStorm = true;
-            }
-
-            if(newTime >= TIME_NIGHT)
-            {
-                world.setTime(TIME_MORNING);
-            }
-            else if (newTime >= TIME_RAIN_NIGHT && world.hasStorm())
-            {
-                world.setTime(TIME_MORNING);
-                world.setStorm(false);
-            }
-
-            // Mark time as set to day for parent
-            wasSetToDay = true;
+        // Wait for the sleep delay before doing anything.
+        if (this.counter < this.sleepDelay) {
+            return;
         }
+
+        // Reset the counter.
+        this.counter = 0;
+
+        // Perform night skip.
+        world.setStorm(false);
+        world.setTime(TimeChanger.TIME_MORNING);
+
+        // Mark time as set to day for parent
+        this.wasSetToDay = true;
     }
 }
