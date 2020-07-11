@@ -174,17 +174,7 @@ public class Messenger {
         for (CommandSender receiver : receivers)
         {
             // Get the senders name
-            String name;
-            if (receiver instanceof Player)
-            {
-                Player player = (Player)receiver;
-                name = player.getDisplayName();
-            }
-            else
-            {
-                name = receiver.getName();
-            }
-
+            String name = receiver.getName();
             String finalMessage = message.replace("<user>", ChatColor.stripColor( name ));
 
             if (receiver instanceof Player)
