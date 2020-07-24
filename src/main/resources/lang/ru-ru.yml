@@ -77,7 +77,7 @@ bed_enter_broadcast: "<player> лёг в кровать, [<num_sleeping>.оди�
 skipping_canceled: "Кто-то покинул свою кровать! [<remaining_sleeping>.Необходим.необходимо] ещё [<remaining_sleeping>.один игрок.<remaining_sleeping> игроков]."
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "Достаточно игроков уже спят, ночь скоро будет пропущена."
+enough_sleeping: "Достаточное число игроков уже спят, ночь скоро будет пропущена."
 
 # Players receive this message in the morning
 morning_message: "Доброе утро, <user>!"
