@@ -22,6 +22,7 @@
 
 # The default language file to be used
 # Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese), de-DE.yml (German)
+# Want to disable all messages? Set this to: "silent". It will load an empty config files and will disable most messages
 # Up-to-date list here: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 language: "en-US"
 
