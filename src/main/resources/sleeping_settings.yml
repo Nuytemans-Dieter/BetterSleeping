@@ -14,7 +14,7 @@
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
 
 # Choose an option from below (percentage or absolute)
-# With percentage, a relative amount of players needs to sleep (eg. needed: 30 -> 13 online players, 30% of 13 is 3,9. Will be rounded up -> 4 sleeping players needed)
+# With percentage, a relative amount of players needs to sleep (eg. needed: 30 -> 13 online players, 30% of 13 is 3,9. Will be rounded to the nearest number -> 4 sleeping players needed)
 # With absolute, a set amount of players needs to sleep (eg. needed: 2 -> any amount of online players, 2 players need to sleep)
 sleeper_counter: "percentage"
 percentage:
