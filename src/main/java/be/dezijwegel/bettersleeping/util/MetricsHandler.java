@@ -14,7 +14,7 @@ import java.util.Map;
 public class MetricsHandler {
 
     public MetricsHandler(JavaPlugin plugin, String localised, boolean autoAddMissingOptions, EssentialsHook essentialsHook, String sleeperCalculatorType,
-                          TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, BypassChecker bypassChecker,
+                          TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, BypassChecker bypassChecker, boolean shortenPrefix,
                           BuffsHandler buffsHandler)
     {
 
@@ -51,6 +51,8 @@ public class MetricsHandler {
         metrics.addCustomChart(new Metrics.SimplePie("time_changer_type", () -> timeChangerType.name().toLowerCase()));
 
         metrics.addCustomChart(new Metrics.SimplePie("enable_bypass", () -> bypassChecker.isEnabled() ? "Yes" : "No"));
+
+        metrics.addCustomChart(new Metrics.SimplePie("shortens_prefix", () -> shortenPrefix ? "Yes" : "No"));
 
         metrics.addCustomChart(new Metrics.AdvancedPie("bypassed_gamemodes", () -> {
             Map<String, Integer> valueMap = new HashMap<>();
