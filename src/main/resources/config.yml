@@ -27,7 +27,7 @@
 language: "en-US"
 
 # Choose whether to use the short prefix: [BS] (true) or the long one [BetterSleeping] (false)
-shorten_prefix: false
+shorten_prefix: true
 
 # This is ran once on startup when enabled to fetch the latest version
 update_notifier: true
