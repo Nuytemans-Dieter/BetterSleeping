@@ -1,9 +1,9 @@
 # BetterSleeping (30.000+ downloads)
 This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. Useful links: 
 
-- More information can be found on the [(free) Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). Additional places to download the free version are the [PaperMC forums](https://papermc.io/forums/t/1-13-1-15-bettersleeping/3675), [MC-market](https://www.mc-market.org/resources/15791/) and [Bukkit](https://dev.bukkit.org/projects/bettersleeping-1-13-1-15).
+- More information can be found on the [(free) Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). Additional places to download the free version are the [PaperMC forums](https://papermc.io/forums/t/1-13-1-15-bettersleeping/3675), [GitHub releases](https://github.com/Nuytemans-Dieter/BetterSleeping/releases) and [Bukkit](https://dev.bukkit.org/projects/bettersleeping-1-13-1-15).
  - For a setup/configuration guide, please visit our [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki)
- - Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/).
+ - Get the premium version on [Spigot](https://www.spigotmc.org/resources/bettersleeping-premium-1-13-1-15.78951/) (Spigot account required).
 
 Servers using v3:
 ![BetterSleeping stats graph](https://bstats.org/signatures/bukkit/BetterSleeping.svg)
@@ -16,7 +16,7 @@ BetterSleeping allows this to be skipped when a given percentage of players is s
 Quite extensive configuration is included to suit your needs. The configuration includes, but is not limited to:
  - Set the night skip mode: will **time pass faster** or will it be set to day?
  - Set a **percentage** of players that must sleep to skip the night, or choose to set a **static amount** that must sleep
- - All messages can be **customised** in lang.yml, and by default several languages are supported (English, Dutch, Spanish and Portuguese)
+ - All messages can be **customised** in lang.yml, and by default several languages are supported (English, French, German, Dutch, Spanish, Portuguese, ...). [Full list here](https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang)
  - Give players **buffs** (potion effects) for sleeping or **debuffs** for not sleeping!
  - **Disable phantoms**
  - Display **messages on screen** instead of in the chat
