@@ -1,6 +1,9 @@
 package be.dezijwegel.bettersleeping.hooks;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
+import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
+import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -71,36 +74,14 @@ public class PapiExpansion extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player player, String identifier){
 
-        if(player == null){
-            return "";
-        }
-
-        if(identifier.equals("current_sleepers")){
-
-        }
-
-        if(identifier.equals("remaining_sleepers")){
-
-        }
-
-        if(identifier.equals("total_needed_sleepers")){
-
-        }
-
-        if(identifier.equals("buffs_amount")){
-
-        }
-
-        if(identifier.equals("night_skip_time")){
-
-        }
-
-        if(identifier.equals("sleep_spam_time")){
-
-        }
-
-        if(identifier.equals("receiver")){
-
+        // Total Sleep percentage.
+        if(identifier.equals("total_sleep_percentage_needed")){
+            String counter = plugin.sleeping.getConfiguration().getString("sleeper_counter");
+            if (counter != null && counter.equalsIgnoreCase("percentage"))
+            {
+                int needed = plugin.sleeping.getConfiguration().getInt("percentage.needed");
+                return Integer.toString(needed);
+            }
         }
 
         return null;
