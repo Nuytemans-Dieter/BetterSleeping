@@ -4,7 +4,6 @@ import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.util.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
@@ -90,7 +89,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         ConfigLib config = new ConfigLib("config.yml", this);
         FileConfiguration fileConfig = config.getConfiguration();
         boolean autoAddOptions  = fileConfig.getBoolean("auto_add_missing_options");
-        boolean disablePhantoms = fileConfig.getBoolean("disable_phantoms");
         boolean checkUpdate     = fileConfig.getBoolean("update_notifier");
         String  localised       = fileConfig.getString("language");
 
@@ -100,9 +98,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
         // Handle configuration
-
-        if (disablePhantoms)
-            getServer().getPluginManager().registerEvents(new PhantomHandler(), this);
 
         if (checkUpdate)
             new UpdateChecker(this.getDescription().getVersion(), logger).start();

@@ -67,7 +67,7 @@ public class BedEventHandler implements Listener, Reloadable {
             return;
 
         // Check event status
-        if (event.isCancelled() || event.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK)
+        if (event.isCancelled())
             return;
 
         Player player = event.getPlayer();

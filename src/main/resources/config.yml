@@ -32,9 +32,6 @@ shorten_prefix: true
 # This is ran once on startup when enabled to fetch the latest version
 update_notifier: true
 
-# Whether or not phantoms should be disabled
-disable_phantoms: false
-
 # Automagically add all missing options in your config (when you delete an option or an update has new features)
 # IMPORTANT NOTE: This will reset all comments above options, except for a link to the documentation
 # Options in this file will never be automatically added due to the importance of some information
