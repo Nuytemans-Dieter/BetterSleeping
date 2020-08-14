@@ -177,15 +177,18 @@ public class Messenger {
             String name = receiver.getName();
             String finalMessage = message.replace("<user>", ChatColor.stripColor( name ));
 
-            if (receiver instanceof Player)
-            try
-            {
-                Class.forName("org.spigotmc.SpigotConfig");
-                ((Player)receiver).spigot().sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(finalMessage));
-                return;
-            } catch (ClassNotFoundException ignored) {}
+            boolean isSuccess = false;
 
-            receiver.sendMessage( finalMessage );
+            if (receiver instanceof Player)
+                try
+                {
+                    Class.forName("org.spigotmc.SpigotConfig");
+                    ((Player)receiver).spigot().sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(finalMessage));
+                    isSuccess = true;
+                } catch (ClassNotFoundException ignored) {}
+
+            if (!isSuccess)
+                receiver.sendMessage( finalMessage );
         }
     }
 }
