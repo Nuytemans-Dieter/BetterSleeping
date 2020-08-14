@@ -13,6 +13,8 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | Portuguese| pt-PT |
 | Dutch     | nl-BE |
 | Japanese  | ja-JP |
-| Chinese   | zh-ZH |
+| Chinese (Simplified)   | zh-CN |
+| Chinese (Traditional)   | zh-TW |
+| Chinese (Hong Kong Cantonese)    | zh-HK |
 | Russian   | ru-RU |
 | Silent mode | silent |
