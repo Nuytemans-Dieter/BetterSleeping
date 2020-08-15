@@ -8,8 +8,7 @@ import be.dezijwegel.bettersleeping.util.ConfigLib;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
-public class PapiExpansion extends PlaceholderExpansion {
-
+public class PapiExpansion extends PlaceholderExpansion{
 
     private final BetterSleeping plugin;
     private ConfigLib sleeping;
@@ -77,7 +76,7 @@ public class PapiExpansion extends PlaceholderExpansion {
     public String onPlaceholderRequest(Player player, String identifier){
 
         // Total Sleep percentage.
-        if(identifier.equals("total_sleep_percentage_needed")){
+        if(identifier.equalsIgnoreCase("total_sleep_percentage_needed")){
             String counter = sleeping.getConfiguration().getString("sleeper_counter");
             if (counter != null && counter.equalsIgnoreCase("percentage"))
             {
@@ -86,6 +85,17 @@ public class PapiExpansion extends PlaceholderExpansion {
             }
         }
 
-        return null;
+
+        // Total Sleep absolute.
+        if(identifier.equalsIgnoreCase("total_sleep_absolute_needed")){
+            String counter = sleeping.getConfiguration().getString("sleeper_counter");
+            if(counter != null && counter.equalsIgnoreCase("absolute")){
+                // Then return absolute Value from File config
+                int needed = sleeping.getConfiguration().getInt("absolute.needed");
+                return Integer.toString(needed);
+            }
+        }
+
+        return "Invalid use of Placeholder";
     }
 }
