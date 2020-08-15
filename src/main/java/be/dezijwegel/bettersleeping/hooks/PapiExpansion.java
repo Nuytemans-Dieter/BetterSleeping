@@ -4,6 +4,7 @@ import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
+import be.dezijwegel.bettersleeping.util.ConfigLib;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
@@ -11,14 +12,15 @@ public class PapiExpansion extends PlaceholderExpansion {
 
 
     private final BetterSleeping plugin;
-
+    private ConfigLib sleeping;
 
     /**
      * @param plugin instance of BetterSleeping
      */
-    public PapiExpansion(BetterSleeping plugin)
+    public PapiExpansion(BetterSleeping plugin,ConfigLib lib)
     {
         this.plugin = plugin;
+        this.lib = lib;
     }
 
 
@@ -76,10 +78,10 @@ public class PapiExpansion extends PlaceholderExpansion {
 
         // Total Sleep percentage.
         if(identifier.equals("total_sleep_percentage_needed")){
-            String counter = plugin.sleeping.getConfiguration().getString("sleeper_counter");
+            String counter = sleeping.getConfiguration().getString("sleeper_counter");
             if (counter != null && counter.equalsIgnoreCase("percentage"))
             {
-                int needed = plugin.sleeping.getConfiguration().getInt("percentage.needed");
+                int needed = sleeping.getConfiguration().getInt("percentage.needed");
                 return Integer.toString(needed);
             }
         }
