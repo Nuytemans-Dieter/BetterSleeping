@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
+import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.util.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
@@ -39,7 +40,7 @@ import java.util.*;
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     BedEventHandler bedEventHandler;
-    public ConfigLib sleeping;
+
 
     @Override
     public void onEnable()
@@ -95,10 +96,13 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         boolean checkUpdate     = fileConfig.getBoolean("update_notifier");
         String  localised       = fileConfig.getString("language");
 
-        sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions);
+        ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions);
         ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
+
+        // Register Papi Expansion
+        new PapiExpansion(this,sleeping).register();
 
         // Handle configuration
 
