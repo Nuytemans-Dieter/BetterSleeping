@@ -20,7 +20,7 @@ public class PapiExpansion extends PlaceholderExpansion {
     public PapiExpansion(BetterSleeping plugin,ConfigLib lib)
     {
         this.plugin = plugin;
-        this.lib = lib;
+        this.sleeping = lib;
     }
 
 
