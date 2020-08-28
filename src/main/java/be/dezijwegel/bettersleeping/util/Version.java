@@ -1,10 +1,10 @@
 package be.dezijwegel.bettersleeping.util;
 
-import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
 public class Version implements Comparable<Version>{
 
+    private final boolean isCorrectFormat;  // Used to indicate whether or not the version was loaded correctly. False when a faulty String is used in the constructor
 
     private final int prefix;
     private final int major;
@@ -22,6 +22,8 @@ public class Version implements Comparable<Version>{
         this.prefix = prefix;
         this.major = major;
         this.minor = minor;
+
+        isCorrectFormat = true;
     }
 
 
@@ -38,12 +40,16 @@ public class Version implements Comparable<Version>{
             prefix = 1;
             major = 0;
             minor = 0;
+
+            isCorrectFormat = false;
         }
         else
         {
             prefix= Integer.parseInt( subs[0] );
             major = Integer.parseInt( subs[1] );
             minor = Integer.parseInt( subs[2] );
+
+            isCorrectFormat = true;
         }
     }
 
@@ -75,6 +81,16 @@ public class Version implements Comparable<Version>{
     public int getMinor()
     {
         return minor;
+    }
+
+
+    /**
+     * Check whether this Version was composed correctly (only false when a wrong format is used in the constructor)
+     * @return True if the format was correct, false otherwise
+     */
+    public boolean isCorrectFormat()
+    {
+        return this.isCorrectFormat;
     }
 
     @Override
