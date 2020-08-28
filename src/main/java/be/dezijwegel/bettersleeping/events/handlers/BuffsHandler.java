@@ -83,7 +83,7 @@ public class BuffsHandler implements Listener {
 
         if (sleepingBuffs.size() > 0)
         {
-            messenger.sendMessage(event.getPlayersWhoSlept(), "buff_received", new MsgEntry("<var>", "" + sleepingBuffs.size()));
+            messenger.sendMessage(event.getPlayersWhoSlept(), "buff_received", false, new MsgEntry("<var>", "" + sleepingBuffs.size()));
             giveEffects(event.getPlayersWhoSlept(), sleepingBuffs);
         }
 
@@ -96,7 +96,7 @@ public class BuffsHandler implements Listener {
                     nonSleepers.add( player );
             }
 
-            messenger.sendMessage(nonSleepers, "debuff_received", new MsgEntry("<var>", "" + sleepingDebuffs.size()));
+            messenger.sendMessage(nonSleepers, "debuff_received", false, new MsgEntry("<var>", "" + sleepingDebuffs.size()));
             giveEffects(nonSleepers, sleepingDebuffs);
         }
     }

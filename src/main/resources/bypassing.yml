@@ -26,6 +26,9 @@
 # Bypassing based on game mode will still work when set to false
 enable_bypass_permissions: true
 
+# Choose whether or not BetterSleeping should send messages to bypassed players
+send_messages: true
+
 # Here you can choose whether or not you want BetterSleeping to ignore players with each gamemode
 ignore_survival: false
 ignore_creative: false

@@ -65,7 +65,7 @@ public class SleepersRunnable extends BukkitRunnable {
         int remaining = Math.max(this.numNeeded - this.sleepers.size() , 0);
 
         this.messenger.sendMessage(
-            player,"bed_enter_message",
+            player,"bed_enter_message", false,
             new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
             new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
             new MsgEntry("<remaining_sleeping>", "" + remaining)
@@ -73,7 +73,7 @@ public class SleepersRunnable extends BukkitRunnable {
 
         if (this.sleepers.size() == this.numNeeded) {
             this.messenger.sendMessage(
-                this.world.getPlayers(), "enough_sleeping",
+                this.world.getPlayers(), "enough_sleeping", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
@@ -83,7 +83,7 @@ public class SleepersRunnable extends BukkitRunnable {
             List<Player> players = this.world.getPlayers();
             players.remove( player );
             messenger.sendMessage(
-                players, "bed_enter_broadcast",
+                players, "bed_enter_broadcast", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
@@ -133,7 +133,7 @@ public class SleepersRunnable extends BukkitRunnable {
         ) {
             int remaining = this.numNeeded - this.sleepers.size();
             this.messenger.sendMessage(
-                this.world.getPlayers(), "skipping_canceled",
+                this.world.getPlayers(), "skipping_canceled", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getDisplayName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
@@ -194,7 +194,7 @@ public class SleepersRunnable extends BukkitRunnable {
 
             if (cause != TimeSetToDayEvent.Cause.NATURAL) {
                 // Send good morning, only when the players slept
-                messenger.sendMessage(this.world.getPlayers(), "morning_message");
+                messenger.sendMessage(this.world.getPlayers(), "morning_message", false);
             }
 
             // Throw event for other devs to handle (and to handle buffs internally)

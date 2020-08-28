@@ -77,14 +77,14 @@ public class BedEventHandler implements Listener, Reloadable {
         if (delay > 0)
         {
             event.setCancelled(true);
-            messenger.sendMessage(player, "sleep_spam", new MsgEntry("<time>", "" + delay));
+            messenger.sendMessage(player, "sleep_spam", true, new MsgEntry("<time>", "" + delay));
             return;
         }
 
         // Checks any reason for bypassing, including afk players and vanished players
         if ( bypassChecker.isPlayerBypassed( player ) )
         {
-            messenger.sendMessage(player, "bypass_message");
+            messenger.sendMessage(player, "bypass_message", true);
             // Don't return, always allow the player to sleep
             //return;
         }

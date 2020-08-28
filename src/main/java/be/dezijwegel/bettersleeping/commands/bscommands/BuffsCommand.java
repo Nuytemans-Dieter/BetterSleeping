@@ -33,42 +33,42 @@ public class BuffsCommand extends BsCommand {
 
         Player player = (Player) commandSender;
 
-        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping buffs}==--");
+        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping buffs}==--", true);
 
         if (buffsHandler.getBuffs().size() == 0)
         {
-            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping buffs!" );
+            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping buffs!", true );
         }
         else
         {
-            messenger.sendMessage(player, "When you sleep, you will get:");
+            messenger.sendMessage(player, "When you sleep, you will get:", true);
             for (PotionEffect buff : buffsHandler.getBuffs())
             {
-                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff) );
+                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff), true );
             }
         }
 
-        messenger.sendMessage(player, ChatColor.GOLD + "---===---");
+        messenger.sendMessage(player, ChatColor.GOLD + "---===---", true);
 
         if (buffsHandler.getDebuffs().size() == 0)
         {
-            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping debuffs!" );
+            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping debuffs!", true );
         }
         else if (bypassChecker.isPlayerBypassed( player ))
         {
-            messenger.sendMessage(player, "You will not get debuffs when not sleeping." );
+            messenger.sendMessage(player, "You will not get debuffs when not sleeping.", true );
         }
         else
         {
-            messenger.sendMessage(player, "When you don't sleep, you will get:");
+            messenger.sendMessage(player, "When you don't sleep, you will get:", true);
             for (PotionEffect buff : buffsHandler.getDebuffs())
             {
-                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff) );
+                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff), true );
             }
         }
 
 
-        messenger.sendMessage(player, ChatColor.GOLD + "---===---");
+        messenger.sendMessage(player, ChatColor.GOLD + "---===---", true);
         return true;
     }
 

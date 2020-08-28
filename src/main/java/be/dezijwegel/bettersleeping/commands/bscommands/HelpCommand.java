@@ -27,7 +27,7 @@ public class HelpCommand extends BsCommand {
     {
         if ( ! commandSender.hasPermission( getPermission() ))
         {
-            messenger.sendMessage(commandSender, "no_permission", new MsgEntry("<var>", "/bs " + arguments[0]));
+            messenger.sendMessage(commandSender, "no_permission", true, new MsgEntry("<var>", "/bs " + arguments[0]));
             return true;
         }
 

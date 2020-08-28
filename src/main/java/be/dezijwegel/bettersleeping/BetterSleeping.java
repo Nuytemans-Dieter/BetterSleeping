@@ -131,19 +131,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
 
 
-        // Read all messages from lang.yml
-
-        Map<String, String> messages = new HashMap<>();
-        FileConfiguration langConfig = lang.getConfiguration();
-        for (String path : langConfig.getKeys(true))
-        {
-            if ( ! langConfig.isConfigurationSection(path))
-                messages.put(path, langConfig.getString(path));
-        }
-
-        Messenger messenger = new Messenger(messages, fileConfig.getBoolean("shorten_prefix"));
-
-
         // Get the time skip mode
 
         TimeChanger.TimeChangeType timeChangerType;
@@ -185,6 +172,17 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
         BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
 
+        // Read all messages from lang.yml
+
+        Map<String, String> messages = new HashMap<>();
+        FileConfiguration langConfig = lang.getConfiguration();
+        for (String path : langConfig.getKeys(true))
+        {
+            if ( ! langConfig.isConfigurationSection(path))
+                messages.put(path, langConfig.getString(path));
+        }
+
+        Messenger messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
 
         // Get the num sleeping players needed calculator
 

@@ -29,11 +29,11 @@ public class ReloadCommand extends BsCommand {
         if (commandSender.hasPermission( getPermission() ))
         {
             plugin.reload();
-            messenger.sendMessage(commandSender, "message_reloaded");
+            messenger.sendMessage(commandSender, "message_reloaded", true);
         }
         else
         {
-            messenger.sendMessage(commandSender, "no_permission");
+            messenger.sendMessage(commandSender, "no_permission", true);
         }
         return true;
     }
