@@ -16,6 +16,10 @@
 # some_setting: "ignored"
 # another_setting: ""
 
+# How to use square brackets? [ and ]
+# BetterSleeping uses those to distinguish singular and plural words so you cannot directly use [ and ].
+# However, you can use |( and )| instead, they will be remapped to [ and ] respectively
+# |( This )| would become [ This ].
 
 # SINGULAR / PLURAL
 # BetterSleeping supports singular and plural nouns
