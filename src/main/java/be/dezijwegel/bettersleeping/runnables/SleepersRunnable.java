@@ -71,15 +71,18 @@ public class SleepersRunnable extends BukkitRunnable {
             new MsgEntry("<remaining_sleeping>", "" + remaining)
         );
 
+        boolean isEnoughSleepingEmpty = false;
         if (this.sleepers.size() == this.numNeeded) {
-            this.messenger.sendMessage(
+            isEnoughSleepingEmpty = ! this.messenger.sendMessage(
                 this.world.getPlayers(), "enough_sleeping", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
                 new MsgEntry("<remaining_sleeping>", "" + remaining)
             );
-        } else if (this.sleepers.size() < this.numNeeded) {
+        }
+
+        if ((isEnoughSleepingEmpty && this.sleepers.size() <= this.numNeeded) || this.sleepers.size() < this.numNeeded) {
             List<Player> players = this.world.getPlayers();
             players.remove( player );
             messenger.sendMessage(

@@ -173,10 +173,11 @@ public class Messenger {
      * @param messageID the id of the message
      * @param overrideBypassed whether or not a bypassed player should get this message. This also depends on the provided config setting.
      * @param replacements The strings that are to be replaced to allow using variables in messages
+     * @return False if this message is disabled (set to "" or "ignored"), true otherwise
      */
-    public void sendMessage(CommandSender receiver, String messageID, boolean overrideBypassed, MsgEntry... replacements)
+    public boolean sendMessage(CommandSender receiver, String messageID, boolean overrideBypassed, MsgEntry... replacements)
     {
-        sendMessage(Collections.singletonList(receiver), messageID, overrideBypassed, replacements);
+        return sendMessage(Collections.singletonList(receiver), messageID, overrideBypassed, replacements);
     }
 
 
@@ -189,13 +190,14 @@ public class Messenger {
      * @param messageID the id of the message
      * @param overrideBypassed whether or not bypassed players should get this message. This overrides the config setting for this message.
      * @param replacements The strings that are to be replaced to allow using variables in messages
+     * @return False if this message is disabled (set to "" or "ignored"), true otherwise
      */
-    public void sendMessage(List<? extends CommandSender> receivers, String messageID, boolean overrideBypassed, MsgEntry... replacements)
+    public boolean sendMessage(List<? extends CommandSender> receivers, String messageID, boolean overrideBypassed, MsgEntry... replacements)
     {
         // Compose the message and return if message is disabled
         String message = composeMessage(messageID, replacements);
         if (message.equals(""))
-            return;
+            return false;
 
         // Send everyone a message
         for (CommandSender receiver : receivers)
@@ -220,5 +222,7 @@ public class Messenger {
                     receiver.sendMessage( finalMessage );
             }
         }
+
+        return true;
     }
 }
