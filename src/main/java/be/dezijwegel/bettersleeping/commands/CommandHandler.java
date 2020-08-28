@@ -6,6 +6,7 @@ import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -86,7 +87,7 @@ public class CommandHandler implements CommandExecutor {
         if (commandMap.containsKey( cmd ))
         {
             BsCommand bsCommand = commandMap.get(cmd);
-            if (commandSender.hasPermission( bsCommand.getPermission() ))
+            if (commandSender.hasPermission( bsCommand.getPermission() ) || commandSender instanceof ConsoleCommandSender)
                 return bsCommand.execute(commandSender, command, alias, arguments);
             else
                 messenger.sendMessage(commandSender, "no_permission", new MsgEntry("<var>", "/bs " + cmd));
