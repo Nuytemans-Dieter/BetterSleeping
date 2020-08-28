@@ -19,8 +19,8 @@ import java.util.*;
 public class SleepersRunnable extends BukkitRunnable {
     // Final data
     private final World world;
-    private final Set<Player> sleepers;
-    private final HashMap<Player, Long> bedLeaveTracker;
+    private final Set<UUID> sleepers;
+    private final HashMap<UUID, Long> bedLeaveTracker;
 
     // Utility
     private final SleepersNeededCalculator sleepersCalculator;
@@ -52,8 +52,8 @@ public class SleepersRunnable extends BukkitRunnable {
      * @param player the now sleeping player
      */
     public void playerEnterBed(Player player) {
-        this.sleepers.add(player);
-        this.bedLeaveTracker.remove(player);
+        this.sleepers.add(player.getUniqueId());
+        this.bedLeaveTracker.remove(player.getUniqueId());
 
         // Check whether all players are sleeping
         if (this.sleepers.size() == this.world.getPlayers().size()) {
@@ -114,8 +114,8 @@ public class SleepersRunnable extends BukkitRunnable {
         }
 
         int previousSize = this.sleepers.size();
-        this.sleepers.remove(player);
-        this.bedLeaveTracker.put(player, this.world.getTime());
+        this.sleepers.remove(player.getUniqueId());
+        this.bedLeaveTracker.put(player.getUniqueId(), this.world.getTime());
 
         this.numNeeded = this.sleepersCalculator.getNumNeeded(this.world);
 
@@ -148,7 +148,7 @@ public class SleepersRunnable extends BukkitRunnable {
      */
     public void playerLogout(Player player) {
         this.playerLeaveBed(player);
-        this.bedLeaveTracker.remove(player);
+        this.bedLeaveTracker.remove(player.getUniqueId());
 
         // Update the needed count when players leave their bed so that the count is adjusted
         this.numNeeded = this.sleepersCalculator.getNumNeeded(this.world);
@@ -167,10 +167,13 @@ public class SleepersRunnable extends BukkitRunnable {
             (this.timeChanger.removedStorm(true) && currentTime < 12000)
         ) {
             // Find players who slept
-            if (this.areAllPlayersSleeping) {
-                this.sleepers.addAll(this.world.getPlayers());
-            } else {
-                for (Map.Entry<Player, Long> entry : this.bedLeaveTracker.entrySet()) {
+            if (this.areAllPlayersSleeping)
+            {
+                this.world.getPlayers().forEach(player -> this.sleepers.add( player.getUniqueId() ));
+            }
+            else
+            {
+                for (Map.Entry<UUID, Long> entry : this.bedLeaveTracker.entrySet()) {
                     if ((entry.getValue() < 10) || (entry.getValue() >= 23450)) {
                         this.sleepers.add(entry.getKey());
                     }
@@ -196,8 +199,9 @@ public class SleepersRunnable extends BukkitRunnable {
 
             // Throw event for other devs to handle (and to handle buffs internally)
             List<Player> nonSleepers = this.world.getPlayers();
-            nonSleepers.removeAll(this.sleepers);
-            Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, new ArrayList<>(this.sleepers), nonSleepers);
+            List<Player> actualSleepers = new ArrayList<>();
+            this.sleepers.forEach( uuid -> actualSleepers.add( Bukkit.getPlayer( uuid ) ) );
+            Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, actualSleepers, nonSleepers);
             Bukkit.getPluginManager().callEvent(timeSetToDayEvent);
 
             // Reset state
@@ -218,8 +222,15 @@ public class SleepersRunnable extends BukkitRunnable {
 
         // SLEEP HANDLER
 
-        // Make sure the set does not contain any false sleepers
-        this.sleepers.removeIf(player -> !player.isSleeping());
+        // Find all players that are no longer sleeping and remove them from the list
+        List<UUID> awakePlayers = new ArrayList<>();
+        for (UUID uuid : this.sleepers)
+        {
+            Player player = Bukkit.getPlayer( uuid );
+            if (player != null && ! player.isSleeping())
+                awakePlayers.add( uuid );
+        }
+        this.sleepers.removeAll( awakePlayers );
 
         if (this.sleepers.size() >= this.numNeeded) {
             this.timeChanger.tick(this.sleepers.size(), this.numNeeded);
