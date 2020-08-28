@@ -202,6 +202,7 @@ public class SleepersRunnable extends BukkitRunnable {
 
             // Throw event for other devs to handle (and to handle buffs internally)
             List<Player> nonSleepers = this.world.getPlayers();
+            nonSleepers.removeIf( player -> this.sleepers.contains( player.getUniqueId() ));
             List<Player> actualSleepers = new ArrayList<>();
             this.sleepers.forEach( uuid -> actualSleepers.add( Bukkit.getPlayer( uuid ) ) );
             Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, actualSleepers, nonSleepers);
