@@ -37,7 +37,11 @@ public class TimeSetter extends TimeChanger {
         this.counter = 0;
 
         // Perform night skip.
-        world.setStorm(false);
+        if (world.isThundering() || world.hasStorm())
+        {
+            world.setThundering(false);
+            world.setStorm(false);
+        }
         world.setTime(TimeChanger.TIME_MORNING);
 
         // Mark time as set to day for parent

@@ -215,14 +215,6 @@ public class SleepersRunnable extends BukkitRunnable {
 
         this.oldTime = currentTime;
 
-        // Early return if players can't sleep.
-        if (
-            currentTime < TimeChanger.TIME_RAIN_NIGHT ||
-            (!world.isThundering() && currentTime < TimeChanger.TIME_NIGHT)
-        ) {
-            return;
-        }
-
         // SLEEP HANDLER
 
         // Find all players that are no longer sleeping and remove them from the list
