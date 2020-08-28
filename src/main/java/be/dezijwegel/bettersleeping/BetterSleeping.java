@@ -20,6 +20,7 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
+import be.dezijwegel.bettersleeping.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -320,9 +321,15 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream()));
                 String updateVersion = reader.readLine();
-                if (updateVersion.equals(currentVersion)) {
+
+                Version current = new Version(currentVersion);
+                Version latest = new Version(updateVersion);
+
+                boolean isVersionCorrect = current.isCorrectFormat() && latest.isCorrectFormat();
+
+                if ( (isVersionCorrect && current.compareTo(latest) == 0 ) || (!isVersionCorrect && updateVersion.equals(currentVersion) )) {
                     logger.log("You are using the latest version: " + currentVersion);
-                } else {
+                } else if (!isVersionCorrect || current.compareTo(latest) < 0) {
                     logger.log("Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/", ChatColor.RED);
                     if (reminder != null) reminder.cancel();
                     reminder = new NotifyUpdateRunnable(messenger, currentVersion, updateVersion);
