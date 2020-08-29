@@ -15,7 +15,7 @@ public class MetricsHandler {
 
     public MetricsHandler(JavaPlugin plugin, String localised, boolean autoAddMissingOptions, EssentialsHook essentialsHook, String sleeperCalculatorType,
                           TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, BypassChecker bypassChecker, boolean shortenPrefix,
-                          BuffsHandler buffsHandler)
+                          BuffsHandler buffsHandler, boolean isMultiworld)
     {
 
         // Report plugin and server metrics
@@ -73,6 +73,8 @@ public class MetricsHandler {
         metrics.addCustomChart(new Metrics.SimplePie("uses_buffs", () -> buffsHandler.getBuffs().size() != 0 ? "Yes" : "No"));
 
         metrics.addCustomChart(new Metrics.SimplePie("uses_debuffs", () -> buffsHandler.getDebuffs().size() != 0 ? "Yes" : "No" ));
+
+        metrics.addCustomChart(new Metrics.SimplePie("is_multiworld", () -> isMultiworld ? "Yes" : "No" ));
 
         metrics.addCustomChart(new Metrics.SimplePie("is_premium", () -> "No" ));
 
