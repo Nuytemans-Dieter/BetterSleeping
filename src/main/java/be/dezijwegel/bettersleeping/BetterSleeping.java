@@ -105,9 +105,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
 
-        // Register Papi Expansion
-        new PapiExpansion(this,sleeping).register();
-
         // Handle configuration
 
         if (disablePhantoms)
@@ -248,6 +245,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         logger.log("The message below is always shown, even if collecting data is disabled: ");
         logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");
+
+        // Register Papi Expansion
+        new PapiExpansion(this, bedEventHandler, buffsHandler).register();
 
         // Handle update checking
         if (checkUpdate)

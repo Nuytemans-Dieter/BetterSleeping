@@ -1,25 +1,30 @@
 package be.dezijwegel.bettersleeping.hooks;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
+import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
+import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
 import be.dezijwegel.bettersleeping.util.ConfigLib;
+import be.dezijwegel.bettersleeping.util.SleepStatus;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
 public class PapiExpansion extends PlaceholderExpansion{
 
     private final BetterSleeping plugin;
-    private ConfigLib sleeping;
+    private final BedEventHandler bedEventHandler;
+    private final BuffsHandler buffsHandler;
 
     /**
      * @param plugin instance of BetterSleeping
      */
-    public PapiExpansion(BetterSleeping plugin,ConfigLib lib)
+    public PapiExpansion(BetterSleeping plugin, BedEventHandler bedEventHandler, BuffsHandler buffsHandler)
     {
         this.plugin = plugin;
-        this.sleeping = lib;
+        this.bedEventHandler = bedEventHandler;
+        this.buffsHandler = buffsHandler;
     }
 
 
@@ -75,27 +80,36 @@ public class PapiExpansion extends PlaceholderExpansion{
     @Override
     public String onPlaceholderRequest(Player player, String identifier){
 
-        // Total Sleep percentage.
-        if(identifier.equalsIgnoreCase("total_sleep_percentage_needed")){
-            String counter = sleeping.getConfiguration().getString("sleeper_counter");
-            if (counter != null && counter.equalsIgnoreCase("percentage"))
-            {
-                int needed = sleeping.getConfiguration().getInt("percentage.needed");
-                return Integer.toString(needed);
-            }
+        // Only allow calculating values if a Player object is provided
+        if (player == null)
+            return null;
+
+        SleepStatus sleepStatus = bedEventHandler.getSleepStatus(player.getWorld());
+
+        // BetterSleeping is disabled in this world so returning null to indicate a faulty identifier
+        if (sleepStatus == null)
+            return null;
+
+        // Make sure the identifier matches, regardless of capitalization used
+        identifier = identifier.toLowerCase();
+
+        switch (identifier)
+        {
+            case "bs_time_changing_type":
+                return "" + sleepStatus.getType().name().toLowerCase();
+            case "bs_num_sleeping":
+                return "" + sleepStatus.getNumSleeping();
+            case "bs_total_needed":
+                return "" + sleepStatus.getTotalNeeded();
+            case "bs_extra_needed":
+                return "" + sleepStatus.getNumLeft();
+            case "bs_buffs_amount":
+                return "" + buffsHandler.getBuffs().size();
+            case "bs_debuffs_amount":
+                return "" + buffsHandler.getDebuffs().size();
         }
 
-
-        // Total Sleep absolute.
-        if(identifier.equalsIgnoreCase("total_sleep_absolute_needed")){
-            String counter = sleeping.getConfiguration().getString("sleeper_counter");
-            if(counter != null && counter.equalsIgnoreCase("absolute")){
-                // Then return absolute Value from File config
-                int needed = sleeping.getConfiguration().getInt("absolute.needed");
-                return Integer.toString(needed);
-            }
-        }
-
-        return "Invalid use of Placeholder";
+        // PAPI documentation suggests returning null for faulty identifiers
+        return null;
     }
 }
