@@ -11,11 +11,14 @@
 
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
-# For SPIGOT ONLY in 1.16+: RGB support in the format: $(RED,GREEN,BLUE)$
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below
 # some_setting: "ignored"
 # another_setting: ""
 
+# How to use square brackets? [ and ]
+# BetterSleeping uses those to distinguish singular and plural words so you cannot directly use [ and ].
+# However, you can use |( and )| instead, they will be remapped to [ and ] respectively
+# |( This )| would become [ This ].
 
 # SINGULAR / PLURAL
 # BetterSleeping supports singular and plural nouns
@@ -34,13 +37,13 @@
 #
 # <player>
 #     Replaced by:      The player who did an action
-#     Can be used in:   bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Can be used in:   bed_enter_broadcast
 #     Example:          When user Freddy_Krueger goes to bed, <player> is replaced by Freddy_Krueger
 #
 # <num_sleeping>
 #     Replaced by:      The amount of sleeping players
 #     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
-#     Example:          When 10 people are online and 4 are sleeping, <num_sleeping> is replaced by 4
+#     Example:          When user Freddy_Krueger receives any message, <user> is replaced by Freddy_Krueger
 #
 # <needed_sleeping>
 #     Replaced by:      The amount of sleeping players that have to sleep in order to skip the night
@@ -68,22 +71,23 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Schlaf schön <user>. (<num_sleeping>/<needed_sleeping>)"
+bed_enter_message: "睡個好覺, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> begab sich ins Bett, [<num_sleeping>.ein Spieler schläft nun.<num_sleeping> Spieler schlafen nun.]. <remaining_sleeping> [<remaining_sleeping>.weiterer Spieler wird.weitere Spieler werden] benötigt."
+bed_enter_broadcast: "<player> 正在睡覺; 共有 <num_sleeping> 人正在睡覺; 仍需再有 <remaining_sleeping> 人睡覺。"
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "Jemand hat sein Bett verlassen. <remaining_sleeping> [<remaining_sleeping>.weiterer Spieler wird.weitere Spieler werden] benötigt."
+skipping_canceled: "有人離開了自己的床, 夜晚將不會被跳過! 需要再有 <remaining_sleeping> 人睡覺!"
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "Es schlafen genügend Spieler. Die Nacht wird in Kürze vorbei sein."
+enough_sleeping: "睡眠中的玩家人數已足, 夜晚將很快被跳過。"
 
 # Players receive this message in the morning
-morning_message: "Guten Morgen <user>."
+morning_message: "早上好, <user>。祝一天愉快!"
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "Du musst weitere <time> [<time>.Sekunde.Sekunden] warten, bevor du wieder schlafen kannst."
+sleep_spam: "你需要再等待 <time> 秒才能再睡!"
+
 
 
 # --------------- #
@@ -91,10 +95,10 @@ sleep_spam: "Du musst weitere <time> [<time>.Sekunde.Sekunden] warten, bevor du 
 # --------------- #
 
 # Players who slept AND receive buffs will get this message
-buff_received: "Du fühlst dich ausgeruht und erhälst [<var>.einen Buff.<var> mehrere Buffs]."
+buff_received: "你休息得很好，獲得了 <var> 種有益狀態效果。"
 
 # Players who did not sleep AND receive debuffs will get this message
-debuff_received: "Du fühlst dich müde und erhälst [<var>.einen Debuff.<var> mehrere Debuffs]."
+debuff_received: "你没有睡覺，非常疲憊，因此獲得了 <var> 種負面狀態效果。"
 
 
 # -------------------- #
@@ -102,14 +106,14 @@ debuff_received: "Du fühlst dich müde und erhälst [<var>.einen Debuff.<var> m
 # -------------------- #
 
 # The message a player gets when they don't have access to a command
-no_permission: "&cDu hast keine Berechtigung den Befehl <var> auszuführen!"
+no_permission: "&c你没有執行 <var> 的權限!"
 
 # The message that will be sent to the admin that does a reload
-message_reloaded: "&2Aktualisierung abgeschlossen!"
+message_reloaded: "&2重新載入完成!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
 #     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cDu brauchst nicht schlafen gehen."
+bypass_message: "&c你在睡眠判定中被跳過了, 所以你不需要睡覺, <user>。"

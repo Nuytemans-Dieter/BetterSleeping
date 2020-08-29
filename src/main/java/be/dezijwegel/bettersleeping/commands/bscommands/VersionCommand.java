@@ -22,7 +22,7 @@ public class VersionCommand extends BsCommand {
     @Override
     public boolean execute(CommandSender commandSender, Command command, String alias, String[] arguments)
     {
-        messenger.sendMessage(commandSender, "You are using BetterSleeping " + version);
+        messenger.sendMessage(commandSender, "You are using BetterSleeping " + version, true);
         return true;
     }
 

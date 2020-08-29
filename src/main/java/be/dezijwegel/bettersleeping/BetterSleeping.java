@@ -38,6 +38,7 @@ import java.util.*;
 public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     BedEventHandler bedEventHandler;
+    private UpdateChecker updateChecker;
 
     @Override
     public void onEnable()
@@ -51,6 +52,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         // Cancels all internal Runnables
         bedEventHandler.reload();
+        updateChecker.stopReminder();
 
         // Reset where needed: prevent events being handled twice
         HandlerList.unregisterAll(this);
@@ -97,10 +99,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
 
-        // Handle configuration
-
-        if (checkUpdate)
-            new UpdateChecker(this.getDescription().getVersion(), logger).start();
+        // Register Papi Expansion
+        new PapiExpansion(this,sleeping).register();
 
         // Get the correct lang file
 
@@ -119,19 +119,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             logger.log("Localised lang file not found! Please make sure " + localised + " exists. Defaulting to en-US...", ChatColor.DARK_RED);
             lang = new ConfigLib("lang/en-us.yml", this);
         }
-
-
-        // Read all messages from lang.yml
-
-        Map<String, String> messages = new HashMap<>();
-        FileConfiguration langConfig = lang.getConfiguration();
-        for (String path : langConfig.getKeys(true))
-        {
-            if ( ! langConfig.isConfigurationSection(path))
-                messages.put(path, langConfig.getString(path));
-        }
-
-        Messenger messenger = new Messenger(messages, fileConfig.getBoolean("shorten_prefix"));
 
 
         // Get the time skip mode
@@ -175,6 +162,17 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
         BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
 
+        // Read all messages from lang.yml
+
+        Map<String, String> messages = new HashMap<>();
+        FileConfiguration langConfig = lang.getConfiguration();
+        for (String path : langConfig.getKeys(true))
+        {
+            if ( ! langConfig.isConfigurationSection(path))
+                messages.put(path, langConfig.getString(path));
+        }
+
+        Messenger messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
 
         // Get the num sleeping players needed calculator
 
@@ -240,6 +238,13 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         logger.log("The message below is always shown, even if collecting data is disabled: ");
         logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");
 
+        // Handle update checking
+        if (checkUpdate)
+        {
+            updateChecker = new UpdateChecker(this, this.getDescription().getVersion(), logger, messenger);
+            updateChecker.start();
+        }
+
         // bStats handles enabling/disabling metrics collection, no check required
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
                             sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
@@ -261,14 +266,27 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
     private static class UpdateChecker extends Thread {
 
+        private final Plugin plugin;
         private final String currentVersion;
         private final ConsoleLogger logger;
+        private final Messenger messenger;
+        private BukkitRunnable reminder = null;
 
-
-        UpdateChecker(String currentVersion, ConsoleLogger logger)
+        UpdateChecker(Plugin plugin, String currentVersion, ConsoleLogger logger, Messenger messenger)
         {
+            this.plugin = plugin;
             this.currentVersion = currentVersion;
             this.logger = logger;
+            this.messenger = messenger;
+        }
+
+        /**
+         * Stop the internal runnable reminder
+         */
+        public void stopReminder()
+        {
+            if (reminder != null)
+                reminder.cancel();
         }
 
 
@@ -292,10 +310,19 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(conn).getInputStream()));
                 String updateVersion = reader.readLine();
-                if (updateVersion.equals(currentVersion)) {
+
+                Version current = new Version(currentVersion);
+                Version latest = new Version(updateVersion);
+
+                boolean isVersionCorrect = current.isCorrectFormat() && latest.isCorrectFormat();
+
+                if ( (isVersionCorrect && current.compareTo(latest) == 0 ) || (!isVersionCorrect && updateVersion.equals(currentVersion) )) {
                     logger.log("You are using the latest version: " + currentVersion);
-                } else {
+                } else if (!isVersionCorrect || current.compareTo(latest) < 0) {
                     logger.log("Update detected! You are using version " + currentVersion + " and the latest version is " + updateVersion + "! Download it at https://www.spigotmc.org/resources/bettersleeping-1-12-1-15.60837/", ChatColor.RED);
+                    if (reminder != null) reminder.cancel();
+                    reminder = new NotifyUpdateRunnable(messenger, currentVersion, updateVersion);
+                    reminder.runTaskTimer(plugin, 1200, 72000);
                 }
             } catch (IOException | NullPointerException e) {
                 logger.log("An error occurred while retrieving the latest version!");

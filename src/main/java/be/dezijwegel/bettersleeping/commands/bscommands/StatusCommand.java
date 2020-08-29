@@ -29,7 +29,7 @@ public class StatusCommand extends BsCommand {
     {
         if ( ! (commandSender instanceof Player))
         {
-            messenger.sendMessage(commandSender, "&cOnly players can execute /bs status!");
+            messenger.sendMessage(commandSender, "&cOnly players can execute /bs status!", true);
             return true;
         }
 
@@ -38,24 +38,24 @@ public class StatusCommand extends BsCommand {
 
         if (status == null)
         {
-            messenger.sendMessage(player, "&cWe're very sorry but checking the sleeping status is not available in your world.");
+            messenger.sendMessage(player, "&cWe're very sorry but checking the sleeping status is not available in your world.", true);
             return true;
         }
 
-        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping status}==--");
-        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Showing satus of world: " + ChatColor.AQUA + status.getWorld().getName());
+        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping status}==--", true);
+        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Showing satus of world: " + ChatColor.AQUA + status.getWorld().getName(), true);
 
         int left = status.getNumLeft();
-        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Sleeping: " + ChatColor.AQUA +  "<left> more [<left>.player.players] needed",
+        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Sleeping: " + ChatColor.AQUA +  "<left> more [<left>.player.players] needed", true,
                               new MsgEntry("<left>", String.valueOf(left)));
 
-        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Sleeping: " + ChatColor.AQUA + status.getNumSleeping() + "/" + status.getTotalNeeded());
-        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Player counter info: " + ChatColor.AQUA + status.getSettingMessage());
+        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Sleeping: " + ChatColor.AQUA + status.getNumSleeping() + "/" + status.getTotalNeeded(), true);
+        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Player counter info: " + ChatColor.AQUA + status.getSettingMessage(), true);
 
         String setType = (status.getType() == TimeChanger.TimeChangeType.SMOOTH) ? "Time will pass faster when enough people sleep" : "Time will be set to day after a delay";
-        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Time set type: " + ChatColor.AQUA + setType);
+        messenger.sendMessage(player, ChatColor.DARK_AQUA + "Time set type: " + ChatColor.AQUA + setType, true);
 
-        messenger.sendMessage(player, ChatColor.GOLD + "---==<>==---");
+        messenger.sendMessage(player, ChatColor.GOLD + "---==<>==---", true);
 
         return true;
     }

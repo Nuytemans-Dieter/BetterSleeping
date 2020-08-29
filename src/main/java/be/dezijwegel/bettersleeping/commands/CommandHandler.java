@@ -6,6 +6,7 @@ import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -72,7 +73,7 @@ public class CommandHandler implements CommandExecutor {
         else
         {
             // No support for command blocks
-            messenger.sendMessage(commandSender, "&cOnly players and the console can execute BetterSleeping commands!");
+            messenger.sendMessage(commandSender, "&cOnly players and the console can execute BetterSleeping commands!", true);
             return true;
         }
 
@@ -86,14 +87,14 @@ public class CommandHandler implements CommandExecutor {
         if (commandMap.containsKey( cmd ))
         {
             BsCommand bsCommand = commandMap.get(cmd);
-            if (commandSender.hasPermission( bsCommand.getPermission() ))
+            if (commandSender.hasPermission( bsCommand.getPermission() ) || commandSender instanceof ConsoleCommandSender)
                 return bsCommand.execute(commandSender, command, alias, arguments);
             else
-                messenger.sendMessage(commandSender, "no_permission", new MsgEntry("<var>", "/bs " + cmd));
+                messenger.sendMessage(commandSender, "no_permission", true, new MsgEntry("<var>", "/bs " + cmd));
         }
         else
         {
-            messenger.sendMessage(commandSender, "&cThe command '/bs " + cmd + "' is not recognised! Execute /bs help to see a list of commands");
+            messenger.sendMessage(commandSender, "&cThe command '/bs " + cmd + "' is not recognised! Execute /bs help to see a list of commands", true);
         }
 
         return true;

@@ -19,8 +19,8 @@ import java.util.*;
 public class SleepersRunnable extends BukkitRunnable {
     // Final data
     private final World world;
-    private final Set<Player> sleepers;
-    private final HashMap<Player, Long> bedLeaveTracker;
+    private final Set<UUID> sleepers;
+    private final HashMap<UUID, Long> bedLeaveTracker;
 
     // Utility
     private final SleepersNeededCalculator sleepersCalculator;
@@ -52,8 +52,8 @@ public class SleepersRunnable extends BukkitRunnable {
      * @param player the now sleeping player
      */
     public void playerEnterBed(Player player) {
-        this.sleepers.add(player);
-        this.bedLeaveTracker.remove(player);
+        this.sleepers.add(player.getUniqueId());
+        this.bedLeaveTracker.remove(player.getUniqueId());
 
         // Check whether all players are sleeping
         if (this.sleepers.size() == this.world.getPlayers().size()) {
@@ -65,25 +65,28 @@ public class SleepersRunnable extends BukkitRunnable {
         int remaining = Math.max(this.numNeeded - this.sleepers.size() , 0);
 
         this.messenger.sendMessage(
-            player,"bed_enter_message",
+            player,"bed_enter_message", false,
             new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
             new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
             new MsgEntry("<remaining_sleeping>", "" + remaining)
         );
 
+        boolean isEnoughSleepingEmpty = false;
         if (this.sleepers.size() == this.numNeeded) {
-            this.messenger.sendMessage(
-                this.world.getPlayers(), "enough_sleeping",
+            isEnoughSleepingEmpty = ! this.messenger.sendMessage(
+                this.world.getPlayers(), "enough_sleeping", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
                 new MsgEntry("<remaining_sleeping>", "" + remaining)
             );
-        } else if (this.sleepers.size() < this.numNeeded) {
+        }
+
+        if ((isEnoughSleepingEmpty && this.sleepers.size() <= this.numNeeded) || this.sleepers.size() < this.numNeeded) {
             List<Player> players = this.world.getPlayers();
             players.remove( player );
             messenger.sendMessage(
-                players, "bed_enter_broadcast",
+                players, "bed_enter_broadcast", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
@@ -114,8 +117,8 @@ public class SleepersRunnable extends BukkitRunnable {
         }
 
         int previousSize = this.sleepers.size();
-        this.sleepers.remove(player);
-        this.bedLeaveTracker.put(player, this.world.getTime());
+        this.sleepers.remove(player.getUniqueId());
+        this.bedLeaveTracker.put(player.getUniqueId(), this.world.getTime());
 
         this.numNeeded = this.sleepersCalculator.getNumNeeded(this.world);
 
@@ -133,7 +136,7 @@ public class SleepersRunnable extends BukkitRunnable {
         ) {
             int remaining = this.numNeeded - this.sleepers.size();
             this.messenger.sendMessage(
-                this.world.getPlayers(), "skipping_canceled",
+                this.world.getPlayers(), "skipping_canceled", false,
                 new MsgEntry("<player>", ChatColor.stripColor(player.getDisplayName())),
                 new MsgEntry("<num_sleeping>", "" + this.sleepers.size()),
                 new MsgEntry("<needed_sleeping>", "" + this.numNeeded),
@@ -148,7 +151,7 @@ public class SleepersRunnable extends BukkitRunnable {
      */
     public void playerLogout(Player player) {
         this.playerLeaveBed(player);
-        this.bedLeaveTracker.remove(player);
+        this.bedLeaveTracker.remove(player.getUniqueId());
 
         // Update the needed count when players leave their bed so that the count is adjusted
         this.numNeeded = this.sleepersCalculator.getNumNeeded(this.world);
@@ -167,10 +170,13 @@ public class SleepersRunnable extends BukkitRunnable {
             (this.timeChanger.removedStorm(true) && currentTime < 12000)
         ) {
             // Find players who slept
-            if (this.areAllPlayersSleeping) {
-                this.sleepers.addAll(this.world.getPlayers());
-            } else {
-                for (Map.Entry<Player, Long> entry : this.bedLeaveTracker.entrySet()) {
+            if (this.areAllPlayersSleeping)
+            {
+                this.world.getPlayers().forEach(player -> this.sleepers.add( player.getUniqueId() ));
+            }
+            else
+            {
+                for (Map.Entry<UUID, Long> entry : this.bedLeaveTracker.entrySet()) {
                     if ((entry.getValue() < 10) || (entry.getValue() >= 23450)) {
                         this.sleepers.add(entry.getKey());
                     }
@@ -191,13 +197,15 @@ public class SleepersRunnable extends BukkitRunnable {
 
             if (cause != TimeSetToDayEvent.Cause.NATURAL) {
                 // Send good morning, only when the players slept
-                messenger.sendMessage(this.world.getPlayers(), "morning_message");
+                messenger.sendMessage(this.world.getPlayers(), "morning_message", false);
             }
 
             // Throw event for other devs to handle (and to handle buffs internally)
             List<Player> nonSleepers = this.world.getPlayers();
-            nonSleepers.removeAll(this.sleepers);
-            Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, new ArrayList<>(this.sleepers), nonSleepers);
+            nonSleepers.removeIf( player -> this.sleepers.contains( player.getUniqueId() ));
+            List<Player> actualSleepers = new ArrayList<>();
+            this.sleepers.forEach( uuid -> actualSleepers.add( Bukkit.getPlayer( uuid ) ) );
+            Event timeSetToDayEvent = new TimeSetToDayEvent(world, cause, actualSleepers, nonSleepers);
             Bukkit.getPluginManager().callEvent(timeSetToDayEvent);
 
             // Reset state
@@ -208,18 +216,17 @@ public class SleepersRunnable extends BukkitRunnable {
 
         this.oldTime = currentTime;
 
-        // Early return if players can't sleep.
-        if (
-            currentTime < TimeChanger.TIME_RAIN_NIGHT ||
-            (!world.isThundering() && currentTime < TimeChanger.TIME_NIGHT)
-        ) {
-            return;
-        }
-
         // SLEEP HANDLER
 
-        // Make sure the set does not contain any false sleepers
-        this.sleepers.removeIf(player -> !player.isSleeping());
+        // Find all players that are no longer sleeping and remove them from the list
+        List<UUID> awakePlayers = new ArrayList<>();
+        for (UUID uuid : this.sleepers)
+        {
+            Player player = Bukkit.getPlayer( uuid );
+            if (player != null && ! player.isSleeping())
+                awakePlayers.add( uuid );
+        }
+        this.sleepers.removeAll( awakePlayers );
 
         if (this.sleepers.size() >= this.numNeeded) {
             this.timeChanger.tick(this.sleepers.size(), this.numNeeded);
