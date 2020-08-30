@@ -42,3 +42,7 @@ setter:
 # The time in seconds that players need to wait before they can enter the bed again after leaving it
 bed_enter_delay: 10
 
+# Disable BetterSleeping in certain worlds. This option is case sensitive!
+disabled_worlds:
+  - World_name_here
+  - Another_world_name_here
