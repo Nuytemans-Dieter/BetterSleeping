@@ -3,10 +3,6 @@ package be.dezijwegel.bettersleeping.hooks;
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
-import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
-import be.dezijwegel.bettersleeping.util.ConfigLib;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
@@ -95,6 +91,8 @@ public class PapiExpansion extends PlaceholderExpansion{
 
         switch (identifier)
         {
+            case "bs_sleep_setting_message":
+                return sleepStatus.getSettingMessage();
             case "bs_time_changing_type":
                 return "" + sleepStatus.getType().name().toLowerCase();
             case "bs_num_sleeping":
