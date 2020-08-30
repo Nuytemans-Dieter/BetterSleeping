@@ -1,19 +1,15 @@
 package be.dezijwegel.bettersleeping.messaging;
 
+import be.dezijwegel.bettersleeping.hooks.PapiSetter;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.util.Version;
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.protocol.packet.Chat;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.*;
 import java.util.Collections;
@@ -25,6 +21,7 @@ public class Messenger {
 
     private final Map<String, String> messages;     // Contains the messages in lang.yml by mapping path to value
     private final BypassChecker bypassChecker;
+    private final PapiSetter papiSetter;
     private final boolean sendToBypassedPlayers;    // Whether or not bypassed players should receive messages (depends on the individual message as well)
     private final boolean doShortenPrefix;          // Whether or not the short prefix variant is to be used
 
@@ -37,6 +34,7 @@ public class Messenger {
     {
         this.messages = messages;
         this.bypassChecker = bypassChecker;
+        this.papiSetter = new PapiSetter();
         this.sendToBypassedPlayers = sendToBypassedPlayers;
         this.doShortenPrefix = doShortenPrefix;
     }
@@ -199,6 +197,16 @@ public class Messenger {
         if (message.equals(""))
             return false;
 
+        // Get the player if there is a player who did an action
+        Player placeholderPlayer = null;
+        for (MsgEntry entry : replacements)
+            if (entry.getTag().equals("<player>"))
+                placeholderPlayer = Bukkit.getPlayer(entry.getReplacement());
+
+        // Replace relative to action player if there is one available
+        if (placeholderPlayer != null)
+            message = papiSetter.replacePlaceholders(placeholderPlayer, message);
+
         // Send everyone a message
         for (CommandSender receiver : receivers)
         {
@@ -207,6 +215,10 @@ public class Messenger {
                 // Get the senders name
                 String name = receiver.getName();
                 String finalMessage = message.replace("<user>", ChatColor.stripColor( name ));
+
+                // Perform placeholder replacement relative to the receiver if the message did not contain a player that did an action
+                if (placeholderPlayer == null && receiver instanceof Player)
+                    message = papiSetter.replacePlaceholders((Player) receiver, message);
 
                 boolean isSuccess = false;
 
