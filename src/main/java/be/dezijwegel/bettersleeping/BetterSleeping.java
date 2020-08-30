@@ -199,11 +199,14 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         int numWorlds = 0;      // The amount of detected worlds
         Map<World, SleepersRunnable> runnables = new HashMap<>();
+        Set<String> disabledWorlds = new HashSet<String> (sleepConfig.getStringList("disabled_worlds") );
         for (World world : Bukkit.getWorlds())
         {
             // Only check on the overworld
             //if (world.getEnvironment() == World.Environment.NORMAL) {
 
+            if ( ! disabledWorlds.contains( world.getName() ))
+            {
                 TimeChanger timeChanger;
 
                 if (timeChangerType == TimeChanger.TimeChangeType.SMOOTH)
@@ -221,6 +224,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
                 runnables.put(world, runnable);
                 numWorlds++;
+            }
+            else
+            {
+                logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'");
+            }
             //}
         }
 
