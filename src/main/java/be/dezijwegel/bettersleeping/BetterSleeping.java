@@ -1,6 +1,8 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
+import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
+import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
 import be.dezijwegel.bettersleeping.util.ConfigLib;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
@@ -17,12 +19,14 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
+import be.dezijwegel.bettersleeping.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -98,9 +102,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
-
-        // Register Papi Expansion
-        new PapiExpansion(this,sleeping).register();
 
         // Get the correct lang file
 
@@ -238,6 +239,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         logger.log("The message below is always shown, even if collecting data is disabled: ");
         logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");
 
+        // Register Papi Expansion
+        new PapiExpansion(this, bedEventHandler, buffsHandler).register();
+
         // Handle update checking
         if (checkUpdate)
         {
@@ -248,7 +252,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // bStats handles enabling/disabling metrics collection, no check required
         new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
                             sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
-                            bypassChecker, fileConfig.getBoolean("shorten_prefix"), buffsHandler);
+                            bypassChecker, fileConfig.getBoolean("shorten_prefix"), buffsHandler, isMultiWorldServer);
 
         this.getCommand("bettersleeping").setExecutor(new CommandHandler(this, messenger, buffsHandler, bypassChecker));
     }
