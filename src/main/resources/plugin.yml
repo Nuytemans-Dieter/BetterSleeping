@@ -1,6 +1,6 @@
 name: BetterSleeping3
 author: vallas
-version: 3.0.4
+version: ${project.version}
 main: be.dezijwegel.bettersleeping.BetterSleeping
 description: A plugin that makes sleeping in multiplayer fun again!
 softdepend: [Essentials, PlaceholderAPI, MultiWorld, Multiverse, Multiverse-Core]

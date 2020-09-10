@@ -111,6 +111,14 @@
         <!-- No longer include the version in the build name -->
         <finalName>${project.artifactId}</finalName>
 
+        <!-- Use Maven version throughout the plugin -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
         <!-- Shade bStats into BetterSleeping -->
         <plugins>
             <plugin>

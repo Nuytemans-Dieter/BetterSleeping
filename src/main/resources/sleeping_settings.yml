@@ -43,6 +43,7 @@ setter:
 bed_enter_delay: 10
 
 # Disable BetterSleeping in certain worlds. This option is case sensitive!
+# Players can still skip the night/storm if everybody in this world is sleeping but no messages/(de)buffs will be sent or given.
 disabled_worlds:
   - World_name_here
   - Another_world_name_here
