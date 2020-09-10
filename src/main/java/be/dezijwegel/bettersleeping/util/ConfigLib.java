@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 public class ConfigLib {
@@ -61,15 +59,15 @@ public class ConfigLib {
      * @param plugin instance of the plugin
      * @param addMissingOptions whether or not to auto-add missing options to this file
      */
-    public ConfigLib(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions) {
+    public ConfigLib(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions, String... ignoredPaths) {
         this.plugin = plugin;
         this.fileName = fileName;
         this.logger = new ConsoleLogger(true);
-        initialise(fileName, plugin, addMissingOptions, true);
+        initialise(fileName, plugin, addMissingOptions, true, ignoredPaths);
     }
 
 
-    public void initialise(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions, boolean reportMissingOptions)
+    public void initialise(@NotNull String fileName, @NotNull JavaPlugin plugin, boolean addMissingOptions, boolean reportMissingOptions, String... ignoredPaths)
     {
 
         this.file = new File(plugin.getDataFolder(), fileName);
@@ -85,9 +83,9 @@ public class ConfigLib {
         saveDefaultConfig();
 
         if (addMissingOptions)
-            this.addMissingOptions();
+            this.addMissingOptions(ignoredPaths);
         else if (reportMissingOptions)
-            this.reportMissingOptions();
+            this.reportMissingOptions(ignoredPaths);
 
         if (!reportMissingOptions && !addMissingOptions)
             return;
@@ -159,18 +157,20 @@ public class ConfigLib {
 
     /**
      * Get all paths of missing options
+     * Will never contain paths equal to those provided as an argument
      * @return a list of missing paths
      */
-    public List<String> getMissingOptionPaths()
+    public List<String> getMissingOptionPaths(String... ignoredPaths)
     {
         List<String> missingOptions = new ArrayList<>();
+        Set<String> ignoredSet = new HashSet<>( Arrays.asList(ignoredPaths) );
 
         Reader defConfigStream = new InputStreamReader(plugin.getResource(fileName), StandardCharsets.UTF_8);
 
         YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
         for (String path : defConfig.getKeys(true)) {
             if (!defConfig.isConfigurationSection(path)) {
-                if (!configuration.contains(path)) {
+                if (!configuration.contains(path) && !ignoredSet.contains( path )) {
                     missingOptions.add(path);
                 }
             }
@@ -185,9 +185,9 @@ public class ConfigLib {
      * Will fail silently if disabled
      * Currently not in use, but functional
      */
-    public void addMissingOptions()
+    public void addMissingOptions(String... ignoredPaths)
     {
-        List<String> missingOptions = getMissingOptionPaths();
+        List<String> missingOptions = getMissingOptionPaths( ignoredPaths );
 
         String missingMessage;
         if (missingOptions.size() == 0)
@@ -241,10 +241,10 @@ public class ConfigLib {
     /**
      * Compare the default file with the one on the server and report every missing option
      */
-    public void reportMissingOptions()
+    public void reportMissingOptions(String... ignoredPaths)
     {
         // Get the missing configuration options that are not configuration sections
-        List<String> missingOptions = getMissingOptionPaths();
+        List<String> missingOptions = getMissingOptionPaths(ignoredPaths);
 
 
         if (missingOptions.size() > 0)

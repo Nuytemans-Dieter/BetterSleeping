@@ -100,7 +100,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         boolean checkUpdate     = fileConfig.getBoolean("update_notifier");
         String  localised       = fileConfig.getString("language");
 
-        ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions);
+        ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions, "disabled_worlds");
         ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
