@@ -248,7 +248,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");
 
         // Register Papi Expansion
-        new PapiExpansion(this, bedEventHandler, buffsHandler).register();
+        if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null)
+            new PapiExpansion(this, bedEventHandler, buffsHandler).register();
 
         // Handle update checking
         if (checkUpdate)
