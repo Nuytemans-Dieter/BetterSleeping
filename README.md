@@ -40,4 +40,3 @@ Sometimes people ask how they can help, there is a lot you can do.
 - Starring this repository is much appreciated (on the top right of this screen)
 - You can make a suggestion (eg. a new feature). Join the [Discord server](https://discord.gg/AS46VGT) to let me know or create a [new issue](https://github.com/Nuytemans-Dieter/BetterSleeping/issues)!
 - If you know how to code, feel free to make a pull request and add your feature on your own!
-- Feel free to [toss a coin to your developer](https://www.paypal.me/vallasPlugins).
