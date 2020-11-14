@@ -39,3 +39,7 @@ disable_phantoms: false
 # IMPORTANT NOTE: This will reset all comments above options, except for a link to the documentation
 # Options in this file will never be automatically added due to the importance of some information
 auto_add_missing_options: false
+
+# Choose where the messages will appear
+# Setting this to false will result in the messages being sent to the action bar
+messages_in_chat: true

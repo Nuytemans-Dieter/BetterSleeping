@@ -19,7 +19,9 @@ import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
+import be.dezijwegel.bettersleeping.messaging.ScreenMessenger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
+import be.dezijwegel.bettersleeping.util.SpigotChecker;
 import be.dezijwegel.bettersleeping.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -169,19 +171,33 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             }
         }
         BypassChecker bypassChecker = new BypassChecker(enableBypass, essentialsHook, bypassedGamemodes);
-
         // Read all messages from lang.yml
 
         Map<String, String> messages = new HashMap<>();
         FileConfiguration langConfig = lang.getConfiguration();
         for (String path : langConfig.getKeys(true))
         {
-            if ( ! langConfig.isConfigurationSection(path))
+            if ( ! langConfig.isConfigurationSection(path)) {
                 messages.put(path, langConfig.getString(path));
+            }
         }
-
-        Messenger messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
-
+        
+        
+        // Determine if able and configured to post messages in chat or action bar
+        
+        Messenger messenger;
+        if (!fileConfig.getBoolean("messages_in_chat") && SpigotChecker.hasSpigot())
+        {
+            messenger = new ScreenMessenger(this, messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
+            logger.log("Using action bar for sending messages");
+        }
+        else
+        {
+            messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
+            logger.log("Using chat for sending messages");
+        }
+        
+        
         // Get the num sleeping players needed calculator
 
         SleepersNeededCalculator calculator;

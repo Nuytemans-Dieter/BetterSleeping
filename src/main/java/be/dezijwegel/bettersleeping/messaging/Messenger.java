@@ -3,8 +3,6 @@ package be.dezijwegel.bettersleeping.messaging;
 import be.dezijwegel.bettersleeping.hooks.PapiSetter;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.util.Version;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -92,7 +90,7 @@ public class Messenger {
         }
 
         // Get the prefix and put it before the message
-        String prefix = doShortenPrefix ? "&6[BS] &3" : "&6[BetterSleeping] &3";
+        String prefix = doShortenPrefix ? "&6[BS3] &3" : "&6[BetterSleeping] &3";
         message = prefix + message;
 
         // Perform final replacements for color
@@ -220,21 +218,14 @@ public class Messenger {
                 if (placeholderPlayer == null && receiver instanceof Player)
                     message = papiSetter.replacePlaceholders((Player) receiver, message);
 
-                boolean isSuccess = false;
-
-                if (receiver instanceof Player)
-                    try
-                    {
-                        Class.forName("org.spigotmc.SpigotConfig");
-                        ((Player)receiver).spigot().sendMessage(ChatMessageType.CHAT, TextComponent.fromLegacyText(finalMessage));
-                        isSuccess = true;
-                    } catch (ClassNotFoundException ignored) {}
-
-                if (!isSuccess)
-                    receiver.sendMessage( finalMessage );
+                sendMessage(receiver, finalMessage);
             }
         }
 
         return true;
+    }
+    
+    protected void sendMessage(CommandSender receiver, String message) {
+        receiver.sendMessage( message );
     }
 }
