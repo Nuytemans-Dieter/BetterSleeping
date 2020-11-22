@@ -98,7 +98,7 @@ sleep_spam: "Você precisa esperar mais <time> [<time>.segundo.segundos] para qu
 buff_received: "Você dormiu bem e recebeu [<var>.um buff.<var> buffs]!"
 
 # Players who did not sleep AND receive debuffs will get this message
-debuff_received: "Você não dormiu e se sente cançado, você recebeu [<var>.um buff.<var> buffs]!"
+debuff_received: "Você não dormiu e se sente cansado, você recebeu [<var>.um buff.<var> buffs]!"
 
 
 # -------------------- #
