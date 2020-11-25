@@ -13,6 +13,7 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | Dutch     | nl-BE |
 | French    | fr-FR |
 | German    | de-DE |
+| Italian   | it-IT |
 | Japanese  | ja-JP |
 | Portuguese| pt-PT |
 | Russian   | ru-RU |
