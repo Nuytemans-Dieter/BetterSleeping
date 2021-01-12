@@ -15,7 +15,7 @@ public class ScreenMessageSender {
 
     private final Plugin plugin;
     private final Player player;
-    private final Queue<String> messageQueue = new ConcurrentLinkedQueue();
+    private final Queue<String> messageQueue = new ConcurrentLinkedQueue<String>();
 
     public ScreenMessageSender(Plugin plugin, Player player) {
         this.plugin = plugin;
