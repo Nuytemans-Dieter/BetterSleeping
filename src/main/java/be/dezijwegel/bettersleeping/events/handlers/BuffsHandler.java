@@ -5,6 +5,7 @@ import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -123,19 +124,23 @@ public class BuffsHandler implements Listener {
         if ( ! config.isConfigurationSection(section) )
             return potions;
 
-        for (String path : config.getConfigurationSection(section).getKeys(false))
+        // Only read effects when the config section exists
+        ConfigurationSection configSection = config.getConfigurationSection(section);
+        if (configSection != null)
         {
-            int time  = config.getInt(section + "." + path + ".time");
-            int level = config.getInt(section + "." + path + ".level" );
+            for (String path : configSection.getKeys(false)) {
+                int time = config.getInt(section + "." + path + ".time");
+                int level = config.getInt(section + "." + path + ".level");
 
-            PotionEffectType type = PotionEffectType.getByName( path.toUpperCase() );
+                PotionEffectType type = PotionEffectType.getByName(path.toUpperCase());
 
 
-            // Only add if all fields are valid
-            if (type != null && time > 0 && level > 0)
-                potions.add(new PotionEffect(type, 20*time, level-1) );
-            else
-                logger.log("Faulty (de)buff: '" + path + "' of duration '" + time + "' and level '" + level + "'");
+                // Only add if all fields are valid
+                if (type != null && time > 0 && level > 0)
+                    potions.add(new PotionEffect(type, 20 * time, level - 1));
+                else
+                    logger.log("Faulty (de)buff: '" + path + "' of duration '" + time + "' and level '" + level + "'");
+            }
         }
 
         return potions;
