@@ -77,6 +77,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         List<String> multiworldPlugins = new ArrayList<String>() {{
             add("Multiverse-Core");
             add("MultiWorld");
+            add("BentoBox");
+            add("Skyblock");
         }};
 
         boolean isMultiWorldServer;
