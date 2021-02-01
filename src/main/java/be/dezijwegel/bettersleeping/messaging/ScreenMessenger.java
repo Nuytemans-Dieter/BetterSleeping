@@ -16,9 +16,10 @@ import org.bukkit.plugin.Plugin;
 public class ScreenMessenger extends Messenger {
 
     private final Plugin plugin;
-    private Map<Player, ScreenMessageSender> playerMessengerMap = new ConcurrentHashMap<>();
+    private final Map<Player, ScreenMessageSender> playerMessengerMap = new ConcurrentHashMap<>();
 
-    public ScreenMessenger(Plugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix) {
+    public ScreenMessenger(Plugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
+    {
         super(messages, bypassChecker, sendToBypassedPlayers, doShortenPrefix);
         this.plugin = plugin;
         // Register creation and deletion of messengers for every player
@@ -30,9 +31,10 @@ public class ScreenMessenger extends Messenger {
     }
 
     @Override
-    protected void sendMessage(CommandSender receiver, String message) {
+    protected void sendMessage(CommandSender receiver, String message)
+    {
         if (receiver instanceof Player) {
-            ScreenMessageSender sender = playerMessengerMap.get((Player) receiver);
+            ScreenMessageSender sender = playerMessengerMap.get( receiver );
             sender.sendMessage(message);
         } else {
             // Fallback
@@ -44,16 +46,19 @@ public class ScreenMessenger extends Messenger {
      * Event listener that manages queue of all players and their corresponding
      * messengers
      */
-    private class PlayerQueueEventListener implements Listener {
+    private class PlayerQueueEventListener implements Listener
+    {
 
         @EventHandler
-        public void onPlayerJoin(PlayerJoinEvent event) {
+        public void onPlayerJoin(PlayerJoinEvent event)
+        {
             // Create messenger for every player joining
             playerMessengerMap.put(event.getPlayer(), new ScreenMessageSender(plugin, event.getPlayer()));
         }
 
         @EventHandler
-        public void onPlayerJoin(PlayerQuitEvent event) {
+        public void onPlayerJoin(PlayerQuitEvent event)
+        {
             // Remove messenger for every player leaving
             playerMessengerMap.remove(event.getPlayer());
         }

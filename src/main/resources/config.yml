@@ -29,6 +29,10 @@ language: "en-US"
 # Choose whether to use the short prefix: [BS] (true) or the long one [BetterSleeping] (false)
 shorten_prefix: true
 
+# Choose where messages show up
+# Messages are shown in the chat when set to false, and shown in the action bar when set to true
+action_bar_messages: false
+
 # This is ran once on startup when enabled to fetch the latest version
 update_notifier: true
 
@@ -39,7 +43,3 @@ disable_phantoms: false
 # IMPORTANT NOTE: This will reset all comments above options, except for a link to the documentation
 # Options in this file will never be automatically added due to the importance of some information
 auto_add_missing_options: false
-
-# Choose where the messages will appear
-# Setting this to false will result in the messages being sent to the action bar
-messages_in_chat: true
