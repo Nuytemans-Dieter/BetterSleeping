@@ -6,6 +6,7 @@ import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
+import be.dezijwegel.bettersleeping.util.Debugger;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,6 +33,8 @@ public class SleepersRunnable extends BukkitRunnable {
     private int numNeeded;
     private long oldTime;
     private boolean areAllPlayersSleeping = false;
+
+    private final Debugger debugger = new Debugger();
 
     /**
      * A runnable that will detect time changes and its cause
@@ -113,9 +116,6 @@ public class SleepersRunnable extends BukkitRunnable {
      */
     public void playerLeaveBed(Player player)
     {
-        if (this.areAllPlayersSleeping) {
-            return;
-        }
 
         int previousSize = this.sleepers.size();
         this.sleepers.remove(player.getUniqueId());
@@ -126,6 +126,9 @@ public class SleepersRunnable extends BukkitRunnable {
         // Don't send cancelled messages when the time is not right
         if (this.world.getTime() < 20 || this.world.getTime() > 23450) {
             return;
+        } else
+        {
+            this.areAllPlayersSleeping = false;
         }
 
         // Check if enough players WERE sleeping but now not anymore
@@ -165,10 +168,10 @@ public class SleepersRunnable extends BukkitRunnable {
         // Time check subsystem: detect time set to day
         long currentTime = this.world.getTime();
 
-        // True if time is set to day OR the storm was skipped during the day
+        // True if time is set to day OR the storm was skipped
         if (
             (currentTime < 10 && currentTime < this.oldTime) ||
-            (this.timeChanger.removedStorm(true) && currentTime < 12000)
+            (this.timeChanger.removedStorm(false))
         ) {
             // Find players who slept
             if (this.areAllPlayersSleeping)
@@ -193,7 +196,9 @@ public class SleepersRunnable extends BukkitRunnable {
 
             // Find the skip cause
             TimeSetToDayEvent.Cause cause;
-            if (timeChanger.wasTimeSetToDay()) { // Caused by BetterSleeping?
+            if (this.timeChanger.removedStorm( true )) {
+                cause = TimeSetToDayEvent.Cause.SLEEPING;
+            } else if (timeChanger.wasTimeSetToDay()) { // Caused by BetterSleeping?
                 cause = TimeSetToDayEvent.Cause.SLEEPING;
             } else if (areAllPlayersSleeping) { // Caused by all players in a world sleeping -> Time is set to day instantly
                 cause = TimeSetToDayEvent.Cause.SLEEPING;
@@ -202,6 +207,8 @@ public class SleepersRunnable extends BukkitRunnable {
             } else { // Caused by some time setter?
                 cause = TimeSetToDayEvent.Cause.OTHER;
             }
+
+            debugger.debug( "Night skip detected in world " + this.world.getName() + ". Cause: " + cause.toString(), Debugger.DebugLevel.INFORMATIVE);
 
             if (cause != TimeSetToDayEvent.Cause.NATURAL) {
                 // Send good morning, only when the players slept
