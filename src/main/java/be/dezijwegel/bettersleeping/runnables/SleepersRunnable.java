@@ -163,10 +163,20 @@ public class SleepersRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        // TIME DETECTOR
 
         // Time check subsystem: detect time set to day
         long currentTime = this.world.getTime();
+
+        // Beds can now be used in any weather
+        if (currentTime == 12542)
+        {
+            messenger.sendMessage( this.world.getPlayers(), "sleep_possible_now", false, new MsgEntry("<needed_sleeping>", "" + this.numNeeded) );
+        }
+        // Beds can be used in any weather, one minute from now
+        else if (currentTime == 11342)
+        {
+            messenger.sendMessage( this.world.getPlayers(), "sleep_possible_soon", false, new MsgEntry("<needed_sleeping>", "" + this.numNeeded) );
+        }
 
         // True if time is set to day OR the storm was skipped
         if (

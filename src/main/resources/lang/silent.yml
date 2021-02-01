@@ -47,7 +47,7 @@
 #
 # <needed_sleeping>
 #     Replaced by:      The amount of sleeping players that have to sleep in order to skip the night
-#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled, sleep_possible_soon, sleep_possible_now
 #     Example:          When 4 players need to sleep, <needed_sleeping> is replaced by 4
 #
 # <remaining_sleeping>
@@ -88,6 +88,11 @@ morning_message: ""
 # Players that try to enter their bed too quickly after getting out of it
 sleep_spam: "You have to wait <time> more [<time>.second.seconds] before you can sleep again!"
 
+# This message is sent one minute before players can go to bed due to nighttime (disabled by default)
+sleep_possible_soon: ""
+
+# This message is sent when sleeping is possible due to a thunderstorm or nighttime (disabled by default)
+sleep_possible_now: ""
 
 # --------------- #
 # Buffs & debuffs |

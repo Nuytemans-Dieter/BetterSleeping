@@ -224,31 +224,29 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         Set<String> disabledWorlds = new HashSet<String> (sleepConfig.getStringList("disabled_worlds") );
         for (World world : Bukkit.getWorlds())
         {
-            // Only enable non-disabled worlds and worlds that have a daylight cycle
-            Boolean doDaylightCycle = world.getGameRuleValue( GameRule.DO_DAYLIGHT_CYCLE );
-            if ( ! disabledWorlds.contains( world.getName() ) && ( doDaylightCycle == null || doDaylightCycle ))
+            // Only enable worlds where sleeping is possible
+            if (world.getEnvironment() == World.Environment.NORMAL)
             {
-                TimeChanger timeChanger;
+                // Only enable non-disabled worlds and worlds that have a daylight cycle
+                Boolean doDaylightCycle = world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
+                if (!disabledWorlds.contains(world.getName()) && (doDaylightCycle == null || doDaylightCycle)) {
+                    TimeChanger timeChanger;
 
-                if (timeChangerType == TimeChanger.TimeChangeType.SMOOTH)
-                {
-                    int baseSpeedup      = sleepConfig.getInt("smooth.base_speedup");
-                    int speedupPerPlayer = sleepConfig.getInt("smooth.speedup_per_player");
-                    int maxSpeedup       = sleepConfig.getInt("smooth.max_speedup");
-                    timeChanger = new TimeSmooth(world, baseSpeedup, speedupPerPlayer, maxSpeedup);
+                    if (timeChangerType == TimeChanger.TimeChangeType.SMOOTH) {
+                        int baseSpeedup = sleepConfig.getInt("smooth.base_speedup");
+                        int speedupPerPlayer = sleepConfig.getInt("smooth.speedup_per_player");
+                        int maxSpeedup = sleepConfig.getInt("smooth.max_speedup");
+                        timeChanger = new TimeSmooth(world, baseSpeedup, speedupPerPlayer, maxSpeedup);
+                    } else {
+                        int sleepDelay = sleepConfig.getInt("setter.delay");
+                        timeChanger = new TimeSetter(world, sleepDelay);
+                    }
+                    SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
+                    runnables.put(world, runnable);
+                    numWorlds++;
+                } else {
+                    logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'");
                 }
-                else
-                {
-                    int sleepDelay = sleepConfig.getInt("setter.delay");
-                    timeChanger = new TimeSetter(world, sleepDelay);
-                }
-                SleepersRunnable runnable = new SleepersRunnable(world, messenger, timeChanger, calculator);
-                runnables.put(world, runnable);
-                numWorlds++;
-            }
-            else
-            {
-                logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'");
             }
         }
 
