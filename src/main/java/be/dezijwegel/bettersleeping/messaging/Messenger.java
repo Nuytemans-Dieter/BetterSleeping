@@ -208,7 +208,7 @@ public class Messenger {
         // Send everyone a message
         for (CommandSender receiver : receivers)
         {
-            if (! (receiver instanceof Player) || this.shouldGetMessage( (Player) receiver, overrideBypassed ))
+            if ( receiver != null && ( ! (receiver instanceof Player) || this.shouldGetMessage( (Player) receiver, overrideBypassed ) ))
             {
                 // Get the senders name
                 String name = receiver.getName();
