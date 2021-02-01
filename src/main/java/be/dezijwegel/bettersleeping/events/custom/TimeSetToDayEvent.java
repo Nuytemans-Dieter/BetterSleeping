@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TimeSetToDayEvent extends Event {
 
@@ -31,8 +32,12 @@ public class TimeSetToDayEvent extends Event {
 
         this.world = world;
         this.cause = cause;
-        this.sleepers = sleepers;
-        this.nonSleepers = nonSleepers;
+        this.sleepers = sleepers.stream()
+            .filter( player -> !player.hasMetadata("NPC") )
+            .collect( Collectors.toList() );
+        this.nonSleepers = nonSleepers.stream()
+            .filter( player -> !player.hasMetadata("NPC") )
+            .collect( Collectors.toList() );
     }
 
 

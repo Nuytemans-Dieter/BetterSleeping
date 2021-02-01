@@ -13,8 +13,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
+import sun.jvm.hotspot.gc.shared.GenCollectedHeap;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SleepersRunnable extends BukkitRunnable {
     // Final data
@@ -172,12 +174,19 @@ public class SleepersRunnable extends BukkitRunnable {
             // Find players who slept
             if (this.areAllPlayersSleeping)
             {
-                this.world.getPlayers().forEach(player -> this.sleepers.add( player.getUniqueId() ));
+                // Filter NPC's from this list
+                List<Player> sleepers = this.world.getPlayers().stream()
+                        .filter(player -> !player.hasMetadata("NPC") )
+                        .collect(Collectors.toList());
+
+                sleepers.forEach(player -> this.sleepers.add( player.getUniqueId() ));
             }
             else
             {
                 for (Map.Entry<UUID, Long> entry : this.bedLeaveTracker.entrySet()) {
-                    if ((entry.getValue() < 10) || (entry.getValue() >= 23450)) {
+                    UUID uuid = entry.getKey();
+                    Player player = Bukkit.getPlayer( uuid );
+                    if ( (entry.getValue() < 10 || entry.getValue() >= 23450) && player != null && !player.hasMetadata("NPC") ) {
                         this.sleepers.add(entry.getKey());
                     }
                 }
@@ -218,12 +227,12 @@ public class SleepersRunnable extends BukkitRunnable {
 
         // SLEEP HANDLER
 
-        // Find all players that are no longer sleeping and remove them from the list
+        // Find all players that are no longer sleeping and remove them from the list (Also remove NPCs)
         List<UUID> awakePlayers = new ArrayList<>();
         for (UUID uuid : this.sleepers)
         {
             Player player = Bukkit.getPlayer( uuid );
-            if (player != null && ! player.isSleeping())
+            if (player == null || !player.isSleeping() || player.hasMetadata("NPC"))
                 awakePlayers.add( uuid );
         }
         this.sleepers.removeAll( awakePlayers );
