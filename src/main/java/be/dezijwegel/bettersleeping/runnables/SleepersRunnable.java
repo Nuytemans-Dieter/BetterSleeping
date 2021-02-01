@@ -13,7 +13,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
-import sun.jvm.hotspot.gc.shared.GenCollectedHeap;
 
 import java.util.*;
 import java.util.stream.Collectors;
