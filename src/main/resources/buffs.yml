@@ -19,6 +19,7 @@
 
 # CONFIGURATION GUIDE:
 
+# Not working? Try copy/pasting the contents of this file into http://www.yamllint.com/ to check for errors
 # To disable an effect, simply remove it from the list
 
 # For a list of possible buffs, check: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html
@@ -38,3 +39,13 @@ non_sleeper_debuffs:
   slow:
     time: 3
     level: 1
+
+# The commands in the list below are executed in the console for EACH (non-)sleeper
+# One tag is supported at this time: <user>, which will be replaced by each user's name
+# Uncomment the blocks below to enable them, you can add your own commands too!
+
+#sleeper_commands:
+#  - money give <user> 5
+
+#non_sleeper_commands:
+#  - say <user> did not sleep, pfuhhh!

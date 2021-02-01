@@ -5,6 +5,8 @@ import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -28,21 +30,8 @@ public class BuffsHandler implements Listener {
     private final Set<PotionEffect> sleepingBuffs;
     private final Set<PotionEffect> sleepingDebuffs;
 
-
-    /**
-     * Event handler for {@link TimeSetToDayEvent}
-     * @param sleepingBuffs players that slept will get these buffs
-     * @param nonSleepingDebuffs players that did not sleep will get these debuffs
-     */
-    public BuffsHandler(ConsoleLogger logger, Messenger messenger, BypassChecker bypassChecker, Set<PotionEffect> sleepingBuffs, Set<PotionEffect> nonSleepingDebuffs)
-    {
-        this.logger = logger;
-        this.messenger = messenger;
-        this.bypassChecker = bypassChecker;
-
-        this.sleepingBuffs = sleepingBuffs;
-        this.sleepingDebuffs = nonSleepingDebuffs;
-    }
+    private final List<String> sleepingCommands;
+    private final List<String> nonSleepingCommands;
 
 
     /**
@@ -57,6 +46,9 @@ public class BuffsHandler implements Listener {
 
         this.sleepingBuffs   = readPotions(buffsConfig, "sleeper_buffs");
         this.sleepingDebuffs = readPotions(buffsConfig, "non_sleeper_debuffs");
+
+        this.sleepingCommands    = buffsConfig.getStringList( "sleeper_commands" );
+        this.nonSleepingCommands = buffsConfig.getStringList( "non_sleeper_commands" );
     }
 
 
@@ -81,7 +73,7 @@ public class BuffsHandler implements Listener {
         if (sleepingBuffs.size() > 0)
         {
             messenger.sendMessage(event.getPlayersWhoSlept(), "buff_received", false, new MsgEntry("<var>", "" + sleepingBuffs.size()));
-            giveEffects(event.getPlayersWhoSlept(), sleepingBuffs);
+            giveEffects(event.getPlayersWhoSlept(), sleepingBuffs, sleepingCommands);
         }
 
         if (sleepingDebuffs.size() > 0)
@@ -94,15 +86,25 @@ public class BuffsHandler implements Listener {
             }
 
             messenger.sendMessage(nonSleepers, "debuff_received", false, new MsgEntry("<var>", "" + sleepingDebuffs.size()));
-            giveEffects(nonSleepers, sleepingDebuffs);
+            giveEffects(nonSleepers, sleepingDebuffs, nonSleepingCommands);
         }
     }
 
 
-    private void giveEffects(List<Player> players, Set<PotionEffect> effects)
+    private void giveEffects(List<Player> players, Set<PotionEffect> effects, List<String> commands)
     {
         for (Player player : players)
+        {
+            // Execute each command
+            for (String command : commands)
+            {
+                command = command.replace("<user>", player.getName());
+                Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), command );
+            }
+
+            // Add (de)buffs
             player.addPotionEffects(effects);
+        }
     }
 
 
