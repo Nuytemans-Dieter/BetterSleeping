@@ -23,10 +23,7 @@ import be.dezijwegel.bettersleeping.messaging.ScreenMessenger;
 import be.dezijwegel.bettersleeping.util.MetricsHandler;
 import be.dezijwegel.bettersleeping.util.SpigotChecker;
 import be.dezijwegel.bettersleeping.util.Version;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
@@ -227,10 +224,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         Set<String> disabledWorlds = new HashSet<String> (sleepConfig.getStringList("disabled_worlds") );
         for (World world : Bukkit.getWorlds())
         {
-            // Only check on the overworld
-            //if (world.getEnvironment() == World.Environment.NORMAL) {
-
-            if ( ! disabledWorlds.contains( world.getName() ))
+            // Only enable non-disabled worlds and worlds that have a daylight cycle
+            Boolean doDaylightCycle = world.getGameRuleValue( GameRule.DO_DAYLIGHT_CYCLE );
+            if ( ! disabledWorlds.contains( world.getName() ) && ( doDaylightCycle == null || doDaylightCycle ))
             {
                 TimeChanger timeChanger;
 
@@ -254,7 +250,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             {
                 logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'");
             }
-            //}
         }
 
         if (isMultiWorldServer)
