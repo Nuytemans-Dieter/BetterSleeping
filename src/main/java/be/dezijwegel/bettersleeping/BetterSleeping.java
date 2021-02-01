@@ -191,12 +191,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         if (!fileConfig.getBoolean("action_bar_messages") && SpigotChecker.hasSpigot())
         {
             messenger = new ScreenMessenger(this, messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
-            logger.log("Using action bar for sending messages");
+            logger.log("Messages will be shown in the action bar");
         }
         else
         {
             messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
-            logger.log("Using chat for sending messages");
+            logger.log("Messages will be shown in chat");
         }
         
         
