@@ -94,6 +94,7 @@ public class Messenger {
         message = prefix + message;
 
         // Perform final replacements for color
+        message = replaceAlternativeRGBFormatByColor( message );
         message = message.replace('&', '§');
         message = replaceRGBFormatByColor( message );
 
@@ -105,6 +106,9 @@ public class Messenger {
     }
 
 
+    /**
+     * Replace our custom color code by their actual colors $(R, G, B)$
+     */
     private String replaceRGBFormatByColor(String string)
     {
         String[] rgbList = StringUtils.substringsBetween(string, "$(", ")$");
@@ -148,6 +152,47 @@ public class Messenger {
         return string;
     }
 
+    /**
+     * Replaces the format &#RRGGBB by their true colors
+     */
+    private String replaceAlternativeRGBFormatByColor(String string)
+    {
+        String[] rgbList = StringUtils.substringsBetween(string, "&#", " ");
+
+        if (rgbList == null)
+            return string;
+
+        // Get Spigot and required version
+        String spigotVersionStr = Bukkit.getServer().getBukkitVersion().split("-")[0];
+        Version spigotVersion = new Version( spigotVersionStr );
+        Version rgbVersion = new Version(1, 16, 0);
+
+        // If 1.16+, use rgb
+        if ( spigotVersion.compareTo(rgbVersion) >= 0 )
+        {
+            for (String s : rgbList)
+            {
+                if (s.length() == 6)
+                {
+                    net.md_5.bungee.api.ChatColor chatColor = null;
+
+                    try {
+                        Color color = Color.decode( "#" + s );
+                        chatColor = net.md_5.bungee.api.ChatColor.of(color);
+                    } catch (NumberFormatException ignored) {
+                    }
+
+                    if (chatColor != null)
+                        string = string.replaceFirst("&#.*? ", "" + chatColor);
+                }
+            }
+        }
+
+        // Remove remaining tags
+        string = string.replaceAll("&#.*? ", "");
+
+        return string;
+    }
 
     /**
      * Check whether or not a player should receive a message

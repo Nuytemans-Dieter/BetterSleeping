@@ -11,6 +11,9 @@
 
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
+# For SPIGOT ONLY in 1.16+: RGB support in one of the following formats: $(RED,GREEN,BLUE)$ OR &#RRGGBB
+# RED, GREEN and BLUE range from 0 to 255
+# RR, GG and BB follow the hex color codes, from 00 to ff
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below
 # some_setting: "ignored"
 # another_setting: ""
