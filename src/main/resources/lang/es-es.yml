@@ -74,7 +74,7 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message:  "Que pases buenas noches, <user>! (<num_sleeping>/<needed_sleeping>)"
+bed_enter_message: "Que pases buenas noches, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
 bed_enter_broadcast: "<player> esta tomando una siesta, [<num_sleeping>.un jugador esta.<num_sleeping> jugadores están] durmiendo ahora. <remaining_sleeping> [<remaining_sleeping>.dormilon es necesario.dormilones son necesarios]."
