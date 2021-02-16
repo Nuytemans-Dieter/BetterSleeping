@@ -18,7 +18,7 @@ jobs:
         with:
           java-version: 1.8
       - name: Clone YAML-localisation-sync
-        run: git clone some_repo
+        run: git clone https://github.com/Nuytemans-Dieter/YAML-localisation-sync.git
       - name: Building the project
         run: |
           cd YAML-localisation-sync
