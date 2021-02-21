@@ -77,10 +77,10 @@
 bed_enter_message: "Спокойной ночи, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> лёг в кровать, [<num_sleeping>.один игрок спит.<num_sleeping> игроков спят] сейчас. <remaining_sleeping> [<remaining_sleeping>.sleeper.sleepers] необходимо."
+bed_enter_broadcast: "<player> лёг в кровать, [<num_sleeping>.один игрок спит.<num_sleeping> игроков спят] сейчас. <remaining_sleeping> [<remaining_sleeping>.спящий.спящих] [<remaining_sleeping>.необходим.необходимо]."
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "Кто-то покинул свою кровать! [<remaining_sleeping>.Необходим.необходимо] ещё [<remaining_sleeping>.один игрок.<remaining_sleeping> игроков]."
+skipping_canceled: "Кто-то покинул свою кровать! [<remaining_sleeping>.необходим.необходимо] ещё [<remaining_sleeping>.игрок.игроков]."
 
 # This message is sent to all players in a world where enough players are sleeping
 enough_sleeping: "Достаточное число игроков уже спят, ночь скоро будет пропущена."
