@@ -248,6 +248,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                 }
             }
         }
+        
+        // Test free->premium pipeline
 
         if (isMultiWorldServer)
             logger.log("Found " + numWorlds + " worlds in memory.");
