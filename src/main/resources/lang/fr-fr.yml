@@ -7,7 +7,8 @@
 #                                              | |             __/ |
 #                                              |_|            |___/
 
-# Default lang files: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
+# Found an error or want to add new translations? Please let us know on Discord (https://discord.gg/AS46VGT) or GitHub!
+# All supported languages: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 
 # CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
@@ -20,16 +21,17 @@
 
 # How to use square brackets? [ and ]
 # BetterSleeping uses those to distinguish singular and plural words so you cannot directly use [ and ].
-# However, you can use |( and )| instead, they will be remapped to [ and ] respectively
-# |( This )| would become [ This ].
+# However, you can use |( and )| instead, they will be replaced by [ and ] respectively
+# |( This )| will become [ This ].
 
 # SINGULAR / PLURAL
 # BetterSleeping supports singular and plural nouns
-# This requires 3 contents: a (supported!) placeholder that will be replaced by a number - the singular form - the plural form
-# Example: [<num_sleeping>.player.players] -> <num_sleeping> must be supported by the message and will be replaced by the corresponding amount
+# This requires 3 contents: a (supported!) placeholder that will be replaced by a number, the singular form and the plural form
+# Example: [<num_sleeping>.player.players] --> <num_sleeping> will be replaced by the corresponding amount. This placeholder must be supported by the provided message.
+#   In this specific case:
 #     When <num_sleeping> is equal to 1: everything between the [] will be replaced by player
 #     When <num_sleeping> is NOT equal to 1: everything between the [] will be replaced by players
-# Hint: You CAN use other placeholders (see below) in these singular/plural messages
+# Note: For this, you can use any placeholder that is replaced by a number (see below)
 
 
 # PLACEHOLDERS
