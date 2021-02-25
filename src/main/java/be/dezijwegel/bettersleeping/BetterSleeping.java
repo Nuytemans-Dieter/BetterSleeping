@@ -129,8 +129,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             lang = new ConfigLib("lang/en-us.yml", this);
         }
 
-        // Test free->premium workflow (TODO: remove this comment)
-
         // Get the time skip mode
 
         TimeChanger.TimeChangeType timeChangerType;
