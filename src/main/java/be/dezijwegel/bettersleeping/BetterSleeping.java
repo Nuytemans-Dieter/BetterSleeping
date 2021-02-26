@@ -112,8 +112,6 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             getServer().getPluginManager().registerEvents(new PhantomHandler(), this);
 
         // Get the correct lang file
-
-        // ANother test
         
         ConfigLib lang;
         localised = localised == null ? "en-us" : localised;
