@@ -1,6 +1,8 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
+import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
+import be.dezijwegel.bettersleeping.events.handlers.TimeSetToDayCounter;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
 import be.dezijwegel.bettersleeping.util.*;
@@ -274,8 +276,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             updateChecker.start();
         }
 
+        TimeSetToDayCounter timeSetToDayCounter = new TimeSetToDayCounter();
+        getServer().getPluginManager().registerEvents(timeSetToDayCounter, this);
+
         // bStats handles enabling/disabling metrics collection, no check required
-        new BStatsHandler(this, config, sleeping, bypassing, essentialsHook, buffsHandler, isMultiWorldServer);
+        new BStatsHandler(this, config, sleeping, bypassing, essentialsHook, buffsHandler, timeSetToDayCounter, isMultiWorldServer);
 
         Objects.requireNonNull(this.getCommand("bettersleeping")).setExecutor(new CommandHandler(this, messenger, buffsHandler, bypassChecker));
     }
