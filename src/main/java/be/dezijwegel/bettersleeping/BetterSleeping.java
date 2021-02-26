@@ -113,6 +113,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         // Get the correct lang file
 
+        // ANother test
+        
         ConfigLib lang;
         localised = localised == null ? "en-us" : localised;
         String filename = "lang/" + localised.toLowerCase() + ".yml";
