@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class MetricsHandler {
 
+    @Deprecated
     public MetricsHandler(JavaPlugin plugin, String localised, boolean autoAddMissingOptions, EssentialsHook essentialsHook, String sleeperCalculatorType,
                           TimeChanger.TimeChangeType timeChangerType, int percentageNeeded, int absoluteNeeded, BypassChecker bypassChecker, boolean shortenPrefix,
                           BuffsHandler buffsHandler, boolean isMultiworld)

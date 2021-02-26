@@ -3,7 +3,7 @@ package be.dezijwegel.bettersleeping;
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
-import be.dezijwegel.bettersleeping.util.ConfigLib;
+import be.dezijwegel.bettersleeping.util.*;
 import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
 import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
 import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
@@ -20,9 +20,6 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.ScreenMessenger;
-import be.dezijwegel.bettersleeping.util.MetricsHandler;
-import be.dezijwegel.bettersleeping.util.SpigotChecker;
-import be.dezijwegel.bettersleeping.util.Version;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.HandlerList;
@@ -278,11 +275,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
 
         // bStats handles enabling/disabling metrics collection, no check required
-        new MetricsHandler(this, localised, autoAddOptions, essentialsHook, counter, timeChangerType,
-                            sleepConfig.getInt("percentage.needed"), sleepConfig.getInt("absolute.needed"),
-                            bypassChecker, fileConfig.getBoolean("shorten_prefix"), buffsHandler, isMultiWorldServer);
+        new BStatsHandler(this, config, sleeping, bypassing, essentialsHook, buffsHandler, isMultiWorldServer);
 
-        this.getCommand("bettersleeping").setExecutor(new CommandHandler(this, messenger, buffsHandler, bypassChecker));
+        Objects.requireNonNull(this.getCommand("bettersleeping")).setExecutor(new CommandHandler(this, messenger, buffsHandler, bypassChecker));
     }
 
 
