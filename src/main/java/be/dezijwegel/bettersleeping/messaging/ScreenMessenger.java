@@ -10,14 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class ScreenMessenger extends Messenger {
 
-    private final Plugin plugin;
+    private final JavaPlugin plugin;
     private final Map<Player, ScreenMessageSender> playerMessengerMap = new ConcurrentHashMap<>();
 
-    public ScreenMessenger(Plugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
+    public ScreenMessenger(JavaPlugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
     {
         super(plugin, messages, bypassChecker, sendToBypassedPlayers, doShortenPrefix);
         this.plugin = plugin;
