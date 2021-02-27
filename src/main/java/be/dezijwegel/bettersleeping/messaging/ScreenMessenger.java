@@ -19,7 +19,7 @@ public class ScreenMessenger extends Messenger {
 
     public ScreenMessenger(Plugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
     {
-        super(messages, bypassChecker, sendToBypassedPlayers, doShortenPrefix);
+        super(plugin, messages, bypassChecker, sendToBypassedPlayers, doShortenPrefix);
         this.plugin = plugin;
         // Register creation and deletion of messengers for every player
         plugin.getServer().getPluginManager().registerEvents(new PlayerQueueEventListener(), plugin);

@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.awt.*;
 import java.util.Collections;
@@ -26,9 +27,10 @@ public class Messenger {
 
     /**
      * Creates a messenger for player output
+     * @param plugin is passed as a parameter as it is required in the premium code. This argument should not be removed.
      * @param messages the messages from lang.yml, mapping path to message
      */
-    public Messenger(Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
+    public Messenger(Plugin plugin, Map<String, String> messages, BypassChecker bypassChecker, boolean sendToBypassedPlayers, boolean doShortenPrefix)
     {
         this.messages = messages;
         this.bypassChecker = bypassChecker;

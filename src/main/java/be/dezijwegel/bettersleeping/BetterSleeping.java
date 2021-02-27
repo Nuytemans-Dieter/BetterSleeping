@@ -190,7 +190,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         }
         else
         {
-            messenger = new Messenger(messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
+            messenger = new Messenger(this, messages, bypassChecker, bypassConfig.getBoolean("send_messages"), fileConfig.getBoolean("shorten_prefix"));
             logger.log("Messages will be shown in chat");
         }
         
