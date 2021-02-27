@@ -98,14 +98,7 @@ public class BStatsHandler {
             }));
         }
 
-        metrics.addCustomChart(new SingleLineChart("number_of_nights_skipped", new Callable<Integer>() {
-            @Override
-            public Integer call() throws Exception {
-                int num = timeSetToDayCounter.getCounter();
-                timeSetToDayCounter.resetCounter();
-                return num;
-            }
-        }));
+        metrics.addCustomChart(new SingleLineChart("number_of_nights_skipped", timeSetToDayCounter::resetCounter));
 
         String correctedTimePassMode;
         String timePassMode = sleepingSettings.getConfiguration().getString("mode");

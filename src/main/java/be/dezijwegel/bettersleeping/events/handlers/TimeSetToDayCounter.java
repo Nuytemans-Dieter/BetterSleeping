@@ -15,14 +15,11 @@ public class TimeSetToDayCounter implements Listener {
             counter++;
     }
 
-    public int getCounter()
+    public int resetCounter()
     {
-        return counter;
-    }
-
-    public void resetCounter()
-    {
+        int temp = counter;
         counter = 0;
+        return temp;
     }
 
 }
