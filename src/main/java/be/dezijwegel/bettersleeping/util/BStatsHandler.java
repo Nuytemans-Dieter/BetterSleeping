@@ -109,7 +109,7 @@ public class BStatsHandler {
 
         String correctedTimePassMode;
         String timePassMode = sleepingSettings.getConfiguration().getString("mode");
-        if (timePassMode == null || !timePassMode.equalsIgnoreCase("setter") || !timePassMode.equalsIgnoreCase("smooth"))
+        if (timePassMode == null || !( timePassMode.equalsIgnoreCase("setter") || timePassMode.equalsIgnoreCase("smooth") ))
             correctedTimePassMode = "faulty setting";
         else
             correctedTimePassMode = timePassMode;
