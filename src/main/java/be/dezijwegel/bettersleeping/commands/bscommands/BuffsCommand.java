@@ -73,7 +73,7 @@ public class BuffsCommand extends BsCommand {
     }
 
 
-    private String toString (PotionEffect buff)
+    String toString (PotionEffect buff)
     {
         String string = "";
         string += buff.toString().split(":")[0].toLowerCase().replace("_", " ");
