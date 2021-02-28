@@ -11,7 +11,7 @@ import java.util.Map;
 public class HelpCommand extends BsCommand {
 
 
-    private final Map<String, BsCommand> commands;
+    final Map<String, BsCommand> commands;
 
 
     public HelpCommand(Messenger messenger, Map<String, BsCommand> commands)

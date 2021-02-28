@@ -12,8 +12,8 @@ import org.bukkit.potion.PotionEffect;
 public class BuffsCommand extends BsCommand {
 
 
-    private final BuffsHandler buffsHandler;
-    private final BypassChecker bypassChecker;
+    final BuffsHandler buffsHandler;
+    final BypassChecker bypassChecker;
 
 
     public BuffsCommand(Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker)

@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class StatusCommand extends BsCommand {
 
 
-    private final BedEventHandler bedEventHandler;
+    final BedEventHandler bedEventHandler;
 
 
     public StatusCommand(Messenger messenger, BedEventHandler bedEventHandler)
