@@ -5,6 +5,9 @@ import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReloadCommand extends BsCommand {
 
 
@@ -45,8 +48,16 @@ public class ReloadCommand extends BsCommand {
     }
 
     @Override
-    public String getDescription()
+    public List<String> getDescription()
     {
+        return new ArrayList<String>() {{
+            add("Reloads config files");
+            add("Also resets sleeper counts!");
+        }};
+    }
+
+    @Override
+    public String getDescriptionAsString() {
         return "Reloads BetterSleeping and its configuration. This WILL reset internal sleeping player counts, keep that in mind.";
     }
 }

@@ -5,6 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VersionCommand extends BsCommand {
 
 
@@ -35,8 +38,15 @@ public class VersionCommand extends BsCommand {
 
 
     @Override
-    public String getDescription()
+    public List<String> getDescription()
     {
+        return new ArrayList<String>() {{
+            add("Shows the BetterSleeping version");
+        }};
+    }
+
+    @Override
+    public String getDescriptionAsString() {
         return "Shows the BetterSleeping version";
     }
 

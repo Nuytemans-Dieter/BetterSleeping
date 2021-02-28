@@ -9,6 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BuffsCommand extends BsCommand {
 
 
@@ -91,8 +94,15 @@ public class BuffsCommand extends BsCommand {
     }
 
     @Override
-    public String getDescription()
+    public List<String> getDescription()
     {
+        return new ArrayList<String>() {{
+            add("Shows all (de)buffs");
+        }};
+    }
+
+    @Override
+    public String getDescriptionAsString() {
         return "Shows the buffs and debuffs the executor will get when (not) sleeping.";
     }
 }

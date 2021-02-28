@@ -3,6 +3,8 @@ package be.dezijwegel.bettersleeping.commands.bscommands;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public abstract class BsCommand {
 
 
@@ -31,10 +33,11 @@ public abstract class BsCommand {
      */
     abstract public String getPermission();
 
+    abstract public List<String> getDescription();
 
     /**
      * Get a description for this command
      * @return decription for this command
      */
-    abstract public String getDescription();
+    abstract public String getDescriptionAsString();
 }

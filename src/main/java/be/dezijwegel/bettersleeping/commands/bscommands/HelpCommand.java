@@ -6,6 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class HelpCommand extends BsCommand {
@@ -75,7 +77,7 @@ public class HelpCommand extends BsCommand {
     private void sendCommandInfo(CommandSender commandSender, String commandName, BsCommand command)
     {
         commandSender.sendMessage(ChatColor.GOLD + "Command: " + ChatColor.DARK_AQUA + "/bs " + commandName);
-        commandSender.sendMessage(ChatColor.GOLD + "Description: " + ChatColor.DARK_AQUA + command.getDescription());
+        commandSender.sendMessage(ChatColor.GOLD + "Description: " + ChatColor.DARK_AQUA + command.getDescriptionAsString());
         if (commandSender.hasPermission("bettersleeping.help.admin"))
             commandSender.sendMessage(ChatColor.GOLD + "Permission: " + ChatColor.DARK_AQUA + command.getPermission());
         commandSender.sendMessage(ChatColor.GOLD + "---===---");
@@ -89,8 +91,16 @@ public class HelpCommand extends BsCommand {
     }
 
     @Override
-    public String getDescription()
+    public List<String> getDescription()
     {
+        return new ArrayList<String>() {{
+            add("Shows allowed commands");
+            add("Admins can see permissions");
+        }};
+    }
+
+    @Override
+    public String getDescriptionAsString() {
         return "Shows all commands a person has access to. Admins will also see the corresponding permissions.";
     }
 }

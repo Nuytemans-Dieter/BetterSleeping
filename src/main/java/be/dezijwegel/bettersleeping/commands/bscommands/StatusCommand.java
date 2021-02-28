@@ -10,6 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StatusCommand extends BsCommand {
 
 
@@ -67,8 +70,16 @@ public class StatusCommand extends BsCommand {
     }
 
     @Override
-    public String getDescription()
+    public List<String> getDescription()
     {
+        return new ArrayList<String>() {{
+            add("Shows sleeping info");
+            add("and other basic info");
+        }};
+    }
+
+    @Override
+    public String getDescriptionAsString() {
         return "View the amount of current sleeping players and the total required amount. Will also show some other basic information.";
     }
 }
