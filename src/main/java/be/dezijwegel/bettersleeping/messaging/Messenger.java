@@ -46,7 +46,7 @@ public class Messenger {
      * @param replacements the tag replacements for this message
      * @return the message ready to be sent
      */
-    private String composeMessage(String messageID, MsgEntry... replacements)
+    public String composeMessage(String messageID, MsgEntry... replacements)
     {
         // Get the message from lang.yml OR if non existent, get the raw message
         String message = messages.getOrDefault(messageID, messageID);
