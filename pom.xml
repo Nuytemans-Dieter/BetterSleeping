@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>be.dezijwegel.bettersleeping</groupId>
-    <artifactId>BetterSleeping</artifactId>
+    <artifactId>bettersleeping</artifactId>
     <version>3.0.4</version>
 
     <properties>
@@ -109,7 +109,7 @@
     <build>
 
         <!-- No longer include the version in the build name -->
-        <finalName>${project.artifactId}</finalName>
+        <finalName>BetterSleeping</finalName>
 
         <!-- Use Maven version throughout the plugin -->
         <resources>
@@ -144,5 +144,14 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Publish GitHub packages -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Nuytemans-Dieter Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/nuytemans-dieter/bettersleeping</url>
+        </repository>
+    </distributionManagement>
 
 </project>
