@@ -48,6 +48,18 @@ public class Messenger {
      */
     public String composeMessage(String messageID, MsgEntry... replacements)
     {
+        return this.composeMessage(messageID, true, replacements);
+    }
+
+    /**
+     * Compose a ready-to-be-sent BetterSleeping message
+     * @param messageID the ID of the message, or a custom message
+     * @param includePrefix whether or not a prefix should be put in front of this message
+     * @param replacements the tag replacements for this message
+     * @return the message ready to be sent
+     */
+    public String composeMessage(String messageID, boolean includePrefix, MsgEntry... replacements)
+    {
         // Get the message from lang.yml OR if non existent, get the raw message
         String message = messages.getOrDefault(messageID, messageID);
 
@@ -92,8 +104,11 @@ public class Messenger {
         }
 
         // Get the prefix and put it before the message
-        String prefix = doShortenPrefix ? "&6[BS3] &3" : "&6[BetterSleeping] &3";
-        message = prefix + message;
+        if (includePrefix)
+        {
+            String prefix = doShortenPrefix ? "&6[BS3] &3" : "&6[BetterSleeping] &3";
+            message = prefix + message;
+        }
 
         // Perform final replacements for color
         message = replaceAlternativeRGBFormatByColor( message );
