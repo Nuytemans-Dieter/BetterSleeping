@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.configuration;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -12,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class YamlLib {
+
+    private final YamlConfiguration yamlConfiguration;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public YamlLib(String name, JavaPlugin plugin) throws IOException {
@@ -98,6 +101,18 @@ public class YamlLib {
 
         new File(plugin.getDataFolder() + File.separator + "temp" + File.separator + "templates" + File.separator).delete();
         new File(plugin.getDataFolder() + File.separator + "temp" + File.separator).delete();
+
+        //
+        // Read final config contents
+        //
+
+        File file = new File(plugin.getDataFolder() + File.separator + name);
+        this.yamlConfiguration = YamlConfiguration.loadConfiguration( file );
+    }
+
+    public YamlConfiguration getYamlConfiguration()
+    {
+        return this.yamlConfiguration;
     }
 
 }
