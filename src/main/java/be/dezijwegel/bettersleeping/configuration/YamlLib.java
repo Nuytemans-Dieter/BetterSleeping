@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class YamlLib {
 
+    private final File file;
     private final YamlConfiguration yamlConfiguration;
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
@@ -90,6 +91,7 @@ public class YamlLib {
                 writer.newLine();
         }
 
+        reader.close();
         writer.close();
 
         //
@@ -107,7 +109,13 @@ public class YamlLib {
         //
 
         File file = new File(plugin.getDataFolder() + File.separator + name);
+        this.file = file;
         this.yamlConfiguration = YamlConfiguration.loadConfiguration( file );
+    }
+
+    public File getFile()
+    {
+        return this.file;
     }
 
     public YamlConfiguration getYamlConfiguration()
