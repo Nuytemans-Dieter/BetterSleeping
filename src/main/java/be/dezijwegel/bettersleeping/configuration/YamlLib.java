@@ -19,8 +19,8 @@ public class YamlLib {
         // Copy temp files
         //
 
-        TempFileCopier defaultCopy = new TempFileCopier( plugin, "", name, "temp/" );
-        TempFileCopier templateCopy = new TempFileCopier( plugin, "templates/", name, "temp/templates/");
+        TempFileCopier defaultCopy = new TempFileCopier( plugin, "", name, "temp" + File.separator );
+        TempFileCopier templateCopy = new TempFileCopier( plugin, "templates/", name, "temp" + File.separator + "templates" + File.separator);
 
 
         //
@@ -90,10 +90,11 @@ public class YamlLib {
         //  Cleanup: Delete temp folders
         //
 
-        templateCopy.deleteCopiedFiles();
-        defaultCopy.deleteCopiedFiles();
-        new File(plugin.getDataFolder() + File.separator + "temp/templates/").delete();
-        new File(plugin.getDataFolder() + File.separator + "temp/").delete();
+        templateCopy.deleteCopiedFile();
+        defaultCopy.deleteCopiedFile();
+
+        new File(plugin.getDataFolder() + File.separator + "temp" + File.separator + "templates" + File.separator).delete();
+        new File(plugin.getDataFolder() + File.separator + "temp" + File.separator).delete();
     }
 
 }

@@ -22,6 +22,9 @@ public class TempFileCopier {
      */
     public TempFileCopier(Plugin plugin, String resourcePath, String fileName, String path) throws IOException {
 
+//        resourcePath = resourcePath.replace("/", File.separator);
+//        path = path.replace( "/", File.separator);
+
         BufferedReader defaultReader = new BufferedReader( new InputStreamReader(Objects.requireNonNull(plugin.getResource( resourcePath + fileName)), StandardCharsets.UTF_8) );
         String tempPath = plugin.getDataFolder() + File.separator + path;
         File tempFolder = new File(tempPath);
@@ -44,7 +47,7 @@ public class TempFileCopier {
      * Delete the copied file
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void deleteCopiedFiles()
+    public void deleteCopiedFile()
     {
         this.copiedFile.delete();
     }
