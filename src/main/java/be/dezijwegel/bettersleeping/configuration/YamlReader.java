@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class YamlReader {
 
-    private final Map<String, Object> contents;
+    private final Map<String, Object> contents = new HashMap<>();
 
     public YamlReader(File file) throws FileNotFoundException
     {
@@ -31,25 +31,36 @@ public class YamlReader {
 
         Yaml yaml = new Yaml(loaderOptions);
         Map<String, Object> yamlContent = yaml.load(fis);
-        this.contents = yamlContent != null ? yamlContent : new HashMap<>();
-
-        // TODO: handle recursive values
+//        this.contents = yamlContent != null ? yamlContent : new HashMap<>();
 
         System.out.println("Reading new file...");
-        for (Map.Entry<String, Object> entry : contents.entrySet())
+        for (Map.Entry<String, Object> entry : yamlContent.entrySet())
         {
-            if (entry.getValue() instanceof Map)
-            {
-                Map<String, Object> map = (Map<String, Object>) entry.getValue();
-                for (Map.Entry<String, Object> subEntry : map.entrySet())
-                    System.out.println(entry.getKey() + " - " + subEntry.getKey());
-            }
-            System.out.println(entry.getKey());
+            addRecursiveContents(entry, "");
         }
     }
 
     public Map<String, Object> getContents()
     {
         return this.contents;
+    }
+
+    private void addRecursiveContents(Map.Entry<String, Object> entry, String path)
+    {
+        String key = entry.getKey();
+        Object value = entry.getValue();
+
+        final String newPath = path.equals("") ? key : path + "." + key;
+
+        if (value instanceof Map)
+        {
+            Map<String, Object> map = (Map<String, Object>) value;
+            for (Map.Entry<String, Object> subEntry : map.entrySet())
+                addRecursiveContents( subEntry, newPath);
+        }
+        else
+        {
+            contents.put(newPath, value);
+        }
     }
 }

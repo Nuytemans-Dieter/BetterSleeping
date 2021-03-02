@@ -19,8 +19,8 @@ public class YamlLib {
         // Copy temp files
         //
 
+        TempFileCopier defaultCopy = new TempFileCopier( plugin, "", name, "temp/" );
         TempFileCopier templateCopy = new TempFileCopier( plugin, "templates/", name, "temp/templates/");
-        TempFileCopier defaultCopy = new TempFileCopier( plugin, "", name, "temp" );
 
 
         //
