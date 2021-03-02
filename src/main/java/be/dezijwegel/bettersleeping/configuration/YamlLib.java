@@ -2,6 +2,7 @@ package be.dezijwegel.bettersleeping.configuration;
 
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -55,10 +56,9 @@ public class YamlLib {
         BufferedReader reader = new BufferedReader( new FileReader( new File(plugin.getDataFolder() + File.separator + "temp/templates/" + name) ) );
 
         // Prepare YAMLSnake
-//        DumperOptions options = new DumperOptions();
-//        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-//        Yaml yaml = new Yaml(options);
-        Yaml yaml = new Yaml();
+        DumperOptions options = new DumperOptions();
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        Yaml yaml = new Yaml(options);
 
         // Go through the template and replace all placeholders
         String line;
@@ -74,6 +74,8 @@ public class YamlLib {
                     {
                         String placeholder = "{" + tag + "}";
                         String dumped = yaml.dump( newContents.get( tag ) );
+                        // Remove newline
+                        dumped = dumped.substring(0, dumped.length() - 1);
                         line = line.replace( placeholder, dumped );;
                     }
                 }
@@ -81,7 +83,8 @@ public class YamlLib {
 
             // Write to file
             writer.append(line);
-            writer.newLine();
+            if (!line.endsWith("\n"))
+                writer.newLine();
         }
 
         writer.close();
