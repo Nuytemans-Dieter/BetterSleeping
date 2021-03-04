@@ -1,6 +1,7 @@
 package be.dezijwegel.bettersleeping.hooks.events;
 
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
+import be.dezijwegel.bettersleeping.util.SleepTimeChecker;
 import me.gsit.api.events.PlayerLayEvent;
 import me.gsit.api.events.PlayerStandUpLayEvent;
 import org.bukkit.World;
@@ -24,7 +25,10 @@ public class GSitListener implements Listener {
     public void onPlayerLay (PlayerLayEvent playerLayEvent)
     {
         Player player = playerLayEvent.getPlayer();
-        player.sendMessage("You lay down");
+
+        // If time for sleeping has not come yet, don't count the event
+        if (! SleepTimeChecker.isSleepPossible( player.getWorld() ))
+            return;
 
         // Don't handle disabled worlds
         if ( ! sleepHandlers.containsKey( player.getWorld() ))
@@ -37,7 +41,6 @@ public class GSitListener implements Listener {
     public void onPlayerGetUp(PlayerStandUpLayEvent playerStandUpLayEvent)
     {
         Player player = playerStandUpLayEvent.getPlayer();
-        player.sendMessage("You stand up");
 
         // Don't handle disabled worlds
         if ( ! sleepHandlers.containsKey( player.getWorld() ))
