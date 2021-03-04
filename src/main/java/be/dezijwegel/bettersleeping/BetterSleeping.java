@@ -1,14 +1,13 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
-import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
-import be.dezijwegel.bettersleeping.events.handlers.TimeSetToDayCounter;
+import be.dezijwegel.bettersleeping.events.listeners.TimeSetToDayCounter;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
 import be.dezijwegel.bettersleeping.util.*;
-import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.events.handlers.PhantomHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BedEventHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
@@ -22,8 +21,10 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.ScreenMessenger;
+import be.dezijwegel.betteryaml.BetterYaml;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -46,7 +47,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     @Override
     public void onEnable()
    {
-       startPlugin();
+       try {
+           startPlugin();
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
    }
 
 
@@ -61,12 +66,15 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         HandlerList.unregisterAll(this);
 
         // Restart all
-        startPlugin();
+        try {
+            startPlugin();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    private void startPlugin()
-    {
+    private void startPlugin() throws IOException {
         ConsoleLogger logger = new ConsoleLogger(true);
 
         // Handle multiworld support
@@ -101,7 +109,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         String  localised       = fileConfig.getString("language");
 
         ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions, "disabled_worlds");
-        ConfigLib hooks    = new ConfigLib("hooks.yml",             this, autoAddOptions);
+        BetterYaml hooks    = new BetterYaml("hooks.yml",this);
         ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
 
 
@@ -141,7 +149,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
         // Read hooks settings
 
-        FileConfiguration hooksConfig = hooks.getConfiguration();
+        YamlConfiguration hooksConfig = hooks.getYamlConfiguration();
         EssentialsHook essentialsHook = new EssentialsHook( hooksConfig.getBoolean("essentials_afk_ignored"),
                                                             hooksConfig.getBoolean("vanished_ignored"),
                                                             hooksConfig.getInt("minimum_afk_time"));

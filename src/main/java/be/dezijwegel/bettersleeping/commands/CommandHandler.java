@@ -2,11 +2,10 @@ package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.commands.bscommands.*;
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

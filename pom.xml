@@ -45,6 +45,12 @@
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
+
+        <!-- JitPack repo for BetterYaml access  -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -103,6 +109,13 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>2.2.1</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- BetterYaml -->
+        <dependency>
+            <groupId>com.github.BetterPluginsSpigot</groupId>
+            <artifactId>BetterYaml</artifactId>
+            <version>1.0.3</version>
         </dependency>
     </dependencies>
 

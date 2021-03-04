@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BedEventHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;

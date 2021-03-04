@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.ChatColor;

@@ -1,12 +1,8 @@
 package be.dezijwegel.bettersleeping.util;
 
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
-import be.dezijwegel.bettersleeping.events.handlers.TimeSetToDayCounter;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.TimeSetToDayCounter;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
-import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
-import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
-import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bstats.charts.DrilldownPie;
@@ -19,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 public class BStatsHandler {
 

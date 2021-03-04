@@ -1,8 +1,8 @@
 package be.dezijwegel.bettersleeping.hooks;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
-import be.dezijwegel.bettersleeping.events.handlers.BedEventHandler;
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BedEventHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;

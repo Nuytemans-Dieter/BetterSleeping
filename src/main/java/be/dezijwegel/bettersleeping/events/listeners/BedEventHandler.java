@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.events.handlers;
+package be.dezijwegel.bettersleeping.events.listeners;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;

@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.events.handlers;
+package be.dezijwegel.bettersleeping.events.listeners;
 
 import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
@@ -6,7 +6,6 @@ import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

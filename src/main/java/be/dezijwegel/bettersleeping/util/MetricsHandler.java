@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.util;
 
-import be.dezijwegel.bettersleeping.events.handlers.BuffsHandler;
+import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
