@@ -23,3 +23,7 @@ minimum_afk_time: {minimum_afk_time}
 
 # Whether or not to ignore vanished players
 vanished_ignored: {vanished_ignored}
+
+# Whether laying GSit players should be counted as sleepers (GSit plugin required)
+# NOTE: This is a new feature so behavior may be unexpected
+enable_gsit_support: {enable_gsit_support}

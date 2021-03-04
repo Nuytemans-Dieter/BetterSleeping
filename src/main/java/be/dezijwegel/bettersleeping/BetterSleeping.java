@@ -3,6 +3,7 @@ package be.dezijwegel.bettersleeping;
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.events.listeners.TimeSetToDayCounter;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
+import be.dezijwegel.bettersleeping.hooks.events.GSitListener;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
 import be.dezijwegel.bettersleeping.util.*;
 import be.dezijwegel.bettersleeping.events.listeners.BedEventHandler;
@@ -269,6 +270,14 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // Register bed event handler
         bedEventHandler = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
         getServer().getPluginManager().registerEvents(bedEventHandler, this);
+
+        // Enable GSit hook if enabled and installed
+        if ( hooksConfig.getBoolean("enable_gsit_support") && getServer().getPluginManager().getPlugin( "GSit" ) != null)
+        {
+            logger.log("Enabling GSit support...");
+            GSitListener gSitListener = new GSitListener( runnables );
+            getServer().getPluginManager().registerEvents( gSitListener, this );
+        }
 
         logger.log("The message below is always shown, even if collecting data is disabled: ");
         logger.log("BetterSleeping collects anonymous statistics once every 30 minutes. Opt-out at bStats/config.yml");

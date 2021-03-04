@@ -1,3 +1,4 @@
 essentials_afk_ignored: true
 minimum_afk_time: 60
 vanished_ignored: true
+enable_gsit_support: true

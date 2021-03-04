@@ -117,6 +117,14 @@
             <artifactId>BetterYaml</artifactId>
             <version>1.0.3</version>
         </dependency>
+
+        <dependency>
+            <groupId>me.gsit.main</groupId>
+            <artifactId>GSitMain</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/GSit.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>

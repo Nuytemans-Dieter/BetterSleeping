@@ -19,9 +19,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SleepersRunnable extends BukkitRunnable {
+
     // Final data
     private final World world;
     private final Set<UUID> sleepers;
+    private final Set<UUID> customSleepers;
     private final HashMap<UUID, Long> bedLeaveTracker;
 
     // Utility
@@ -47,7 +49,32 @@ public class SleepersRunnable extends BukkitRunnable {
         this.sleepersCalculator = sleepersCalculator;
         this.numNeeded = sleepersCalculator.getNumNeeded(world);
         this.sleepers = new HashSet<>();
+        this.customSleepers = new HashSet<>();
         this.bedLeaveTracker = new HashMap<>();
+    }
+
+    /**
+     * Fakes a player entering their bed
+     * This allows non-sleeping players to fake sleeping
+     *
+     * @param player the player who should count as a sleeping player
+     */
+    public void playerCustomEnterBEd(Player player)
+    {
+        this.customSleepers.add( player.getUniqueId() );
+        this.playerEnterBed( player );
+    }
+
+    /**
+     * Fakes a player leaving their bed
+     * This allows non-sleeping players to fake getting out of bed
+     *
+     * @param player the player who should no longer count as a sleeping player
+     */
+    public void playerCustomLeaveBEd(Player player)
+    {
+        this.customSleepers.remove( player.getUniqueId() );
+        this.playerLeaveBed( player );
     }
 
     /**
@@ -155,6 +182,7 @@ public class SleepersRunnable extends BukkitRunnable {
      */
     public void playerLogout(Player player) {
         this.playerLeaveBed(player);
+        this.customSleepers.remove( player.getUniqueId() );
         this.bedLeaveTracker.remove(player.getUniqueId());
 
         // Update the needed count when players leave their bed so that the count is adjusted
@@ -249,8 +277,11 @@ public class SleepersRunnable extends BukkitRunnable {
         {
             Player player = Bukkit.getPlayer( uuid );
             if (player == null || !player.isSleeping() || player.hasMetadata("NPC"))
-                awakePlayers.add( uuid );
+                // Ignore custom sleeping players
+                if (player == null || !this.customSleepers.contains( player.getUniqueId() ))
+                    awakePlayers.add( uuid );
         }
+
         this.sleepers.removeAll( awakePlayers );
 
         if (this.sleepers.size() >= this.numNeeded) {
