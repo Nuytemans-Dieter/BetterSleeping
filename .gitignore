@@ -2,7 +2,6 @@
 target/
 backup/
 .gitattributes
-BetterSleeping.iml
 build.xml
 .gradle/
 dependency-reduced-pom.xml
