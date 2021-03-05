@@ -55,16 +55,29 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
        }
    }
 
+    /**
+     * Not necessary in free version but it is required to handle Premiu GUIs
+     */
+   @Override
+   public void onDisable()
+   {
+       this.disable();
+   }
+
+   private void disable()
+   {
+       // Cancels all internal Runnables
+       bedEventHandler.reload();
+       updateChecker.stopReminder();
+
+       // Reset where needed: prevent events being handled twice
+       HandlerList.unregisterAll(this);
+   }
 
     @Override
     public void reload() {
 
-        // Cancels all internal Runnables
-        bedEventHandler.reload();
-        updateChecker.stopReminder();
-
-        // Reset where needed: prevent events being handled twice
-        HandlerList.unregisterAll(this);
+        this.disable();
 
         // Restart all
         try {
