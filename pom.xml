@@ -6,7 +6,7 @@
 
     <groupId>be.dezijwegel.bettersleeping</groupId>
     <artifactId>bettersleeping</artifactId>
-    <version>3.0.5</version>
+    <version>3.0.6</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
