@@ -28,10 +28,10 @@ This plugin is functional and has been tested on several Spigot versions. Bukkit
 | Spigot | BetterSleeping |
 | :----: | :------------: |
 | 1.12   | [3.0.4 download **only here**](https://github.com/Nuytemans-Dieter/BetterSleeping/releases)|
-| 1.13   | 3.0.4          |
-| 1.14   | 3.0.4          |
-| 1.15   | 3.0.4          |
-| 1.16   | 3.0.4 (latest) |
+| 1.13   | 3.0.6          |
+| 1.14   | 3.0.6          |
+| 1.15   | 3.0.6          |
+| 1.16   | 3.0.6 (latest) |
 
 ## How to contribute
 Sometimes people ask how they can help, there is a lot you can do.
