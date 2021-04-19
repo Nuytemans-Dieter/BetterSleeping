@@ -64,7 +64,7 @@ public class Messenger {
         String message = messages.getOrDefault(messageID, messageID);
 
         // Early return if the message is disabled
-        if (message.equals(""))
+        if (message.equals("") || message.equalsIgnoreCase("ignored"))
             return "";
         // Perform variable replacements
         for (MsgEntry entry : replacements)
