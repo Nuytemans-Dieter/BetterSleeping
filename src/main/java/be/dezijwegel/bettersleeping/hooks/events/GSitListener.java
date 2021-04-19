@@ -2,8 +2,8 @@ package be.dezijwegel.bettersleeping.hooks.events;
 
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
 import be.dezijwegel.bettersleeping.util.SleepTimeChecker;
+import me.gsit.api.events.PlayerGetUpLayEvent;
 import me.gsit.api.events.PlayerLayEvent;
-import me.gsit.api.events.PlayerStandUpLayEvent;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,7 +38,7 @@ public class GSitListener implements Listener {
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
-    public void onPlayerGetUp(PlayerStandUpLayEvent playerStandUpLayEvent)
+    public void onPlayerGetUp(PlayerGetUpLayEvent playerStandUpLayEvent)
     {
         Player player = playerStandUpLayEvent.getPlayer();
 
