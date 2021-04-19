@@ -67,15 +67,20 @@ public class BStatsHandler {
         {
             metrics.addCustomChart(new SimplePie("sleepers_calculator", counter::toLowerCase));
 
+            final int needed;
             if (counter.equalsIgnoreCase("absolute"))
             {
-                int needed = sleepingSettings.getConfiguration().getInt("absolute.needed");
+                needed = sleepingSettings.getConfiguration().getInt("absolute.needed");
                 metrics.addCustomChart(new SimplePie("percentage_needed", () -> String.valueOf( needed )));
             }
             else if (counter.equalsIgnoreCase("percentage"))
             {
-                int needed = sleepingSettings.getConfiguration().getInt("percentage.needed");
+                needed = sleepingSettings.getConfiguration().getInt("percentage.needed");
                 metrics.addCustomChart(new SimplePie("absolute_needed", () -> String.valueOf( needed )));
+            }
+            else
+            {
+                needed = 0;
             }
 
             metrics.addCustomChart(new DrilldownPie("sleepers_calculator_drilldown", () -> {
@@ -87,11 +92,13 @@ public class BStatsHandler {
                     category = counter;
                 else category = "Other";
 
-                entry.put(counter, 1);
+                entry.put("" + needed, 1);
                 map.put(category, entry);
                 return map;
             }));
         }
+
+        metrics.addCustomChart(new SimplePie("update_notifier", () -> config.getConfiguration().getBoolean("update_notifier") ? "Enabled" : "Disabled"));
 
         metrics.addCustomChart(new SingleLineChart("number_of_nights_skipped", timeSetToDayCounter::resetCounter));
 
