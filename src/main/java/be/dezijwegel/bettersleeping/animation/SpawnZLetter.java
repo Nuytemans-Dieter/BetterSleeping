@@ -5,102 +5,117 @@ import be.dezijwegel.bettersleeping.animation.location.IVariableLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class SpawnZLetter extends Animation {
+public class SpawnZLetter extends Animation implements PreComputeable<Double> {
+
+    private final List<Double> rotations;
+    private final Map<Double, List<Vector>> animationComputations;
 
     private final Particle particle;
     private final double size;
     private final double spacing;
-    private final double rotation;
 
-//    [cos  0   sin 0]
-//    [0    2   0   0]
-//    [-sin 0   cos 0]
-//    [0    0   0   1]
 
-    public SpawnZLetter(IVariableLocation location, Particle particle, double size, double spacing)
+    public SpawnZLetter(Particle particle, double size, double spacing)
     {
-        this(location, particle, size, spacing, 0);
-    }
+        this.animationComputations = new HashMap<>();
 
-    public SpawnZLetter(IVariableLocation location, Particle particle, double size, double spacing, double rotation)
-    {
-        super( location );
         this.particle = particle;
         this.size = size;
         this.spacing = spacing;
-        this.rotation = rotation;
-    }
 
-    private Vector rotate(Vector vector, double theta)
-    {
-        Vector x = new Vector( Math.cos( theta ), 0, - Math.sin( theta ) );
-        Vector y = new Vector( 0, 1, 0);
-        Vector z = new Vector( Math.sin( theta ), 0, Math.cos( theta ));
+        this.rotations = new ArrayList<>();
+        for (double rotation = 0; rotation < 2 * Math.PI; rotation += Math.PI/4)
+        {
+            System.out.println(rotation);
+            this.rotations.add(rotation);
+        }
 
-        return new Vector(
-            x.getX() * vector.getX() + x.getY() * vector.getY()  + x.getZ() * vector.getZ(),
-            y.getX() * vector.getX() + y.getY() * vector.getY()  + y.getZ() * vector.getZ(),
-            z.getX() * vector.getX() + z.getY() * vector.getY()  + z.getZ() * vector.getZ()
-        );
     }
 
     @Override
-    public void startAnimation() {
-        super.startAnimation();
-
+    public void preCompute(Double rotation)
+    {
         // Do calculations async
         Bukkit.getScheduler().runTaskAsynchronously(BetterSleeping.getInstance(), () -> {
 
             // Load the raw animation by following the path
 
-            Vector currentPosition = new Vector(0, 0, 0);
-
             List<Vector> rawLocations = new ArrayList<>();
-            for (double t = 0; t < size; t += spacing)
+            for (int i = -1; i < 2; i++)
             {
-                Vector movement = new Vector(1, 0, 0);
-                rawLocations.add( currentPosition.add( movement ).clone() );
-            }
+                Vector currentPosition = new Vector(i * size, 0, 0);
 
-            for (double t = 0; t < size; t += spacing)
-            {
-                Vector movement = new Vector(-1, -1, 0);
-                rawLocations.add( currentPosition.add( movement ).clone() );
-            }
+                for (double t = 0; t < size; t += spacing) {
+                    Vector movement = new Vector(1, 0, 0);
+                    rawLocations.add(currentPosition.add(movement).clone());
+                }
 
-            for (double t = 0; t < size; t += spacing)
-            {
-                Vector movement = new Vector(1, 0, 0);
-                rawLocations.add( currentPosition.add( movement ).clone() );
+
+                for (double t = 0; t < size; t += spacing) {
+                    Vector movement = new Vector(-1, -1, 0);
+                    rawLocations.add(currentPosition.add(movement).clone());
+                }
+
+
+                for (double t = 0; t < size; t += spacing) {
+                    Vector movement = new Vector(1, 0, 0);
+                    rawLocations.add(currentPosition.add(movement).clone());
+                }
             }
 
             // Perform calculations
 
-            Location origin = super.getOrigin();
-
-            double halfSize = size / 2;
+            double halfSize = (3 * size) / 2;
             Vector offset = new Vector(-halfSize, halfSize, 0);
-            List<Location> particleLocations = new ArrayList<>();
+            List<Vector> locations = new ArrayList<>();
             for (Vector position : rawLocations)
             {
                 position.add( offset );
                 position.rotateAroundY( rotation );
                 position.multiply( spacing );
-                particleLocations.add( origin.clone().add( position ) );
+                locations.add( position );
             }
 
-            // Draw particles
+            this.animationComputations.put( rotation, locations);
+        });
+    }
 
-            if (origin.getWorld() != null)
-                for (Location location : particleLocations)
-                {
-                    origin.getWorld().spawnParticle( particle, location, 1 );
-                }
+    @Override
+    public boolean isComputed(Double rotation)
+    {
+        return this.animationComputations.containsKey( rotation );
+    }
+
+    @Override
+    public void startAnimation(IVariableLocation variableLocation) {
+        super.startAnimation(variableLocation);
+
+        // Do calculations async
+        Bukkit.getScheduler().runTaskAsynchronously(BetterSleeping.getInstance(), () -> {
+
+            // Pick a random rotation
+            double rotation = this.rotations.get( new Random().nextInt( this.rotations.size() ) );
+
+            if ( ! this.isComputed( rotation ))
+            {
+                this.preCompute( rotation );
+                return;
+            }
+
+            Location origin = variableLocation.getLocation();
+            if (origin.getWorld() == null) return;
+
+            // Draw particles
+            List<Vector> locations = this.animationComputations.get( rotation );
+            for (Vector location : locations) {
+
+                origin.getWorld().spawnParticle(particle, origin.clone().add( location ), 1);
+            }
 
             // Mark the animation as finished
             super.isPlaying = false;
