@@ -45,6 +45,13 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     BedEventHandler bedEventHandler;
     private UpdateChecker updateChecker;
 
+    private static BetterSleeping instance;
+
+    public static BetterSleeping getInstance()
+    {
+        return instance;
+    }
+
     @Override
     public void onEnable()
    {
@@ -89,6 +96,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
     private void startPlugin() throws IOException {
+
+       BetterSleeping.instance = this;
+
         ConsoleLogger logger = new ConsoleLogger(true);
 
         // Handle multiworld support
