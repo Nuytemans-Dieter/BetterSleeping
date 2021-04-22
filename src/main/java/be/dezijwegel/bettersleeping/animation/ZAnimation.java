@@ -5,12 +5,11 @@ import be.dezijwegel.bettersleeping.animation.location.IVariableLocation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class SpawnZLetter extends Animation implements PreComputeable<Double> {
+public class ZAnimation extends Animation implements PreComputeable<Double> {
 
     private final List<Double> rotations;
     private final Map<Double, List<Vector>> animationComputations;
@@ -20,7 +19,7 @@ public class SpawnZLetter extends Animation implements PreComputeable<Double> {
     private final double spacing;
 
 
-    public SpawnZLetter(Particle particle, double size, double spacing)
+    public ZAnimation(Particle particle, double size, double spacing)
     {
         this.animationComputations = new HashMap<>();
 
@@ -72,7 +71,7 @@ public class SpawnZLetter extends Animation implements PreComputeable<Double> {
             // Perform calculations
 
             double halfSize = (3 * size) / 2;
-            Vector offset = new Vector(-halfSize, halfSize, 0);
+            Vector offset = new Vector(-halfSize, halfSize, 0).add( new Vector(0, 1 / spacing, 0) );
             List<Vector> locations = new ArrayList<>();
             for (Vector position : rawLocations)
             {
@@ -96,7 +95,7 @@ public class SpawnZLetter extends Animation implements PreComputeable<Double> {
     public void startAnimation(IVariableLocation variableLocation) {
         super.startAnimation(variableLocation);
 
-        // Do calculations async
+        // Handle particle spawning async
         Bukkit.getScheduler().runTaskAsynchronously(BetterSleeping.getInstance(), () -> {
 
             // Pick a random rotation
