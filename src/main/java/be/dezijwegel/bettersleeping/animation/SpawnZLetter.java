@@ -31,7 +31,6 @@ public class SpawnZLetter extends Animation implements PreComputeable<Double> {
         this.rotations = new ArrayList<>();
         for (double rotation = 0; rotation < 2 * Math.PI; rotation += Math.PI/4)
         {
-            System.out.println(rotation);
             this.rotations.add(rotation);
         }
 
@@ -48,7 +47,9 @@ public class SpawnZLetter extends Animation implements PreComputeable<Double> {
             List<Vector> rawLocations = new ArrayList<>();
             for (int i = -1; i < 2; i++)
             {
-                Vector currentPosition = new Vector(i * size, 0, 0);
+                double correctedSize = size / spacing;
+                double spaceSize = 3;
+                Vector currentPosition = new Vector(i * (correctedSize + spaceSize), 0, 0);
 
                 for (double t = 0; t < size; t += spacing) {
                     Vector movement = new Vector(1, 0, 0);
