@@ -7,6 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SpawnZLetter extends Animation {
 
     private final Particle particle;
@@ -33,19 +36,6 @@ public class SpawnZLetter extends Animation {
         this.rotation = rotation;
     }
 
-    /**
-     * Change the location by an offset and spawn a particle in this location
-     * @param location the starting location
-     * @param offset offset, should only contain -1, 0 and 1 as the spacing is applied internally
-     */
-    private void handleLocation(Location location, Vector offset)
-    {
-        location.add( offset.multiply( spacing ) );
-
-        if (location.getWorld() == null) return;
-        location.getWorld().spawnParticle( particle, location, 1 );
-    }
-
     private Vector rotate(Vector vector, double theta)
     {
         Vector x = new Vector( Math.cos( theta ), 0, - Math.sin( theta ) );
@@ -66,17 +56,51 @@ public class SpawnZLetter extends Animation {
         // Do calculations async
         Bukkit.getScheduler().runTaskAsynchronously(BetterSleeping.getInstance(), () -> {
 
+            // Load the raw animation by following the path
+
+            Vector currentPosition = new Vector(0, 0, 0);
+
+            List<Vector> rawLocations = new ArrayList<>();
+            for (double t = 0; t < size; t += spacing)
+            {
+                Vector movement = new Vector(1, 0, 0);
+                rawLocations.add( currentPosition.add( movement ).clone() );
+            }
+
+            for (double t = 0; t < size; t += spacing)
+            {
+                Vector movement = new Vector(-1, -1, 0);
+                rawLocations.add( currentPosition.add( movement ).clone() );
+            }
+
+            for (double t = 0; t < size; t += spacing)
+            {
+                Vector movement = new Vector(1, 0, 0);
+                rawLocations.add( currentPosition.add( movement ).clone() );
+            }
+
+            // Perform calculations
+
+            Location origin = super.getOrigin();
+
             double halfSize = size / 2;
-            Location lastLocation = super.getOrigin().add( - halfSize, halfSize, 0 );
+            Vector offset = new Vector(-halfSize, halfSize, 0);
+            List<Location> particleLocations = new ArrayList<>();
+            for (Vector position : rawLocations)
+            {
+                position.add( offset );
+                position.rotateAroundY( rotation );
+                position.multiply( spacing );
+                particleLocations.add( origin.clone().add( position ) );
+            }
 
-            for (double t = 0; t < size; t += spacing)
-                handleLocation(lastLocation, rotate(new Vector(1, 0, 0), rotation));
+            // Draw particles
 
-            for (double t = 0; t < size; t += spacing)
-                handleLocation(lastLocation, rotate(new Vector(-1, -1, 0), rotation));
-
-            for (double t = 0; t < size; t += spacing)
-                handleLocation(lastLocation, rotate(new Vector(1, 0, 0), rotation));
+            if (origin.getWorld() != null)
+                for (Location location : particleLocations)
+                {
+                    origin.getWorld().spawnParticle( particle, location, 1 );
+                }
 
             // Mark the animation as finished
             super.isPlaying = false;
