@@ -36,8 +36,6 @@ public class BedEventHandler implements Listener, Reloadable {
     private final EssentialsHook essentialsHook;
     private final SleepDelayChecker sleepDelayChecker;
     private final Map<World, SleepersRunnable> runnables;
-    private final Map<UUID, SleepingAnimation> sleepingAnimations;
-    private final Animation sleepingAnimation;
 
 
     public BedEventHandler(Plugin plugin, Messenger messenger, BypassChecker bypassChecker, EssentialsHook essentialsHook, int bedEnterDelay, Map<World, SleepersRunnable> runnables)
@@ -52,9 +50,6 @@ public class BedEventHandler implements Listener, Reloadable {
 
         for (SleepersRunnable runnable : runnables.values())
             runnable.runTaskTimer(plugin, 40L, 1L);
-
-        this.sleepingAnimations = new HashMap<>();
-        this.sleepingAnimation = new ZAnimation(Particle.COMPOSTER, 0.5, 0.1);
     }
 
 
@@ -103,24 +98,12 @@ public class BedEventHandler implements Listener, Reloadable {
         // Notify the subsystems of the player entering their bed. Subsystems will handle player messaging
         sleepDelayChecker.bedEnterEvent(player.getUniqueId());
         runnables.get(player.getWorld()).playerEnterBed(player);
-
-        // Start animations
-        SleepingAnimation animation = new SleepingAnimation(this.sleepingAnimation, 200);
-        animation.startAnimation( new PlayerLocation( player ));
-        this.sleepingAnimations.put(player.getUniqueId(), animation);
     }
 
 
     @EventHandler
     public void bedLeaveEvent (PlayerBedLeaveEvent event)
     {
-        // Stop animations
-        UUID uuid =  event.getPlayer().getUniqueId();
-        if (this.sleepingAnimations.containsKey( uuid ))
-        {
-            this.sleepingAnimations.remove(uuid).stopAnimation();
-        }
-
         Player player = event.getPlayer();
         if (runnables.containsKey( player.getWorld() ))
             runnables.get( player.getWorld() ).playerLeaveBed(player);

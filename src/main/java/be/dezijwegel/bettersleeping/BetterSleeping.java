@@ -1,14 +1,11 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
-import be.dezijwegel.bettersleeping.events.listeners.TimeSetToDayCounter;
+import be.dezijwegel.bettersleeping.events.listeners.*;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.hooks.events.GSitListener;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
 import be.dezijwegel.bettersleeping.util.*;
-import be.dezijwegel.bettersleeping.events.listeners.BedEventHandler;
-import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
-import be.dezijwegel.bettersleeping.events.listeners.PhantomHandler;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
@@ -26,6 +23,7 @@ import be.dezijwegel.betteryaml.BetterYaml;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -293,6 +291,13 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         // Register bed event handler
         bedEventHandler = new BedEventHandler(this, messenger, bypassChecker, essentialsHook, sleepConfig.getInt("bed_enter_delay"), runnables);
         getServer().getPluginManager().registerEvents(bedEventHandler, this);
+
+        // Register animation event handler
+        if (fileConfig.getBoolean("enable_animations"))
+        {
+            AnimationHandler animationHandler = new AnimationHandler();
+            getServer().getPluginManager().registerEvents(animationHandler, this);
+        }
 
         // Enable GSit hook if enabled and installed
         if ( hooksConfig.getBoolean("enable_gsit_support") && getServer().getPluginManager().getPlugin( "GSit" ) != null)
