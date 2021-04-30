@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +30,9 @@ public class AnimationHandler implements Listener {
     @EventHandler
     public void onBedEnter(PlayerBedEnterEvent event)
     {
+        if (event.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK)
+            return;
+
         // Start animations
         Player player = event.getPlayer();
         SleepingAnimation animation = new SleepingAnimation(this.sleepingAnimation, 200);
@@ -39,8 +43,19 @@ public class AnimationHandler implements Listener {
     @EventHandler
     public void onBedLeave(PlayerBedLeaveEvent event)
     {
-        // Stop animations
         UUID uuid =  event.getPlayer().getUniqueId();
+        stopAnimation( uuid );
+    }
+
+    @EventHandler
+    public void onLeave(PlayerQuitEvent event)
+    {
+        UUID uuid = event.getPlayer().getUniqueId();
+        stopAnimation(uuid);
+    }
+
+    private void stopAnimation(UUID uuid)
+    {
         if (this.sleepingAnimations.containsKey( uuid ))
         {
             this.sleepingAnimations.remove(uuid).stopAnimation();
