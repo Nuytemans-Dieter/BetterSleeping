@@ -6,6 +6,8 @@ import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -26,7 +28,7 @@ public class CommandHandler implements CommandExecutor {
 
     private final Map<String, String> shortcuts;
 
-    public CommandHandler(BetterSleeping plugin, Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker)
+    public CommandHandler(BetterSleeping plugin, Messenger messenger, BuffsHandler buffsHandler, BypassChecker bypassChecker, Map<World, SleepersRunnable> sleepHandlers)
     {
         this.messenger = messenger;
 
@@ -38,12 +40,14 @@ public class CommandHandler implements CommandExecutor {
         BsCommand reload    = new ReloadCommand(plugin, messenger);
         BsCommand status    = new StatusCommand(messenger, plugin.getBedEventHandler());
         BsCommand buffs     = new BuffsCommand(messenger, buffsHandler, bypassChecker);
+        BsCommand sleep     = new SleepCommand(messenger, sleepHandlers);
 
         playerCommands.put("version",   version );
         playerCommands.put("help"   ,   help    );
         playerCommands.put("reload" ,   reload  );
         playerCommands.put("status" ,   status  );
         playerCommands.put("buffs"  ,   buffs   );
+        playerCommands.put("sleep"  ,   sleep   );
 
         consoleCommands.put("version",  version );
         consoleCommands.put("help",     help    );

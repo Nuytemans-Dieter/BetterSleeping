@@ -59,7 +59,7 @@ public class SleepersRunnable extends BukkitRunnable {
      *
      * @param player the player who should count as a sleeping player
      */
-    public void playerCustomEnterBEd(Player player)
+    public void playerCustomEnterBed(Player player)
     {
         this.customSleepers.add( player.getUniqueId() );
         this.playerEnterBed( player );
