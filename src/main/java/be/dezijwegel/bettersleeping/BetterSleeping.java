@@ -257,7 +257,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             {
                 // Only enable non-disabled worlds and worlds that have a daylight cycle
                 Boolean doDaylightCycle = world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-                if (!disabledWorlds.contains(world.getName()) && (doDaylightCycle == null || doDaylightCycle)) {
+                boolean hasTimeCycle = doDaylightCycle == null || doDaylightCycle;
+                boolean isEnabled = !disabledWorlds.contains( world.getName() );
+                if (isEnabled && hasTimeCycle) {
                     TimeChanger timeChanger;
 
                     if (timeChangerType == TimeChanger.TimeChangeType.SMOOTH) {
@@ -273,7 +275,11 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
                     runnables.put(world, runnable);
                     numWorlds++;
                 } else {
-                    logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'");
+                    logger.log("Not enabling BetterSleeping in world '" + world.getName() + "'. Reason(s): ");
+                    if (!hasTimeCycle)
+                        logger.log("    - Gamerule DoDaylightCycle is set to false, this is a vanilla setting");
+                    if (!isEnabled)
+                        logger.log("    - You have disabled this world in sleeping_settings.yml");
                 }
             }
         }
