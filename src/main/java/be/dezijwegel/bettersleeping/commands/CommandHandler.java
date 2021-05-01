@@ -41,6 +41,7 @@ public class CommandHandler implements CommandExecutor {
         BsCommand status    = new StatusCommand(messenger, plugin.getBedEventHandler());
         BsCommand buffs     = new BuffsCommand(messenger, buffsHandler, bypassChecker);
         BsCommand sleep     = new SleepCommand(messenger, sleepHandlers);
+        BsCommand shout     = new ShoutCommand(messenger);
 
         playerCommands.put("version",   version );
         playerCommands.put("help"   ,   help    );
@@ -48,6 +49,7 @@ public class CommandHandler implements CommandExecutor {
         playerCommands.put("status" ,   status  );
         playerCommands.put("buffs"  ,   buffs   );
         playerCommands.put("sleep"  ,   sleep   );
+        playerCommands.put("shout"  ,   shout   );
 
         consoleCommands.put("version",  version );
         consoleCommands.put("help",     help    );

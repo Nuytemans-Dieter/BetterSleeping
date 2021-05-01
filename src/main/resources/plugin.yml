@@ -21,6 +21,7 @@ permissions:
             bettersleeping.buffs: true
             bettersleeping.help.admin: true
             bettersleeping.version: true
+            bettersleeping.shout: true
             bettersleeping.sleepcommand: true
     bettersleeping.user:
         description: Collection of commands that default users may want access to
@@ -31,6 +32,7 @@ permissions:
             bettersleeping.help.admin: false
             bettersleeping.buffs: true
             bettersleeping.version: false
+            bettersleeping.shout: true
             bettersleeping.sleepcommand: false
     bettersleeping.admin:
         description: Collection of commands that admins may want access to (all permissions except bypass)
@@ -41,6 +43,7 @@ permissions:
             bettersleeping.help.admin: true
             bettersleeping.buffs: true
             bettersleeping.version: true
+            bettersleeping.shout: true
             bettersleeping.sleepcommand: false
     bettersleeping.reload:
         description: Gives access to /bs reload, which will reload the BetterSleeping config files
@@ -65,4 +68,7 @@ permissions:
         default: op
     bettersleeping.buffs:
         description: Gives access to /bs buffs, which will show the (de)buffs this user will receive
+        default: true
+    bettersleeping.shout:
+        description: Gives access to /bs shout, which will request all players in that world to sleep. Has a per-world cooldown.
         default: true
