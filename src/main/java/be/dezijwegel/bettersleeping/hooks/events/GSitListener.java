@@ -34,7 +34,7 @@ public class GSitListener implements Listener {
         if ( ! sleepHandlers.containsKey( player.getWorld() ))
             return;
 
-        sleepHandlers.get( player.getWorld() ).playerCustomEnterBEd( player );
+        sleepHandlers.get( player.getWorld() ).playerCustomEnterBed( player );
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)

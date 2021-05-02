@@ -21,6 +21,8 @@ permissions:
             bettersleeping.buffs: true
             bettersleeping.help.admin: true
             bettersleeping.version: true
+            bettersleeping.shout: true
+            bettersleeping.sleepcommand: true
     bettersleeping.user:
         description: Collection of commands that default users may want access to
         children:
@@ -30,6 +32,8 @@ permissions:
             bettersleeping.help.admin: false
             bettersleeping.buffs: true
             bettersleeping.version: false
+            bettersleeping.shout: true
+            bettersleeping.sleepcommand: false
     bettersleeping.admin:
         description: Collection of commands that admins may want access to (all permissions except bypass)
         children:
@@ -39,6 +43,8 @@ permissions:
             bettersleeping.help.admin: true
             bettersleeping.buffs: true
             bettersleeping.version: true
+            bettersleeping.shout: true
+            bettersleeping.sleepcommand: false
     bettersleeping.reload:
         description: Gives access to /bs reload, which will reload the BetterSleeping config files
         default: op
@@ -48,6 +54,9 @@ permissions:
     bettersleeping.bypass:
         description: This player will be ignored from the required player count and will not be able to sleep
         default: false
+    bettersleeping.sleepcommand:
+        description: Gives acces to /bs sleep, which will make the plugin think that the player is sleeping
+        default: op
     bettersleeping.help.admin:
         description: Gives access to /bs help, which will give info about all commands the user has access to and permission nodes will be shown as well
         default: op
@@ -59,4 +68,7 @@ permissions:
         default: op
     bettersleeping.buffs:
         description: Gives access to /bs buffs, which will show the (de)buffs this user will receive
+        default: true
+    bettersleeping.shout:
+        description: Gives access to /bs shout, which will request all players in that world to sleep. Has a per-world cooldown.
         default: true
