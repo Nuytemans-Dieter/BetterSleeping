@@ -1,6 +1,8 @@
 name: Yaml autosync
 
-on: [push]
+on:
+  push:
+    branches: [ v3.0.0 ]
 
 jobs:
   build:
