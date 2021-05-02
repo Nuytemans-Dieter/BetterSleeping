@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.events.listeners;
+package be.dezijwegel.bettersleeping.listeners;
 
 import be.dezijwegel.bettersleeping.animation.Animation;
 import be.dezijwegel.bettersleeping.animation.SleepingAnimation;

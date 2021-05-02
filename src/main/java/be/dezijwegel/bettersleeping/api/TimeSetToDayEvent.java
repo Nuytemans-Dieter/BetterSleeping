@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.events.custom;
+package be.dezijwegel.bettersleeping.api;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;

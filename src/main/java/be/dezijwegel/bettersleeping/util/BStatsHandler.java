@@ -1,7 +1,7 @@
 package be.dezijwegel.bettersleeping.util;
 
-import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
-import be.dezijwegel.bettersleeping.events.listeners.TimeSetToDayCounter;
+import be.dezijwegel.bettersleeping.listeners.BuffsHandler;
+import be.dezijwegel.bettersleeping.listeners.TimeSetToDayCounter;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;

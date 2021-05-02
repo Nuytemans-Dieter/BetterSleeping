@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.runnables;
 
-import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
+import be.dezijwegel.bettersleeping.api.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
@@ -71,7 +71,7 @@ public class SleepersRunnable extends BukkitRunnable {
      *
      * @param player the player who should no longer count as a sleeping player
      */
-    public void playerCustomLeaveBEd(Player player)
+    public void playerCustomLeaveBed(Player player)
     {
         this.customSleepers.remove( player.getUniqueId() );
         this.playerLeaveBed( player );

@@ -1,6 +1,6 @@
-package be.dezijwegel.bettersleeping.events.listeners;
+package be.dezijwegel.bettersleeping.listeners;
 
-import be.dezijwegel.bettersleeping.events.custom.TimeSetToDayEvent;
+import be.dezijwegel.bettersleeping.api.TimeSetToDayEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

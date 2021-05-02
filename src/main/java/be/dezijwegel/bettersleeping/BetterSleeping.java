@@ -1,7 +1,8 @@
 package be.dezijwegel.bettersleeping;
 
+import be.dezijwegel.bettersleeping.api.Api;
 import be.dezijwegel.bettersleeping.commands.CommandHandler;
-import be.dezijwegel.bettersleeping.events.listeners.*;
+import be.dezijwegel.bettersleeping.listeners.*;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.hooks.events.GSitListener;
 import be.dezijwegel.bettersleeping.runnables.NotifyUpdateRunnable;
@@ -23,7 +24,6 @@ import be.dezijwegel.betteryaml.BetterYaml;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -44,10 +44,16 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     private UpdateChecker updateChecker;
 
     private static BetterSleeping instance;
+    private static Api api;
 
     public static BetterSleeping getInstance()
     {
         return instance;
+    }
+
+    public static Api getApi()
+    {
+        return api;
     }
 
     @Override
@@ -334,6 +340,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         new BStatsHandler(this, config, sleeping, bypassing, essentialsHook, buffsHandler, timeSetToDayCounter, isMultiWorldServer);
 
         Objects.requireNonNull(this.getCommand("bettersleeping")).setExecutor(new CommandHandler(this, messenger, buffsHandler, bypassChecker, runnables));
+        api = new Api(runnables);
     }
 
 

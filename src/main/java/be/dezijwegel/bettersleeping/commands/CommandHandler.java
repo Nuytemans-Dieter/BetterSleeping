@@ -2,7 +2,7 @@ package be.dezijwegel.bettersleeping.commands;
 
 import be.dezijwegel.bettersleeping.BetterSleeping;
 import be.dezijwegel.bettersleeping.commands.bscommands.*;
-import be.dezijwegel.bettersleeping.events.listeners.BuffsHandler;
+import be.dezijwegel.bettersleeping.listeners.BuffsHandler;
 import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;

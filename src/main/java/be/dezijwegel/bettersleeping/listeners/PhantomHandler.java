@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.events.listeners;
+package be.dezijwegel.bettersleeping.listeners;
 
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;

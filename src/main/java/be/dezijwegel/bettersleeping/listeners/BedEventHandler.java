@@ -1,10 +1,5 @@
-package be.dezijwegel.bettersleeping.events.listeners;
+package be.dezijwegel.bettersleeping.listeners;
 
-import be.dezijwegel.bettersleeping.animation.Animation;
-import be.dezijwegel.bettersleeping.animation.SleepingAnimation;
-import be.dezijwegel.bettersleeping.animation.ZAnimation;
-import be.dezijwegel.bettersleeping.animation.location.PlayerLocation;
-import be.dezijwegel.bettersleeping.animation.location.StaticLocation;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.messaging.MsgEntry;
@@ -13,8 +8,6 @@ import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.permissions.SleepDelayChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
 import be.dezijwegel.bettersleeping.util.SleepStatus;
-import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,9 +16,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class BedEventHandler implements Listener, Reloadable {
 
