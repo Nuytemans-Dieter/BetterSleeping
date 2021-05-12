@@ -79,7 +79,8 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
    {
        // Cancels all internal Runnables
        bedEventHandler.reload();
-       updateChecker.stopReminder();
+       if (updateChecker != null)
+        updateChecker.stopReminder();
 
        // Reset where needed: prevent events being handled twice
        HandlerList.unregisterAll(this);
@@ -327,6 +328,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
             new PapiExpansion(this, bedEventHandler, buffsHandler).register();
 
         // Handle update checking
+        updateChecker = null;
         if (checkUpdate)
         {
             updateChecker = new UpdateChecker(this, this.getDescription().getVersion(), logger, messenger);
