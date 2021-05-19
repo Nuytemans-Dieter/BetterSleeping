@@ -80,7 +80,7 @@
 bed_enter_message: "Buonanotte, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> si sta riposando, [<num_sleeping>.one giocatore sta.<num_sleeping> giocatori stanno] riposando ora. Altri <remaining_sleeping> [<remaining_sleeping>.giocatore.giocatori] richiesti."
+bed_enter_broadcast: "<player> si sta riposando, [<num_sleeping>.un solo giocatore sta.<num_sleeping> giocatori stanno] riposando ora. Servono altri <remaining_sleeping> [<remaining_sleeping>.giocatore.giocatori] per far passare la notte."
 
 # When not enough people are sleeping due to someone leaving their bed
 skipping_canceled: "Qualcuno ha lasciato il letto, quindi la notte non verrà saltata! Servono ancora <remaining_sleeping> [<remaining_sleeping>.giocatore.giocatori] che dormono!"
