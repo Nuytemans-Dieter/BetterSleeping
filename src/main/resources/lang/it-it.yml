@@ -7,11 +7,10 @@
 #                                              | |             __/ |
 #                                              |_|            |___/
 
-# Traduzione del file effettuata da Villag3r_. Le stringhe commentate non verranno tradotte (yet).
-# Se trovi un errore o hai bisogno di supporto, entra sul nostro Discord (https://discord.gg/AS46VGT) o scrivici su GitHub!
-# Tutti i linguaggi supportati: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
+# Found an error or want to add new translations? Please let us know on Discord (https://discord.gg/AS46VGT) or GitHub!
+# All supported languages: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 
-# CONFIGURATION GUIDE: 
+# CONFIGURATION GUIDE:
 # The symbol '&' is used for color codes
 # For SPIGOT ONLY in 1.16+: RGB support in one of the following formats: $(RED,GREEN,BLUE)$ OR &#RRGGBB
 # RED, GREEN and BLUE range from 0 to 255
