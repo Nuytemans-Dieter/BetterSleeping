@@ -7,10 +7,11 @@
 #                                              | |             __/ |
 #                                              |_|            |___/
 
-# Found an error or want to add new translations? Please let us know on Discord (https://discord.gg/AS46VGT) or GitHub!
-# All supported languages: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
+# Traduzione del file effettuata da Villag3r_. Le stringhe commentate non verranno tradotte (yet).
+# Se trovi un errore o hai bisogno di supporto, entra sul nostro Discord (https://discord.gg/AS46VGT) o scrivici su GitHub!
+# Tutti i linguaggi supportati: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 
-# CONFIGURATION GUIDE:
+# CONFIGURATION GUIDE: 
 # The symbol '&' is used for color codes
 # For SPIGOT ONLY in 1.16+: RGB support in one of the following formats: $(RED,GREEN,BLUE)$ OR &#RRGGBB
 # RED, GREEN and BLUE range from 0 to 255
@@ -76,22 +77,22 @@
 # ----------------- #
 
 # A player receives this message when entering their bed
-bed_enter_message: "Dormi bene, <user>! (<num_sleeping>/<needed_sleeping>)"
+bed_enter_message: "Buonanotte, <user>! (<num_sleeping>/<needed_sleeping>)"
 
 # All players in the same world get this message when someone enters their bed
-bed_enter_broadcast: "<player> sta schiacciando un pisolino, [<num_sleeping>.one player sta.<num_sleeping> players stanno] dormendo ora. <remaining_sleeping> [<remaining_sleeping>.sleeper.sleepers] needed."
+bed_enter_broadcast: "<player> si sta riposando, [<num_sleeping>.un solo giocatore sta.<num_sleeping> giocatori stanno] riposando ora. Servono altri <remaining_sleeping> [<remaining_sleeping>.giocatore.giocatori] per far passare la notte."
 
 # When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: "Qualcuno ha lasciato il letto quindi la notte non sarà saltata! <remaining_sleeping> altri [<remaining_sleeping>.player.player] necessari!"
+skipping_canceled: "Qualcuno ha lasciato il letto, quindi la notte non verrà saltata! Servono ancora <remaining_sleeping> [<remaining_sleeping>.giocatore.giocatori] che dormono!"
 
 # This message is sent to all players in a world where enough players are sleeping
-enough_sleeping: "Ora stanno dormendo abbastanza giocatori, la notte finirà a breve."
+enough_sleeping: "La notte passerà più in fretta, perché ci sono abbastanza giocatori che si stanno riposando."
 
 # Players receive this message in the morning
-morning_message: "Buon mattino, <user>. Buona giornata!"
+morning_message: "Buongiorno, <user>. Ti auguriamo buona giornata!"
 
 # Players that try to enter their bed too quickly after getting out of it
-sleep_spam: "Devi aspettare ancora <time> [<time>.secondo.secondi] prima che tu possa dormire di nuovo!"
+sleep_spam: "Devi aspettare ancora <time> [<time>.secondo.secondi] prima di dormire!"
 
 # This message is sent one minute before players can go to bed due to nighttime (disabled by default)
 sleep_possible_soon: ""
@@ -104,10 +105,10 @@ sleep_possible_now: ""
 # --------------- #
 
 # Players who slept AND receive buffs will get this message
-buff_received: "Ti senti ben riposato, hai ricevuro [<var>.a buff.<var> buff]."
+buff_received: "Ti sei riposato bene e hai ricevuto [<var>.un potenziamento.<var> dei potenziamenti]."
 
 # Players who did not sleep AND receive debuffs will get this message
-debuff_received: "Non hai dormito e ti senti stanco, hai ricevuto [<var>.a debuff.<var> debuff]."
+debuff_received: "Non hai risposato bene e hai ricevuto [<var>.un debuff.<var> dei debuff]."
 
 
 # -------------------- #
@@ -118,11 +119,11 @@ debuff_received: "Non hai dormito e ti senti stanco, hai ricevuto [<var>.a debuf
 no_permission: "&cNon hai il permesso di eseguire <var>!"
 
 # The message that will be sent to the admin that does a reload
-message_reloaded: "&2Reload completato!"
+message_reloaded: "&2Riavvio dei config completato!"
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
 #     - Having the node bettersleeping.bypass OR essentials.sleepingignored
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
-bypass_message: "&cSei bypassato, quindi non hai bisogno di dormire, <user>."
+bypass_message: "&cStai bypassando il plugin, perciò non hai bisogno di dormire <user>."
