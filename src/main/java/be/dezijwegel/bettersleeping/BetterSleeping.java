@@ -20,7 +20,7 @@ import be.dezijwegel.bettersleeping.timechange.TimeSetter;
 import be.dezijwegel.bettersleeping.timechange.TimeSmooth;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
 import be.dezijwegel.bettersleeping.messaging.ScreenMessenger;
-import be.dezijwegel.betteryaml.BetterYaml;
+import be.dezijwegel.betteryaml.OptionalBetterYaml;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -59,11 +59,7 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
     @Override
     public void onEnable()
    {
-       try {
-           startPlugin();
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+       startPlugin();
    }
 
     /**
@@ -92,15 +88,12 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         this.disable();
 
         // Restart all
-        try {
-            startPlugin();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        startPlugin();
     }
 
 
-    private void startPlugin() throws IOException {
+    private void startPlugin()
+    {
 
        BetterSleeping.instance = this;
 
@@ -137,10 +130,9 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
         boolean checkUpdate     = fileConfig.getBoolean("update_notifier");
         String  localised       = fileConfig.getString("language");
 
-        ConfigLib sleeping = new ConfigLib("sleeping_settings.yml", this, autoAddOptions, "disabled_worlds");
-        BetterYaml hooks    = new BetterYaml("hooks.yml",this);
-        ConfigLib bypassing= new ConfigLib("bypassing.yml",         this, autoAddOptions);
-
+        ConfigLib sleeping          = new ConfigLib("sleeping_settings.yml", this, autoAddOptions, "disabled_worlds");
+        OptionalBetterYaml hooks    = new OptionalBetterYaml("hooks.yml",this);
+        ConfigLib bypassing         = new ConfigLib("bypassing.yml",this, autoAddOptions);
 
         // Handle configuration
 
@@ -177,11 +169,22 @@ public class BetterSleeping extends JavaPlugin implements Reloadable {
 
 
         // Read hooks settings
-
-        YamlConfiguration hooksConfig = hooks.getYamlConfiguration();
-        EssentialsHook essentialsHook = new EssentialsHook( hooksConfig.getBoolean("essentials_afk_ignored"),
-                                                            hooksConfig.getBoolean("vanished_ignored"),
-                                                            hooksConfig.getInt("minimum_afk_time"));
+        EssentialsHook essentialsHook;
+        YamlConfiguration hooksConfig;
+        Optional<YamlConfiguration> optionalHooks = hooks.getYamlConfiguration();
+        if (optionalHooks.isPresent())
+        {
+            hooksConfig = optionalHooks.get();
+            essentialsHook = new EssentialsHook(hooksConfig.getBoolean("essentials_afk_ignored"),
+                    hooksConfig.getBoolean("vanished_ignored"),
+                    hooksConfig.getInt("minimum_afk_time"));
+        }
+        else
+        {
+            logger.log("Something went wrong while handling your hooks.yml configuration! Cannot enable BetterSleeping");
+            this.getPluginLoader().disablePlugin( this );
+            return;
+        }
 
 
         // Read bypass settings

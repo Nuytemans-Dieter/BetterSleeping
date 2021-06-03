@@ -91,7 +91,7 @@
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.10.3</version>
+            <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
 
@@ -115,9 +115,10 @@
         <dependency>
             <groupId>com.github.BetterPluginsSpigot</groupId>
             <artifactId>BetterYaml</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.6</version>
         </dependency>
 
+        <!-- Add GSit as a dependency -->
         <dependency>
             <groupId>me.gsit.main</groupId>
             <artifactId>GSitMain</artifactId>
