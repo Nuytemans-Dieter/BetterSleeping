@@ -1,7 +1,6 @@
 package be.dezijwegel.bettersleeping;
 
 import be.dezijwegel.bettersleeping.api.Api;
-import be.dezijwegel.bettersleeping.commands.CommandHandler;
 import be.dezijwegel.bettersleeping.listeners.*;
 import be.dezijwegel.bettersleeping.hooks.PapiExpansion;
 import be.dezijwegel.bettersleeping.hooks.events.GSitListener;
@@ -10,7 +9,6 @@ import be.dezijwegel.bettersleeping.util.*;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;

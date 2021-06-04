@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.commands;
 
-import be.dezijwegel.bettersleeping.commands.bscommands.BsCommand;
+import be.betterplugins.core.commands.BPCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -17,14 +17,12 @@ import java.util.Map;
 public class TabCompleter implements org.bukkit.command.TabCompleter {
 
 
-    private final Map<String, BsCommand> playerCommands;    // Every Player subcommand mapped to its BsCommand object
-    private final Map<String, BsCommand> consoleCommands;   // Every console subcommand mapped to its BsCommand object
+    private final Map<String, BPCommand> commands;
 
 
-    public TabCompleter(Map<String, BsCommand> playerCommands, Map<String, BsCommand> consoleCommands)
+    public TabCompleter(Map<String, BPCommand> commands)
     {
-        this.playerCommands = playerCommands;
-        this.consoleCommands = consoleCommands;
+        this.commands = commands;
     }
 
 
@@ -35,17 +33,17 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
      * @param partialMatch enforces each command to start with the given String
      * @return a list of possible commands
      */
-    private List<String> getAllowedCommands( @NotNull  Map<String, BsCommand> commands, @NotNull CommandSender cs, @Nullable String partialMatch )
+    private List<String> getAllowedCommands( @NotNull  Map<String, BPCommand> commands, @NotNull CommandSender cs, @Nullable String partialMatch )
     {
         List<String> options = new ArrayList<>();
 
         // Get the allowed commands for this CommandSender
-        for(Map.Entry<String, BsCommand> entry : commands.entrySet())
+        for(Map.Entry<String, BPCommand> entry : commands.entrySet())
         {
             String cmdName = entry.getKey();
-            BsCommand command = entry.getValue();
+            BPCommand command = entry.getValue();
 
-            if (cs.hasPermission( command.getPermission() ))
+            if (cs.hasPermission( command.getPermission() ) && command.mayExecute( cs ))
                 options.add( cmdName );
         }
 
@@ -72,7 +70,7 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
      * @param cs which CommandSender needs to be checked
      * @return a list of possible commands
      */
-    private List<String> getAllowedCommands( @NotNull Map<String, BsCommand> commands, @NotNull CommandSender cs)
+    private List<String> getAllowedCommands( @NotNull Map<String, BPCommand> commands, @NotNull CommandSender cs)
     {
         return getAllowedCommands(commands, cs, null);
     }
@@ -86,20 +84,12 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
         if ( !(commandSender instanceof Player) && !(commandSender instanceof ConsoleCommandSender))
             return null;
 
-        // Get the right commands
-        Map<String, BsCommand> commands;
-        commands = commandSender instanceof Player ? playerCommands : consoleCommands;
-
         // Return the correct list of possible commands
         if (arguments.length == 0)
-
             return getAllowedCommands(commands, commandSender);
-
         else if (arguments.length == 1)
-
             return getAllowedCommands(commands, commandSender, arguments[0]);
-
-        else  return new ArrayList<>();
+        else  return null;
     }
 
 }

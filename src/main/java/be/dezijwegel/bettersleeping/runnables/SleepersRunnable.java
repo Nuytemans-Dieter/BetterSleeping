@@ -2,8 +2,6 @@ package be.dezijwegel.bettersleeping.runnables;
 
 import be.dezijwegel.bettersleeping.api.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
-import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 import be.dezijwegel.bettersleeping.util.Debugger;

@@ -2,8 +2,6 @@ package be.dezijwegel.bettersleeping.listeners;
 
 import be.dezijwegel.bettersleeping.api.TimeSetToDayEvent;
 import be.dezijwegel.bettersleeping.messaging.ConsoleLogger;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
-import be.dezijwegel.bettersleeping.messaging.MsgEntry;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;

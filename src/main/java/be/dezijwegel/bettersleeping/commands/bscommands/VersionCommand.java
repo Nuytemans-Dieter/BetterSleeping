@@ -1,14 +1,17 @@
 package be.dezijwegel.bettersleeping.commands.bscommands;
 
-import be.dezijwegel.bettersleeping.messaging.Messenger;
+import be.betterplugins.core.commands.BPCommand;
+import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class VersionCommand extends BsCommand {
+public class VersionCommand extends BPCommand
+{
 
 
     private final String version;
@@ -21,34 +24,35 @@ public class VersionCommand extends BsCommand {
         version = plugin.getDescription().getVersion();
     }
 
-
     @Override
-    public boolean execute(CommandSender commandSender, Command command, String alias, String[] arguments)
+    public @NotNull String getCommandName()
     {
-        messenger.sendMessage(commandSender, "You are using BetterSleeping " + version, true);
-        return true;
+        return "version";
     }
 
+    @Override
+    public @NotNull List<String> getAliases()
+    {
+        return Collections.singletonList("v");
+    }
 
     @Override
-    public String getPermission()
+    public @NotNull String getPermission()
     {
         return "bettersleeping.version";
     }
 
-
     @Override
-    public List<String> getDescription()
+    public boolean mayExecute(CommandSender commandSender)
     {
-        return new ArrayList<String>() {{
-            add("Shows the BetterSleeping version");
-        }};
+        return true;
     }
 
     @Override
-    public String getDescriptionAsString() {
-        return "Shows the BetterSleeping version";
+    public boolean execute(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String[] strings)
+    {
+        messenger.sendMessage(commandSender, "You are using BetterSleeping " + version);
+        return true;
     }
-
 
 }

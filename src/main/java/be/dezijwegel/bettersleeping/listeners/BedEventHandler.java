@@ -2,8 +2,6 @@ package be.dezijwegel.bettersleeping.listeners;
 
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
-import be.dezijwegel.bettersleeping.messaging.MsgEntry;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.permissions.SleepDelayChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepersRunnable;

@@ -1,6 +1,5 @@
 package be.dezijwegel.bettersleeping.runnables;
 
-import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

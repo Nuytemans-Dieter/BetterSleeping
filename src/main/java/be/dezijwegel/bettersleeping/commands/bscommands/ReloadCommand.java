@@ -1,14 +1,17 @@
 package be.dezijwegel.bettersleeping.commands.bscommands;
 
+import be.betterplugins.core.commands.BPCommand;
+import be.betterplugins.core.messaging.messenger.Messenger;
 import be.dezijwegel.bettersleeping.interfaces.Reloadable;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class ReloadCommand extends BsCommand {
+public class ReloadCommand extends BPCommand
+{
 
 
     private final Reloadable plugin;
@@ -27,37 +30,41 @@ public class ReloadCommand extends BsCommand {
     }
 
     @Override
-    public boolean execute(CommandSender commandSender, Command command, String alias, String[] arguments)
+    public @NotNull String getCommandName()
     {
-        if (commandSender.hasPermission( getPermission() ))
-        {
-            plugin.reload();
-            messenger.sendMessage(commandSender, "message_reloaded", true);
-        }
-        else
-        {
-            messenger.sendMessage(commandSender, "no_permission", true);
-        }
-        return true;
+        return "reload";
     }
 
     @Override
-    public String getPermission()
+    public @NotNull List<String> getAliases()
+    {
+        return Collections.singletonList("r");
+    }
+
+    @Override
+    public @NotNull String getPermission()
     {
         return "bettersleeping.reload";
     }
 
     @Override
-    public List<String> getDescription()
+    public boolean mayExecute(CommandSender commandSender)
     {
-        return new ArrayList<String>() {{
-            add("Reloads config files");
-            add("Also resets sleeper counts!");
-        }};
+        return false;
     }
 
     @Override
-    public String getDescriptionAsString() {
-        return "Reloads BetterSleeping and its configuration. This WILL reset internal sleeping player counts, keep that in mind.";
+    public boolean execute(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String[] strings)
+    {
+        if (commandSender.hasPermission( getPermission() ))
+        {
+            plugin.reload();
+            messenger.sendMessage(commandSender, "message_reloaded");
+        }
+        else
+        {
+            messenger.sendMessage(commandSender, "no_permission");
+        }
+        return true;
     }
 }

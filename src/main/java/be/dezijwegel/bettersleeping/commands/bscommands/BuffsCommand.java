@@ -1,18 +1,20 @@
 package be.dezijwegel.bettersleeping.commands.bscommands;
 
+import be.betterplugins.core.commands.shortcuts.PlayerBPCommand;
+import be.betterplugins.core.messaging.messenger.Messenger;
 import be.dezijwegel.bettersleeping.listeners.BuffsHandler;
-import be.dezijwegel.bettersleeping.messaging.Messenger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class BuffsCommand extends BsCommand {
+public class BuffsCommand extends PlayerBPCommand
+{
 
 
     final BuffsHandler buffsHandler;
@@ -27,55 +29,6 @@ public class BuffsCommand extends BsCommand {
         this.bypassChecker = bypassChecker;
     }
 
-
-    @Override
-    public boolean execute(CommandSender commandSender, Command command, String alias, String[] arguments)
-    {
-        if ( ! (commandSender instanceof Player ))
-            return true;
-
-        Player player = (Player) commandSender;
-
-        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping buffs}==--", true);
-
-        if (buffsHandler.getBuffs().size() == 0)
-        {
-            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping buffs!", true );
-        }
-        else
-        {
-            messenger.sendMessage(player, "When you sleep, you will get:", true);
-            for (PotionEffect buff : buffsHandler.getBuffs())
-            {
-                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff), true );
-            }
-        }
-
-        messenger.sendMessage(player, ChatColor.GOLD + "---===---", true);
-
-        if (buffsHandler.getDebuffs().size() == 0)
-        {
-            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping debuffs!", true );
-        }
-        else if (bypassChecker.isPlayerBypassed( player ))
-        {
-            messenger.sendMessage(player, "You will not get debuffs when not sleeping.", true );
-        }
-        else
-        {
-            messenger.sendMessage(player, "When you don't sleep, you will get:", true);
-            for (PotionEffect buff : buffsHandler.getDebuffs())
-            {
-                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff), true );
-            }
-        }
-
-
-        messenger.sendMessage(player, ChatColor.GOLD + "---===---", true);
-        return true;
-    }
-
-
     String toString (PotionEffect buff)
     {
         String string = "";
@@ -88,21 +41,61 @@ public class BuffsCommand extends BsCommand {
 
 
     @Override
-    public String getPermission()
+    public @NotNull String getCommandName() {
+        return "buffs";
+    }
+
+    @Override
+    public @NotNull List<String> getAliases() {
+        return Collections.singletonList("b");
+    }
+
+    @Override
+    public @NotNull String getPermission()
     {
         return "bettersleeping.buffs";
     }
 
     @Override
-    public List<String> getDescription()
+    public boolean execute(@NotNull Player player, @NotNull Command command, @NotNull String[] strings)
     {
-        return new ArrayList<String>() {{
-            add("Shows all (de)buffs");
-        }};
-    }
 
-    @Override
-    public String getDescriptionAsString() {
-        return "Shows the buffs and debuffs the executor will get when (not) sleeping.";
+        messenger.sendMessage(player, ChatColor.GOLD + "--=={BetterSleeping buffs}==--");
+
+        if (buffsHandler.getBuffs().size() == 0)
+        {
+            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping buffs!");
+        }
+        else
+        {
+            messenger.sendMessage(player, "When you sleep, you will get:");
+            for (PotionEffect buff : buffsHandler.getBuffs())
+            {
+                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff));
+            }
+        }
+
+        messenger.sendMessage(player, ChatColor.GOLD + "---===---");
+
+        if (buffsHandler.getDebuffs().size() == 0)
+        {
+            messenger.sendMessage(player, ChatColor.AQUA + "There are no enabled sleeping debuffs!");
+        }
+        else if (bypassChecker.isPlayerBypassed( player ))
+        {
+            messenger.sendMessage(player, "You will not get debuffs when not sleeping.");
+        }
+        else
+        {
+            messenger.sendMessage(player, "When you don't sleep, you will get:");
+            for (PotionEffect buff : buffsHandler.getDebuffs())
+            {
+                messenger.sendMessage(player, ChatColor.AQUA + "  - " + toString(buff));
+            }
+        }
+
+
+        messenger.sendMessage(player, ChatColor.GOLD + "---===---");
+        return true;
     }
 }
