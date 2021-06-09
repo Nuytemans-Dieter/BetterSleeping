@@ -6,7 +6,7 @@
 
     <groupId>be.dezijwegel.bettersleeping</groupId>
     <artifactId>bettersleeping</artifactId>
-    <version>3.0.7</version>
+    <version>4.0.0</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -55,12 +55,13 @@
 
     <dependencies>
 
-        <!-- Dagger -->
+        <!-- Guice -->
         <dependency>
-            <groupId>com.google.dagger</groupId>
-            <artifactId>dagger</artifactId>
-            <version>2.36</version>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>5.0.1</version>
         </dependency>
+
 
         <!-- SPIGOT -->
         <dependency>
@@ -85,20 +86,20 @@
         </dependency>
 
         <!-- BUNGEECORD -->
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.14-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.14-SNAPSHOT</version>
-            <type>javadoc</type>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>net.md-5</groupId>-->
+<!--            <artifactId>bungeecord-api</artifactId>-->
+<!--            <version>1.14-SNAPSHOT</version>-->
+<!--            <type>jar</type>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>net.md-5</groupId>-->
+<!--            <artifactId>bungeecord-api</artifactId>-->
+<!--            <version>1.14-SNAPSHOT</version>-->
+<!--            <type>javadoc</type>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
         <!-- ESSENTIALS -->
         <dependency>
@@ -172,7 +173,7 @@
                             <shadedPattern>be.dezijwegel.bettersleeping.core</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>be.dezijwegel.</pattern>
+                            <pattern>be.dezijwegel.betteryaml</pattern>
                             <shadedPattern>be.dezijwegel.bettersleeping.core</shadedPattern>
                         </relocation>
                     </relocations>
@@ -185,20 +186,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>com.google.dagger</groupId>
-                            <artifactId>dagger-compiler</artifactId>
-                            <version>2.36</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
             </plugin>
         </plugins>
     </build>
