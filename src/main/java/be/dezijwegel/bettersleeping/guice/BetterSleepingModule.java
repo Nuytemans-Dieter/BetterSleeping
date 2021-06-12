@@ -2,14 +2,12 @@ package be.dezijwegel.bettersleeping.guice;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
+import be.dezijwegel.bettersleeping.util.ConfigContainer;
 import be.dezijwegel.betteryaml.BetterLang;
-import be.dezijwegel.betteryaml.OptionalBetterYaml;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.logging.Level;
 
@@ -26,6 +24,12 @@ public class BetterSleepingModule extends AbstractModule
     }
 
     @Provides
+    public JavaPlugin provideJavaPlugin()
+    {
+        return plugin;
+    }
+
+    @Provides
     @Singleton
     public BPLogger provideLogger()
     {
@@ -34,49 +38,9 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    @Named("config")
-    public YamlConfiguration provideConfig()
+    public BetterLang provideBetterLang(ConfigContainer config, BPLogger logger)
     {
-        return new OptionalBetterYaml("config.yml", plugin, true).getYamlConfiguration().orElse( new YamlConfiguration() );
-    }
-
-    @Provides
-    @Singleton
-    @Named("buffs")
-    public YamlConfiguration provideBuffs()
-    {
-        return new OptionalBetterYaml("buffs.yml", plugin, true).getYamlConfiguration().orElse(new YamlConfiguration());
-    }
-
-    @Provides
-    @Singleton
-    @Named("bypassing")
-    public YamlConfiguration provideBypassing()
-    {
-        return new OptionalBetterYaml("bypassing.yml", plugin, true).getYamlConfiguration().orElse(new YamlConfiguration());
-    }
-
-    @Provides
-    @Singleton
-    @Named("hooks")
-    public YamlConfiguration provideHooks()
-    {
-        return new OptionalBetterYaml("hooks.yml", plugin, true).getYamlConfiguration().orElse(new YamlConfiguration());
-    }
-
-    @Provides
-    @Singleton
-    @Named("sleeping_settings")
-    public YamlConfiguration provideSleepingSettings()
-    {
-        return new OptionalBetterYaml("sleeping_settings.yml", plugin, true).getYamlConfiguration().orElse(new YamlConfiguration());
-    }
-
-    @Provides
-    @Singleton
-    public BetterLang provideBetterLang(@Named("config") YamlConfiguration section, BPLogger logger)
-    {
-        String configValue = section.getString("language");
+        String configValue = config.getConfig().getString("language");
         String language = configValue != null ? configValue.toLowerCase() : "en-us";
 
         logger.log(Level.CONFIG, "Loading language: " + language);
