@@ -110,15 +110,30 @@ buff_received: {buff_received}
 debuff_received: {debuff_received}
 
 
-# -------------------- #
-# Commands/Permissions |
-# -------------------- #
+# -------- #
+# Commands |
+# -------- #
 
-# The message a player gets when they don't have access to a command
-no_permission: {no_permission}
+# Sent to all players in a world when someone asks for players to sleep
+command_shout: {command_shout}
+
+# Sent to all players in a world when someone asks for players to sleep
+# Placeholders: <time> amount of seconds until '/bs4 shout' can be executed again
+command_shout_cooldown: {command_shout}
 
 # The message that will be sent to the admin that does a reload
 message_reloaded: {message_reloaded}
+
+# ----------- #
+# Permissions |
+# ----------- #
+
+# Sent when a command is not recognised
+# Placeholders: <command> the executed command
+unknown_command: {unknown_command}
+
+# The message a player gets when they don't have access to a command
+no_permission: {no_permission}
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:

@@ -4,42 +4,35 @@ import be.betterplugins.core.commands.BPCommand;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
 
-public class VersionCommand extends BPCommand
+public class HelpCommand extends BPCommand
 {
 
-
-    private final String version;
-
-
-    public VersionCommand(JavaPlugin plugin, Messenger messenger)
+    public HelpCommand(Messenger messenger)
     {
-        super( messenger );
-
-        version = plugin.getDescription().getVersion();
+        super(messenger);
     }
 
     @Override
     public @NotNull String getCommandName()
     {
-        return "version";
+        return "help";
     }
 
     @Override
     public @NotNull List<String> getAliases()
     {
-        return Collections.singletonList("v");
+        return Collections.singletonList("h");
     }
 
     @Override
     public @NotNull String getPermission()
     {
-        return "bettersleeping.version";
+        return "bettersleeping.help";
     }
 
     @Override
@@ -51,8 +44,7 @@ public class VersionCommand extends BPCommand
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String[] strings)
     {
-        messenger.sendMessage(commandSender, "You are using BetterSleeping " + version);
+        messenger.sendMessage(commandSender, "Help info placeholder");
         return true;
     }
-
 }

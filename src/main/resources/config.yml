@@ -1,5 +1,4 @@
 language: "en-US"
-shorten_prefix: true
 action_bar_messages: false
 update_notifier: true
 disable_phantoms: false

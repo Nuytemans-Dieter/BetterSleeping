@@ -8,9 +8,9 @@ softdepend: [Essentials, PlaceholderAPI, MultiWorld, Multiverse, Multiverse-Core
 commands:
     bettersleeping:
         description: See all BetterSleeping commands
-        usage: Perform /bettersleeping help or /bs help to see a list of commands!
+        usage: Perform /bettersleeping help or /bs help to see a list of commands
         default: true
-        aliases: [bs]
+        aliases: [bs, bs4]
 permissions:
     bettersleeping.*:
         description: Gives access to all BetterSleeping commands

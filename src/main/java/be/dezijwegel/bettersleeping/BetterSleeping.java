@@ -1,16 +1,15 @@
 package be.dezijwegel.bettersleeping;
 
-import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.core.messaging.messenger.Messenger;
+import be.betterplugins.core.commands.BPCommandHandler;
+import be.betterplugins.core.interfaces.IReloadable;
 import be.dezijwegel.bettersleeping.guice.BetterSleepingModule;
-import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
-public class BetterSleeping extends JavaPlugin
+public class BetterSleeping extends JavaPlugin implements IReloadable
 {
 
     @Override
@@ -22,14 +21,19 @@ public class BetterSleeping extends JavaPlugin
                 new BetterSleepingModule(this, Level.ALL)
         );
 
-        BPLogger logger = injector.getInstance(BPLogger.class);
-        BetterLang lang = injector.getInstance(BetterLang.class);
-//        Messenger messenger = injector.getInstance(Messenger.class);
+        BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);
+        getCommand("bettersleeping").setExecutor( commandHandler );
     }
 
     @Override
     public void onDisable()
     {
         super.onDisable();
+    }
+
+    @Override
+    public void reload()
+    {
+        // TODO: Handle reloading
     }
 }

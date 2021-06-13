@@ -1,13 +1,16 @@
-bed_enter_message: {bed_enter_message}
-bed_enter_broadcast: {bed_enter_broadcast}
-skipping_canceled: {skipping_canceled}
-enough_sleeping: {enough_sleeping}
-morning_message: {morning_message}
-sleep_spam: {sleep_spam}
-sleep_possible_soon: {sleep_possible_soon}
-sleep_possible_now: {sleep_possible_now}
-buff_received: {buff_received}
-debuff_received: {debuff_received}
-no_permission: {no_permission}
-message_reloaded: {message_reloaded}
-bypass_message: {bypass_message}
+bed_enter_message: "Sleep tight, <user>! (<num_sleeping>/<needed_sleeping>)"
+bed_enter_broadcast: "<player> is taking a nap, [<num_sleeping>.one player is.<num_sleeping> players are] sleeping now. <remaining_sleeping> [<remaining_sleeping>.sleeper.sleepers] needed."
+skipping_canceled: "Someone left their bed so the night will not be skipped! <remaining_sleeping> more sleeping [<remaining_sleeping>.player.players] needed!"
+enough_sleeping: "Enough players are sleeping now, the night will be over shortly."
+morning_message: "Good morning, <user>. Have a great day!"
+sleep_spam: "You have to wait <time> more [<time>.second.seconds] before you can sleep again!"
+sleep_possible_soon: ""
+sleep_possible_now: ""
+buff_received: "You feel well rested and received [<var>.a buff.<var> buffs]."
+debuff_received: "You did not sleep and feel tired, you received [<var>.a debuff.<var> debuffs]."
+unknown_command: "&cThe command '<command>' is unknown. Execute /bs4 help to see a list of commands"
+command_shout: "Please go to bed, some players want to sleep."
+command_shout_cooldown: "&cYou have to wait <time> more seconds before shouting in this world"
+no_permission: "&cYou don't have permission to execute <var>!"
+message_reloaded: "&2Reload complete!"
+bypass_message: "&cYou are bypassed so you don't need to sleep, <user>."

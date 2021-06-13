@@ -26,9 +26,6 @@
 # Up-to-date list here: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 language: {language}
 
-# Choose whether to use the short prefix: [BS] (true) or the long one [BetterSleeping] (false)
-shorten_prefix: {shorten_prefix}
-
 # Choose where messages show up
 # Messages are shown in the chat when set to false, and shown in the action bar when set to true
 action_bar_messages: {action_bar_messages}
