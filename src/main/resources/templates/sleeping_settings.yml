@@ -17,10 +17,11 @@
 # With percentage, a relative amount of players needs to sleep (eg. needed: 30 -> 13 online players, 30% of 13 is 3,9. Will be rounded to the nearest number -> 4 sleeping players needed)
 # With absolute, a set amount of players needs to sleep (eg. needed: 2 -> any amount of online players, 2 players need to sleep)
 sleeper_counter: {sleeper_counter}
-percentage:
-  needed: {percentage.needed}
-absolute:
-  needed: {absolute.needed}
+
+# This depends on your sleeper_counter setting
+#     Percentage: This value is the percentage of players in a world that must sleep ([0, 100])
+#     Absolute: This value is always the amount of players that must sleep, does not scale with the amount of online players!
+needed: {needed}
 
 
 # Choose the time passing mode

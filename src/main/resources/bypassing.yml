@@ -1,4 +1,4 @@
-enable_bypass_permissions: true
+enable_bypassing: true
 send_messages: true
 ignore_survival: false
 ignore_creative: false

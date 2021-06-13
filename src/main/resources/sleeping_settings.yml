@@ -1,8 +1,5 @@
 sleeper_counter: "percentage"
-percentage:
-  needed: 30
-absolute:
-  needed: 2
+needed: 30
 mode: "smooth"
 smooth:
   base_speedup: 60

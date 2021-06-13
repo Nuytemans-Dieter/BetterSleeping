@@ -1,76 +1,113 @@
-//package be.dezijwegel.bettersleeping.permissions;
-//
-//import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
-//import org.bukkit.Bukkit;
-//import org.bukkit.GameMode;
-//import org.bukkit.entity.Player;
-//
-//import java.util.HashSet;
-//import java.util.List;
-//import java.util.Set;
-//
-//public class BypassChecker {
-//
-//    private final EssentialsHook essentialsHook;
-//    private final boolean isEnabled;
-//    private final Set<GameMode> bypassedGamemodes;
-//
-//    /**
-//     * Creates an object that can check whether or not a player has got bypass permissions
-//     * @param bypassedGamemodes the list of gamemodes that are bypassed
-//     */
-//    public BypassChecker(boolean isEnabled, EssentialsHook essentialsHook, List<GameMode> bypassedGamemodes)
-//    {
-//        this.isEnabled = isEnabled;
-//
-//        // Add all bypassed gamemodes
-//        this.bypassedGamemodes = new HashSet<>();
-//        this.bypassedGamemodes.addAll(bypassedGamemodes);
-//
-//        this.essentialsHook = essentialsHook;
-//    }
-//
-//
-//    /**
-//     * Get whether or not bypass permissions are enabled or disabled
-//     * @return true of they are enabled
-//     */
-//    public boolean isEnabled()
-//    {
-//        return isEnabled;
-//    }
-//
-//
-//    /**
-//     * Get the Set of bypassed gamemodes
-//     * @return the gamemodes that are bypassed
-//     */
-//    public Set<GameMode> getBypassedGamemodes()
-//    {
-//        return bypassedGamemodes;
-//    }
-//
-//
-//    /**
-//     * Returns whether a player has bypass permissions or not
-//     * Can be based on a permission node or gamemode
-//     * @param player the player to be checked
-//     * @return whether this player should be bypassed or not
-//     */
-//    public boolean isPlayerBypassed(Player player)
-//    {
-//        // Permission based bypassing
-//        boolean hasPermission       = player.hasPermission("bettersleeping.bypass") && isEnabled;
-//        boolean essentialsBypass    = player.hasPermission("essentials.sleepingignored") && essentialsHook.isHooked() && isEnabled;
-//
-//        // Gamemode based bypassing
-//        boolean gamemodeBypass      = bypassedGamemodes.contains( player.getGameMode() );
-//
-//        // State based bypassing (internally handles the config settings)
-//        boolean isAfk       = essentialsHook.isAfk( player );
-//        boolean isVanished  = essentialsHook.isVanished( player );
-//
-//        return hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
-//    }
-//
-//}
+package be.dezijwegel.bettersleeping.permissions;
+
+import be.betterplugins.core.messaging.logging.BPLogger;
+import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
+import be.dezijwegel.bettersleeping.util.ConfigContainer;
+import org.bukkit.GameMode;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+
+import javax.inject.Inject;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+
+public class BypassChecker {
+
+    private final EssentialsHook essentialsHook;
+    private final boolean isEnabled;
+    private final Set<GameMode> bypassedGamemodes;
+
+    @Inject
+    public BypassChecker(ConfigContainer config, EssentialsHook essentialsHook, BPLogger logger)
+    {
+        YamlConfiguration bypassConfig = config.getBypassing();
+        this.isEnabled = bypassConfig.getBoolean("enable_bypassing");
+
+        this.bypassedGamemodes = new HashSet<>();
+        if (bypassConfig.getBoolean("ignore_survival"))
+            this.bypassedGamemodes.add(GameMode.SURVIVAL);
+
+        if (bypassConfig.getBoolean("ignore_creative"))
+            this.bypassedGamemodes.add(GameMode.CREATIVE);
+
+        if (bypassConfig.getBoolean("ignore_adventure"))
+            this.bypassedGamemodes.add(GameMode.ADVENTURE);
+
+        if (bypassConfig.getBoolean("ignore_spectator"))
+            this.bypassedGamemodes.add(GameMode.SPECTATOR);
+
+        logger.log(Level.CONFIG, "Is bypassing enabled? " + isEnabled);
+        logger.log(Level.CONFIG, "Ignoring " + bypassedGamemodes.size() + " game modes");
+
+//        for (String path : bypassConfig.getKeys(false))
+//        {
+//            if (path.contains("ignore_") && bypassConfig.getBoolean(path))
+//            {
+//                path = path.replace("ignore_", "");
+//                try
+//                {
+//                    GameMode gm = GameMode.valueOf(path.toUpperCase());
+//                    bypassedGamemodes.add( gm );
+//                }
+//                catch(IllegalArgumentException ignored)
+//                {
+//                    logger.log(Level.CONFIG, "Unknown gamemode in bypassing.yml: " + path);
+//                }
+//            }
+//        }
+
+        this.essentialsHook = essentialsHook;
+    }
+
+
+    /**
+     * Get whether or not bypass permissions are enabled or disabled
+     * @return true of they are enabled
+     */
+    public boolean isBypassingEnabled()
+    {
+        return isEnabled;
+    }
+
+
+    /**
+     * Get the Set of bypassed gamemodes
+     * @return the gamemodes that are bypassed
+     */
+    public Set<GameMode> getBypassedGamemodes()
+    {
+        return bypassedGamemodes;
+    }
+
+
+    /**
+     * Returns whether a player has bypass permissions or not
+     * Can be based on a permission node or gamemode
+     * @param player the player to be checked
+     * @return whether this player should be bypassed or not
+     */
+    public boolean isPlayerBypassed(Player player)
+    {
+        // Never consider a player bypassed when disabled
+        if (!isEnabled)
+        {
+            return false;
+        }
+
+        // Permission based bypassing
+        boolean hasPermission       = player.hasPermission("bettersleeping.bypass");
+        boolean essentialsBypass    = player.hasPermission("essentials.sleepingignored") && essentialsHook.isHooked();
+
+        // Gamemode based bypassing
+        boolean gamemodeBypass      = bypassedGamemodes.contains( player.getGameMode() );
+
+        // State based bypassing (internally handles the config settings)
+        boolean isAfk       = essentialsHook.isAfk( player );
+        boolean isVanished  = essentialsHook.isVanished( player );
+
+        return hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
+    }
+
+}

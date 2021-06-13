@@ -9,3 +9,4 @@ dependency-reduced-pom.xml
 versions/production/
 Versions/BetterSleeping.jar
 Versions/Changelogs/Version numbers.txt
+*.iml

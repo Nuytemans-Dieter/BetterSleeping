@@ -15,16 +15,15 @@
 
 # Players with bypass permissions won't be counted towards the sleeping count but CAN still sleep
 # They can get buffs if they sleep but not sleeping won't give them debuffs
-# How to give bypass permissions? (meeting one of the points below is enough)
+# How to give bypass permissions? (meeting one of the requirements below is enough)
 #     - Give permission bettersleeping.bypass
-#     - Give permission essentials.sleepingingored (works only if Essentials is installed on the server)
-#     - Ignore a game mode below and be in that gamemode
+#     - Give permission essentials.sleepingingored (will only work if Essentials is installed on your server)
+#     - Ignore a game mode in the list below and be in that gamemode
 
 # Having trouble with bypass permissions? Join our Discord server: https://discord.gg/AS46VGT
 # If all else fails, feel free to set this to false
-# This option will be removed once Essentials updates (around 1.16 release)
-# Bypassing based on game mode will still work when set to false
-enable_bypass_permissions: {enable_bypass_permissions}
+# Setting this to false will never allow anyone to be bypassed (even by gamemode, being afk, vanished, etc)
+enable_bypassing: {enable_bypassing}
 
 # Choose whether or not BetterSleeping should send messages to bypassed players
 send_messages: {send_messages}
