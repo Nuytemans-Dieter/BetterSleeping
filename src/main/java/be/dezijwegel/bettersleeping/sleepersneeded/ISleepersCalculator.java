@@ -1,14 +1,16 @@
-package be.dezijwegel.bettersleeping.interfaces;
+package be.dezijwegel.bettersleeping.sleepersneeded;
 
+import be.dezijwegel.bettersleeping.Model.SleepWorld;
 import org.bukkit.World;
 
-public interface SleepersNeededCalculator {
+public interface ISleepersCalculator
+{
 
     /**
      * Gets the required amount of sleeping players in a world
      * @return the amount of required sleeping players
      */
-    int getNumNeeded(World world);
+    int getNumNeeded(SleepWorld world);
 
     /**
      * Get the amount to which this object is set

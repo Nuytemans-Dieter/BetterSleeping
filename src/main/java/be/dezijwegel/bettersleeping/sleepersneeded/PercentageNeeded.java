@@ -1,24 +1,19 @@
 package be.dezijwegel.bettersleeping.sleepersneeded;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
-import be.dezijwegel.bettersleeping.permissions.BypassChecker;
+import be.dezijwegel.bettersleeping.Model.SleepWorld;
 import be.dezijwegel.bettersleeping.util.ConfigContainer;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.logging.Level;
 
-public class PercentageNeeded implements SleepersNeededCalculator {
+public class PercentageNeeded implements ISleepersCalculator
+{
 
-    private final BypassChecker bypassChecker;
-
-    // Constants
     private final int percentage;
 
     @Inject
-    public PercentageNeeded (ConfigContainer config, BypassChecker bypassChecker, BPLogger logger)
+    public PercentageNeeded (ConfigContainer config, BPLogger logger)
     {
         int percentage = config.getSleeping_settings().getInt("needed");
 
@@ -28,8 +23,6 @@ public class PercentageNeeded implements SleepersNeededCalculator {
             percentage = 0;
 
         this.percentage = percentage;
-
-        this.bypassChecker = bypassChecker;
 
         logger.log(Level.CONFIG, "Using 'percentage' as sleepers-needed calculator");
         logger.log(Level.CONFIG, "The percentage is set to " + percentage + "%");
@@ -43,18 +36,9 @@ public class PercentageNeeded implements SleepersNeededCalculator {
      * @return the absolute amount of required sleepers
      */
     @Override
-    public int getNumNeeded(World world)
+    public int getNumNeeded(SleepWorld world)
     {
-        int numPlayers = 0;     // Num players in the world
-        for (Player player : world.getPlayers())
-        {
-            // Internally checks Essentials bypass causes like /afk and /vanish
-            if ( ! bypassChecker.isPlayerBypassed( player ))
-            {
-                numPlayers++;
-            }
-        }
-
+        int numPlayers = world.getValidPlayersInWorld().size();
         return Math.max(Math.round(percentage * numPlayers / 100f), 1);
     }
 

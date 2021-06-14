@@ -1,7 +1,7 @@
 //package be.dezijwegel.bettersleeping.runnables;
 //
 //import be.dezijwegel.bettersleeping.api.TimeSetToDayEvent;
-//import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
+//import be.dezijwegel.bettersleeping.sleepersneeded.SleepersNeededCalculator;
 //import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 //import be.dezijwegel.bettersleeping.timechange.TimeChanger;
 //import be.dezijwegel.bettersleeping.util.Debugger;

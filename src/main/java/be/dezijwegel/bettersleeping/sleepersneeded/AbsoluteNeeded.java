@@ -1,14 +1,14 @@
 package be.dezijwegel.bettersleeping.sleepersneeded;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.dezijwegel.bettersleeping.interfaces.SleepersNeededCalculator;
+import be.dezijwegel.bettersleeping.Model.SleepWorld;
 import be.dezijwegel.bettersleeping.util.ConfigContainer;
 import org.bukkit.World;
 
 import javax.inject.Inject;
 import java.util.logging.Level;
 
-public class AbsoluteNeeded implements SleepersNeededCalculator
+public class AbsoluteNeeded implements ISleepersCalculator
 {
 
     // Constants
@@ -29,7 +29,7 @@ public class AbsoluteNeeded implements SleepersNeededCalculator
      * @return the absolute amount of required sleepers
      */
     @Override
-    public int getNumNeeded(World world)
+    public int getNumNeeded(SleepWorld world)
     {
         return numNeeded;
     }

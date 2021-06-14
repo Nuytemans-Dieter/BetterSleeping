@@ -1,12 +1,7 @@
 sleeper_counter: "percentage"
 needed: 30
-mode: "smooth"
-smooth:
-  base_speedup: 60
-  speedup_per_player: 10
-  max_speedup: 500
-setter:
-  delay: 3
+night_skip_length: 10
+allow_partial_skipping: false
 bed_enter_delay: 10
 world_settings:
   worldname:

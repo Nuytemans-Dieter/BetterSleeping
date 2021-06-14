@@ -23,25 +23,28 @@ sleeper_counter: {sleeper_counter}
 #     Absolute: This value is always the amount of players that must sleep, does not scale with the amount of online players!
 needed: {needed}
 
+# The duration (in seconds) of the night when enough players are sleeping
+# Set this to 0 to skip the night instantly
+# A normal night lasts 500 ticks
+night_skip_length: {night_skip_length}
 
-# Choose the time passing mode
-# Smooth will make the time move faster, depending on the amount of sleeping players
-# Setter will set the time to day after a while when enough people are sleeping
-mode: {mode}
-smooth:
-  # The amount of time units that will pass each tick when enough people are sleeping
-  base_speedup: {smooth.base_speedup}
-  # For every EXTRA sleeping player, an extra speedup time can be added
-  speedup_per_player: {smooth.speedup_per_player}
-  # The max amount of time that can be moved forward in one tick
-  max_speedup: {smooth.max_speedup}
-setter:
-  # The time in seconds that players have to stay in bed before the time is set to day
-  delay: {setter.delay}
+# Whether to start skipping the night
+allow_partial_skipping: {allow_partial_skipping}
+
+# The normal length of the day and night when not skipping (in seconds)
+# This allows you to speed up or slow down the time
+# Default: 700
+day_length: {day_length}
+# Default: 500
+night_length: {night_length}
+
+# The normal length of the day (in seconds)
+# This allows you to speed up or slow down the time during nighttime
+# Default: 700
 
 
 # The time in seconds that players need to wait before they can enter the bed again after leaving it
-bed_enter_delay: {bed_enter_delay}
+bed_enter_cooldown: {bed_enter_delay}
 
 # Disable BetterSleeping in certain worlds. This option is case sensitive!
 # Players can still skip the night/storm if everybody in this world is sleeping but no messages/(de)buffs will be sent or given.
