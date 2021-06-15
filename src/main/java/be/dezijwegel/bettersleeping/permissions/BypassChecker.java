@@ -25,38 +25,19 @@ public class BypassChecker {
         YamlConfiguration bypassConfig = config.getBypassing();
         this.isEnabled = bypassConfig.getBoolean("enable_bypassing");
 
+        // Get all bypassed gamemodes from the config file
         this.bypassedGamemodes = new HashSet<>();
-        if (bypassConfig.getBoolean("ignore_survival"))
-            this.bypassedGamemodes.add(GameMode.SURVIVAL);
-
-        if (bypassConfig.getBoolean("ignore_creative"))
-            this.bypassedGamemodes.add(GameMode.CREATIVE);
-
-        if (bypassConfig.getBoolean("ignore_adventure"))
-            this.bypassedGamemodes.add(GameMode.ADVENTURE);
-
-        if (bypassConfig.getBoolean("ignore_spectator"))
-            this.bypassedGamemodes.add(GameMode.SPECTATOR);
+        for (GameMode gameMode : GameMode.values())
+        {
+            String lowerCaseGamemode = gameMode.toString().toLowerCase();
+            if (bypassConfig.getBoolean("ignore_" + lowerCaseGamemode))
+            {
+                this.bypassedGamemodes.add( gameMode );
+            }
+        }
 
         logger.log(Level.CONFIG, "Is bypassing enabled? " + isEnabled);
         logger.log(Level.CONFIG, "Ignoring " + bypassedGamemodes.size() + " game modes");
-
-//        for (String path : bypassConfig.getKeys(false))
-//        {
-//            if (path.contains("ignore_") && bypassConfig.getBoolean(path))
-//            {
-//                path = path.replace("ignore_", "");
-//                try
-//                {
-//                    GameMode gm = GameMode.valueOf(path.toUpperCase());
-//                    bypassedGamemodes.add( gm );
-//                }
-//                catch(IllegalArgumentException ignored)
-//                {
-//                    logger.log(Level.CONFIG, "Unknown gamemode in bypassing.yml: " + path);
-//                }
-//            }
-//        }
 
         this.essentialsHook = essentialsHook;
     }

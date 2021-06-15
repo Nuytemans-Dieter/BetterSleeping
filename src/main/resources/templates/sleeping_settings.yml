@@ -29,7 +29,8 @@ needed: {needed}
 night_skip_length: {night_skip_length}
 
 # Whether to start skipping the night
-allow_partial_skipping: {allow_partial_skipping}
+# Currently not possible:
+#allow_partial_skipping: {allow_partial_skipping}
 
 # The normal length of the day and night when not skipping (in seconds)
 # This allows you to speed up or slow down the time
@@ -47,7 +48,7 @@ night_length: {night_length}
 bed_enter_cooldown: {bed_enter_delay}
 
 # Disable BetterSleeping in certain worlds. This option is case sensitive!
-# Players can still skip the night/storm if everybody in this world is sleeping but no messages/(de)buffs will be sent or given.
+# Sleeping is always enabled in worlds that are not in this list
 world_settings:
   worldname:
     enabled: {world_settings.worldname.enabled}

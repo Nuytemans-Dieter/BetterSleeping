@@ -20,7 +20,7 @@ public class SleepWorld
     private long dayDuration;
 
     private final World world;
-    private int numSleeping;
+    private double time;
 
     private final ISleepersCalculator sleepersCalculator;
     private final BypassChecker bypassChecker;
@@ -29,7 +29,7 @@ public class SleepWorld
     public SleepWorld(World world, ConfigContainer config, BypassChecker bypassChecker, BPLogger logger)
     {
         this.world = world;
-        this.numSleeping = 0;
+        this.time = world.getTime();
         this.bypassChecker = bypassChecker;
 
         String counterMode = config.getSleeping_settings().getString("sleeper_counter");
@@ -60,21 +60,30 @@ public class SleepWorld
     }
 
 
+    /**
+     * @deprecated Avoid using this method, unless absolutely necessary. Attempt to use SleepWorld as a wrapper (rather add a method to SleepWorld than get the world first)
+     */
+    @Deprecated
     public World getWorld()
     {
         return world;
     }
 
 
-    public long getTime()
+    public double getInternalTime()
+    {
+        return this.time;
+    }
+
+    public long getWorldTime()
     {
         return world.getTime();
     }
 
-
-    public void setTime(long newTime)
+    public void setTime(double newTime)
     {
-        world.setTime(newTime);
+        this.time = newTime;
+        world.setTime((long) newTime);
     }
 
 
