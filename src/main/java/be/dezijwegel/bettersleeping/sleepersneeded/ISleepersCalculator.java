@@ -1,7 +1,6 @@
 package be.dezijwegel.bettersleeping.sleepersneeded;
 
-import be.dezijwegel.bettersleeping.Model.SleepWorld;
-import org.bukkit.World;
+import be.dezijwegel.bettersleeping.model.SleepWorld;
 
 public interface ISleepersCalculator
 {

@@ -1,9 +1,8 @@
 package be.dezijwegel.bettersleeping.sleepersneeded;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.dezijwegel.bettersleeping.Model.SleepWorld;
+import be.dezijwegel.bettersleeping.model.SleepWorld;
 import be.dezijwegel.bettersleeping.util.ConfigContainer;
-import org.bukkit.World;
 
 import javax.inject.Inject;
 import java.util.logging.Level;

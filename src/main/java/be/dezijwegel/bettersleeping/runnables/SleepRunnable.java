@@ -1,6 +1,6 @@
 package be.dezijwegel.bettersleeping.runnables;
 
-import be.dezijwegel.bettersleeping.Model.SleepWorld;
+import be.dezijwegel.bettersleeping.model.SleepWorld;
 import be.dezijwegel.bettersleeping.util.ConfigContainer;
 import be.dezijwegel.bettersleeping.util.TimeUtil;
 import org.bukkit.configuration.file.YamlConfiguration;

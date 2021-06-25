@@ -46,7 +46,7 @@
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
 
-        <!-- JitPack repo for BetterYaml access  -->
+        <!-- JitPack repo for BetterYaml & BetterCore access  -->
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <version>1.17-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.github.BetterPluginsSpigot</groupId>
             <artifactId>betteryaml</artifactId>
-            <version>1.0.6</version>
+            <version>1.1.0</version>
         </dependency>
 
         <!-- BUNGEECORD -->
@@ -166,15 +166,15 @@
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping</shadedPattern>
+                            <shadedPattern>be.dezijwegel.bettersleeping.shade.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>be.betterplugins.core</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping.core</shadedPattern>
+                            <shadedPattern>be.dezijwegel.bettersleeping.shade.core</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>be.dezijwegel.betteryaml</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping.core</shadedPattern>
+                            <shadedPattern>be.dezijwegel.bettersleeping.shade.betteryaml</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

@@ -1,8 +1,0 @@
-sleeper_buffs:
-  speed:
-    time: 20
-    level: 1
-non_sleeper_debuffs:
-  slow:
-    time: 3
-    level: 1

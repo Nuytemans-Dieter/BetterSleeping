@@ -2,11 +2,17 @@ package be.dezijwegel.bettersleeping.util;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.betteryaml.OptionalBetterYaml;
+import be.dezijwegel.betteryaml.validation.ValidationHandler;
+import be.dezijwegel.betteryaml.validation.validator.numeric.Min;
+import be.dezijwegel.betteryaml.validation.validator.string.StringWhiteList;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 
 public class ConfigContainer
@@ -19,12 +25,29 @@ public class ConfigContainer
     private YamlConfiguration sleeping_settings;
 
     @Inject
+    @Singleton
     public ConfigContainer(JavaPlugin plugin, BPLogger logger)
     {
-        OptionalBetterYaml configBY = new OptionalBetterYaml("config.yml", plugin, true);
-        OptionalBetterYaml buffsBY = new OptionalBetterYaml("buffs.yml", plugin, true);
+        ValidationHandler configValidation = new ValidationHandler()
+                .addValidator("language", new StringWhiteList(
+                        "en-US",
+                        true,
+                        "de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "ja-JP", "nl-BE", "pt-PT", "ru-RU", "silent", "zh-CN", "zh-HK", "zh-TW")
+                );
+        ValidationHandler buffsValidation = new ValidationHandler()
+                .addOptionalSection("sleeper_buffs")
+                .setOptionalValue("sleeper_buffs.speed.time", 20)
+                .setOptionalValue("sleeper_buffs.speed.level", 1)
+                .addOptionalSection("non_sleeper_debuffs")
+                .setOptionalValue("non_sleeper_debuffs.slow.time", 3)
+                .setOptionalValue("non_sleeper_debuffs.slow.level", 1);
+        ValidationHandler hooksValidation = new ValidationHandler()
+                .addValidator("minimum_afk_time", new Min(-1));
+
+        OptionalBetterYaml configBY = new OptionalBetterYaml("config.yml", configValidation, plugin, true);
+        OptionalBetterYaml buffsBY = new OptionalBetterYaml("buffs.yml", buffsValidation, plugin, true);
         OptionalBetterYaml bypassingBY = new OptionalBetterYaml("bypassing.yml", plugin, true);
-        OptionalBetterYaml hooksBY = new OptionalBetterYaml("hooks.yml", plugin, true);
+        OptionalBetterYaml hooksBY = new OptionalBetterYaml("hooks.yml", hooksValidation, plugin, true);
         OptionalBetterYaml sleeping_settingsBY = new OptionalBetterYaml("sleeping_settings.yml", plugin, true);
 
         try
@@ -35,34 +58,34 @@ public class ConfigContainer
             hooks = hooksBY.getYamlConfiguration().get();
             sleeping_settings = sleeping_settingsBY.getYamlConfiguration().get();
         }
-        catch (Exception ignored)
+        catch (NoSuchElementException ignored)
         {
             logger.log(Level.SEVERE, "BetterSleeping cannot enable due to an error in your jar file, please contact the developer!");
             Bukkit.getPluginManager().disablePlugin(plugin);
         }
     }
 
-    public YamlConfiguration getConfig()
+    public @NotNull YamlConfiguration getConfig()
     {
         return config;
     }
 
-    public YamlConfiguration getBuffs()
+    public @NotNull YamlConfiguration getBuffs()
     {
         return buffs;
     }
 
-    public YamlConfiguration getBypassing()
+    public @NotNull YamlConfiguration getBypassing()
     {
         return bypassing;
     }
 
-    public YamlConfiguration getHooks()
+    public @NotNull YamlConfiguration getHooks()
     {
         return hooks;
     }
 
-    public YamlConfiguration getSleeping_settings()
+    public @NotNull YamlConfiguration getSleeping_settings()
     {
         return sleeping_settings;
     }

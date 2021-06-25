@@ -28,18 +28,6 @@
 # time: The time in seconds for which the effect will be applied
 # level: The level of the effect (may be an OP level but >90 may work in unintended ways)
 
-
-# Example configuration
-sleeper_buffs:
-  speed:
-    time: {sleeper_buffs.speed.time}
-    level: {sleeper_buffs.speed.level}
-
-non_sleeper_debuffs:
-  slow:
-    time: {non_sleeper_debuffs.slow.time}
-    level: {non_sleeper_debuffs.slow.level}
-
 # The commands in the list below are executed in the console for EACH (non-)sleeper
 # One tag is supported at this time: <user>, which will be replaced by each user's name
 # Uncomment the blocks below to enable them, you can add your own commands too!
@@ -49,3 +37,6 @@ non_sleeper_debuffs:
 
 #non_sleeper_commands:
 #  - say <user> did not sleep, pfuhhh!
+
+# Sleeper_buffs are given for every sleeping player
+# Non_sleepers_debuffs are given for every non-sleeping player

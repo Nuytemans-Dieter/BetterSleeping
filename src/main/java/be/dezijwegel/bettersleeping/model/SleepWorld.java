@@ -1,4 +1,4 @@
-package be.dezijwegel.bettersleeping.Model;
+package be.dezijwegel.bettersleeping.model;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;

@@ -2,7 +2,7 @@ package be.dezijwegel.bettersleeping;
 
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
-import be.dezijwegel.bettersleeping.Model.SleepManager;
+import be.dezijwegel.bettersleeping.model.SleepManager;
 import be.dezijwegel.bettersleeping.guice.BetterSleepingModule;
 import be.dezijwegel.bettersleeping.guice.UtilModule;
 import com.google.inject.Guice;
