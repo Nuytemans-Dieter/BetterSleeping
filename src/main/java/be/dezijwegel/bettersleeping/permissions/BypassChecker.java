@@ -76,6 +76,9 @@ public class BypassChecker {
             return false;
         }
 
+        // When a player is marked as sleeping ignored
+        boolean isIgnored = player.isSleepingIgnored();
+
         // Permission based bypassing
         boolean hasPermission       = player.hasPermission("bettersleeping.bypass");
         boolean essentialsBypass    = player.hasPermission("essentials.sleepingignored") && essentialsHook.isHooked();
@@ -87,7 +90,7 @@ public class BypassChecker {
         boolean isAfk       = essentialsHook.isAfk( player );
         boolean isVanished  = essentialsHook.isVanished( player );
 
-        return hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
+        return isIgnored || hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
     }
 
 }

@@ -18,9 +18,11 @@ public class SleepRunnable extends BukkitRunnable
     private final Set<UUID> fakeSleepers;
     private final Set<UUID> sleepers;
 
-    private double lastTime;
+    private long lastTime;
 
-
+    private final double daySpeedup;
+    private final double nightSpeedup;
+    private final double sleepSpeedup;
 
     public SleepRunnable(ConfigContainer config, SleepWorld sleepWorld)
     {
@@ -28,16 +30,16 @@ public class SleepRunnable extends BukkitRunnable
 
         this.fakeSleepers = new HashSet<>();
         this.sleepers = new HashSet<>();
-        lastTime = sleepWorld.getInternalTime();
+        lastTime = sleepWorld.getWorldTime();
 
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         long dayDuration = sleepingSettings.getLong("day_length") * 20;
         long nightDuration = sleepingSettings.getLong("night_length") * 20;
         long skippedNightDuration = sleepingSettings.getLong("night_skip_length") * 20;
 
-        double daySpeedup = (float) dayDuration / (float) TimeUtil.DAY_DURATION;
-        double nightSpeedup = (float) nightDuration / (float) TimeUtil.NIGHT_DURATION;
-
+        this.daySpeedup = (float) dayDuration / (float) TimeUtil.DAY_DURATION;
+        this.nightSpeedup = (float) nightDuration / (float) TimeUtil.NIGHT_DURATION;
+        this.sleepSpeedup = (float) skippedNightDuration / (float) TimeUtil.NIGHT_DURATION;
     }
 
     /**
@@ -63,8 +65,8 @@ public class SleepRunnable extends BukkitRunnable
     @Override
     public void run()
     {
-        // Check the passed time
-        long currentTime = sleepWorld.getWorldTime();
+        // Reset the passed time
+        this.sleepWorld.setTime( lastTime );
 
         // Count sleepers
         this.sleepers.clear();
@@ -78,22 +80,24 @@ public class SleepRunnable extends BukkitRunnable
         // Check num needed
         int numNeeded = sleepWorld.getNumNeeded();
 
-        boolean skipNight = numSleepers >= numNeeded;
-        if (skipNight)
+        final double speedup;
+        if ( this.sleepWorld.isNight() )
         {
-            // Handle night skipping
+            boolean skipNight = numSleepers >= numNeeded;
+            speedup = skipNight ? sleepSpeedup : nightSpeedup;
+            if (skipNight)
+            {
+                this.sleepWorld.clearWeather();
+            }
         }
         else
         {
-            // Handle normal time passing
-
+            speedup = this.daySpeedup;
         }
 
-        // TODO Handle custom day/night length + night skipping
-        //use below + day/night length settings
-        TimeUtil.isDayTime( this.sleepWorld.getWorld() );
+
         // Set the correct time
-        this.sleepWorld.setTime( currentTime + 1 );
-        lastTime = currentTime;
+        this.sleepWorld.addTime( speedup );
+        lastTime = this.sleepWorld.getWorldTime();
     }
 }

@@ -6,6 +6,7 @@ import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.sleepersneeded.ISleepersCalculator;
 import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
 import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
+import be.dezijwegel.bettersleeping.util.TimeUtil;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -61,7 +62,7 @@ public class SleepWorld
 
 
     /**
-     * @deprecated Avoid using this method, unless absolutely necessary. Attempt to use SleepWorld as a wrapper (rather add a method to SleepWorld than get the world first)
+     * @deprecated Avoid using this method, unless absolutely necessary. Attempt to use SleepWorld as a wrapper (rather add a method to SleepWorld than get the world first).
      */
     @Deprecated
     public World getWorld()
@@ -69,6 +70,19 @@ public class SleepWorld
         return world;
     }
 
+    public void clearWeather()
+    {
+        if (world.hasStorm() || world.isThundering())
+        {
+            world.setStorm(false);
+            world.setThundering(false);
+        }
+    }
+
+    public boolean isNight()
+    {
+        return !TimeUtil.isDayTime( this.world );
+    }
 
     public double getInternalTime()
     {
@@ -82,8 +96,23 @@ public class SleepWorld
 
     public void setTime(double newTime)
     {
-        this.time = newTime;
-        world.setTime((long) newTime);
+        this.time = newTime % 24000;
+        world.setTime((long) this.time);
+    }
+
+    public boolean addTime(double deltaTime)
+    {
+        this.time = this.time + deltaTime;
+
+        boolean isNextDay = false;
+        if (this.time > 24000)
+        {
+            isNextDay = true;
+            this.time = this.time % 24000;
+        }
+
+        world.setTime( (long) this.time );
+        return isNextDay;
     }
 
 

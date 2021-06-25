@@ -5,6 +5,7 @@ import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepRunnable;
 import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
+import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -15,14 +16,14 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.logging.Level;
 
-public class SleepManager
+public class SleepWorldManager
 {
 
     private final DoubleMap<SleepWorld, World, SleepRunnable> sleepRunnables;
 
     @Inject
     @Singleton
-    public SleepManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, JavaPlugin plugin, BPLogger logger)
+    public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, JavaPlugin plugin, BPLogger logger)
     {
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         this.sleepRunnables = new DoubleMap<>();
@@ -37,9 +38,12 @@ public class SleepManager
             }
 
             String isEnabledPath = "world_settings." + world.getName() + ".enabled";
-            boolean isEnabled = !sleepingSettings.contains(isEnabledPath) || sleepingSettings.getBoolean(isEnabledPath);
+            boolean isEnabled = ( !sleepingSettings.contains(isEnabledPath) ) || sleepingSettings.getBoolean(isEnabledPath);
 
-            if (isEnabled)
+            Boolean doDayLightRule = world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
+            boolean doDayLightCycle = doDayLightRule == null || doDayLightRule;
+
+            if (isEnabled && doDayLightCycle)
             {
                 logger.log(Level.CONFIG, "Enabling BetterSleeping in world " + world.getName());
 
@@ -52,7 +56,7 @@ public class SleepManager
             }
             else
             {
-                logger.log(Level.CONFIG, "NOT enabling BetterSleeping in world " + world.getName());
+                logger.log(Level.CONFIG, "NOT enabling BetterSleeping in world " + world.getName() + ". Enabled in config? " + isEnabled + ". DoDayLightCycle? " + doDayLightCycle);
             }
         }
     }

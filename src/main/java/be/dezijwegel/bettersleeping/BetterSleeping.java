@@ -3,7 +3,7 @@ package be.dezijwegel.bettersleeping;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
 import be.dezijwegel.bettersleeping.guice.StaticModule;
-import be.dezijwegel.bettersleeping.model.SleepManager;
+import be.dezijwegel.bettersleeping.model.SleepWorldManager;
 import be.dezijwegel.bettersleeping.guice.BetterSleepingModule;
 import be.dezijwegel.bettersleeping.guice.UtilModule;
 import com.google.inject.Guice;
@@ -17,7 +17,7 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
     private final static Level logLevel = Level.ALL;
 
-    private SleepManager sleepManager;
+    private SleepWorldManager sleepWorldManager;
 
 
     @Override
@@ -43,17 +43,17 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);
         getCommand("bettersleeping").setExecutor( commandHandler );
 
-        sleepManager = injector.getInstance(SleepManager.class);
+        sleepWorldManager = injector.getInstance(SleepWorldManager.class);
     }
 
 
     @Override
     public void reload()
     {
-        if (sleepManager != null)
+        if (sleepWorldManager != null)
         {
-            sleepManager.stopRunnables();
-            sleepManager = null;
+            sleepWorldManager.stopRunnables();
+            sleepWorldManager = null;
         }
 
         this.startPlugin();
