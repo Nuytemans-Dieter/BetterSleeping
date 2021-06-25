@@ -5,8 +5,8 @@ import org.bukkit.World;
 public class TimeUtil
 {
 
-    public final static long DAY_DURATION = 14000;          // Default day duration (in ticks, 20tps * 700s)
-    public final static long NIGHT_DURATION = 10000;        // Default night duration (in ticks, 20tps * 500s)
+    public final static double DAY_DURATION = 14000;          // Default day duration (in ticks, 20tps * 700s)
+    public final static double NIGHT_DURATION = 10000;        // Default night duration (in ticks, 20tps * 500s)
 
     public final static int TIME_NIGHT_START = 13000;       // Starting time of the night
     public final static int TIME_NIGHT_END = 23000;         // Ending time of the night

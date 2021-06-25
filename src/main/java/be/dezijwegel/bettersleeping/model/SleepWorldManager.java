@@ -48,7 +48,7 @@ public class SleepWorldManager
                 logger.log(Level.CONFIG, "Enabling BetterSleeping in world " + world.getName());
 
                 SleepWorld sleepWorld = new SleepWorld(world, config, bypassChecker, logger);
-                SleepRunnable runnable = new SleepRunnable(config, sleepWorld);
+                SleepRunnable runnable = new SleepRunnable(config, sleepWorld, logger);
 
                 this.sleepRunnables.put(sleepWorld, world, runnable );
 
