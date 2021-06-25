@@ -3,6 +3,3 @@ needed: 30
 night_skip_length: 10
 allow_partial_skipping: false
 bed_enter_delay: 10
-world_settings:
-  worldname:
-    enabled: true

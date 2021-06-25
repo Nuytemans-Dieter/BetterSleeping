@@ -2,14 +2,13 @@ package be.dezijwegel.bettersleeping.permissions;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.bettersleeping.hooks.EssentialsHook;
-import be.dezijwegel.bettersleeping.util.ConfigContainer;
+import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 

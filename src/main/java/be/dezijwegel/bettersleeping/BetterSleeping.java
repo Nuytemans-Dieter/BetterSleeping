@@ -2,6 +2,7 @@ package be.dezijwegel.bettersleeping;
 
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
+import be.dezijwegel.bettersleeping.guice.StaticModule;
 import be.dezijwegel.bettersleeping.model.SleepManager;
 import be.dezijwegel.bettersleeping.guice.BetterSleepingModule;
 import be.dezijwegel.bettersleeping.guice.UtilModule;
@@ -35,7 +36,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
     {
         Injector injector = Guice.createInjector(
                 new BetterSleepingModule(this, logLevel),
-                new UtilModule()
+                new UtilModule(),
+                new StaticModule()
         );
 
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);

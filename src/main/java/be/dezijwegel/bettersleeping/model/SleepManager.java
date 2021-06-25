@@ -4,14 +4,15 @@ import be.betterplugins.core.collections.DoubleMap;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.runnables.SleepRunnable;
-import be.dezijwegel.bettersleeping.util.ConfigContainer;
-import org.bukkit.Bukkit;
+import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.List;
 import java.util.logging.Level;
 
 public class SleepManager
@@ -20,12 +21,13 @@ public class SleepManager
     private final DoubleMap<SleepWorld, World, SleepRunnable> sleepRunnables;
 
     @Inject
-    public SleepManager(ConfigContainer config, BypassChecker bypassChecker, JavaPlugin plugin, BPLogger logger)
+    @Singleton
+    public SleepManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, JavaPlugin plugin, BPLogger logger)
     {
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         this.sleepRunnables = new DoubleMap<>();
 
-        for (World world : Bukkit.getWorlds())
+        for (World world : allWorlds)
         {
             // Only allow sleeping in the overworld
             if (world.getEnvironment() != World.Environment.NORMAL)

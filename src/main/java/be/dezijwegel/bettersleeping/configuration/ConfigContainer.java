@@ -1,10 +1,12 @@
-package be.dezijwegel.bettersleeping.util;
+package be.dezijwegel.bettersleeping.configuration;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.betteryaml.OptionalBetterYaml;
 import be.dezijwegel.betteryaml.validation.ValidationHandler;
+import be.dezijwegel.betteryaml.validation.validator.ChainedValidator;
 import be.dezijwegel.betteryaml.validation.validator.numeric.Min;
 import be.dezijwegel.betteryaml.validation.validator.string.StringWhiteList;
+import be.dezijwegel.betteryaml.validation.validator.string.ToLowerCase;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,12 +45,24 @@ public class ConfigContainer
                 .setOptionalValue("non_sleeper_debuffs.slow.level", 1);
         ValidationHandler hooksValidation = new ValidationHandler()
                 .addValidator("minimum_afk_time", new Min(-1));
+        ValidationHandler sleeping_settingsValidation = new ValidationHandler()
+                .addValidator("sleeper_counter", new ChainedValidator(
+                        new StringWhiteList("percentage", true, "percentage", "absolute"),
+                        new ToLowerCase()
+                ))
+                .addValidator("needed", new Min(0))
+                .addValidator("night_skip_length", new Min(0))
+                .addValidator("day_length", new Min(0))
+                .addValidator("night_length", new Min(0))
+                .addValidator("bed_enter_cooldown", new Min(0))
+                .addOptionalSection("world_settings")
+                .setOptionalValue("world_settings.worldname.enabled", true);
 
         OptionalBetterYaml configBY = new OptionalBetterYaml("config.yml", configValidation, plugin, true);
         OptionalBetterYaml buffsBY = new OptionalBetterYaml("buffs.yml", buffsValidation, plugin, true);
         OptionalBetterYaml bypassingBY = new OptionalBetterYaml("bypassing.yml", plugin, true);
         OptionalBetterYaml hooksBY = new OptionalBetterYaml("hooks.yml", hooksValidation, plugin, true);
-        OptionalBetterYaml sleeping_settingsBY = new OptionalBetterYaml("sleeping_settings.yml", plugin, true);
+        OptionalBetterYaml sleeping_settingsBY = new OptionalBetterYaml("sleeping_settings.yml", sleeping_settingsValidation, plugin, true);
 
         try
         {

@@ -1,9 +1,8 @@
 package be.dezijwegel.bettersleeping.hooks;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.dezijwegel.bettersleeping.util.ConfigContainer;
+import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
 import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.User;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

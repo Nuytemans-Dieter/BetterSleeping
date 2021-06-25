@@ -10,7 +10,7 @@ import be.dezijwegel.bettersleeping.commands.bscommands.HelpCommand;
 import be.dezijwegel.bettersleeping.commands.bscommands.ReloadCommand;
 import be.dezijwegel.bettersleeping.commands.bscommands.ShoutCommand;
 import be.dezijwegel.bettersleeping.commands.bscommands.VersionCommand;
-import be.dezijwegel.bettersleeping.util.ConfigContainer;
+import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
 import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;

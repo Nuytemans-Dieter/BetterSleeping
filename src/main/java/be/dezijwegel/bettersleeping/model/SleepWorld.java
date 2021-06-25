@@ -5,7 +5,7 @@ import be.dezijwegel.bettersleeping.permissions.BypassChecker;
 import be.dezijwegel.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.dezijwegel.bettersleeping.sleepersneeded.ISleepersCalculator;
 import be.dezijwegel.bettersleeping.sleepersneeded.PercentageNeeded;
-import be.dezijwegel.bettersleeping.util.ConfigContainer;
+import be.dezijwegel.bettersleeping.configuration.ConfigContainer;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
