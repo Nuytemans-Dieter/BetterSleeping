@@ -46,18 +46,23 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
                 new StaticModule()
         );
 
+        // Capture the state of all worlds
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );
-        this.worldStateHandler.setWorldStates( new WorldState( false ));
 
+        // Handle commands
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);
         getCommand("bettersleeping").setExecutor( commandHandler );
 
+        // Handle sleeping through a runnable
         sleepWorldManager = injector.getInstance(SleepWorldManager.class);
+
+        // Disable daylightcycle in all worlds
+        this.worldStateHandler.setWorldStates( new WorldState( false ));
     }
 
 
     @Override
-    public void reload()
+    public void onDisable()
     {
         if (sleepWorldManager != null)
         {
@@ -70,7 +75,12 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
             worldStateHandler.revertWorldStates();
             worldStateHandler = null;
         }
+    }
 
+    @Override
+    public void reload()
+    {
+        this.onDisable();
         this.startPlugin();
     }
 }

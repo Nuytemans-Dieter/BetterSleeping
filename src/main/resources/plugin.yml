@@ -2,7 +2,7 @@ name: BetterSleeping4
 author: vallas
 version: ${project.version}
 api-version: "1.13"
-main: be.dezijwegel.bettersleeping.BetterSleeping
+main: be.betterplugins.bettersleeping.BetterSleeping
 description: A plugin that makes sleeping in multiplayer fun again!
 softdepend: [Essentials, PlaceholderAPI, MultiWorld, Multiverse, Multiverse-Core, BentoBox, Skyblock, GSit]
 commands:

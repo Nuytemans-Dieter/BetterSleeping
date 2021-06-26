@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>be.dezijwegel.bettersleeping</groupId>
+    <groupId>be.betterplugins.bettersleeping</groupId>
     <artifactId>bettersleeping</artifactId>
     <version>4.0.0</version>
 
@@ -163,18 +163,27 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
                 <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <artifactSet>
+                        <includes>
+                            <include>org.bstats:*</include>
+                            <include>com.github.BetterPluginsSpigot:*</include>
+                            <include>com.google.inject:*</include>
+                            <include>aopalliance:aopalliance:*</include>
+                        </includes>
+                    </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping.shade.bstats</shadedPattern>
+                            <shadedPattern>be.betterplugins.bettersleeping.shade.bstats</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>be.betterplugins.core</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping.shade.core</shadedPattern>
+                            <shadedPattern>be.betterplugins.bettersleeping.shade.core</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>be.dezijwegel.betteryaml</pattern>
-                            <shadedPattern>be.dezijwegel.bettersleeping.shade.betteryaml</shadedPattern>
+                            <shadedPattern>be.betterplugins.bettersleeping.shade.betteryaml</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
