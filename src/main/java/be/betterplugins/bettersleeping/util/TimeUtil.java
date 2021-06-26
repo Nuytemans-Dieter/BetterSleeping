@@ -5,12 +5,13 @@ import org.bukkit.World;
 public class TimeUtil
 {
 
+    // Variables for time passing
     public final static double DAY_DURATION = 14000;          // Default day duration (in ticks, 20tps * 700s)
     public final static double NIGHT_DURATION = 10000;        // Default night duration (in ticks, 20tps * 500s)
+    public final static int TIME_NIGHT_START = 13000;         // Starting time of the night
+    public final static int TIME_NIGHT_END = 23000;           // Ending time of the night
 
-    public final static int TIME_NIGHT_START = 13000;       // Starting time of the night
-    public final static int TIME_NIGHT_END = 23000;         // Ending time of the night
-
+    // Sleeping variables
     public final static int BED_TIME_MORNING = 0;           // Morning time
     public final static int BED_TIME_RAIN_NIGHT = 12010;    // Time at which players can enter their bed during rain
     public final static int BED_TIME_NIGHT = 12542;         // Time at which players can enter their bed

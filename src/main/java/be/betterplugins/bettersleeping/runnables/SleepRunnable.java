@@ -4,6 +4,9 @@ import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.util.TimeUtil;
+import be.betterplugins.core.messaging.messenger.Messenger;
+import be.betterplugins.core.messaging.messenger.MsgEntry;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,6 +19,8 @@ import java.util.stream.Collectors;
 public class SleepRunnable extends BukkitRunnable
 {
 
+    private final Messenger messenger;
+
     private final SleepWorld sleepWorld;
     private final Set<UUID> fakeSleepers;
     private final Set<UUID> sleepers;
@@ -26,9 +31,11 @@ public class SleepRunnable extends BukkitRunnable
     private final double nightSpeedup;
     private final double sleepSpeedup;
 
-    public SleepRunnable(ConfigContainer config, SleepWorld sleepWorld, BPLogger logger)
+    public SleepRunnable(ConfigContainer config, SleepWorld sleepWorld, Messenger messenger, BPLogger logger)
     {
         this.sleepWorld = sleepWorld;
+
+        this.messenger = messenger;
 
         this.fakeSleepers = new HashSet<>();
         this.sleepers = new HashSet<>();
@@ -50,12 +57,14 @@ public class SleepRunnable extends BukkitRunnable
 
     /**
      * Mark a player as sleeping, that is not actually sleeping
+     * Will fail silently when the player is already sleeping
      *
      * @param player the relevant player
      */
     public void addFakeSleeper(Player player)
     {
-        fakeSleepers.add( player.getUniqueId() );
+        if (!player.isSleeping())
+            fakeSleepers.add( player.getUniqueId() );
     }
 
     /**
@@ -103,7 +112,28 @@ public class SleepRunnable extends BukkitRunnable
 
 
         // Set the correct time
-        this.sleepWorld.addTime( speedup );
+        boolean isNightSkipped = this.sleepWorld.addTime( speedup );
+
+        if (isNightSkipped)
+        {
+            messenger.sendMessage(new ArrayList<>(Bukkit.getOnlinePlayers()), "<num> player slept!", new MsgEntry("<num>", numSleepers));
+            for (UUID uuid : fakeSleepers)
+            {
+                messenger.sendMessage( Bukkit.getPlayer( uuid ), "You were a FAKE sleeper!" );
+            }
+            for (UUID uuid : sleepers)
+            {
+                messenger.sendMessage( Bukkit.getPlayer( uuid ), "You were a REAL sleeper!" );
+            }
+            for (Player p : Bukkit.getOnlinePlayers())
+            {
+                if (!fakeSleepers.contains( p.getUniqueId() ) && !sleepers.contains( p.getUniqueId() ))
+                {
+                    messenger.sendMessage( p, "You did NOT sleep!" );
+                }
+            }
+        }
+
         lastTime = this.sleepWorld.getWorldTime();
     }
 }

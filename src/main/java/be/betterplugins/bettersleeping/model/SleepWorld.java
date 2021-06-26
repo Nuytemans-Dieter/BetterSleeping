@@ -106,7 +106,7 @@ public class SleepWorld
         this.time = this.time + deltaTime;
 
         boolean isNextDay = false;
-        if (this.time > 24000)
+        if (this.time >= 24000)
         {
             isNextDay = true;
             this.time = this.time % 24000;

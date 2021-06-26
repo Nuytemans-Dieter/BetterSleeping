@@ -5,6 +5,7 @@ import be.betterplugins.core.collections.DoubleMap;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.permissions.BypassChecker;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,7 +24,7 @@ public class SleepWorldManager
 
     @Inject
     @Singleton
-    public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, JavaPlugin plugin, BPLogger logger)
+    public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, Messenger messenger, JavaPlugin plugin, BPLogger logger)
     {
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         this.sleepRunnables = new DoubleMap<>();
@@ -48,7 +49,7 @@ public class SleepWorldManager
                 logger.log(Level.CONFIG, "Enabling BetterSleeping in world " + world.getName());
 
                 SleepWorld sleepWorld = new SleepWorld(world, config, bypassChecker, logger);
-                SleepRunnable runnable = new SleepRunnable(config, sleepWorld, logger);
+                SleepRunnable runnable = new SleepRunnable(config, sleepWorld, messenger, logger);
 
                 this.sleepRunnables.put(sleepWorld, world, runnable );
 
