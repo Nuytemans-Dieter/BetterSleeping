@@ -81,13 +81,9 @@ public class SleepWorldManager
 
     public void stopRunnables()
     {
-        // TODO: After upgrading BetterCore to 1.0.1 or later: Use DoubleMap#values()
-        for (SleepWorld sleepWorld : this.sleepRunnables.keySetForward())
-        {
-            SleepRunnable runnable = this.sleepRunnables.getForward( sleepWorld );
+        for (SleepRunnable runnable : this.sleepRunnables.values())
             if (!runnable.isCancelled())
                 runnable.cancel();
-        }
         this.sleepRunnables.clear();
     }
 }
