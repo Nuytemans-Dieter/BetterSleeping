@@ -44,7 +44,8 @@ public class SleepWorldManager
             Boolean doDayLightRule = world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
             boolean doDayLightCycle = doDayLightRule == null || doDayLightRule;
 
-            if (isEnabled && doDayLightCycle)
+            // Only enable if this world is enabled in the config AND time has been paused
+            if (isEnabled && !doDayLightCycle)
             {
                 logger.log(Level.CONFIG, "Enabling BetterSleeping in world " + world.getName());
 

@@ -17,15 +17,11 @@ import java.util.stream.Collectors;
 public class SleepWorld
 {
 
-    private long nightDuration;
-    private long dayDuration;
-
     private final World world;
     private double time;
 
     private final ISleepersCalculator sleepersCalculator;
     private final BypassChecker bypassChecker;
-
 
     public SleepWorld(World world, ConfigContainer config, BypassChecker bypassChecker, BPLogger logger)
     {
@@ -39,12 +35,22 @@ public class SleepWorld
     }
 
 
+    /**
+     * Get all players that are in this world, regardless of whether they sleep/are bypassed
+     *
+     * @return a list of players
+     */
     public List<Player> getAllPlayersInWorld()
     {
         return world.getPlayers();
     }
 
 
+    /**
+     * Get all players that are not bypassed and are in this world
+     *
+     * @return a list of players
+     */
     public List<Player> getValidPlayersInWorld()
     {
         return world.getPlayers().stream()
@@ -53,6 +59,11 @@ public class SleepWorld
     }
 
 
+    /**
+     * Get all players that are currently sleeping in this world
+     *
+     * @return a list of sleeping players, that are in this world
+     */
     public List<Player> getSleepingPlayersInWorld()
     {
         return world.getPlayers().stream()
@@ -70,40 +81,73 @@ public class SleepWorld
         return world;
     }
 
+
+    /**
+     * Clear the weather in this world, if the weather is not clear
+     */
     public void clearWeather()
     {
-        if (world.hasStorm() || world.isThundering())
+        if (!world.isClearWeather())
         {
             world.setStorm(false);
             world.setThundering(false);
         }
     }
 
+
+    /**
+     * Check whether or not it is currently night in this world
+     *
+     * @return whether or not it is nighttime
+     */
     public boolean isNight()
     {
         return !TimeUtil.isDayTime( this.world );
     }
 
+    /**
+     * Get the BetterSleeping time in this world
+     *
+     * @return the time in (double) ticks
+     */
     public double getInternalTime()
     {
         return this.time;
     }
 
+
+    /**
+     * Get the time in this minecraft world
+     *
+     * @return the time in ticks
+     */
     public long getWorldTime()
     {
         return world.getTime();
     }
 
+    /**
+     * Set the new time in this world
+     *
+     * @param newTime the desired time, a modulo of 24000 will be performed!
+     */
     public void setTime(double newTime)
     {
         this.time = newTime % 24000;
         world.setTime((long) this.time);
     }
 
-    public boolean addTime(double deltaTime)
+
+    /**
+     * Add an amount of ticks to this world, on top of the current time
+     *
+     * @param deltaTicks the amount of ticks to forward the time
+     * @return whether or not adding this time caused the time to become day
+     */
+    public boolean addTime(double deltaTicks)
     {
-        assert deltaTime >= 0;
-        this.time = this.time + deltaTime;
+        assert deltaTicks >= 0;
+        this.time = this.time + deltaTicks;
 
         boolean isNextDay = false;
         if (this.time >= 24000)
@@ -116,6 +160,37 @@ public class SleepWorld
         return isNextDay;
     }
 
+
+    /**
+     * Calculate the passed time between now and a given amount of ticks
+     *
+     * @param sinceTicks the time (in ticks) since when the time should be calculated
+     * @return the amount of ticks between the argument sinceTicks and now
+     */
+    public long calcPassedTime(final long sinceTicks)
+    {
+        long currentTicks = this.world.getTime();
+        if (currentTicks >= sinceTicks)
+        {
+            return currentTicks - sinceTicks;
+        }
+        else
+        {
+            return (24000 + currentTicks) - sinceTicks;
+        }
+    }
+
+
+    /**
+     * Check whether time became day between now and the given amount of ticks
+     *
+     * @param sinceTicks the time since when we are checking whether time became day
+     * @return whether or not the night was over during sinceTicks and now
+     */
+    public boolean didTimeBecomeDay(final long sinceTicks)
+    {
+        return this.world.getTime() < sinceTicks;
+    }
 
     public int getNumNeeded()
     {

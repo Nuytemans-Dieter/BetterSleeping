@@ -83,6 +83,7 @@ public class SleepRunnable extends BukkitRunnable
         // Reset the passed time
         this.sleepWorld.setTime( lastTime );
 
+
         // Count sleepers
         this.sleepers.clear();
         this.sleepers.addAll(
