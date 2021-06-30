@@ -80,10 +80,6 @@ public class SleepRunnable extends BukkitRunnable
     @Override
     public void run()
     {
-        // Reset the passed time
-        this.sleepWorld.setTime( lastTime );
-
-
         // Count sleepers
         this.sleepers.clear();
         this.sleepers.addAll(
@@ -111,6 +107,9 @@ public class SleepRunnable extends BukkitRunnable
             speedup = this.daySpeedup;
         }
 
+
+        // NEW approach: When enough players sleep, keep passing the time until next day
+        // Bed leavers count as sleepers, new players can enter the bed until the next day to be counted
 
         // Set the correct time
         boolean isNightSkipped = this.sleepWorld.addTime( speedup );

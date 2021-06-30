@@ -1,5 +1,6 @@
 package be.betterplugins.bettersleeping;
 
+import be.betterplugins.bettersleeping.listeners.BedEventListener;
 import be.betterplugins.bettersleeping.model.WorldState;
 import be.betterplugins.bettersleeping.model.WorldStateHandler;
 import be.betterplugins.core.commands.BPCommandHandler;
@@ -12,6 +13,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -53,6 +55,10 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);
         getCommand("bettersleeping").setExecutor( commandHandler );
 
+        // Register events
+        BedEventListener bedEventListener = injector.getInstance(BedEventListener.class);
+        Bukkit.getServer().getPluginManager().registerEvents( bedEventListener, this );
+
         // Handle sleeping through a runnable
         sleepWorldManager = injector.getInstance(SleepWorldManager.class);
 
@@ -64,12 +70,17 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
     @Override
     public void onDisable()
     {
+        // Unregister all listeners from this plugin
+        HandlerList.unregisterAll(this);
+
+        // Stop all time handling runnables
         if (sleepWorldManager != null)
         {
             sleepWorldManager.stopRunnables();
             sleepWorldManager = null;
         }
 
+        // Reset all world states to their normal values
         if (worldStateHandler != null)
         {
             worldStateHandler.revertWorldStates();
