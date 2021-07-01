@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.logging.Level;
 
+@Singleton
 public class SleepWorldManager
 {
 
