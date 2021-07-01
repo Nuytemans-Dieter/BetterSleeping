@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TimeSetToDayEvent extends Event {
+public class BecomeDayEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
 
@@ -26,7 +26,7 @@ public class TimeSetToDayEvent extends Event {
     }
 
 
-    public TimeSetToDayEvent (World world, Cause cause, List<Player> sleepers, List<Player> nonSleepers)
+    public BecomeDayEvent(World world, Cause cause, List<Player> sleepers, List<Player> nonSleepers)
     {
         super();
 

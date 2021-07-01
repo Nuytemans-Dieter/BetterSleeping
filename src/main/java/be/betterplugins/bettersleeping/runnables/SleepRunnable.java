@@ -1,7 +1,7 @@
 package be.betterplugins.bettersleeping.runnables;
 
-import be.betterplugins.bettersleeping.api.TimeSetToDayEvent;
-import be.betterplugins.bettersleeping.api.TimeSetToDayEvent.Cause;
+import be.betterplugins.bettersleeping.api.BecomeDayEvent;
+import be.betterplugins.bettersleeping.api.BecomeDayEvent.Cause;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
@@ -168,7 +168,7 @@ public class SleepRunnable extends BukkitRunnable
             final List<Player> tiredPlayers = sleepWorld.getAllPlayersInWorld();
             tiredPlayers.removeIf(player -> this.sleepers.contains( player.getUniqueId() ));
 
-            TimeSetToDayEvent event = new TimeSetToDayEvent(sleepWorld.getWorld(), cause, restedPlayers, tiredPlayers);
+            BecomeDayEvent event = new BecomeDayEvent(sleepWorld.getWorld(), cause, restedPlayers, tiredPlayers);
             Bukkit.getServer().getPluginManager().callEvent( event );
 
             this.isSkipping = false;

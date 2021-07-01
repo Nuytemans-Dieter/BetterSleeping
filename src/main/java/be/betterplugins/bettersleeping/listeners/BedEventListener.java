@@ -57,6 +57,14 @@ public class BedEventListener implements Listener
     public void onSleep(PlayerBedEnterEvent event)
     {
 
+        //TODO Implement bypassing
+//        if ( bypassChecker.isPlayerBypassed( player ) )
+//        {
+//            messenger.sendMessage(player, "bypass_message", false);
+//            // Don't return, always allow the player to sleep
+//            //return;
+//        }
+
         // Only handle sleeping in enabled worlds
         if (! sleepWorldManager.isWorldEnabled( event.getPlayer().getWorld() ))
         {
