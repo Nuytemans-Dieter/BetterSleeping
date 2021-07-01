@@ -68,7 +68,7 @@ public class SleepWorldManager
     {
         SleepRunnable runnable = sleepRunnables.getBackward( player.getWorld() );
         if (runnable != null)
-            runnable.addFakeSleeper( player );
+            runnable.addSleeper( player );
     }
 
 
@@ -76,7 +76,7 @@ public class SleepWorldManager
     {
         SleepRunnable runnable = sleepRunnables.getBackward( player.getWorld() );
         if (runnable != null)
-            runnable.addFakeSleeper( player );
+            runnable.addSleeper( player );
     }
 
 

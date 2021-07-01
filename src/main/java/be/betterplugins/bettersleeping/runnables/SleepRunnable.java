@@ -22,24 +22,22 @@ public class SleepRunnable extends BukkitRunnable
     private final Messenger messenger;
 
     private final SleepWorld sleepWorld;
-    private final Set<UUID> fakeSleepers;
     private final Set<UUID> sleepers;
 
-    private long lastTime;
+    private boolean isSkipping;
 
     private final double daySpeedup;
     private final double nightSpeedup;
     private final double sleepSpeedup;
 
+
     public SleepRunnable(ConfigContainer config, SleepWorld sleepWorld, Messenger messenger, BPLogger logger)
     {
         this.sleepWorld = sleepWorld;
-
         this.messenger = messenger;
 
-        this.fakeSleepers = new HashSet<>();
         this.sleepers = new HashSet<>();
-        lastTime = sleepWorld.getWorldTime();
+        this.isSkipping = false;
 
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         double dayDuration = (double) sleepingSettings.getLong("day_length") * 20;
@@ -55,85 +53,119 @@ public class SleepRunnable extends BukkitRunnable
         logger.log(Level.FINEST, "Sleep speedup: " + sleepSpeedup);
     }
 
+
     /**
-     * Mark a player as sleeping, that is not actually sleeping
+     * Mark a player as sleeping, he does not actually have to sleep
      * Will fail silently when the player is already sleeping
      *
      * @param player the relevant player
      */
-    public void addFakeSleeper(Player player)
+    public void addSleeper(Player player)
     {
         if (!player.isSleeping())
-            fakeSleepers.add( player.getUniqueId() );
+            sleepers.add( player.getUniqueId() );
     }
 
+
     /**
-     * Mark a player as no longer being fake sleeping
+     * Mark a player as no longer sleeping
      *
      * @param player the relevant player
      */
     public void removeSleeper(Player player)
     {
-        fakeSleepers.remove( player.getUniqueId() );
+        sleepers.remove( player.getUniqueId() );
     }
 
-    @Override
-    public void run()
+
+    /**
+     * Reset the internal players sleeping state: makes BetterSleeping think all players woke up
+     */
+    public void resetSleepers()
     {
-        // Count sleepers
         this.sleepers.clear();
-        this.sleepers.addAll(
-                sleepWorld.getSleepingPlayersInWorld().stream()
-                .map(Entity::getUniqueId)
-                .collect(Collectors.toList())
-        );
-        int numSleepers = sleepers.size() + fakeSleepers.size();
+    }
 
-        // Check num needed
-        int numNeeded = sleepWorld.getNumNeeded();
+    /**
+     * Check whether a player should still be counted as a sleeping player
+     *
+     * @param uuid the UUID of the player to be checked
+     * @return True if the player is no longer in the right world or the player is offline. False otherwise
+     */
+    private boolean isNotValidSleeper(UUID uuid)
+    {
+        Player player = Bukkit.getPlayer( uuid );
+        return !(player != null && player.isOnline() && this.sleepWorld.isInWorld( player ));
+    }
 
+    private double calcSpeedup()
+    {
         final double speedup;
+
         if ( this.sleepWorld.isNight() )
         {
-            boolean skipNight = numSleepers >= numNeeded;
-            speedup = skipNight ? sleepSpeedup : nightSpeedup;
-            if (skipNight)
-            {
+            speedup = isSkipping ? sleepSpeedup : nightSpeedup;
+            if (isSkipping)
                 this.sleepWorld.clearWeather();
-            }
         }
         else
         {
             speedup = this.daySpeedup;
         }
 
+        return speedup;
+    }
 
-        // NEW approach: When enough players sleep, keep passing the time until next day
-        // Bed leavers count as sleepers, new players can enter the bed until the next day to be counted
+    @Override
+    public void run()
+    {
+        // Remove invalid sleepers
+        this.sleepers.removeIf(this::isNotValidSleeper);
+
+        // Add all new sleepers
+        this.sleepers.addAll(
+                sleepWorld.getSleepingPlayersInWorld().stream()
+                .map(Entity::getUniqueId)
+                .collect(Collectors.toList())
+        );
+
+        // Calculate the amounts
+        int numSleepers = sleepers.size();
+        int numNeeded = sleepWorld.getNumNeeded();
+
+
+        // Only start skipping when enough players sleep & at least someone sleeps
+        if (!isSkipping && numSleepers >= numNeeded && numSleepers > 0)
+        {
+            this.isSkipping = true;
+            messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "enough_sleeping");
+        }
+
+        // Calculate the acceleration
+        final double acceleration = calcSpeedup();
+
+        // TODO: Handle when default mechanics try to skip the night
 
         // Set the correct time
-        boolean isNightSkipped = this.sleepWorld.addTime( speedup );
+        boolean isNightSkipped = this.sleepWorld.addTime( acceleration );
 
         if (isNightSkipped)
         {
             messenger.sendMessage(new ArrayList<>(Bukkit.getOnlinePlayers()), "<num> player slept!", new MsgEntry("<num>", numSleepers));
-            for (UUID uuid : fakeSleepers)
-            {
-                messenger.sendMessage( Bukkit.getPlayer( uuid ), "You were a FAKE sleeper!" );
-            }
             for (UUID uuid : sleepers)
             {
                 messenger.sendMessage( Bukkit.getPlayer( uuid ), "You were a REAL sleeper!" );
             }
             for (Player p : Bukkit.getOnlinePlayers())
             {
-                if (!fakeSleepers.contains( p.getUniqueId() ) && !sleepers.contains( p.getUniqueId() ))
+                if (!sleepers.contains( p.getUniqueId() ))
                 {
                     messenger.sendMessage( p, "You did NOT sleep!" );
                 }
             }
-        }
 
-        lastTime = this.sleepWorld.getWorldTime();
+            this.isSkipping = false;
+            this.sleepers.clear();
+        }
     }
 }

@@ -73,12 +73,14 @@ public class SleepWorld
 
 
     /**
-     * @deprecated Avoid using this method, unless absolutely necessary. Attempt to use SleepWorld as a wrapper (rather add a method to SleepWorld than get the world first).
+     * Check whether a player is in this world
+     *
+     * @param player the player to be checked
+     * @return true if this player is currently in this world, false otherwise
      */
-    @Deprecated
-    public World getWorld()
+    public boolean isInWorld(Player player)
     {
-        return world;
+        return player.getWorld().getName().equals( this.world.getName() );
     }
 
 
