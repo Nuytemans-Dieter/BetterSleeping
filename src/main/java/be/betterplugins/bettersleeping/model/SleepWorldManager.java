@@ -64,7 +64,23 @@ public class SleepWorldManager
     }
 
 
-    public void addFakeSleeper(Player player)
+    /**
+     * Check whether this world is a BetterSleeping world
+     *
+     * @param world the world to be checked
+     * @return true if BetterSleeping handles sleeping
+     */
+    public boolean isWorldEnabled(World world)
+    {
+        return sleepRunnables.getBackward( world ) != null;
+    }
+
+    /**
+     * Add a sleeper to the right sleep runnable
+     *
+     * @param player the player that should be marked as sleeping
+     */
+    public void addSleeper(Player player)
     {
         SleepRunnable runnable = sleepRunnables.getBackward( player.getWorld() );
         if (runnable != null)
@@ -72,7 +88,12 @@ public class SleepWorldManager
     }
 
 
-    public void removeFakeSleeper(Player player)
+    /**
+     * Remove a sleeper from the right sleep runnable
+     *
+     * @param player the player that should no longer be marked as sleeping
+     */
+    public void removeSleeper(Player player)
     {
         SleepRunnable runnable = sleepRunnables.getBackward( player.getWorld() );
         if (runnable != null)
@@ -80,6 +101,9 @@ public class SleepWorldManager
     }
 
 
+    /**
+     * Stop all sleeping runnables
+     */
     public void stopRunnables()
     {
         for (SleepRunnable runnable : this.sleepRunnables.values())

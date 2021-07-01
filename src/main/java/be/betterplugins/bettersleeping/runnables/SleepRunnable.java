@@ -1,20 +1,21 @@
 package be.betterplugins.bettersleeping.runnables;
 
-import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
+import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.core.messaging.messenger.MsgEntry;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 public class SleepRunnable extends BukkitRunnable
 {
@@ -62,6 +63,7 @@ public class SleepRunnable extends BukkitRunnable
      */
     public void addSleeper(Player player)
     {
+        this.messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "bed_enter_broadcast");
         if (!player.isSleeping())
             sleepers.add( player.getUniqueId() );
     }
@@ -123,11 +125,11 @@ public class SleepRunnable extends BukkitRunnable
         this.sleepers.removeIf(this::isNotValidSleeper);
 
         // Add all new sleepers
-        this.sleepers.addAll(
-                sleepWorld.getSleepingPlayersInWorld().stream()
-                .map(Entity::getUniqueId)
-                .collect(Collectors.toList())
-        );
+//        this.sleepers.addAll(
+//                sleepWorld.getSleepingPlayersInWorld().stream()
+//                .map(Entity::getUniqueId)
+//                .collect(Collectors.toList())
+//        );
 
         // Calculate the amounts
         int numSleepers = sleepers.size();
@@ -143,8 +145,6 @@ public class SleepRunnable extends BukkitRunnable
 
         // Calculate the acceleration
         final double acceleration = calcSpeedup();
-
-        // TODO: Handle when default mechanics try to skip the night
 
         // Set the correct time
         boolean isNightSkipped = this.sleepWorld.addTime( acceleration );

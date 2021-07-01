@@ -1,16 +1,14 @@
 package be.betterplugins.bettersleeping.guice;
 
+import be.betterplugins.bettersleeping.commands.*;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.SleepWorldManager;
 import be.betterplugins.core.CoreFactory;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.commands.messages.CommandMessages;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.bettersleeping.BetterSleeping;
-import be.betterplugins.bettersleeping.commands.HelpCommand;
-import be.betterplugins.bettersleeping.commands.ReloadCommand;
-import be.betterplugins.bettersleeping.commands.ShoutCommand;
-import be.betterplugins.bettersleeping.commands.VersionCommand;
 import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
@@ -55,13 +53,14 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    public BPCommandHandler provideCommandHandler(Messenger messenger, BetterLang lang)
+    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, Messenger messenger, BetterLang lang)
     {
         CoreFactory fact = new CoreFactory();
 
         HelpCommand     help    = new HelpCommand(messenger);
         ReloadCommand   reload  = new ReloadCommand(plugin, messenger);
         ShoutCommand    shout   = new ShoutCommand(messenger);
+        SleepCommand    sleep   = new SleepCommand(messenger, sleepWorldManager);
         VersionCommand  version = new VersionCommand(plugin, messenger);
 
         Map<String, String> messageMap = lang.getMessages();
@@ -75,6 +74,7 @@ public class BetterSleepingModule extends AbstractModule
                 help,
                 reload,
                 shout,
+                sleep,
                 version
         );
     }
