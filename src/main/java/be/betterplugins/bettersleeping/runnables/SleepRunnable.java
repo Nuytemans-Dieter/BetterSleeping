@@ -11,10 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.logging.Level;
 
 public class SleepRunnable extends BukkitRunnable
@@ -59,13 +56,16 @@ public class SleepRunnable extends BukkitRunnable
      * Mark a player as sleeping, he does not actually have to sleep
      * Will fail silently when the player is already sleeping
      *
-     * @param player the relevant player
+     * @param sleeper the relevant player
      */
-    public void addSleeper(Player player)
+    public void addSleeper(Player sleeper)
     {
-        this.messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "bed_enter_broadcast");
-        if (!player.isSleeping())
-            sleepers.add( player.getUniqueId() );
+        List<Player> players = sleepWorld.getAllPlayersInWorld();
+        players.removeIf(player -> player.getUniqueId() == sleeper.getUniqueId());
+
+        this.messenger.sendMessage(players,"bed_enter_broadcast");
+        if (!sleeper.isSleeping())
+            sleepers.add( sleeper.getUniqueId() );
     }
 
 
@@ -123,13 +123,6 @@ public class SleepRunnable extends BukkitRunnable
     {
         // Remove invalid sleepers
         this.sleepers.removeIf(this::isNotValidSleeper);
-
-        // Add all new sleepers
-//        this.sleepers.addAll(
-//                sleepWorld.getSleepingPlayersInWorld().stream()
-//                .map(Entity::getUniqueId)
-//                .collect(Collectors.toList())
-//        );
 
         // Calculate the amounts
         int numSleepers = sleepers.size();
