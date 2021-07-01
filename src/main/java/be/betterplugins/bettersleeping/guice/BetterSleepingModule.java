@@ -48,7 +48,7 @@ public class BetterSleepingModule extends AbstractModule
     public Messenger provideMessenger(BetterLang lang, BPLogger logger)
     {
         // The shorten_prefix option has been removed, 98.6% had this option enabled
-        return new Messenger(lang.getMessages(), logger, ChatColor.GOLD + "[BS4] " + ChatColor.DARK_AQUA);
+        return new Messenger(lang.getMessages(), logger, ChatColor.RED + "[BS4] " + ChatColor.GRAY);
     }
 
     @Provides
@@ -83,7 +83,7 @@ public class BetterSleepingModule extends AbstractModule
     @Singleton
     public BPLogger provideLogger()
     {
-        return new BPLogger(logLevel);
+        return new BPLogger(logLevel, "BetterSleeping4");
     }
 
     @Provides
