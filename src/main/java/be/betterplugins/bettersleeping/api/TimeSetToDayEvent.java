@@ -34,9 +34,11 @@ public class TimeSetToDayEvent extends Event {
         this.cause = cause;
         this.sleepers = sleepers.stream()
             .filter( player -> !player.hasMetadata("NPC") )
+            .filter(Player::isOnline)
             .collect( Collectors.toList() );
         this.nonSleepers = nonSleepers.stream()
             .filter( player -> !player.hasMetadata("NPC") )
+            .filter(Player::isOnline)
             .collect( Collectors.toList() );
     }
 

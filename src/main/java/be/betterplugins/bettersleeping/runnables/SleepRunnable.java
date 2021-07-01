@@ -1,5 +1,7 @@
 package be.betterplugins.bettersleeping.runnables;
 
+import be.betterplugins.bettersleeping.api.TimeSetToDayEvent;
+import be.betterplugins.bettersleeping.api.TimeSetToDayEvent.Cause;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
@@ -13,6 +15,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class SleepRunnable extends BukkitRunnable
 {
@@ -100,6 +103,7 @@ public class SleepRunnable extends BukkitRunnable
         return !(player != null && player.isOnline() && this.sleepWorld.isInWorld( player ));
     }
 
+
     private double calcSpeedup()
     {
         final double speedup;
@@ -144,18 +148,28 @@ public class SleepRunnable extends BukkitRunnable
 
         if (isNightSkipped)
         {
-            messenger.sendMessage(new ArrayList<>(Bukkit.getOnlinePlayers()), "<num> player slept!", new MsgEntry("<num>", numSleepers));
-            for (UUID uuid : sleepers)
-            {
-                messenger.sendMessage( Bukkit.getPlayer( uuid ), "You were a REAL sleeper!" );
-            }
-            for (Player p : Bukkit.getOnlinePlayers())
-            {
-                if (!sleepers.contains( p.getUniqueId() ))
-                {
-                    messenger.sendMessage( p, "You did NOT sleep!" );
-                }
-            }
+            messenger.sendMessage(
+                    new ArrayList<>(Bukkit.getOnlinePlayers()),
+                    "<num> player slept!",
+                    new MsgEntry("<num>", numSleepers)
+            );
+
+
+            // Find the cause for night skipping
+            final Cause cause = isSkipping ? Cause.SLEEPING : Cause.NATURAL;
+
+            // Find all players that slept
+            final List<Player> restedPlayers = this.sleepers.stream()
+                    .map(Bukkit::getPlayer)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+
+            // Get all players that did not sleep
+            final List<Player> tiredPlayers = sleepWorld.getAllPlayersInWorld();
+            tiredPlayers.removeIf(player -> this.sleepers.contains( player.getUniqueId() ));
+
+            TimeSetToDayEvent event = new TimeSetToDayEvent(sleepWorld.getWorld(), cause, restedPlayers, tiredPlayers);
+            Bukkit.getServer().getPluginManager().callEvent( event );
 
             this.isSkipping = false;
             this.sleepers.clear();

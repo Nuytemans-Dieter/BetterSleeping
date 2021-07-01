@@ -198,4 +198,17 @@ public class SleepWorld
     {
         return sleepersCalculator.getNumNeeded(this);
     }
+
+    /**
+     * Get the world which is represented by this SleepWorld
+     * @deprecated Do not make direct calls to the retrieved worlds, use SleepWorld as a wrapper for this object.
+     * This getter is required in rare instances, which is why it is not removed but should be used as little as possible.
+     *
+     * @return the relevant World
+     */
+    @Deprecated
+    public World getWorld()
+    {
+        return this.world;
+    }
 }
