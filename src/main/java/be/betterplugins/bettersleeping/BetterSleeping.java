@@ -5,6 +5,7 @@ import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
 import be.betterplugins.bettersleeping.listeners.BedEventListener;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
+import be.betterplugins.bettersleeping.listeners.PhantomHandler;
 import be.betterplugins.bettersleeping.listeners.TimeSetToDayCounter;
 import be.betterplugins.bettersleeping.model.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.WorldState;
@@ -62,7 +63,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         registerEvents(
             injector.getInstance(BedEventListener.class),
             injector.getInstance(BuffsHandler.class),
-            injector.getInstance(TimeSetToDayCounter.class)
+            injector.getInstance(TimeSetToDayCounter.class),
+            injector.getInstance(PhantomHandler.class)
         );
 
         // Handle sleeping through a runnable

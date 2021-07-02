@@ -1,18 +1,27 @@
-//package be.dezijwegel.bettersleeping.listeners;
-//
-//import org.bukkit.entity.EntityType;
-//import org.bukkit.event.EventHandler;
-//import org.bukkit.event.EventPriority;
-//import org.bukkit.event.Listener;
-//import org.bukkit.event.entity.EntitySpawnEvent;
-//
-//public class PhantomHandler implements Listener {
-//
-//    @EventHandler(priority = EventPriority.LOWEST)
-//    public void onPhantomSpawn(EntitySpawnEvent spawnEvent)
-//    {
-//        if (spawnEvent.getEntityType() == EntityType.PHANTOM)
-//            spawnEvent.setCancelled(true);
-//    }
-//
-//}
+package be.betterplugins.bettersleeping.listeners;
+
+import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntitySpawnEvent;
+
+public class PhantomHandler implements Listener
+{
+
+    private final boolean disablePhantoms;
+
+    public PhantomHandler(ConfigContainer container)
+    {
+        this.disablePhantoms = container.getConfig().getBoolean("disable_phantoms");
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPhantomSpawn(EntitySpawnEvent spawnEvent)
+    {
+        if (disablePhantoms && spawnEvent.getEntityType() == EntityType.PHANTOM)
+            spawnEvent.setCancelled(true);
+    }
+
+}
