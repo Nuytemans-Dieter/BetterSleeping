@@ -5,15 +5,19 @@ import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
 import be.betterplugins.bettersleeping.listeners.BedEventListener;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
+import be.betterplugins.bettersleeping.listeners.TimeSetToDayCounter;
 import be.betterplugins.bettersleeping.model.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.WorldState;
 import be.betterplugins.bettersleeping.model.WorldStateHandler;
+import be.betterplugins.bettersleeping.util.BStatsHandler;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -54,19 +58,34 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         getCommand("bettersleeping").setExecutor( commandHandler );
 
         // Register events
-        BedEventListener bedEventListener = injector.getInstance(BedEventListener.class);
-        BuffsHandler buffsHandler = injector.getInstance(BuffsHandler.class);
 
-        Bukkit.getServer().getPluginManager().registerEvents( bedEventListener, this );
-        Bukkit.getServer().getPluginManager().registerEvents( buffsHandler, this );
+        registerEvents(
+            injector.getInstance(BedEventListener.class),
+            injector.getInstance(BuffsHandler.class),
+            injector.getInstance(TimeSetToDayCounter.class)
+        );
 
         // Handle sleeping through a runnable
         sleepWorldManager = injector.getInstance(SleepWorldManager.class);
 
         // Disable daylightcycle in all worlds
         this.worldStateHandler.setWorldStates( new WorldState( false ));
+
+        // Enable bStats
+        injector.getInstance(BStatsHandler.class);
     }
 
+    /**
+     * Register all provided Listeners
+     *
+     * @param listeners all listeners to be registered
+     */
+    private void registerEvents(Listener... listeners)
+    {
+        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+        for (Listener listener : listeners)
+            pluginManager.registerEvents( listener, this );
+    }
 
     @Override
     public void onDisable()
