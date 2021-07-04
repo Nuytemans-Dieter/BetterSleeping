@@ -22,6 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class BedEventListener implements Listener
 {
 
@@ -53,6 +54,9 @@ public class BedEventListener implements Listener
         }};
     }
 
+    /**
+     * Highest priority to call this method as late as possible, this gives other plugins the chance to cancel the event
+     */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSleep(PlayerBedEnterEvent event)
     {
