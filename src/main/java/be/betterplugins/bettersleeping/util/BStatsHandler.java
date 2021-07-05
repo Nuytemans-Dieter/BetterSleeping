@@ -10,6 +10,7 @@ import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,7 +28,7 @@ public class BStatsHandler {
             JavaPlugin plugin,
             ConfigContainer configContainer,
             EssentialsHook essentialsHook, BuffsHandler buffsHandler, TimeSetToDayCounter timeSetToDayCounter,
-            boolean isMultiWorld
+            List<World> worlds
     )
     {
 
@@ -136,7 +137,8 @@ public class BStatsHandler {
         // TODO: Advanced chart for buffs: which ones?
         metrics.addCustomChart(new SimplePie("uses_debuffs", () -> buffsHandler.getDebuffs().size() != 0 ? "Yes" : "No" ));
 
-        metrics.addCustomChart(new SimplePie("is_multiworld", () -> isMultiWorld ? "Yes" : "No" ));
+        long numWorlds = worlds.stream().filter( world -> world.getEnvironment() == World.Environment.NORMAL || world.getEnvironment() == World.Environment.CUSTOM ).count();
+        metrics.addCustomChart(new SimplePie("is_multiworld", () -> numWorlds > 1 ? "Yes" : "No" ));
 
         metrics.addCustomChart(new SimplePie("is_premium", () -> "No" ));
 
