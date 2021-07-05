@@ -1,4 +1,4 @@
-package model;
+package model.sleeping;
 
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;

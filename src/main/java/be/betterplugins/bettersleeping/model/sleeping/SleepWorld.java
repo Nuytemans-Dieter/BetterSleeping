@@ -48,6 +48,7 @@ public class SleepWorld
 
     /**
      * Get all players that are not bypassed and are in this world
+     * Will return all players in this world if bypassing is disabled
      *
      * @return a list of players
      */
