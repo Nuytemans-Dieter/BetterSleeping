@@ -2,7 +2,7 @@ name: Yaml autosync
 
 on:
   push:
-    branches: [ v3.0.0 ]
+    branches: [ BetterSleeping-v4 ]
 
 jobs:
   build:
@@ -47,5 +47,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
+          branch: BetterSleeping-v4
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
