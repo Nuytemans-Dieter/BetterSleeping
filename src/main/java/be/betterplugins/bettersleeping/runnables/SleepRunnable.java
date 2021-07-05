@@ -193,7 +193,7 @@ public class SleepRunnable extends BukkitRunnable
         {
             messenger.sendMessage(
                     new ArrayList<>(Bukkit.getOnlinePlayers()),
-                    "<num> player slept!",
+                    "morning_message",
                     new MsgEntry("<num>", numSleepers)
             );
 

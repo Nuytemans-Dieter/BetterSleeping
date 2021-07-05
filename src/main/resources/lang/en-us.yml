@@ -12,7 +12,7 @@ debuff_received: "You did not sleep and feel tired, you received [<var>.a debuff
 # Permissions
 no_permission: "&cYou don't have permission to execute <var>!"
 message_reloaded: "&2Reload complete!"
-bypass_message: "&cYou are bypassed so you don't need to sleep, <user>."
+bypass_message: "&cYou are bypassed so you don't need to sleep, <user>. You will never get debuffs!"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"
 command_shout_cooldown: "Someone recently shouted in this world, please wait <time> more [<time>.second.seconds]!"

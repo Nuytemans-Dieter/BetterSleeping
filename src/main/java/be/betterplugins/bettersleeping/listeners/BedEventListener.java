@@ -1,6 +1,7 @@
 package be.betterplugins.bettersleeping.listeners;
 
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
@@ -30,18 +31,20 @@ public class BedEventListener implements Listener
     private final int cooldownMs;
 
     private final SleepWorldManager sleepWorldManager;
+    private final BypassChecker bypassChecker;
     private final Messenger messenger;
     private final BPLogger logger;
 
     private final Set<BedEnterResult> blacklistedResults;
 
     @Inject
-    public BedEventListener(SleepWorldManager sleepWorldManager, ConfigContainer container, Messenger messenger, BPLogger logger)
+    public BedEventListener(SleepWorldManager sleepWorldManager, ConfigContainer container, BypassChecker bypassChecker, Messenger messenger, BPLogger logger)
     {
         this.cooldownMs = 1000 * container.getSleeping_settings().getInt("bed_enter_cooldown");
         this.lastBedEnterMap = new HashMap<>();
 
         this.sleepWorldManager = sleepWorldManager;
+        this.bypassChecker = bypassChecker;
         this.messenger = messenger;
         this.logger = logger;
 
@@ -60,15 +63,6 @@ public class BedEventListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSleep(PlayerBedEnterEvent event)
     {
-
-        //TODO Implement bypassing
-//        if ( bypassChecker.isPlayerBypassed( player ) )
-//        {
-//            messenger.sendMessage(player, "bypass_message", false);
-//            // Don't return, always allow the player to sleep
-//            //return;
-//        }
-
         // Only handle sleeping in enabled worlds
         if (! sleepWorldManager.isWorldEnabled( event.getPlayer().getWorld() ))
         {
@@ -101,9 +95,15 @@ public class BedEventListener implements Listener
         Player player = event.getPlayer();
         if (!canPlayerSleep(player))
         {
-            messenger.sendMessage(player, "bed_enter_cooldown");
+            messenger.sendMessage(player, "sleep_spam");
             event.setUseBed(Event.Result.DENY);
             return;
+        }
+
+        // Notify bypassed players
+        if ( bypassChecker.isPlayerBypassed( player ) )
+        {
+            messenger.sendMessage(player, "bypass_message");
         }
 
         logger.log(Level.FINE, "Player " + event.getPlayer().getName() + " entered their bed");

@@ -11,6 +11,8 @@
 # All supported languages: https://github.com/Nuytemans-Dieter/BetterSleeping/tree/v3.0.0/src/main/resources/lang
 
 # CONFIGURATION GUIDE:
+
+# Using colors:
 # The symbol '&' is used for color codes
 # For SPIGOT ONLY in 1.16+: RGB support in one of the following formats: $(RED,GREEN,BLUE)$ OR &#RRGGBB
 # RED, GREEN and BLUE range from 0 to 255
@@ -18,11 +20,6 @@
 # Any message can be disabled by setting the text to "ignored" or "", an example can be found below
 # some_setting: "ignored"
 # another_setting: ""
-
-# How to use square brackets? [ and ]
-# BetterSleeping uses those to distinguish singular and plural words so you cannot directly use [ and ].
-# However, you can use |( and )| instead, they will be replaced by [ and ] respectively
-# |( This )| will become [ This ].
 
 # SINGULAR / PLURAL
 # BetterSleeping supports singular and plural nouns
@@ -33,6 +30,11 @@
 #     When <num_sleeping> is NOT equal to 1: everything between the [] will be replaced by players
 # Note: For this, you can use any placeholder that is replaced by a number (see below)
 
+# How to use square brackets? [ and ]
+# BetterSleeping uses those to distinguish singular and plural words so you cannot directly use [ and ].
+# However, you can use |( and )| instead, they will be replaced by [ and ] respectively
+# |( This )| will become [ This ].
+
 
 # PLACEHOLDERS
 # <user>
@@ -42,7 +44,7 @@
 #
 # <player>
 #     Replaced by:      The player who did an action
-#     Can be used in:   bed_enter_broadcast, enough_sleeping, skipping_canceled
+#     Can be used in:   bed_enter_broadcast, enough_sleeping
 #     Example:          When user Freddy_Krueger goes to bed, <player> is replaced by Freddy_Krueger
 #
 # <num_sleeping>
@@ -52,7 +54,7 @@
 #
 # <needed_sleeping>
 #     Replaced by:      The amount of sleeping players that have to sleep in order to skip the night
-#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled, sleep_possible_soon, sleep_possible_now
+#     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping
 #     Example:          When 4 players need to sleep, <needed_sleeping> is replaced by 4
 #
 # <remaining_sleeping>
@@ -67,7 +69,7 @@
 #
 # <var>
 #     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
-#     Can be used in:   no_permission, buff_received, debuff_received
+#     Can be used in:   no_permission, buff_received, debuff_received, some commands
 #     Example:          User executes /bs reload but has no access. <var> will be replaced by '/bs reload'
 
 
@@ -85,6 +87,7 @@ bed_enter_broadcast: {bed_enter_broadcast}
 enough_sleeping: {enough_sleeping}
 
 # Players receive this message in the morning
+# Placeholders: <num>: Amount of sleepers
 morning_message: {morning_message}
 
 # Players that try to enter their bed too quickly after getting out of it
@@ -120,7 +123,7 @@ no_permission: {no_permission}
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:
-#     - Having the node bettersleeping.bypass OR essentials.sleepingignored
+#     - Having the node bettersleeping.bypass
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
 bypass_message: {bypass_message}
