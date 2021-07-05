@@ -1,4 +1,4 @@
-package be.betterplugins.bettersleeping.model;
+package be.betterplugins.bettersleeping.model.world;
 
 import org.bukkit.World;
 

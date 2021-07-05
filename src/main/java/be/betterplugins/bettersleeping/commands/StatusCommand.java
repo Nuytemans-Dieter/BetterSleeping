@@ -1,7 +1,7 @@
 package be.betterplugins.bettersleeping.commands;
 
 import be.betterplugins.bettersleeping.model.SleepStatus;
-import be.betterplugins.bettersleeping.model.SleepWorldManager;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.commands.shortcuts.PlayerBPCommand;
 import be.betterplugins.core.messaging.messenger.Messenger;

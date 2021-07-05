@@ -1,7 +1,7 @@
 package be.betterplugins.bettersleeping.api;
 
 import be.betterplugins.bettersleeping.model.SleepStatus;
-import be.betterplugins.bettersleeping.model.SleepWorldManager;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

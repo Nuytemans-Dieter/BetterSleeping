@@ -1,6 +1,6 @@
 package be.betterplugins.bettersleeping.hooks.events;
 
-import be.betterplugins.bettersleeping.model.SleepWorldManager;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import me.gsit.api.events.PlayerGetUpLayEvent;
 import me.gsit.api.events.PlayerLayEvent;
@@ -10,8 +10,6 @@ import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
-import java.util.Map;
 
 public class GSitListener implements Listener {
 

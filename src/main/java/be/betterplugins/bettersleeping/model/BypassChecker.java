@@ -1,4 +1,4 @@
-package be.betterplugins.bettersleeping.permissions;
+package be.betterplugins.bettersleeping.model;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;

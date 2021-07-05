@@ -4,7 +4,7 @@ import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent.Cause;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepStatus;
-import be.betterplugins.bettersleeping.model.SleepWorld;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;

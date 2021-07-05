@@ -1,6 +1,6 @@
 package be.betterplugins.bettersleeping.sleepersneeded;
 
-import be.betterplugins.bettersleeping.model.SleepWorld;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 

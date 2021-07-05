@@ -1,8 +1,8 @@
 package model;
 
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
-import be.betterplugins.bettersleeping.model.SleepWorld;
-import be.betterplugins.bettersleeping.permissions.BypassChecker;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
+import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.seeseemelk.mockbukkit.MockBukkit;
 import be.seeseemelk.mockbukkit.ServerMock;
