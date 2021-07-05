@@ -49,14 +49,14 @@ public class SleepCommand extends PlayerBPCommand
         // Make sure this world is enabled
         if (!sleepWorldManager.isWorldEnabled( world ))
         {
-            messenger.sendMessage(player, "&cSleeping is not enabled in this world!");
+            messenger.sendMessage(player, "world_disabled");
             return true;
         }
 
         // Make sure the time is right in the player's world
         if (!TimeUtil.isSleepPossible( world ))
         {
-            messenger.sendMessage(player, "&cYou feel not tired yet, please wait until night");
+            messenger.sendMessage(player, "command_sleep_notnight");
             return true;
         }
 

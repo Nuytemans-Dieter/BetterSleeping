@@ -110,9 +110,10 @@ buff_received: "You feel well rested and received [<var>.a buff.<var> buffs]."
 debuff_received: "You did not sleep and feel tired, you received [<var>.a debuff.<var> debuffs]."
 
 
-# -------------------- #
-# Commands/Permissions |
-# -------------------- #
+
+# ----------- #
+# Permissions |
+# ----------- #
 
 # The message a player gets when they don't have access to a command
 no_permission: "&cYou don't have permission to execute <var>!"
@@ -126,3 +127,39 @@ message_reloaded: "&2Reload complete!"
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
 bypass_message: "&cYou are bypassed so you don't need to sleep, <user>."
+
+# -------- #
+# Commands |
+# -------- #
+
+command_shout: "Someone is asking you to take a nap and accelerate the night"
+command_shout_cooldown: "Someone recently shouted in this world, please wait <time> more [<time>.second.seconds]!"
+
+command_sleep_notnight: "&cYou are not tired yet, please wait until nighttime."
+world_disabled: "&cBetterSleeping is not enabled in your world."
+
+command_help_header: "&3--=={BetterSleeping4 Help}==--"
+command_help_buffs: "/bs4 buffs: "
+command_help_reload: "/bs4 reload: &fReload BetterSleeping configuration"
+command_help_shout: "/bs4 shout: &fAnonymously ask players in your world to sleep"
+command_help_sleep: "/bs4 sleep: &fCount as a sleeper without going to bed"
+command_help_status: "/bs status: &fView the current status in your world"
+command_help_version: "/bs version: &fSee info about the BetterSleeping version"
+command_help_footer: "&3---==<>==---"
+
+command_status_header: "&3--=={BetterSleeping4 Status}==--"
+command_status_world: "Showing status of world: &f<worldname>"
+command_status_sleeping: "Sleeping: &f<num_sleeping>/<needed_sleeping>"
+command_status_dayspeed: "Day speed: &f<var>"
+command_status_nightspeed: "Night speed: &f<var>"
+command_status_sleepingspeed: "Sleeping speed: &f<var>"
+command_status_footer: "&3---==<>==---"
+
+command_buffs_header: "&3--=={BetterSleeping4 Buffs}==--"
+command_buffs_nobuffs: "&cThere are no enabled sleeping buffs!"
+command_buffs_buffs: "When you sleep, you will get:"
+command_buffs_separator: "&3---===---"
+command_buffs_nodebuffs: "&cThere are no enabled sleeping debuffs!"
+command_buffs_bypassed: "You are bypassed so you will never get debuffs"
+command_buffs_debuffs: "When you don't sleep, you will get:"
+command_buffs_footer: "&3---==<>==---"

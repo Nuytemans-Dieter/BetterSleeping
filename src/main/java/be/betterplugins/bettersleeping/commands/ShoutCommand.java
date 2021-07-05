@@ -52,7 +52,7 @@ public class ShoutCommand extends PlayerBPCommand
         }
 
         cooldownMap.put( world, System.currentTimeMillis() );
-        messenger.sendMessage(world.getPlayers(), "");
+        messenger.sendMessage(world.getPlayers(), "command_shout");
         return true;
     }
 

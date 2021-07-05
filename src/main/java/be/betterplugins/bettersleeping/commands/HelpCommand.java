@@ -44,7 +44,14 @@ public class HelpCommand extends BPCommand
     @Override
     public boolean execute(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String[] strings)
     {
-        messenger.sendMessage(commandSender, "Help info placeholder");
+        messenger.sendMessage(commandSender, "command_help_header");
+        messenger.sendMessage(commandSender, "command_help_buffs");
+        messenger.sendMessage(commandSender, "command_help_reload");
+        messenger.sendMessage(commandSender, "command_help_shout");
+        messenger.sendMessage(commandSender, "command_help_sleep");
+        messenger.sendMessage(commandSender, "command_help_status");
+        messenger.sendMessage(commandSender, "command_help_version");
+        messenger.sendMessage(commandSender, "command_help_footer");
         return true;
     }
 }

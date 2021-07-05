@@ -110,20 +110,6 @@ buff_received: {buff_received}
 debuff_received: {debuff_received}
 
 
-# -------- #
-# Commands |
-# -------- #
-
-# Sent to all players in a world when someone asks for players to sleep
-command_shout: {command_shout}
-
-# Sent to all players in a world when someone asks for players to sleep
-# Placeholders: <time> amount of seconds until '/bs4 shout' can be executed again
-command_shout_cooldown: {command_shout}
-
-# The message that will be sent to the admin that does a reload
-message_reloaded: {message_reloaded}
-
 # ----------- #
 # Permissions |
 # ----------- #
@@ -141,3 +127,52 @@ no_permission: {no_permission}
 #     - Being in a bypassed gamemode
 #     - Being afk / vanished
 bypass_message: {bypass_message}
+
+# -------- #
+# Commands |
+# -------- #
+
+# Sent to all players in a world when someone asks for players to sleep
+command_shout: {command_shout}
+command_shout_cooldown: {command_shout_cooldown}
+
+# Sent when someone tries to perform /bs4 sleep during the day
+command_sleep_notnight: {command_sleep_notnight}
+
+# Sent when someone attempts to get info on a disabled world
+world_disabled: {world_disabled}
+
+# These are shown when performing /bs4 help
+# Set one or more of these to "" to disable them from showing up
+command_help_header: {command_help_header}
+command_help_buffs: {command_help_buffs}
+command_help_reload: {command_help_reload}
+command_help_shout: {command_help_shout}
+command_help_sleep: {command_help_sleep}
+command_help_status: {command_help_status}
+command_help_version: {command_help_version}
+command_help_footer: {command_help_footer}
+
+# Shown when performing /bs4 status
+# Set one or more of these to "" to disable them from showing up
+command_status_header: {command_status_header}
+command_status_world: {command_status_world}
+# Placeholders: <num_sleeping> and <needed_sleeping>
+command_status_sleeping: {command_status_sleeping}
+# Placeholder: <var>
+command_status_dayspeed: {command_status_dayspeed}
+# Placeholder: <var>
+command_status_nightspeed: {command_status_nightspeed}
+# Placeholder: <var>
+command_status_sleepingspeed: {command_status_sleepingspeed}
+command_status_footer: {command_status_footer}
+
+# Shown when performing /bs4 buffs
+command_buffs_header: {command_buffs_header}
+command_buffs_nobuffs: {command_buffs_nobuffs}
+command_buffs_buffs: {command_buffs_buffs}
+command_buffs_separator: {command_buffs_separator}
+command_buffs_nodebuffs: {command_buffs_nodebuffs}
+command_buffs_bypassed: {command_buffs_bypassed}
+command_buffs_debuffs: {command_buffs_debuffs}
+command_buffs_footer: {command_buffs_footer}

@@ -60,7 +60,7 @@ public class ReloadCommand extends BPCommand
         if (commandSender.hasPermission( getPermission() ))
         {
             plugin.reload();
-            messenger.sendMessage(commandSender, "message_reloaded");
+            messenger.sendMessage(commandSender, "&2Reload complete!");
         }
         else
         {

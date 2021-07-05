@@ -51,17 +51,17 @@ public class StatusCommand extends PlayerBPCommand {
 
         if ( status == null )
         {
-            messenger.sendMessage(player, "&cWe're very sorry but BetterSleeping is not available in your world.");
+            messenger.sendMessage(player, "world_disabled");
             return true;
         }
 
-        messenger.sendMessage(player, Theme.primaryColor + "--=={BetterSleeping4 status}==--");
-        messenger.sendMessage(player, Theme.secondaryColor + "Showing status of world: " + Theme.tertiaryColor + player.getWorld().getName());
-        messenger.sendMessage(player, Theme.secondaryColor + "Sleeping: " + Theme.tertiaryColor + status.getNumSleepers() + "/" + status.getNumNeeded());
-        messenger.sendMessage(player, Theme.secondaryColor + "Day speed: " + Theme.tertiaryColor + "x" + status.getDaySpeedup());
-        messenger.sendMessage(player, Theme.secondaryColor + "Night speed: " + Theme.tertiaryColor + "x" + status.getNightSpeedup());
-        messenger.sendMessage(player, Theme.secondaryColor + "Sleeping speed: " + Theme.tertiaryColor + "x" + status.getSleepSpeedup());
-        messenger.sendMessage(player, Theme.primaryColor + "---==<>==---");
+        messenger.sendMessage(player, "command_status_header");
+        messenger.sendMessage(player, "command_status_world");
+        messenger.sendMessage(player, "command_status_sleeping");
+        messenger.sendMessage(player, "command_status_dayspeed");
+        messenger.sendMessage(player, "command_status_nightspeed");
+        messenger.sendMessage(player, "command_status_sleepingspeed");
+        messenger.sendMessage(player, "command_status_footer");
 
         return true;
     }

@@ -60,42 +60,42 @@ public class BuffsCommand extends PlayerBPCommand
     public boolean execute(@NotNull Player player, @NotNull Command command, @NotNull String[] strings)
     {
 
-        messenger.sendMessage(player, Theme.primaryColor + "--=={BetterSleeping buffs}==--");
+        messenger.sendMessage(player, "command_buffs_header");
 
         if (buffsHandler.getBuffs().size() == 0)
         {
-            messenger.sendMessage(player, Theme.secondaryColor + "There are no enabled sleeping buffs!");
+            messenger.sendMessage(player, "command_buffs_nobuffs");
         }
         else
         {
-            messenger.sendMessage(player, "When you sleep, you will get:");
+            messenger.sendMessage(player, "command_buffs_buffs");
             for (PotionEffect buff : buffsHandler.getBuffs())
             {
-                messenger.sendMessage(player, Theme.secondaryColor + "  - " + toString(buff));
+                messenger.sendMessage(player, Theme.tertiaryColor + "  - " + toString(buff));
             }
         }
 
-        messenger.sendMessage(player, Theme.primaryColor + "---===---");
+        messenger.sendMessage(player, "command_buffs_separator");
 
         if (buffsHandler.getDebuffs().size() == 0)
         {
-            messenger.sendMessage(player, Theme.secondaryColor + "There are no enabled sleeping debuffs!");
+            messenger.sendMessage(player, "command_buffs_nodebuffs");
         }
         else if (bypassChecker.isPlayerBypassed( player ))
         {
-            messenger.sendMessage(player, Theme.secondaryColor + "You will not get debuffs when not sleeping.");
+            messenger.sendMessage(player, "command_buffs_bypassed");
         }
         else
         {
-            messenger.sendMessage(player, Theme.secondaryColor + "When you don't sleep, you will get:");
+            messenger.sendMessage(player, "command_buffs_debuffs");
             for (PotionEffect buff : buffsHandler.getDebuffs())
             {
-                messenger.sendMessage(player, Theme.secondaryColor + "  - " + toString(buff));
+                messenger.sendMessage(player, Theme.tertiaryColor + "  - " + toString(buff));
             }
         }
 
 
-        messenger.sendMessage(player, Theme.primaryColor + "---===---");
+        messenger.sendMessage(player, "command_buffs_footer");
         return true;
     }
 }
