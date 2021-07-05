@@ -9,33 +9,36 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class ZAnimation extends Animation implements PreComputeable<Double>
+public class ZZZAnimation extends Animation implements PreComputeable<Double>
 {
 
     private final List<Double> rotations;
-    private final Map<Double, List<Vector>> animationComputations;
+    private static final Map<Double, List<Vector>> animationComputations = new HashMap<>();
 
     private final Particle particle;
     private final double size;
     private final double spacing;
 
+    private final long delay;
+
     private final JavaPlugin plugin;
 
 
-    public ZAnimation(Particle particle, double size, double spacing, JavaPlugin plugin)
+    public ZZZAnimation(Particle particle, double size, double spacing, long delayMilliseconds, JavaPlugin plugin)
     {
         this.plugin = plugin;
-
-        this.animationComputations = new HashMap<>();
 
         this.particle = particle;
         this.size = size;
         this.spacing = spacing;
 
+        this.delay = delayMilliseconds;
+
         this.rotations = new ArrayList<>();
         for (double rotation = 0; rotation < 2 * Math.PI; rotation += Math.PI/4)
         {
             this.rotations.add(rotation);
+            preCompute( rotation );
         }
 
     }
@@ -91,7 +94,7 @@ public class ZAnimation extends Animation implements PreComputeable<Double>
                 locations.add( position );
             }
 
-            this.animationComputations.put( rotation, locations);
+            animationComputations.put( rotation, locations);
         });
     }
 
@@ -99,7 +102,7 @@ public class ZAnimation extends Animation implements PreComputeable<Double>
     @Override
     public boolean isComputed(Double rotation)
     {
-        return this.animationComputations.containsKey( rotation );
+        return animationComputations.containsKey( rotation );
     }
 
 
@@ -112,27 +115,35 @@ public class ZAnimation extends Animation implements PreComputeable<Double>
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () ->
         {
 
-            // Pick a random rotation
-            double rotation = this.rotations.get( new Random().nextInt( this.rotations.size() ) );
-
-            if ( ! this.isComputed( rotation ))
+            int iteration = 0;
+            while (super.isPlaying)
             {
-                this.preCompute( rotation );
-                return;
+
+                // Pick a random rotation
+                double rotation = this.rotations.get( iteration );
+
+                Location origin = variableLocation.getLocation();
+                if (origin.getWorld() == null) return;
+
+                // Draw particles
+                List<Vector> locations = animationComputations.get( rotation );
+                for (Vector location : locations)
+                {
+                    origin.getWorld().spawnParticle(particle, origin.clone().add( location ), 1);
+                }
+
+                iteration++;
+                iteration = iteration % this.rotations.size();
+                try
+                {
+                    Thread.sleep( delay );
+                }
+                catch (InterruptedException e)
+                {
+                    super.isPlaying = false;
+                    this.stopAnimation();
+                }
             }
-
-            Location origin = variableLocation.getLocation();
-            if (origin.getWorld() == null) return;
-
-            // Draw particles
-            List<Vector> locations = this.animationComputations.get( rotation );
-            for (Vector location : locations)
-            {
-                origin.getWorld().spawnParticle(particle, origin.clone().add( location ), 1);
-            }
-
-            // Mark the animation as finished
-            super.isPlaying = false;
         });
     }
 }

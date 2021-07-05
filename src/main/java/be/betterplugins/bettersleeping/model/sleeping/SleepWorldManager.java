@@ -1,5 +1,6 @@
 package be.betterplugins.bettersleeping.model.sleeping;
 
+import be.betterplugins.bettersleeping.listeners.AnimationHandler;
 import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.runnables.SleepRunnable;
@@ -24,13 +25,16 @@ public class SleepWorldManager
 {
 
     private final DoubleMap<SleepWorld, World, SleepRunnable> sleepRunnables;
+    private final AnimationHandler animationHandler;
 
     @Inject
     @Singleton
-    public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, Messenger messenger, JavaPlugin plugin, BPLogger logger)
+    public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, Messenger messenger, AnimationHandler animationHandler, JavaPlugin plugin, BPLogger logger)
     {
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         this.sleepRunnables = new DoubleMap<>();
+
+        this.animationHandler = animationHandler;
 
         for (World world : allWorlds)
         {
@@ -100,7 +104,10 @@ public class SleepWorldManager
     {
         SleepRunnable runnable = sleepRunnables.getBackward( player.getWorld() );
         if (runnable != null)
-            runnable.addSleeper( player );
+        {
+            runnable.addSleeper(player);
+            this.animationHandler.startSleepingAnimation( player );
+        }
     }
 
 

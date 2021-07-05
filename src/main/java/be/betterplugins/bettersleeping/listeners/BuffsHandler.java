@@ -49,8 +49,6 @@ public class BuffsHandler implements Listener {
         this.messenger = messenger;
         this.bypassChecker = bypassChecker;
 
-        this.logger.log(Level.FINEST, "Initialising buffshandler...");
-
         YamlConfiguration buffsConfig = config.getBuffs();
         this.sleepingBuffs   = readPotions(buffsConfig, "sleeper_buffs");
         this.sleepingDebuffs = readPotions(buffsConfig, "non_sleeper_debuffs");

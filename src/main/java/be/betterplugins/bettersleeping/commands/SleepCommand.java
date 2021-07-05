@@ -54,7 +54,7 @@ public class SleepCommand extends PlayerBPCommand
         }
 
         // Make sure the time is right in the player's world
-        if (TimeUtil.isSleepPossible( world ))
+        if (!TimeUtil.isSleepPossible( world ))
         {
             messenger.sendMessage(player, "&cYou feel not tired yet, please wait until night");
             return true;

@@ -29,6 +29,7 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
     private SleepWorldManager sleepWorldManager;
     private WorldStateHandler worldStateHandler;
+    private AnimationHandler animationHandler;
 
     private static BetterSleepingAPI API;
 
@@ -122,6 +123,12 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         {
             worldStateHandler.revertWorldStates();
             worldStateHandler = null;
+        }
+
+        if (animationHandler != null)
+        {
+            animationHandler.reload();
+            animationHandler = null;
         }
 
         // Reset the API

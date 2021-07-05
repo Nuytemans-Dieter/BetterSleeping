@@ -30,20 +30,18 @@ public class BedEventListener implements Listener
     private final int cooldownMs;
 
     private final SleepWorldManager sleepWorldManager;
-    private final AnimationHandler animationHandler;
     private final Messenger messenger;
     private final BPLogger logger;
 
     private final Set<BedEnterResult> blacklistedResults;
 
     @Inject
-    public BedEventListener(SleepWorldManager sleepWorldManager, ConfigContainer container, AnimationHandler animationHandler, Messenger messenger, BPLogger logger)
+    public BedEventListener(SleepWorldManager sleepWorldManager, ConfigContainer container, Messenger messenger, BPLogger logger)
     {
         this.cooldownMs = 1000 * container.getSleeping_settings().getInt("bed_enter_cooldown");
         this.lastBedEnterMap = new HashMap<>();
 
         this.sleepWorldManager = sleepWorldManager;
-        this.animationHandler = animationHandler;
         this.messenger = messenger;
         this.logger = logger;
 
@@ -113,9 +111,6 @@ public class BedEventListener implements Listener
         lastBedEnterMap.put( player.getUniqueId(), System.currentTimeMillis() );
         messenger.sendMessage(player, "bed_enter_message");
         sleepWorldManager.addSleeper( player );
-
-        // Start animation
-        this.animationHandler.startSleepingAnimation( player );
     }
 
     public boolean canPlayerSleep(Player player)

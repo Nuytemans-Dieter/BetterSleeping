@@ -1,10 +1,10 @@
 package be.betterplugins.bettersleeping.listeners;
 
-import be.betterplugins.bettersleeping.animation.Animation;
-import be.betterplugins.bettersleeping.animation.SleepingAnimation;
-import be.betterplugins.bettersleeping.animation.ZAnimation;
+import be.betterplugins.bettersleeping.animation.ZZZAnimation;
 import be.betterplugins.bettersleeping.animation.location.PlayerSleepLocation;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
+import be.betterplugins.core.interfaces.IReloadable;
+import be.betterplugins.core.messaging.logging.BPLogger;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,34 +18,47 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 
 @Singleton
-public class AnimationHandler implements Listener {
+public class AnimationHandler implements Listener, IReloadable
+{
 
-    private final Map<UUID, SleepingAnimation> sleepingAnimations;
-    private final Animation sleepingAnimation;
+    private final Map<UUID, ZZZAnimation> sleepingAnimations;
     private final JavaPlugin plugin;
 
+    private final BPLogger logger;
+
     @Inject
-    public AnimationHandler(JavaPlugin plugin)
+    public AnimationHandler(JavaPlugin plugin, BPLogger logger)
     {
         this.plugin = plugin;
+        this.logger = logger;
 
         this.sleepingAnimations = new HashMap<>();
-        this.sleepingAnimation = new ZAnimation(Particle.COMPOSTER, 0.5, 0.1, plugin);
     }
 
     public void startSleepingAnimation(Player player)
     {
+        this.logger.log(Level.FINEST, "Starting animation for player " + player.getName());
+
         // Start animations
-        SleepingAnimation animation = new SleepingAnimation(this.sleepingAnimation, 200, plugin);
+        ZZZAnimation animation = new ZZZAnimation(Particle.COMPOSTER, 0.5, 0.1, 200, plugin);
         animation.startAnimation( new PlayerSleepLocation( player ));
-        this.sleepingAnimations.put(player.getUniqueId(), animation);
+        ZZZAnimation previous = this.sleepingAnimations.put(player.getUniqueId(), animation);
+
+        // Stop previous animation, if one was active
+        if (previous != null)
+        {
+            previous.stopAnimation();
+        }
     }
 
     @EventHandler
     public void timeSetToDayEvent(BecomeDayEvent event)
     {
+        this.logger.log(Level.FINEST, "Stopping animations for all players");
+
         // Stop all animations
         this.sleepingAnimations.forEach( (uuid, animation) -> animation.stopAnimation());
         this.sleepingAnimations.clear();
@@ -54,6 +67,7 @@ public class AnimationHandler implements Listener {
     @EventHandler
     public void onBedLeave(PlayerBedLeaveEvent event)
     {
+        this.logger.log(Level.FINEST, "Stopping animation for player " + event.getPlayer().getName() + " due to waking up");
         UUID uuid =  event.getPlayer().getUniqueId();
         stopAnimation( uuid );
     }
@@ -61,6 +75,7 @@ public class AnimationHandler implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent event)
     {
+        this.logger.log(Level.FINEST, "Stopping animation for player " + event.getPlayer().getName() + " due to leaving");
         UUID uuid = event.getPlayer().getUniqueId();
         stopAnimation(uuid);
     }
@@ -73,4 +88,11 @@ public class AnimationHandler implements Listener {
         }
     }
 
+    @Override
+    public void reload()
+    {
+        // Stop all animations
+        this.sleepingAnimations.forEach( (uuid, animation) -> animation.stopAnimation());
+        this.sleepingAnimations.clear();
+    }
 }
