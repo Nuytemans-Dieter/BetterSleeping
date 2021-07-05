@@ -19,7 +19,8 @@ public class BecomeDayEvent extends Event {
     private final List<Player> nonSleepers; // List of players that did not sleep
 
 
-    public enum Cause {
+    public enum Cause
+    {
         NATURAL,
         SLEEPING,
         OTHER

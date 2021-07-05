@@ -2,7 +2,8 @@ package be.betterplugins.bettersleeping.animation.location;
 
 import org.bukkit.Location;
 
-public class StaticLocation implements IVariableLocation {
+public class StaticLocation implements IVariableLocation
+{
 
     private final Location location;
 

@@ -2,7 +2,8 @@ package be.betterplugins.bettersleeping.animation;
 
 import be.betterplugins.bettersleeping.animation.location.IVariableLocation;
 
-public abstract class Animation {
+public abstract class Animation
+{
 
     protected boolean isPlaying = false;
 
