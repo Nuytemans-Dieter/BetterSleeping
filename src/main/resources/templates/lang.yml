@@ -81,9 +81,6 @@ bed_enter_message: {bed_enter_message}
 # All players in the same world get this message when someone enters their bed
 bed_enter_broadcast: {bed_enter_broadcast}
 
-# When not enough people are sleeping due to someone leaving their bed
-skipping_canceled: {skipping_canceled}
-
 # This message is sent to all players in a world where enough players are sleeping
 enough_sleeping: {enough_sleeping}
 
