@@ -35,9 +35,9 @@ public class SleepWorldManager
         for (World world : allWorlds)
         {
             // Only allow sleeping in the overworld
-            if (world.getEnvironment() != World.Environment.NORMAL || world.getEnvironment() != World.Environment.CUSTOM)
+            if (world.getEnvironment() != World.Environment.NORMAL && world.getEnvironment() != World.Environment.CUSTOM)
             {
-                logger.log(Level.FINEST, "Sleeping in world " + world.getName() + " will not be handled because it is not an overworld / custom world (but: " + world.getEnvironment() + ")");
+                logger.log(Level.FINE, "Sleeping in world " + world.getName() + " will not be handled because it is not an overworld / custom world (but: " + world.getEnvironment() + ")");
                 continue;
             }
 
