@@ -19,7 +19,6 @@ command_shout_cooldown: "Someone recently shouted in this world, please wait <ti
 command_sleep_notnight: "&cYou are not tired yet, please wait until nighttime."
 world_disabled: "&cBetterSleeping is not enabled in your world."
 command_help_header: "&3--=={BetterSleeping4 Help}==--"
-command_help_buffs: "/bs4 buffs: "
 command_help_reload: "/bs4 reload: &fReload BetterSleeping configuration"
 command_help_shout: "/bs4 shout: &fAnonymously ask players in your world to sleep"
 command_help_sleep: "/bs4 sleep: &fCount as a sleeper without going to bed"
