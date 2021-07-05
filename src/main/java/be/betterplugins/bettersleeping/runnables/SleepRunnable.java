@@ -3,6 +3,7 @@ package be.betterplugins.bettersleeping.runnables;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent.Cause;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import be.betterplugins.core.messaging.logging.BPLogger;
@@ -89,6 +90,24 @@ public class SleepRunnable extends BukkitRunnable
     public void resetSleepers()
     {
         this.sleepers.clear();
+    }
+
+    /**
+     * Get the amount of players that count as sleeping
+     *
+     * @return the amount of sleeping players
+     */
+    public SleepStatus getSleepStatus()
+    {
+        return new SleepStatus
+        (
+            this.sleepers.size(),
+            this.sleepWorld.getNumNeeded(),
+            this.sleepWorld.getAllPlayersInWorld().size(),
+            this.daySpeedup,
+            this.nightSpeedup,
+            this.sleepSpeedup
+        );
     }
 
     /**

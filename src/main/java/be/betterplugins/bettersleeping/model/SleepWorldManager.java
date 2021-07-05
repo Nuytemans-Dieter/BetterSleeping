@@ -11,6 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -62,6 +63,19 @@ public class SleepWorldManager
                 logger.log(Level.CONFIG, "NOT enabling BetterSleeping in world " + world.getName() + ". Enabled in config? " + isEnabled + ". DoDayLightCycle? " + doDayLightCycle);
             }
         }
+    }
+
+
+    /**
+     * Get the SleepStatus of a specific world, if sleeping is enabled in that world
+     *
+     * @param world the world for which the status should be retrieved
+     * @return null if sleeping is not enabled in this world, the relevant SleepStatus otherwise
+     */
+    public @Nullable SleepStatus getSleepStatus(World world)
+    {
+        SleepRunnable runnable = this.sleepRunnables.getBackward(world);
+        return runnable != null ? runnable.getSleepStatus() : null;
     }
 
 

@@ -1,6 +1,7 @@
 package be.betterplugins.bettersleeping.guice;
 
 import be.betterplugins.bettersleeping.commands.*;
+import be.betterplugins.bettersleeping.commands.StatusCommand;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.model.SleepWorldManager;
@@ -15,7 +16,6 @@ import be.betterplugins.bettersleeping.BetterSleeping;
 import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Singleton;
@@ -58,28 +58,29 @@ public class BetterSleepingModule extends AbstractModule
     @Singleton
     public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, BetterLang lang)
     {
-        CoreFactory fact = new CoreFactory();
-
-        HelpCommand     help    = new HelpCommand(messenger);
-        ReloadCommand   reload  = new ReloadCommand(plugin, messenger);
-        ShoutCommand    shout   = new ShoutCommand(messenger);
-        SleepCommand    sleep   = new SleepCommand(messenger, sleepWorldManager);
-        BuffsCommand    buffs   = new BuffsCommand(messenger, buffsHandler, bypassChecker);
-        VersionCommand  version = new VersionCommand(plugin, messenger);
+        HelpCommand     help    = new HelpCommand( messenger );
+        ReloadCommand   reload  = new ReloadCommand( plugin, messenger );
+        ShoutCommand    shout   = new ShoutCommand( messenger );
+        SleepCommand    sleep   = new SleepCommand( messenger, sleepWorldManager );
+        BuffsCommand    buffs   = new BuffsCommand( messenger, buffsHandler, bypassChecker );
+        StatusCommand   status = new StatusCommand( messenger, sleepWorldManager );
+        VersionCommand  version = new VersionCommand( plugin, messenger );
 
         Map<String, String> messageMap = lang.getMessages();
-        CommandMessages messages = fact.createCommandMessages(
+        CommandMessages messages = new CoreFactory().createCommandMessages(
                 "&4This command can only be performed by the foreseen executor",
                 messageMap.getOrDefault("no_permission", "no_permission"),
                 messageMap.getOrDefault("unknown_command", "unknown_command")
         );
 
-        return new BPCommandHandler( messages, messenger,
+        return new BPCommandHandler
+        ( messages, messenger,
                 help,
                 reload,
                 shout,
                 sleep,
                 buffs,
+                status,
                 version
         );
     }
