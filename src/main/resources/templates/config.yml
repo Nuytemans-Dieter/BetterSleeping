@@ -20,6 +20,7 @@
 # Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/config.yml
 # All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
 
+# After changing this option, please delete 'lang.yml' and do /bs reload or restart your server
 # The default language file to be used
 # Options: en-US (English), nl-BE (Dutch), es-ES (Spanish), pt-PT (Portuguese), de-DE.yml (German), fr-FR (French), Chinese (zh-ZH)
 # Want to disable all messages? Set this to: "silent". It will load an empty config files and will disable most messages
@@ -28,6 +29,7 @@ language: {language}
 
 # Choose where messages show up
 # Messages are shown in the chat when set to false, and shown in the action bar when set to true
+# This will ONLY work if you are using Spigot
 action_bar_messages: {action_bar_messages}
 
 # This is ran once on startup when enabled to fetch the latest version

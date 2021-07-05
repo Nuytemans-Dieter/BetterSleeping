@@ -4,6 +4,7 @@ import be.betterplugins.bettersleeping.commands.*;
 import be.betterplugins.bettersleeping.commands.StatusCommand;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
+import be.betterplugins.bettersleeping.messaging.ScreenMessenger;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.bettersleeping.util.Theme;
@@ -18,6 +19,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 import java.util.logging.Level;
@@ -48,23 +50,40 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    public Messenger provideMessenger(BetterLang lang, BPLogger logger)
+    public Messenger provideMessenger(@Named("has_spigot") boolean hasSpigot, JavaPlugin plugin, BetterLang lang, ConfigContainer configContainer, BPLogger logger)
     {
-        // The shorten_prefix option has been removed, 98.6% had this option enabled
-        return new Messenger(lang.getMessages(), logger, Theme.primaryColor + "[BS4] " + Theme.secondaryColor);
+        logger.log(Level.CONFIG, hasSpigot ? "This server is running on Spigot" : "This server is NOT running on Spigot");
+        boolean sendOnScreen = configContainer.getConfig().getBoolean("action_bar_messages");
+
+        Messenger messenger;
+        if (hasSpigot && sendOnScreen)
+        {
+            logger.log(Level.CONFIG, "Using on screen messaging");
+            messenger = new ScreenMessenger(plugin, lang.getMessages(), logger);
+        }
+        else
+        {
+            logger.log(Level.CONFIG, "Using chat messaging");
+            messenger = new Messenger(lang.getMessages(), logger, Theme.prefix);
+        }
+
+        return messenger;
     }
 
     @Provides
     @Singleton
-    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, BetterLang lang)
+    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, BetterLang lang, BPLogger logger)
     {
-        HelpCommand     help    = new HelpCommand( messenger );
-        ReloadCommand   reload  = new ReloadCommand( plugin, messenger );
+        // Use a chatMessenger to override the instances where we never want to send messages on screen
+        Messenger chatMessenger = new Messenger(lang.getMessages(), logger, Theme.prefix);
+
+        HelpCommand     help    = new HelpCommand( chatMessenger );
+        ReloadCommand   reload  = new ReloadCommand( plugin, chatMessenger );
         ShoutCommand    shout   = new ShoutCommand( messenger );
         SleepCommand    sleep   = new SleepCommand( messenger, sleepWorldManager );
-        BuffsCommand    buffs   = new BuffsCommand( messenger, buffsHandler, bypassChecker );
-        StatusCommand   status = new StatusCommand( messenger, sleepWorldManager );
-        VersionCommand  version = new VersionCommand( plugin, messenger );
+        BuffsCommand    buffs   = new BuffsCommand( chatMessenger, buffsHandler, bypassChecker );
+        StatusCommand   status = new StatusCommand( chatMessenger, sleepWorldManager );
+        VersionCommand  version = new VersionCommand( plugin, chatMessenger );
 
         Map<String, String> messageMap = lang.getMessages();
         CommandMessages messages = new CoreFactory().createCommandMessages(
