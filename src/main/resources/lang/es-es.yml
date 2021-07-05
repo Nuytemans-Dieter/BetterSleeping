@@ -11,7 +11,6 @@ buff_received: "Te sientes lleno de energia, recibiste [<var>.un efecto positivo
 debuff_received: "No has dormido y te sientes cansado, recibiste [<var>.un efecto negativo.<var> efectos negativos]."
 # Permissions
 no_permission: "&c¡No tienes permiso para ejecutar <var>!"
-message_reloaded: "&2¡Recarga completa!"
 bypass_message: "&cEstas en modo bypassed por lo que no necesitas dormir, <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

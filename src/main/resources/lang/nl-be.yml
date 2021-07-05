@@ -11,7 +11,6 @@ buff_received: "Je voelt je uitgerust en krijgt daardoor [<var>.een verbetering.
 debuff_received: "Je hebt niet geslapen en bent moe, hierdoor krijg je [<var>.een nadeel.<var> nadelen]."
 # Permissions
 no_permission: "&cJe hebt geen toestemming tot dat commando!"
-message_reloaded: "&2Klaar met herladen!"
 bypass_message: "&cJe hebt omzeiltoestemming dus je hoeft niet te slapen, <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

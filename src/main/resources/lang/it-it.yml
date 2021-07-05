@@ -11,7 +11,6 @@ buff_received: "Ti sei riposato bene e hai ricevuto [<var>.un potenziamento.<var
 debuff_received: "Non hai risposato bene e hai ricevuto [<var>.un debuff.<var> dei debuff]."
 # Permissions
 no_permission: "&cNon hai il permesso di eseguire <var>!"
-message_reloaded: "&2Riavvio dei config completato!"
 bypass_message: "&cStai bypassando il plugin, perciò non hai bisogno di dormire <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

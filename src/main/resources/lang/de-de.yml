@@ -11,7 +11,6 @@ buff_received: "Du fühlst dich ausgeruht und erhälst [<var>.einen Buff.<var> m
 debuff_received: "Du fühlst dich müde und erhälst [<var>.einen Debuff.<var> mehrere Debuffs]."
 # Permissions
 no_permission: "&cDu hast keine Berechtigung den Befehl <var> auszuführen!"
-message_reloaded: "&2Aktualisierung abgeschlossen!"
 bypass_message: "&cDu brauchst nicht schlafen gehen."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

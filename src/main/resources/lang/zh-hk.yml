@@ -11,7 +11,6 @@ buff_received: "你感覺到精力充沛， 並收到[<var>.一個 Buff. <var> �
 debuff_received: "你感到疲倦同眼瞓， 並收到[<var>.一個 Debuff. <var> 個 Debuff]。"
 # Permissions
 no_permission: "&c你並沒有權限執行 <var>！"
-message_reloaded: "&2重新載入完成!"
 bypass_message: "&c<user>， 你並唔需要瞓覺啊。 (code: bypassed)"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

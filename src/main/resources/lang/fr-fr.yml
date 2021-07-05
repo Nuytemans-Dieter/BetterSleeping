@@ -11,7 +11,6 @@ buff_received: "Vous vous sentez bien reposé et avez reçu [<var>.a buff.<var> 
 debuff_received: "Vous n'avez pas dormi et vous vous êtes senti fatigué, vous avez reçu [<var>.a debuff.<var> debuffs]."
 # Permissions
 no_permission: "&cVous n'êtes pas autorisé à exécuter <var>!"
-message_reloaded: "&2Reload terminé!"
 bypass_message: "&cVous êtes OP donc vous n'avez pas besoin de dormir, <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

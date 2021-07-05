@@ -11,7 +11,6 @@ buff_received: "你休息得很好，獲得了 <var> 種有益狀態效果。"
 debuff_received: "你没有睡覺，非常疲憊，因此獲得了 <var> 種負面狀態效果。"
 # Permissions
 no_permission: "&c你没有執行 <var> 的權限!"
-message_reloaded: "&2重新載入完成!"
 bypass_message: "&c你在睡眠判定中被跳過了, 所以你不需要睡覺, <user>。"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

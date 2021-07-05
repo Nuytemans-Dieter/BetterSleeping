@@ -11,7 +11,6 @@ buff_received: "よく休んだので<var>のバフがかかりました。"
 debuff_received: "徹夜で疲れたので<var>のデバフがかかりました。"
 # Permissions
 no_permission: "&c<var>を実行する権限がありません。"
-message_reloaded: "&2リロード完了。"
 bypass_message: "&c<user>さんはバイパス権限があるので寝る必要はありません。"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"
