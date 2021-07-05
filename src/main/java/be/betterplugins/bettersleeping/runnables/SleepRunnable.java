@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 
 public class SleepRunnable extends BukkitRunnable
 {
-
     private final Messenger messenger;
 
     private final SleepWorld sleepWorld;
     private final Set<UUID> sleepers;
 
+    private TimeState timeState;
     private boolean isSkipping;
 
     private final double daySpeedup;
@@ -49,6 +49,8 @@ public class SleepRunnable extends BukkitRunnable
         this.daySpeedup   = TimeUtil.DAY_DURATION / dayDuration;
         this.nightSpeedup = TimeUtil.NIGHT_DURATION / nightDuration;
         this.sleepSpeedup = TimeUtil.NIGHT_DURATION / skippedNightDuration;
+
+        this.timeState = TimeState.fromWorld(sleepWorld);
 
         logger.log(Level.FINEST, "Day speedup: " + daySpeedup);
         logger.log(Level.FINEST, "Night speedup: " + nightSpeedup);
@@ -153,10 +155,32 @@ public class SleepRunnable extends BukkitRunnable
 
 
         // Only start skipping when enough players sleep & at least someone sleeps
-        if (!isSkipping && numSleepers >= numNeeded && numSleepers > 0)
+        if (!isSkipping)
         {
-            this.isSkipping = true;
-            messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "enough_sleeping");
+            if (numSleepers >= numNeeded && numSleepers > 0)
+            {
+                this.isSkipping = true;
+                messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "enough_sleeping");
+            }
+
+            // Handle proceeding to a next time state
+            TimeState nextState = TimeState.fromWorld( sleepWorld );
+            if (this.timeState.isNextState( nextState ))
+            {
+                this.timeState = nextState;
+                switch (nextState)
+                {
+                    case CAN_SLEEP_SOON:
+                        messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "sleep_possible_soon");
+                        break;
+                    case CAN_SLEEP:
+                        messenger.sendMessage(sleepWorld.getAllPlayersInWorld(), "sleep_possible_now");
+                        break;
+                    case CANNOT_SLEEP:
+                    default:
+                        break;
+                }
+            }
         }
 
         // Calculate the acceleration
@@ -192,6 +216,40 @@ public class SleepRunnable extends BukkitRunnable
 
             this.isSkipping = false;
             this.sleepers.clear();
+        }
+    }
+
+    enum TimeState
+    {
+        CANNOT_SLEEP,
+        CAN_SLEEP_SOON,
+        CAN_SLEEP;
+
+        public boolean isNextState(TimeState timeState)
+        {
+            return values()[(this.ordinal() + 1) % values().length] == timeState;
+        }
+
+        public static TimeState fromWorld(SleepWorld world)
+        {
+            long time = world.getWorldTime();
+
+            // During daytime
+            long almostSkipTime = TimeUtil.BED_TIME_NIGHT - 1200;
+            if (time >= 0 && time < almostSkipTime)
+            {
+                return CANNOT_SLEEP;
+            }
+            // One minute before nighttime
+            else if (time >= almostSkipTime && time < TimeUtil.BED_TIME_NIGHT)
+            {
+                return CAN_SLEEP_SOON;
+            }
+            // Nighttime
+            else
+            {
+                return CAN_SLEEP;
+            }
         }
     }
 }
