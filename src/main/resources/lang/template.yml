@@ -11,7 +11,6 @@ buff_received: {buff_received}
 debuff_received: {debuff_received}
 # Permissions
 no_permission: {no_permission}
-message_reloaded: {message_reloaded}
 bypass_message: {bypass_message}
 # Commands
 command_shout: {command_shout}
