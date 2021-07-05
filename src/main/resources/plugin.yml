@@ -23,6 +23,7 @@ permissions:
             bettersleeping.version: true
             bettersleeping.shout: true
             bettersleeping.sleepcommand: true
+            bettersleeping.bypass: false
     bettersleeping.user:
         description: Collection of commands that default users may want access to
         children:
@@ -34,6 +35,7 @@ permissions:
             bettersleeping.version: false
             bettersleeping.shout: true
             bettersleeping.sleepcommand: false
+            bettersleeping.bypass: false
     bettersleeping.admin:
         description: Collection of commands that admins may want access to (all permissions except bypass)
         children:
@@ -45,6 +47,7 @@ permissions:
             bettersleeping.version: true
             bettersleeping.shout: true
             bettersleeping.sleepcommand: false
+            bettersleeping.bypass: false
     bettersleeping.reload:
         description: Gives access to /bs reload, which will reload the BetterSleeping config files
         default: op
@@ -52,7 +55,7 @@ permissions:
         description: Gives access to /bs status or /bs s, which will display info about the sleeping players
         default: true
     bettersleeping.bypass:
-        description: This player will be ignored from the required player count and will not be able to sleep
+        description: This player will be ignored from the required player count, but will be able to sleep and get buffs (never debuffs)
         default: false
     bettersleeping.sleepcommand:
         description: Gives acces to /bs sleep, which will make the plugin think that the player is sleeping

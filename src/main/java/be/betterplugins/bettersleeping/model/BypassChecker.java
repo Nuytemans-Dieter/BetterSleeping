@@ -19,14 +19,12 @@ public class BypassChecker
 {
 
     private final EssentialsHook essentialsHook;
-    private final boolean isEnabled;
     private final Set<GameMode> bypassedGameModes;
 
     @Inject
     public BypassChecker(ConfigContainer config, EssentialsHook essentialsHook, BPLogger logger)
     {
         YamlConfiguration bypassConfig = config.getBypassing();
-        this.isEnabled = bypassConfig.getBoolean("enable_bypassing");
 
         // Get all bypassed gamemodes from the config file
         Set<GameMode> bypassedGameModesTemp = new HashSet<>();
@@ -40,21 +38,9 @@ public class BypassChecker
         }
         this.bypassedGameModes = Collections.unmodifiableSet( bypassedGameModesTemp );
 
-        logger.log(Level.CONFIG, "Is bypassing enabled? " + isEnabled);
         logger.log(Level.CONFIG, "Ignoring " + bypassedGameModes.size() + " game modes");
 
         this.essentialsHook = essentialsHook;
-    }
-
-
-    /**
-     * Get whether or not bypass permissions are enabled or disabled
-     *
-     * @return true of they are enabled
-     */
-    public boolean isBypassingEnabled()
-    {
-        return isEnabled;
     }
 
 
@@ -78,12 +64,8 @@ public class BypassChecker
      */
     public boolean isPlayerBypassed(Player player)
     {
-        // When a player is marked as sleeping ignored
-        boolean isSleepingIgnored = isEnabled && player.isSleepingIgnored();
-
         // Permission based bypassing
-        boolean hasPermission       = isEnabled && player.hasPermission("bettersleeping.bypass");
-        boolean essentialsBypass    = isEnabled && player.hasPermission("essentials.sleepingignored") && essentialsHook.isHooked();
+        boolean hasBSBypass         = player.hasPermission("bettersleeping.bypass");
 
         // Gamemode based bypassing
         boolean gamemodeBypass      = bypassedGameModes.contains( player.getGameMode() );
@@ -92,7 +74,7 @@ public class BypassChecker
         boolean isAfk       = essentialsHook.isAfk( player );
         boolean isVanished  = essentialsHook.isVanished( player );
 
-        return isSleepingIgnored || hasPermission || essentialsBypass || gamemodeBypass || isAfk || isVanished;
+        return hasBSBypass || gamemodeBypass || isAfk || isVanished;
     }
 
 }

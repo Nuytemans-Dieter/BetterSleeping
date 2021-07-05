@@ -30,7 +30,12 @@ public class AbsoluteNeeded implements ISleepersCalculator
     @Override
     public int getNumNeeded(SleepWorld world)
     {
-        return numNeeded;
+        // Calculate the lowest requirement: the fixed number, or all players in the world
+        int numPlayers = world.getValidPlayersInWorld().size();
+        int num = Math.min(numPlayers, numNeeded);
+
+        // Require at least one sleeper
+        return Math.max(num, 1);
     }
 
     @Override
