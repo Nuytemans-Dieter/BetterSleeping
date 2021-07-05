@@ -1,7 +1,6 @@
 # Sleeping messages
 bed_enter_message: "Sleep tight, <user>! (<num_sleeping>/<needed_sleeping>)"
 bed_enter_broadcast: "<player> is taking a nap, [<num_sleeping>.one player is.<num_sleeping> players are] sleeping now. <remaining_sleeping> [<remaining_sleeping>.sleeper.sleepers] needed."
-skipping_canceled: "Someone left their bed so the night will not be skipped! <remaining_sleeping> more sleeping [<remaining_sleeping>.player.players] needed!"
 enough_sleeping: "Enough players are sleeping now, the night will be over shortly."
 morning_message: "Good morning, <user>. Have a great day!"
 sleep_spam: "You have to wait <time> more [<time>.second.seconds] before you can sleep again!"
