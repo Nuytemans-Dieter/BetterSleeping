@@ -1,5 +1,6 @@
 package be.betterplugins.bettersleeping;
 
+import be.betterplugins.bettersleeping.api.BetterSleepingAPI;
 import be.betterplugins.bettersleeping.guice.BetterSleepingModule;
 import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
@@ -20,6 +21,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.logging.Level;
 
@@ -30,6 +32,18 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
     private SleepWorldManager sleepWorldManager;
     private WorldStateHandler worldStateHandler;
+
+    private static BetterSleepingAPI API;
+
+    /**
+     * Get the publicly accessible API of BetterSleeping
+     *
+     * @return the BetterSleepingAPI instance. Null if something went wrong while enabling BetterSleeping
+     */
+    public static @Nullable BetterSleepingAPI getAPI()
+    {
+        return BetterSleeping.API;
+    }
 
     @Override
     public void onEnable()
@@ -73,6 +87,9 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         // Disable daylightcycle in all worlds
         this.worldStateHandler.setWorldStates( new WorldState( false ));
 
+        // Load the BetterSleeping API
+        BetterSleeping.API = injector.getInstance(BetterSleepingAPI.class);
+
         // Enable bStats
         injector.getInstance(BStatsHandler.class);
     }
@@ -108,6 +125,9 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
             worldStateHandler.revertWorldStates();
             worldStateHandler = null;
         }
+
+        // Reset the API
+        BetterSleeping.API = null;
     }
 
     @Override
