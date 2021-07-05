@@ -2,7 +2,10 @@ package be.betterplugins.bettersleeping.guice;
 
 import be.betterplugins.bettersleeping.commands.*;
 import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.model.SleepWorldManager;
+import be.betterplugins.bettersleeping.permissions.BypassChecker;
+import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.CoreFactory;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.commands.messages.CommandMessages;
@@ -48,12 +51,12 @@ public class BetterSleepingModule extends AbstractModule
     public Messenger provideMessenger(BetterLang lang, BPLogger logger)
     {
         // The shorten_prefix option has been removed, 98.6% had this option enabled
-        return new Messenger(lang.getMessages(), logger, ChatColor.RED + "[BS4] " + ChatColor.GRAY);
+        return new Messenger(lang.getMessages(), logger, Theme.primaryColor + "[BS4] " + Theme.secondaryColor);
     }
 
     @Provides
     @Singleton
-    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, Messenger messenger, BetterLang lang)
+    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, BetterLang lang)
     {
         CoreFactory fact = new CoreFactory();
 
@@ -61,6 +64,7 @@ public class BetterSleepingModule extends AbstractModule
         ReloadCommand   reload  = new ReloadCommand(plugin, messenger);
         ShoutCommand    shout   = new ShoutCommand(messenger);
         SleepCommand    sleep   = new SleepCommand(messenger, sleepWorldManager);
+        BuffsCommand    buffs   = new BuffsCommand(messenger, buffsHandler, bypassChecker);
         VersionCommand  version = new VersionCommand(plugin, messenger);
 
         Map<String, String> messageMap = lang.getMessages();
@@ -75,6 +79,7 @@ public class BetterSleepingModule extends AbstractModule
                 reload,
                 shout,
                 sleep,
+                buffs,
                 version
         );
     }

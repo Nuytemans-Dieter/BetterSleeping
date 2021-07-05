@@ -17,12 +17,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
+@Singleton
 public class BuffsHandler implements Listener {
 
 
@@ -46,6 +48,8 @@ public class BuffsHandler implements Listener {
         this.logger = logger;
         this.messenger = messenger;
         this.bypassChecker = bypassChecker;
+
+        this.logger.log(Level.FINEST, "Initialising buffshandler...");
 
         YamlConfiguration buffsConfig = config.getBuffs();
         this.sleepingBuffs   = readPotions(buffsConfig, "sleeper_buffs");

@@ -8,10 +8,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 
+@Singleton
 public class BypassChecker {
 
     private final EssentialsHook essentialsHook;
