@@ -31,20 +31,26 @@ public class ConfigContainer
     public ConfigContainer(JavaPlugin plugin, BPLogger logger)
     {
         ValidationHandler configValidation = new ValidationHandler()
-                .addValidator("language", new StringWhiteList(
+                .addValidator("language", new StringWhiteList
+                (
                         "en-US",
                         true,
                         "de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "ja-JP", "nl-BE", "pt-PT", "ru-RU", "silent", "zh-CN", "zh-HK", "zh-TW")
                 );
+
         ValidationHandler buffsValidation = new ValidationHandler()
                 .addOptionalSection("sleeper_buffs")
                 .setOptionalValue("sleeper_buffs.speed.time", 20)
                 .setOptionalValue("sleeper_buffs.speed.level", 1)
                 .addOptionalSection("non_sleeper_debuffs")
                 .setOptionalValue("non_sleeper_debuffs.slow.time", 3)
-                .setOptionalValue("non_sleeper_debuffs.slow.level", 1);
+                .setOptionalValue("non_sleeper_debuffs.slow.level", 1)
+                .addOptionalSection("sleeper_commands")
+                .addOptionalSection("non_sleeper_commands");
+
         ValidationHandler hooksValidation = new ValidationHandler()
                 .addValidator("minimum_afk_time", new Min(-1));
+
         ValidationHandler sleeping_settingsValidation = new ValidationHandler()
                 .addValidator("sleeper_counter", new ChainedValidator(
                         new StringWhiteList("percentage", true, "percentage", "absolute"),

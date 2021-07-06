@@ -11,10 +11,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import javax.inject.Inject;
+
 public class GSitListener implements Listener {
 
     private final SleepWorldManager sleepWorldManager;
 
+    @Inject
     public GSitListener( SleepWorldManager sleepWorldManager )
     {
         this.sleepWorldManager = sleepWorldManager;

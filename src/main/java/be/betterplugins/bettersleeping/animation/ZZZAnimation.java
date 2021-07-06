@@ -127,9 +127,12 @@ public class ZZZAnimation extends Animation implements PreComputeable<Double>
 
                 // Draw particles
                 List<Vector> locations = animationComputations.get( rotation );
-                for (Vector location : locations)
+                if (locations != null)
                 {
-                    origin.getWorld().spawnParticle(particle, origin.clone().add( location ), 1);
+                    for (Vector location : locations)
+                    {
+                        origin.getWorld().spawnParticle(particle, origin.clone().add( location ), 1);
+                    }
                 }
 
                 iteration++;

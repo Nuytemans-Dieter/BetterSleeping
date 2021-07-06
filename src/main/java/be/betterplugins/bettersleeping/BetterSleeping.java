@@ -4,6 +4,7 @@ import be.betterplugins.bettersleeping.api.BetterSleepingAPI;
 import be.betterplugins.bettersleeping.guice.BetterSleepingModule;
 import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
+import be.betterplugins.bettersleeping.hooks.GSitListener;
 import be.betterplugins.bettersleeping.hooks.PapiExpansion;
 import be.betterplugins.bettersleeping.listeners.*;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
@@ -99,6 +100,13 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         {
             this.bossBarRunnable = injector.getInstance(BossBarRunnable.class);
             this.bossBarRunnable.runTaskTimer(this, 20L, 5L);
+        }
+
+        // Handle GSit events
+        boolean doSupportGSit = config.getHooks().getBoolean("enable_gsit_support");
+        if (doSupportGSit)
+        {
+            this.getServer().getPluginManager().registerEvents( injector.getInstance(GSitListener.class), this );
         }
 
         // Load the BetterSleeping API
