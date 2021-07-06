@@ -25,8 +25,8 @@ public class SettingsMigrator
         this.logger = logger;
 
         File serverFolder = plugin.getServer().getWorldContainer();
-        this.oldFolder = new File(serverFolder, "/plugins/BetterSleeping3");
-        File newFolder = new File(serverFolder, "/plugins/BetterSleeping4");
+        this.oldFolder = new File(serverFolder, File.separator + "plugins" + File.separator + "BetterSleeping3");
+        File newFolder = new File(serverFolder, File.separator + "plugins" + File.separator + "BetterSleeping4");
 
         boolean shouldMigrate = oldFolder.exists() && !newFolder.exists();
         if (shouldMigrate)
@@ -42,7 +42,7 @@ public class SettingsMigrator
             handleBuffs();
 
             logger.log(Level.INFO, "Your BetterSleeping3 settings have now been migrated to BetterSleeping4. Thank you for updating, and happy sleeping!!");
-            if (this.oldFolder.renameTo( new File(serverFolder, "/plugins/OLD_BetterSleeping") ))
+            if (this.oldFolder.renameTo( new File(serverFolder, File.separator + "plugins" + File.separator + "OLD_BetterSleeping") ))
             {
                 logger.log(Level.INFO, "Renamed /plugins/BetterSleeping3 to /plugins/OLD_BetterSleeping...");
                 logger.log(Level.INFO, "You can safely delete the old configuration if you will not be downgrading to v3 in the future");

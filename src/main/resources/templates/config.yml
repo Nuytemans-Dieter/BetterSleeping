@@ -44,3 +44,6 @@ disable_phantoms: {disable_phantoms}
 # Whether you want to show particle animations when players are sleeping
 # These are precomputed to save on processing time
 enable_animations: {enable_animations}
+
+# Whether you want to save BetterSleeping output to log files
+save_logs: {save_logs}

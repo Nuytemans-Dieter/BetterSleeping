@@ -7,6 +7,7 @@ import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.messaging.ScreenMessenger;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.util.FileLogger;
 import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.CoreFactory;
 import be.betterplugins.core.commands.BPCommandHandler;
@@ -18,10 +19,13 @@ import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -107,8 +111,23 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    public BPLogger provideLogger()
+    public BPLogger provideLogger(JavaPlugin plugin)
     {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration( new File(plugin.getDataFolder() + File.separator + "config.yml") );
+        boolean doFileLogging = config.contains("save_logs") && config.getBoolean("save_logs");
+
+        if (doFileLogging)
+        {
+            try
+            {
+                return new FileLogger(logLevel, plugin, "BetterSleeping4");
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
         return new BPLogger(logLevel, "BetterSleeping4");
     }
 

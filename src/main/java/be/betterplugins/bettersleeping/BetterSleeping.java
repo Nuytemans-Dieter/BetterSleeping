@@ -13,6 +13,7 @@ import be.betterplugins.bettersleeping.model.world.WorldState;
 import be.betterplugins.bettersleeping.model.world.WorldStateHandler;
 import be.betterplugins.bettersleeping.runnables.BossBarRunnable;
 import be.betterplugins.bettersleeping.util.BStatsHandler;
+import be.betterplugins.bettersleeping.util.FileLogger;
 import be.betterplugins.bettersleeping.util.migration.SettingsMigrator;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
@@ -26,7 +27,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class BetterSleeping extends JavaPlugin implements IReloadable
@@ -34,6 +34,7 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
     private final static Level logLevel = Level.ALL;
 
+    private BPLogger logger;
     private SleepWorldManager sleepWorldManager;
     private BossBarRunnable bossBarRunnable;
     private WorldStateHandler worldStateHandler;
@@ -70,6 +71,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
                 new UtilModule(),
                 new StaticModule()
         );
+
+        this.logger = injector.getInstance(BPLogger.class);
 
         // Get all configuration
         ConfigContainer config = injector.getInstance(ConfigContainer.class);
@@ -169,6 +172,12 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         {
             bossBarRunnable.stopBossBars();
             bossBarRunnable = null;
+        }
+
+        if (logger != null && logger instanceof FileLogger)
+        {
+            ((FileLogger) logger).close();
+            logger = null;
         }
 
         // Reset the API
