@@ -1,6 +1,6 @@
 language: "en-US"
 action_bar_messages: false
-use_bossbar: true
+enable_bossbar: true
 update_notifier: true
 disable_phantoms: false
 enable_animations: true

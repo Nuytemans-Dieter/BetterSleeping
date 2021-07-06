@@ -3,6 +3,7 @@ package be.betterplugins.bettersleeping.runnables;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
+import be.betterplugins.bettersleeping.util.TimeUtil;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.core.messaging.messenger.MsgEntry;
 import org.bukkit.Bukkit;
@@ -77,6 +78,9 @@ public class BossBarRunnable extends BukkitRunnable
                     bossBar.removePlayer( player );
                 }
             }
+
+            // Only enable the bossbar during the night
+            bossBar.setVisible(!TimeUtil.isDayTime( world ));
         }
 
         // Update players bossbar visualisation
@@ -93,6 +97,7 @@ public class BossBarRunnable extends BukkitRunnable
             if (!bossBarMap.containsKey( world ))
             {
                 bossBar = Bukkit.createBossBar("", BarColor.BLUE, BarStyle.SEGMENTED_12);
+                bossBar.setVisible(true);
                 updateBossBar(bossBar, sleepStatus);
                 bossBarMap.put( world, bossBar);
             }
