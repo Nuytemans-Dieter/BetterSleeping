@@ -13,12 +13,10 @@ import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffect;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BStatsHandler {
 
@@ -93,7 +91,58 @@ public class BStatsHandler {
             }));
         }
 
-        // TODO: New sleep settings chart (acceleration when sleeping, during the day and at night)
+        metrics.addCustomChart(
+            new DrilldownPie("day_length",
+                () ->
+                {
+                    Map<String, Map<String, Integer>> map = new HashMap<>();
+                    Map<String, Integer> entry = new HashMap<>();
+
+                    int length = config.getInt("day_length");
+                    String category = length == 700 ? "Default" : "Modified";
+
+                    entry.put("" + length, 1);
+                    map.put(category, entry);
+                    return map;
+                }
+            )
+        );
+
+        metrics.addCustomChart(
+            new DrilldownPie("night_length",
+                () ->
+                {
+                    Map<String, Map<String, Integer>> map = new HashMap<>();
+                    Map<String, Integer> entry = new HashMap<>();
+
+                    int length = config.getInt("night_length");
+                    String category = length == 500 ? "Default" : "Modified";
+
+                    entry.put("" + length, 1);
+                    map.put(category, entry);
+                    return map;
+                }
+            )
+        );
+
+        metrics.addCustomChart(
+            new DrilldownPie("night_skip_length",
+                () ->
+                {
+                    Map<String, Map<String, Integer>> map = new HashMap<>();
+                    Map<String, Integer> entry = new HashMap<>();
+
+                    int length = config.getInt("night_skip_length");
+                    String category = length == 10 ? "Default" : "Modified";
+
+                    entry.put("" + length, 1);
+                    map.put(category, entry);
+                    return map;
+                }
+            )
+        );
+
+        metrics.addCustomChart(new SimplePie("uses_bossbar", () -> config.getBoolean("enable_bossbar") ? "Yes" : "No"));
 
         metrics.addCustomChart(new SimplePie("update_notifier", () -> config.getBoolean("update_notifier") ? "Enabled" : "Disabled"));
 
@@ -115,27 +164,67 @@ public class BStatsHandler {
             }
         }
 
-        metrics.addCustomChart(new AdvancedPie("bypassed_gamemodes", () -> {
-            Map<String, Integer> valueMap = new HashMap<>();
+        metrics.addCustomChart(new AdvancedPie("bypassed_gamemodes",
+            () -> {
+                Map<String, Integer> valueMap = new HashMap<>();
 
-            // Add all bypassed gamemodes
-            for (GameMode mode : bypassedGamemodes)
-            {
-                valueMap.put( mode.toString().toLowerCase(), 1 );
+                // Add all bypassed gamemodes
+                for (GameMode mode : bypassedGamemodes)
+                {
+                    valueMap.put( mode.toString().toLowerCase(), 1 );
+                }
+
+                // Report when no game modes are bypassed
+                if (valueMap.size() == 0)
+                    valueMap.put("None", 1);
+
+                return valueMap;
             }
+        ));
 
-            // Report when no game modes are bypassed
-            if (valueMap.size() == 0)
-                valueMap.put("None", 1);
+        Set<PotionEffect> buffs = buffsHandler.getBuffs();
+        metrics.addCustomChart(
+            new DrilldownPie(
+            "has_buffs",
+                () -> {
+                    Map<String, Map<String, Integer>> map = new HashMap<>();
+                    Map<String, Integer> entry = new HashMap<>();
 
-            return valueMap;
-        }));
+                    String isEnabled = buffs.size() > 0 ? "Yes": "No";
 
-        // TODO: Advanced chart for buffs: which ones?
-        metrics.addCustomChart(new SimplePie("uses_buffs", () -> buffsHandler.getBuffs().size() != 0 ? "Yes" : "No"));
+                    for (PotionEffect buff : buffs)
+                    {
+                        String name = buff.toString().split(":")[0].toLowerCase().replace("_", " ");
+                        entry.put(name, 1);
+                    }
 
-        // TODO: Advanced chart for buffs: which ones?
-        metrics.addCustomChart(new SimplePie("uses_debuffs", () -> buffsHandler.getDebuffs().size() != 0 ? "Yes" : "No" ));
+                    map.put(isEnabled, entry);
+                    return map;
+                }
+            )
+        );
+
+        Set<PotionEffect> debuffs = buffsHandler.getDebuffs();
+        metrics.addCustomChart(
+            new DrilldownPie(
+                "has_debuffs",
+                () -> {
+                    Map<String, Map<String, Integer>> map = new HashMap<>();
+                    Map<String, Integer> entry = new HashMap<>();
+
+                    String isEnabled = debuffs.size() > 0 ? "Yes": "No";
+
+                    for (PotionEffect buff : debuffs)
+                    {
+                        String name = buff.toString().split(":")[0].toLowerCase().replace("_", " ");
+                        entry.put(name, 1);
+                    }
+
+                    map.put(isEnabled, entry);
+                    return map;
+                }
+            )
+        );
 
         long numWorlds = worlds.stream().filter( world -> world.getEnvironment() == World.Environment.NORMAL || world.getEnvironment() == World.Environment.CUSTOM ).count();
         metrics.addCustomChart(new SimplePie("is_multiworld", () -> numWorlds > 1 ? "Yes" : "No" ));

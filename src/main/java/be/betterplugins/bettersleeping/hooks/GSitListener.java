@@ -1,4 +1,4 @@
-package be.betterplugins.bettersleeping.hooks.events;
+package be.betterplugins.bettersleeping.hooks;
 
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
