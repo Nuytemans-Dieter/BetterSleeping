@@ -2,7 +2,7 @@ package be.betterplugins.bettersleeping.guice;
 
 import be.betterplugins.bettersleeping.commands.*;
 import be.betterplugins.bettersleeping.commands.StatusCommand;
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.messaging.ScreenMessenger;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
@@ -17,6 +17,7 @@ import be.betterplugins.bettersleeping.BetterSleeping;
 import be.dezijwegel.betteryaml.BetterLang;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.inject.Named;
@@ -72,10 +73,10 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, BetterLang lang, BPLogger logger)
+    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, Map<String, String> langMessages, BPLogger logger)
     {
         // Use a chatMessenger to override the instances where we never want to send messages on screen
-        Messenger chatMessenger = new Messenger(lang.getMessages(), logger, Theme.prefix);
+        Messenger chatMessenger = new Messenger(langMessages, logger, Theme.prefix);
 
         HelpCommand     help    = new HelpCommand( chatMessenger );
         ReloadCommand   reload  = new ReloadCommand( plugin, chatMessenger );
@@ -85,11 +86,11 @@ public class BetterSleepingModule extends AbstractModule
         StatusCommand   status = new StatusCommand( chatMessenger, sleepWorldManager );
         VersionCommand  version = new VersionCommand( plugin, chatMessenger );
 
-        Map<String, String> messageMap = lang.getMessages();
-        CommandMessages messages = new CoreFactory().createCommandMessages(
-                "&4This command can only be performed by the foreseen executor",
-                messageMap.getOrDefault("no_permission", "no_permission"),
-                messageMap.getOrDefault("unknown_command", "unknown_command")
+        CommandMessages messages = new CoreFactory().createCommandMessages
+        (
+                langMessages.getOrDefault("wrong_executor", "wrong_executor"),
+                langMessages.getOrDefault("no_permission", "no_permission"),
+                langMessages.getOrDefault("unknown_command", "unknown_command")
         );
 
         return new BPCommandHandler
@@ -119,8 +120,22 @@ public class BetterSleepingModule extends AbstractModule
         String language = configValue != null ? configValue.toLowerCase() : "en-us";
 
         logger.log(Level.CONFIG, "Loading language: " + language);
+        BetterLang betterLang = new BetterLang("lang.yml", language + ".yml", plugin);
 
-        return new BetterLang("lang.yml", language + ".yml", plugin);
+        if (!betterLang.getYamlConfiguration().isPresent())
+        {
+            logger.log(Level.SEVERE, "This is a BetterLang issue.");
+            logger.log(Level.SEVERE, "BetterSleeping cannot enable due to an error in your jar file, please contact the developer!");
+            Bukkit.getPluginManager().disablePlugin(plugin);
+        }
+
+        return betterLang;
     }
 
+    @Provides
+    @Singleton
+    public Map<String, String> provideMessages(BetterLang betterLang)
+    {
+        return betterLang.getMessages();
+    }
 }

@@ -2,7 +2,7 @@ package be.betterplugins.bettersleeping.runnables;
 
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent.Cause;
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.bettersleeping.util.TimeUtil;
@@ -25,21 +25,19 @@ public class SleepRunnable extends BukkitRunnable
     private final SleepWorld sleepWorld;
     private final Set<UUID> sleepers;
 
-    private TimeState timeState;
-    private boolean isSkipping;
-
     private final double daySpeedup;
     private final double nightSpeedup;
     private final double sleepSpeedup;
 
+    private TimeState timeState;
+    private boolean isSkipping;
 
     public SleepRunnable(ConfigContainer config, SleepWorld sleepWorld, Messenger messenger, BPLogger logger)
     {
-        this.sleepWorld = sleepWorld;
         this.messenger = messenger;
 
+        this.sleepWorld = sleepWorld;
         this.sleepers = new HashSet<>();
-        this.isSkipping = false;
 
         YamlConfiguration sleepingSettings = config.getSleeping_settings();
         double dayDuration = (double) sleepingSettings.getLong("day_length") * 20;
@@ -50,6 +48,7 @@ public class SleepRunnable extends BukkitRunnable
         this.nightSpeedup = TimeUtil.NIGHT_DURATION / nightDuration;
         this.sleepSpeedup = TimeUtil.NIGHT_DURATION / skippedNightDuration;
 
+        this.isSkipping = false;
         this.timeState = TimeState.fromWorld(sleepWorld);
 
         logger.log(Level.FINEST, "Day speedup: " + daySpeedup);

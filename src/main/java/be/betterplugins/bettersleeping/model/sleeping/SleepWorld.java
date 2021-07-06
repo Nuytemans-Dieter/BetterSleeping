@@ -5,7 +5,7 @@ import be.betterplugins.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.sleepersneeded.ISleepersCalculator;
 import be.betterplugins.bettersleeping.sleepersneeded.PercentageNeeded;
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import org.bukkit.World;
 import org.bukkit.entity.LivingEntity;

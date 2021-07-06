@@ -2,7 +2,6 @@ package be.betterplugins.bettersleeping.model;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;

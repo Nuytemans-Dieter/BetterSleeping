@@ -1,4 +1,4 @@
-package be.betterplugins.bettersleeping.configuration;
+package be.betterplugins.bettersleeping.model;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.betteryaml.OptionalBetterYaml;
@@ -74,6 +74,7 @@ public class ConfigContainer
         }
         catch (NoSuchElementException ignored)
         {
+            logger.log(Level.SEVERE, "This is a BetterYaml issue.");
             logger.log(Level.SEVERE, "BetterSleeping cannot enable due to an error in your jar file, please contact the developer!");
             Bukkit.getPluginManager().disablePlugin(plugin);
         }

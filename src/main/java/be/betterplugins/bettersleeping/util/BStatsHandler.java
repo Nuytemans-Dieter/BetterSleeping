@@ -1,6 +1,6 @@
 package be.betterplugins.bettersleeping.util;
 
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.listeners.TimeSetToDayCounter;

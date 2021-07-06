@@ -32,6 +32,9 @@ language: {language}
 # This will ONLY work if you are using Spigot
 action_bar_messages: {action_bar_messages}
 
+# Use the bossbar to display the amount of sleeping players
+enable_bossbar: {enable_bossbar}
+
 # This is ran once on startup when enabled to fetch the latest version
 update_notifier: {update_notifier}
 

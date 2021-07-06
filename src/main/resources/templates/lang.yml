@@ -99,6 +99,9 @@ sleep_possible_soon: {sleep_possible_soon}
 # This message is sent when sleeping is possible due to a thunderstorm or nighttime (disabled by default)
 sleep_possible_now: {sleep_possible_now}
 
+# Used as title above the bossbar
+bossbar_title: {bossbar_title}
+
 # --------------- #
 # Buffs & debuffs |
 # --------------- #
@@ -120,6 +123,9 @@ unknown_command: {unknown_command}
 
 # The message a player gets when they don't have access to a command
 no_permission: {no_permission}
+
+# Sent when the console tries executing a player command, and when a player executes a console-only command
+wrong_executor: {wrong_executor}
 
 # This message is sent when a player tries to sleep but they have got a bypass permission
 # Permissions include:

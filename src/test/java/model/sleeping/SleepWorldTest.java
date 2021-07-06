@@ -1,6 +1,6 @@
 package model.sleeping;
 
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.core.messaging.logging.BPLogger;

@@ -6,11 +6,14 @@ morning_message: {morning_message}
 sleep_spam: {sleep_spam}
 sleep_possible_soon: {sleep_possible_soon}
 sleep_possible_now: {sleep_possible_now}
+bossbar_title: {bossbar_title}
 # Buffs & debuffs
 buff_received: {buff_received}
 debuff_received: {debuff_received}
 # Permissions
+unknown_command: {unknown_command}
 no_permission: {no_permission}
+wrong_executor: {wrong_executor}
 bypass_message: {bypass_message}
 # Commands
 command_shout: {command_shout}

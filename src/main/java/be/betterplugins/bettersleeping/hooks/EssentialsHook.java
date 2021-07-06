@@ -1,6 +1,6 @@
 package be.betterplugins.bettersleeping.hooks;
 
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import com.earth2me.essentials.Essentials;
 import org.bukkit.Bukkit;

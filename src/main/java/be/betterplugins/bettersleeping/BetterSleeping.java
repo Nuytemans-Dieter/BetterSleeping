@@ -6,9 +6,11 @@ import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
 import be.betterplugins.bettersleeping.hooks.PapiExpansion;
 import be.betterplugins.bettersleeping.listeners.*;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.world.WorldState;
 import be.betterplugins.bettersleeping.model.world.WorldStateHandler;
+import be.betterplugins.bettersleeping.runnables.BossBarRunnable;
 import be.betterplugins.bettersleeping.util.BStatsHandler;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
@@ -29,6 +31,7 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
     private final static Level logLevel = Level.ALL;
 
     private SleepWorldManager sleepWorldManager;
+    private BossBarRunnable bossBarRunnable;
     private WorldStateHandler worldStateHandler;
     private AnimationHandler animationHandler;
 
@@ -64,6 +67,9 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
                 new StaticModule()
         );
 
+        // Get all configuration
+        ConfigContainer config = injector.getInstance(ConfigContainer.class);
+
         // Capture the state of all worlds
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );
 
@@ -87,10 +93,18 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         // Disable daylightcycle in all worlds
         this.worldStateHandler.setWorldStates( new WorldState( false ));
 
+        // Handle the boss bar
+        boolean enableBossBar = config.getConfig().getBoolean("enable_bossbar");
+        if (enableBossBar)
+        {
+            this.bossBarRunnable = injector.getInstance(BossBarRunnable.class);
+            this.bossBarRunnable.runTaskTimer(this, 20L, 5L);
+        }
+
         // Load the BetterSleeping API
         BetterSleeping.API = injector.getInstance(BetterSleepingAPI.class);
 
-        //
+        // Register the PAPI expansion
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
         {
             injector.getInstance(PapiExpansion.class).register();
@@ -132,10 +146,18 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
             worldStateHandler = null;
         }
 
+        // Stop handling animations
         if (animationHandler != null)
         {
             animationHandler.reload();
             animationHandler = null;
+        }
+
+        // Stop handling bossbars
+        if (bossBarRunnable != null)
+        {
+            bossBarRunnable.stopBossBars();
+            bossBarRunnable = null;
         }
 
         // Reset the API

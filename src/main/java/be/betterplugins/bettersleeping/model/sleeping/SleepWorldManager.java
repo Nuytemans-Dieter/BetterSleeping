@@ -6,7 +6,7 @@ import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.runnables.SleepRunnable;
 import be.betterplugins.core.collections.DoubleMap;
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.bettersleeping.configuration.ConfigContainer;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.GameRule;
 import org.bukkit.World;
