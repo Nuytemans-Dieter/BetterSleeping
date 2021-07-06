@@ -4,6 +4,7 @@ import be.betterplugins.bettersleeping.api.BetterSleepingAPI;
 import be.betterplugins.bettersleeping.guice.BetterSleepingModule;
 import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
+import be.betterplugins.bettersleeping.hooks.PapiExpansion;
 import be.betterplugins.bettersleeping.listeners.*;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.model.world.WorldState;
@@ -88,6 +89,12 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
         // Load the BetterSleeping API
         BetterSleeping.API = injector.getInstance(BetterSleepingAPI.class);
+
+        //
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null)
+        {
+            injector.getInstance(PapiExpansion.class).register();
+        }
 
         // Enable bStats
         injector.getInstance(BStatsHandler.class);
