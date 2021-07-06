@@ -49,7 +49,7 @@ public class BossBarRunnable extends BukkitRunnable
         bossBar.setTitle(
             messenger.composeMessage(
                 "bossbar_title",
-                false,
+                true,
                 new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
                 new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
                 new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing())

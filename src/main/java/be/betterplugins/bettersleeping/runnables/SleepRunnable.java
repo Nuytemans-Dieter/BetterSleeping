@@ -185,6 +185,13 @@ public class SleepRunnable extends BukkitRunnable
         // Calculate the acceleration
         final double acceleration = calcSpeedup();
 
+        // Check whether another cause skipped the night and allow this if no one is sleeping
+        boolean wasNightExternallyChanged = this.sleepWorld.getWorldTime() != Math.floor(this.sleepWorld.getInternalTime()) && numSleepers == 0;
+        if (wasNightExternallyChanged)
+        {
+            this.sleepWorld.setTime( this.sleepWorld.getWorldTime() );
+        }
+
         // Set the correct time
         boolean isNightSkipped = this.sleepWorld.addTime( acceleration );
 
