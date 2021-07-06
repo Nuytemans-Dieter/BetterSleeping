@@ -56,7 +56,10 @@ public class ConfigContainer
                 .addValidator("night_length", new Min(0))
                 .addValidator("bed_enter_cooldown", new Min(0))
                 .addOptionalSection("world_settings")
-                .setOptionalValue("world_settings.worldname.enabled", true);
+                .setOptionalValue("world_settings.worldname.enabled", true)
+                .setOptionalValue("world_settings.worldname.day_length", 700)
+                .setOptionalValue("world_settings.worldname.night_length", 500)
+                .setOptionalValue("world_settings.worldname.night_skip_length", 10);
 
         OptionalBetterYaml configBY = new OptionalBetterYaml("config.yml", configValidation, plugin, true);
         OptionalBetterYaml buffsBY = new OptionalBetterYaml("buffs.yml", buffsValidation, plugin, true);

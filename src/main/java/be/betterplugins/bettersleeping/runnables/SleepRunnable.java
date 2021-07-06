@@ -39,10 +39,11 @@ public class SleepRunnable extends BukkitRunnable
         this.sleepWorld = sleepWorld;
         this.sleepers = new HashSet<>();
 
-        YamlConfiguration sleepingSettings = config.getSleeping_settings();
-        double dayDuration = (double) sleepingSettings.getLong("day_length") * 20;
-        double nightDuration = (double) sleepingSettings.getLong("night_length") * 20;
-        double skippedNightDuration = (double) sleepingSettings.getLong("night_skip_length") * 20;
+
+        YamlConfiguration sleepConfig = config.getSleeping_settings();
+        double dayDuration = getGeneralOrPerWorld("day_length", sleepConfig) * 20;
+        double nightDuration = getGeneralOrPerWorld("night_length", sleepConfig) * 20;
+        double skippedNightDuration = getGeneralOrPerWorld("night_skip_length", sleepConfig) * 20;
 
         this.daySpeedup   = TimeUtil.DAY_DURATION / dayDuration;
         this.nightSpeedup = TimeUtil.NIGHT_DURATION / nightDuration;
@@ -56,6 +57,18 @@ public class SleepRunnable extends BukkitRunnable
         logger.log(Level.FINEST, "Sleep speedup: " + sleepSpeedup);
     }
 
+    private Double getGeneralOrPerWorld(String subPath, YamlConfiguration config)
+    {
+        String perWorldPath = "world_settings." + sleepWorld.getWorld().getName() + "." + subPath;
+        if (config.contains( perWorldPath ))
+        {
+            return config.getDouble( perWorldPath );
+        }
+        else
+        {
+            return config.getDouble( subPath );
+        }
+    }
 
     /**
      * Mark a player as sleeping, he does not actually have to sleep
