@@ -39,15 +39,14 @@ public class SleepRunnable extends BukkitRunnable
         this.sleepWorld = sleepWorld;
         this.sleepers = new HashSet<>();
 
-
         YamlConfiguration sleepConfig = config.getSleeping_settings();
         double dayDuration = getGeneralOrPerWorld("day_length", sleepConfig) * 20;
         double nightDuration = getGeneralOrPerWorld("night_length", sleepConfig) * 20;
         double skippedNightDuration = getGeneralOrPerWorld("night_skip_length", sleepConfig) * 20;
 
-        this.daySpeedup   = TimeUtil.DAY_DURATION / dayDuration;
-        this.nightSpeedup = TimeUtil.NIGHT_DURATION / nightDuration;
-        this.sleepSpeedup = TimeUtil.NIGHT_DURATION / skippedNightDuration;
+        this.daySpeedup   = Math.min(TimeUtil.DAY_DURATION / dayDuration, 14000);
+        this.nightSpeedup = Math.min(TimeUtil.NIGHT_DURATION / nightDuration, 10000);
+        this.sleepSpeedup = Math.min(TimeUtil.NIGHT_DURATION / skippedNightDuration, 10000);
 
         this.isSkipping = false;
         this.timeState = TimeState.fromWorld(sleepWorld);
