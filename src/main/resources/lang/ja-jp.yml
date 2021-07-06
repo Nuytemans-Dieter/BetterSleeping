@@ -6,11 +6,14 @@ morning_message: "<user>さん、おはようございます！ 良い一日を�
 sleep_spam: "再度ベッドに入るにはあと<time>秒待ってください。"
 sleep_possible_soon: ""
 sleep_possible_now: ""
+bossbar_title: "Sleepers: <num_sleeping>/<needed_sleeping>"
 # Buffs & debuffs
 buff_received: "よく休んだので<var>のバフがかかりました。"
 debuff_received: "徹夜で疲れたので<var>のデバフがかかりました。"
 # Permissions
+unknown_command: "&cThe command '<var>' is unknown! Perform /bs4 help to see a list of commands"
 no_permission: "&c<var>を実行する権限がありません。"
+wrong_executor: "&cYou cannot execute '<var>'!"
 bypass_message: "&c<user>さんはバイパス権限があるので寝る必要はありません。"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

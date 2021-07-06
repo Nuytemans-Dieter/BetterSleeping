@@ -6,11 +6,14 @@ morning_message: "早晨啊 <user>， 祝你有愉快嘅一日！"
 sleep_spam: "你需要等待 <time> [<time>.秒.秒] 先可以再次入睡。"
 sleep_possible_soon: ""
 sleep_possible_now: ""
+bossbar_title: "Sleepers: <num_sleeping>/<needed_sleeping>"
 # Buffs & debuffs
 buff_received: "你感覺到精力充沛， 並收到[<var>.一個 Buff. <var> 個 Buff]。"
 debuff_received: "你感到疲倦同眼瞓， 並收到[<var>.一個 Debuff. <var> 個 Debuff]。"
 # Permissions
+unknown_command: "&cThe command '<var>' is unknown! Perform /bs4 help to see a list of commands"
 no_permission: "&c你並沒有權限執行 <var>！"
+wrong_executor: "&cYou cannot execute '<var>'!"
 bypass_message: "&c<user>， 你並唔需要瞓覺啊。 (code: bypassed)"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"
