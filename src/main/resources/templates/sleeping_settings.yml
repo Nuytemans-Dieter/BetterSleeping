@@ -24,12 +24,8 @@ needed: {needed}
 
 # The duration (in seconds) of the night when enough players are sleeping
 # Set this to 0 to skip the night instantly
-# A normal night lasts 500 ticks
+# A normal night lasts 500 seconds
 night_skip_length: {night_skip_length}
-
-# Whether to start skipping the night
-# Currently not possible:
-#allow_partial_skipping: {allow_partial_skipping}
 
 # The normal length of the day and night when not skipping (in seconds)
 # This allows you to speed up or slow down the time
@@ -37,10 +33,6 @@ night_skip_length: {night_skip_length}
 day_length: {day_length}
 # Default: 500
 night_length: {night_length}
-
-# The normal length of the day (in seconds)
-# This allows you to speed up or slow down the time during nighttime
-# Default: 700
 
 
 # The time in seconds that players need to wait before they can enter the bed again after leaving it

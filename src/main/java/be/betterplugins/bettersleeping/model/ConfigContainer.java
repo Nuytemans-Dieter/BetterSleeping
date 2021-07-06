@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 
+@Singleton
 public class ConfigContainer
 {
 

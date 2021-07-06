@@ -13,8 +13,10 @@ import be.betterplugins.bettersleeping.model.world.WorldState;
 import be.betterplugins.bettersleeping.model.world.WorldStateHandler;
 import be.betterplugins.bettersleeping.runnables.BossBarRunnable;
 import be.betterplugins.bettersleeping.util.BStatsHandler;
+import be.betterplugins.bettersleeping.util.migration.SettingsMigrator;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
+import be.betterplugins.core.messaging.logging.BPLogger;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.Bukkit;
@@ -24,6 +26,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class BetterSleeping extends JavaPlugin implements IReloadable
@@ -53,8 +56,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
     {
         super.onEnable();
 
-        // Before all else: check if bettersleeping4 folder does NOT exist yet and bettersleeping3 folder DOES exist
-        // If this is met: automatically migrate BS3 options to the BS4 config files
+        // Automatically migrate BS3 options to the BS4 config files if needed
+        new SettingsMigrator(this, new BPLogger(Level.CONFIG, "BetterSleeping4"));
 
         this.startPlugin();
     }
