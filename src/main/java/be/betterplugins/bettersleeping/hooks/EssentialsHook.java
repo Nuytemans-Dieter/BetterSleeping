@@ -9,8 +9,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.logging.Level;
 
+@Singleton
 public class EssentialsHook {
 
 
