@@ -6,11 +6,14 @@ morning_message: "Goeiemorgen, <user>. Geniet van je dag!"
 sleep_spam: "Je moet nog <time> [<time>.seconde.seconden] wachten voor je weer kan slapen!"
 sleep_possible_soon: ""
 sleep_possible_now: ""
+bossbar_title: "Sleepers: <num_sleeping>/<needed_sleeping>"
 # Buffs & debuffs
 buff_received: "Je voelt je uitgerust en krijgt daardoor [<var>.een verbetering.<var> verbeteringen]."
 debuff_received: "Je hebt niet geslapen en bent moe, hierdoor krijg je [<var>.een nadeel.<var> nadelen]."
 # Permissions
+unknown_command: "&cThe command '<var>' is unknown! Perform /bs4 help to see a list of commands"
 no_permission: "&cJe hebt geen toestemming tot dat commando!"
+wrong_executor: "&cYou cannot execute '<var>'!"
 bypass_message: "&cJe hebt omzeiltoestemming dus je hoeft niet te slapen, <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"

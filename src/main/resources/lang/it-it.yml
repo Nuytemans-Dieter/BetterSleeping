@@ -6,11 +6,14 @@ morning_message: "Buongiorno, <user>. Ti auguriamo buona giornata!"
 sleep_spam: "Devi aspettare ancora <time> [<time>.secondo.secondi] prima di dormire!"
 sleep_possible_soon: ""
 sleep_possible_now: ""
+bossbar_title: "Sleepers: <num_sleeping>/<needed_sleeping>"
 # Buffs & debuffs
 buff_received: "Ti sei riposato bene e hai ricevuto [<var>.un potenziamento.<var> dei potenziamenti]."
 debuff_received: "Non hai risposato bene e hai ricevuto [<var>.un debuff.<var> dei debuff]."
 # Permissions
+unknown_command: "&cThe command '<var>' is unknown! Perform /bs4 help to see a list of commands"
 no_permission: "&cNon hai il permesso di eseguire <var>!"
+wrong_executor: "&cYou cannot execute '<var>'!"
 bypass_message: "&cStai bypassando il plugin, perciò non hai bisogno di dormire <user>."
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night"
