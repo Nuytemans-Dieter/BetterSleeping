@@ -98,7 +98,7 @@ public class BStatsHandler {
                     Map<String, Map<String, Integer>> map = new HashMap<>();
                     Map<String, Integer> entry = new HashMap<>();
 
-                    int length = config.getInt("day_length");
+                    int length = sleepingSettings.getInt("day_length");
                     String category = length == 700 ? "Default" : "Modified";
 
                     entry.put("" + length, 1);
@@ -115,7 +115,7 @@ public class BStatsHandler {
                     Map<String, Map<String, Integer>> map = new HashMap<>();
                     Map<String, Integer> entry = new HashMap<>();
 
-                    int length = config.getInt("night_length");
+                    int length = sleepingSettings.getInt("night_length");
                     String category = length == 500 ? "Default" : "Modified";
 
                     entry.put("" + length, 1);
@@ -132,7 +132,7 @@ public class BStatsHandler {
                     Map<String, Map<String, Integer>> map = new HashMap<>();
                     Map<String, Integer> entry = new HashMap<>();
 
-                    int length = config.getInt("night_skip_length");
+                    int length = sleepingSettings.getInt("night_skip_length");
                     String category = length == 10 ? "Default" : "Modified";
 
                     entry.put("" + length, 1);
