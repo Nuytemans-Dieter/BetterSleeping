@@ -6,6 +6,7 @@ import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class ReloadCommand extends BPCommand
     @Override
     public boolean mayExecute(CommandSender commandSender)
     {
-        return commandSender instanceof ConsoleCommandSender;
+        return commandSender instanceof ConsoleCommandSender || commandSender instanceof Player;
     }
 
     @Override
