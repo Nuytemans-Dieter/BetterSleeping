@@ -75,10 +75,12 @@ public class BedEventListener implements Listener
         {
             if (event.getPlayer().hasPermission("bettersleeping.monsters_sleep") || event.getPlayer().hasPermission("bettersleeping.monstersnearby"))
             {
+                logger.log(Level.FINER, "Player " + event.getPlayer().getName() + " was allowed to enter their bed with nearby monsters");
                 event.setUseBed(Event.Result.ALLOW);
             }
             else
             {
+                logger.log(Level.FINER, "Player " + event.getPlayer().getName() + " failed to enter their bed with nearby monsters");
                 return;
             }
         }

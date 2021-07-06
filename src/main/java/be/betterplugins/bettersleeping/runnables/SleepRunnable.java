@@ -141,11 +141,9 @@ public class SleepRunnable extends BukkitRunnable
     {
         final double speedup;
 
-        if ( this.sleepWorld.isNight() )
+        if ( this.sleepWorld.getWorldTime() >= TimeUtil.TIME_NIGHT_START )
         {
             speedup = isSkipping ? sleepSpeedup : nightSpeedup;
-            if (isSkipping)
-                this.sleepWorld.clearWeather();
         }
         else
         {
@@ -193,6 +191,10 @@ public class SleepRunnable extends BukkitRunnable
                         break;
                 }
             }
+        }
+        else
+        {
+            this.sleepWorld.clearWeather();
         }
 
         // Calculate the acceleration

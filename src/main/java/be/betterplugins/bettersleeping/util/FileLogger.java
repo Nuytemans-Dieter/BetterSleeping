@@ -88,11 +88,11 @@ public class FileLogger extends BPLogger
         // Also log to console
         super.log(level, message);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("[HH:mm:ss:SSS] ");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss:SSS");
         LocalDateTime now = LocalDateTime.now();
         String timeStamp = dtf.format(now);
 
-        String logMessage = timeStamp + "[" + level.toString() + "] " + message;
+        String logMessage = "[" + timeStamp + "] [" + level.toString() + "]: " + message;
         if (level.intValue() >= this.fileLogLevel.intValue())
         {
             try
