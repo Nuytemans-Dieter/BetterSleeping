@@ -55,8 +55,15 @@ public class SettingsMigrator
     {
         logger.log(Level.INFO, "Migrating: config.yml");
 
+        File file = new File(oldFolder, "config.yml");
+        if (!file.exists())
+        {
+            logger.log(Level.INFO, "Config file not found. Not handling config.yml migration");
+            return;
+        }
+
         // Load the old settings
-        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(new File(oldFolder, "config.yml"));
+        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
         String language = oldConfig.getString("language");
         boolean disablePhantoms = oldConfig.getBoolean("disable_phantoms");
 
@@ -77,8 +84,15 @@ public class SettingsMigrator
     {
         logger.log(Level.INFO, "Migrating: bypassing.yml");
 
+        File file = new File(oldFolder, "bypassing.yml");
+        if (!file.exists())
+        {
+            logger.log(Level.INFO, "Config file not found. Not handling bypassing.yml migration");
+            return;
+        }
+
         // Load the old settings
-        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(new File(oldFolder, "bypassing.yml"));
+        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
         boolean ignoreSurvival = oldConfig.getBoolean("ignore_survival");
         boolean ignoreCreative = oldConfig.getBoolean("ignore_creative");
         boolean ignoreAdventure = oldConfig.getBoolean("ignore_adventure");
@@ -105,8 +119,15 @@ public class SettingsMigrator
     {
         logger.log(Level.INFO, "Migrating: hooks.yml");
 
+        File file = new File(oldFolder, "hooks.yml");
+        if (!file.exists())
+        {
+            logger.log(Level.INFO, "Config file not found. Not handling hooks.yml migration");
+            return;
+        }
+
         // Load the old settings
-        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(new File(oldFolder, "hooks.yml"));
+        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
         boolean essentials_afk_ignored = oldConfig.getBoolean("essentials_afk_ignored");
         int minimum_afk_time = oldConfig.getInt("minimum_afk_time");
         boolean vanished_ignored = oldConfig.getBoolean("vanished_ignored");
@@ -140,8 +161,15 @@ public class SettingsMigrator
     {
         logger.log(Level.INFO, "Migrating: sleeping_settings.yml");
 
+        File file = new File(oldFolder, "sleeping_settings.yml");
+        if (!file.exists())
+        {
+            logger.log(Level.INFO, "Config file not found. Not handling sleeping_settings.yml migration");
+            return;
+        }
+
         // Load the old settings
-        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(new File(oldFolder, "sleeping_settings.yml"));
+        YamlConfiguration oldConfig = YamlConfiguration.loadConfiguration(file);
 
         String sleeperCounter = oldConfig.getString("sleeper_counter");
         sleeperCounter = sleeperCounter == null || sleeperCounter.equalsIgnoreCase("percentage") ? "percentage" : "absolute";
