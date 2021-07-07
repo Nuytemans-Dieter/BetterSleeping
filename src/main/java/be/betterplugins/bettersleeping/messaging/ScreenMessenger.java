@@ -21,9 +21,9 @@ public class ScreenMessenger extends Messenger
     private final JavaPlugin plugin;
     private final Map<Player, ScreenMessageSender> playerMessengerMap = new ConcurrentHashMap<>();
 
-    public ScreenMessenger(JavaPlugin plugin, Map<String, String> messages, BPLogger logger)
+    public ScreenMessenger(JavaPlugin plugin, Map<String, String> messages, String prefix, BPLogger logger)
     {
-        super(messages, logger, Theme.prefix);
+        super(messages, logger, prefix);
         this.plugin = plugin;
 
         // Register creation and deletion of messengers for every player

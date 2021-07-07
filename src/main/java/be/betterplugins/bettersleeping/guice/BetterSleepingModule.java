@@ -54,8 +54,15 @@ public class BetterSleepingModule extends AbstractModule
     }
 
     @Provides
+    @Named("prefix")
+    public String providePrefix()
+    {
+        return Theme.primaryColor + "[BS4] " + Theme.secondaryColor;
+    }
+
+    @Provides
     @Singleton
-    public Messenger provideMessenger(@Named("has_spigot") boolean hasSpigot, JavaPlugin plugin, BetterLang lang, ConfigContainer configContainer, BPLogger logger)
+    public Messenger provideMessenger(@Named("has_spigot") boolean hasSpigot, @Named("prefix") String prefix, JavaPlugin plugin, BetterLang lang, ConfigContainer configContainer, BPLogger logger)
     {
         logger.log(Level.CONFIG, hasSpigot ? "This server is running on Spigot" : "This server is NOT running on Spigot");
         boolean sendOnScreen = configContainer.getConfig().getBoolean("action_bar_messages");
@@ -64,12 +71,12 @@ public class BetterSleepingModule extends AbstractModule
         if (hasSpigot && sendOnScreen)
         {
             logger.log(Level.CONFIG, "Using on screen messaging");
-            messenger = new ScreenMessenger(plugin, lang.getMessages(), logger);
+            messenger = new ScreenMessenger(plugin, lang.getMessages(), prefix, logger);
         }
         else
         {
             logger.log(Level.CONFIG, "Using chat messaging");
-            messenger = new Messenger(lang.getMessages(), logger, Theme.prefix);
+            messenger = new Messenger(lang.getMessages(), logger, prefix);
         }
 
         return messenger;
@@ -77,10 +84,10 @@ public class BetterSleepingModule extends AbstractModule
 
     @Provides
     @Singleton
-    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, Map<String, String> langMessages, BPLogger logger)
+    public BPCommandHandler provideCommandHandler(SleepWorldManager sleepWorldManager, @Named("prefix") String prefix, BuffsHandler buffsHandler, BypassChecker bypassChecker, Messenger messenger, Map<String, String> langMessages, BPLogger logger)
     {
         // Use a chatMessenger to override the instances where we never want to send messages on screen
-        Messenger chatMessenger = new Messenger(langMessages, logger, Theme.prefix);
+        Messenger chatMessenger = new Messenger(langMessages, logger, prefix);
 
         HelpCommand     help    = new HelpCommand( chatMessenger );
         ReloadCommand   reload  = new ReloadCommand( plugin, chatMessenger );
