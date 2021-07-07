@@ -35,7 +35,7 @@ public class ZZZAnimation extends Animation implements PreComputeable<Double>
         this.delay = delayMilliseconds;
 
         this.rotations = new ArrayList<>();
-        for (double rotation = 0; rotation < 2 * Math.PI; rotation += Math.PI/4)
+        for (double rotation = 0; rotation < 2 * Math.PI; rotation += Math.PI/16)
         {
             this.rotations.add(rotation);
             preCompute( rotation );

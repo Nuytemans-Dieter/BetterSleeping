@@ -17,7 +17,7 @@ wrong_executor: "&cYou cannot execute '<command>'!"
 bypass_message: "&cYou are bypassed so you don't need to sleep, <user>. You will never get debuffs!"
 # Commands
 command_shout: "Someone is asking you to take a nap and accelerate the night (<num_sleeping>/<needed_sleeping>)"
-command_shout_cooldown: "Someone recently shouted in this world, please wait <time> more [<time>.second.seconds]!"
+command_shout_cooldown: "&cSomeone recently shouted in this world, please wait <time> more [<time>.second.seconds]!"
 command_sleep_notnight: "&cYou are not tired yet, please wait until nighttime."
 world_disabled: "&cBetterSleeping is not enabled in your world."
 command_help_header: "&3--=={BetterSleeping4 Help}==--"
