@@ -91,7 +91,7 @@ public class BetterSleepingModule extends AbstractModule
 
         HelpCommand     help    = new HelpCommand( chatMessenger );
         ReloadCommand   reload  = new ReloadCommand( plugin, chatMessenger );
-        ShoutCommand    shout   = new ShoutCommand( messenger );
+        ShoutCommand    shout   = new ShoutCommand( messenger, sleepWorldManager );
         SleepCommand    sleep   = new SleepCommand( messenger, sleepWorldManager );
         BuffsCommand    buffs   = new BuffsCommand( chatMessenger, buffsHandler, bypassChecker );
         StatusCommand   status = new StatusCommand( chatMessenger, sleepWorldManager );
