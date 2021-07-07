@@ -80,7 +80,12 @@ public class SleepRunnable extends BukkitRunnable
         List<Player> players = sleepWorld.getAllPlayersInWorld();
         players.removeIf(player -> player.getUniqueId() == sleeper.getUniqueId());
 
-        this.messenger.sendMessage(players,"bed_enter_broadcast");
+        SleepStatus sleepStatus = getSleepStatus();
+
+        this.messenger.sendMessage(players,"bed_enter_broadcast",
+                new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
+                new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
+                new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()));
         if (!sleeper.isSleeping())
             sleepers.add( sleeper.getUniqueId() );
     }

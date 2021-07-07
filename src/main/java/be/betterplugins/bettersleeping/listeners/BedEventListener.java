@@ -2,9 +2,11 @@ package be.betterplugins.bettersleeping.listeners;
 
 import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
+import be.betterplugins.core.messaging.messenger.MsgEntry;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -97,7 +99,8 @@ public class BedEventListener implements Listener
         Player player = event.getPlayer();
         if (!canPlayerSleep(player))
         {
-            messenger.sendMessage(player, "sleep_spam");
+            messenger.sendMessage(player, "sleep_spam",
+                    new MsgEntry("<time>", calcRemainingCooldown(player)));
             event.setUseBed(Event.Result.DENY);
             return;
         }
@@ -111,19 +114,29 @@ public class BedEventListener implements Listener
         logger.log(Level.FINE, "Player " + event.getPlayer().getName() + " entered their bed");
 
         lastBedEnterMap.put( player.getUniqueId(), System.currentTimeMillis() );
-        messenger.sendMessage(player, "bed_enter_message");
         sleepWorldManager.addSleeper( player );
+        SleepStatus sleepStatus = sleepWorldManager.getSleepStatus( player.getWorld() );
+        if (sleepStatus != null)
+            messenger.sendMessage(player, "bed_enter_message",
+                    new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
+                    new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
+                    new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()));
+    }
+
+    private long calcRemainingCooldown(Player player)
+    {
+        UUID uuid = player.getUniqueId();
+        if (!this.lastBedEnterMap.containsKey( uuid ))
+            return 0;
+
+        long previousTime = this.lastBedEnterMap.get( uuid );
+        long currentTime = System.currentTimeMillis();
+        return Math.max(0, this.cooldownMs - (currentTime - previousTime));
     }
 
     public boolean canPlayerSleep(Player player)
     {
-        UUID uuid = player.getUniqueId();
-        if (!this.lastBedEnterMap.containsKey( uuid ))
-            return true;
-
-        long previousTime = this.lastBedEnterMap.get( uuid );
-        long currentTime = System.currentTimeMillis();
-        return currentTime - previousTime >= this.cooldownMs;
+        return calcRemainingCooldown(player) <= 0;
     }
 
     @EventHandler

@@ -1,5 +1,7 @@
 package be.betterplugins.bettersleeping.commands;
 
+import be.betterplugins.bettersleeping.model.SleepStatus;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.core.commands.shortcuts.PlayerBPCommand;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.core.messaging.messenger.MsgEntry;
@@ -18,12 +20,14 @@ public class ShoutCommand extends PlayerBPCommand
 
     private final long cooldownMillis = 60000;
     private final Map<World, Long> cooldownMap;
+    private final SleepWorldManager sleepWorldManager;
 
-    public ShoutCommand(Messenger messenger)
+    public ShoutCommand(Messenger messenger, SleepWorldManager sleepWorldManager)
     {
         super(messenger);
 
         this.cooldownMap = new HashMap<>();
+        this.sleepWorldManager = sleepWorldManager;
     }
 
     @Override
@@ -43,6 +47,14 @@ public class ShoutCommand extends PlayerBPCommand
     {
         World world = player.getWorld();
 
+        SleepStatus sleepStatus = sleepWorldManager.getSleepStatus( world );
+
+        if (sleepStatus == null)
+        {
+            messenger.sendMessage(player, "world_disabled");
+            return true;
+        }
+
         long remainingCooldown = getRemainingCooldown( world );
         if ( remainingCooldown > 0 )
         {
@@ -52,7 +64,11 @@ public class ShoutCommand extends PlayerBPCommand
         }
 
         cooldownMap.put( world, System.currentTimeMillis() );
-        messenger.sendMessage(world.getPlayers(), "command_shout");
+
+        messenger.sendMessage(world.getPlayers(), "command_shout",
+                new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
+                new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
+                new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()));
         return true;
     }
 
