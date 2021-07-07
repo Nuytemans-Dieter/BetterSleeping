@@ -149,7 +149,8 @@ public class SettingsMigrator
 
         String mode = oldConfig.getString("mode");
         boolean isSmooth = mode == null || mode.equalsIgnoreCase("smooth");
-        int nightSkipLength = isSmooth ? 500 / oldConfig.getInt("smooth.base_speedup") : oldConfig.getInt("setter.delay");
+        int oldSpeedup = Math.max(1, oldConfig.getInt("smooth.base_speedup"));
+        int nightSkipLength = isSmooth ? 500 / oldSpeedup : oldConfig.getInt("setter.delay");
         int bedEnterCooldown = oldConfig.getInt("bed_enter_delay");
 
         // Force old values
