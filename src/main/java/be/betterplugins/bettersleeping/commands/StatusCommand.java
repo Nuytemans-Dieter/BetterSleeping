@@ -5,6 +5,7 @@ import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.commands.shortcuts.PlayerBPCommand;
 import be.betterplugins.core.messaging.messenger.Messenger;
+import be.betterplugins.core.messaging.messenger.MsgEntry;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -56,11 +57,18 @@ public class StatusCommand extends PlayerBPCommand {
         }
 
         messenger.sendMessage(player, "command_status_header");
-        messenger.sendMessage(player, "command_status_world");
-        messenger.sendMessage(player, "command_status_sleeping");
-        messenger.sendMessage(player, "command_status_dayspeed");
-        messenger.sendMessage(player, "command_status_nightspeed");
-        messenger.sendMessage(player, "command_status_sleepingspeed");
+        messenger.sendMessage(player, "command_status_world",
+                new MsgEntry("<worldname>", player.getWorld().getName()));
+        messenger.sendMessage(player, "command_status_sleeping",
+                new MsgEntry("<num_sleeping>", status.getNumSleepers()),
+                new MsgEntry("<needed_sleeping>", status.getNumNeeded()),
+                new MsgEntry("<remaining_sleeping>", status.getNumMissing()));
+        messenger.sendMessage(player, "command_status_dayspeed",
+                new MsgEntry("<var>", status.getDaySpeedup()));
+        messenger.sendMessage(player, "command_status_nightspeed",
+                new MsgEntry("<var>", status.getNightSpeedup()));
+        messenger.sendMessage(player, "command_status_sleepingspeed",
+                new MsgEntry("<var>", status.getSleepSpeedup()));
         messenger.sendMessage(player, "command_status_footer");
 
         return true;
