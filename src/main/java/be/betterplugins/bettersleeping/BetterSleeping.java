@@ -32,7 +32,7 @@ import java.util.logging.Level;
 public class BetterSleeping extends JavaPlugin implements IReloadable
 {
 
-    private final static Level logLevel = Level.INFO;
+    private final static Level logLevel = Level.CONFIG;
 
     private BPLogger logger;
     private SleepWorldManager sleepWorldManager;
@@ -80,6 +80,9 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         // Capture the state of all worlds
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );
 
+        // Disable daylightcycle in all worlds
+        this.worldStateHandler.setWorldStates( new WorldState( false ));
+
         // Handle commands
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);
         getCommand("bettersleeping").setExecutor( commandHandler );
@@ -96,9 +99,6 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
         // Handle sleeping through a runnable
         sleepWorldManager = injector.getInstance(SleepWorldManager.class);
-
-        // Disable daylightcycle in all worlds
-        this.worldStateHandler.setWorldStates( new WorldState( false ));
 
         // Handle the boss bar
         boolean enableBossBar = config.getConfig().getBoolean("enable_bossbar");
