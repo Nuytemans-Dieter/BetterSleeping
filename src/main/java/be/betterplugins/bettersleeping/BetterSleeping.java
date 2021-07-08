@@ -110,9 +110,14 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
         // Handle GSit events
         boolean doSupportGSit = config.getHooks().getBoolean("enable_gsit_support");
-        if (doSupportGSit)
+        boolean hasGSit = getServer().getPluginManager().getPlugin("GSit") != null;
+        if (doSupportGSit && hasGSit)
         {
             this.getServer().getPluginManager().registerEvents( injector.getInstance(GSitListener.class), this );
+        }
+        else if (hasGSit)
+        {
+            logger.log(Level.INFO, "You are using GSit but did not opt-in to enable GSit support with BetterSleeping!");
         }
 
         // Load the BetterSleeping API
