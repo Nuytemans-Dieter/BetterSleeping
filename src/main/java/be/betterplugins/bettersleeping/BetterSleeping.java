@@ -32,7 +32,7 @@ import java.util.logging.Level;
 public class BetterSleeping extends JavaPlugin implements IReloadable
 {
 
-    private final static Level logLevel = Level.ALL;
+    private final static Level logLevel = Level.INFO;
 
     private BPLogger logger;
     private SleepWorldManager sleepWorldManager;
