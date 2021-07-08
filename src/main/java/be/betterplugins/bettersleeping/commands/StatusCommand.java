@@ -10,6 +10,8 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,6 +47,15 @@ public class StatusCommand extends PlayerBPCommand {
         return "bettersleeping.status";
     }
 
+    protected DecimalFormat createDecimalFormat()
+    {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setDecimalSeparator('.');
+        symbols.setGroupingSeparator(',');
+
+        return new DecimalFormat("##.##", symbols);
+    }
+
     @Override
     public boolean execute(@NotNull Player player, @NotNull Command command, @NotNull String[] strings)
     {
@@ -56,6 +67,12 @@ public class StatusCommand extends PlayerBPCommand {
             return true;
         }
 
+        DecimalFormat df = createDecimalFormat();
+
+        String daySpeedup = df.format( status.getDaySpeedup() );
+        String nightSpeedup = df.format( status.getNightSpeedup() );
+        String sleepSpeedup = df.format( status.getSleepSpeedup() );
+
         messenger.sendMessage(player, "command_status_header");
         messenger.sendMessage(player, "command_status_world",
                 new MsgEntry("<worldname>", player.getWorld().getName()));
@@ -64,11 +81,11 @@ public class StatusCommand extends PlayerBPCommand {
                 new MsgEntry("<needed_sleeping>", status.getNumNeeded()),
                 new MsgEntry("<remaining_sleeping>", status.getNumMissing()));
         messenger.sendMessage(player, "command_status_dayspeed",
-                new MsgEntry("<var>", status.getDaySpeedup()));
+                new MsgEntry("<var>", daySpeedup));
         messenger.sendMessage(player, "command_status_nightspeed",
-                new MsgEntry("<var>", status.getNightSpeedup()));
+                new MsgEntry("<var>", nightSpeedup));
         messenger.sendMessage(player, "command_status_sleepingspeed",
-                new MsgEntry("<var>", status.getSleepSpeedup()));
+                new MsgEntry("<var>", sleepSpeedup));
         messenger.sendMessage(player, "command_status_footer");
 
         return true;
