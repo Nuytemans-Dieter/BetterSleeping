@@ -48,6 +48,13 @@ public class SleepWorldTest
         return container;
     }
 
+    public void mockGetEnvironment(Player player)
+    {
+        World world = mock(World.class);
+        when(world.getEnvironment()).thenReturn(World.Environment.NORMAL);
+        when(player.getWorld()).thenReturn(world);
+    }
+
     @Test
     public void testGetAllPlayersInWorld()
     {
@@ -55,6 +62,10 @@ public class SleepWorldTest
         Player p1 = mock( Player.class );
         Player p2 = mock( Player.class );
         Player p3 = mock( Player.class );
+
+        mockGetEnvironment(p1);
+        mockGetEnvironment(p2);
+        mockGetEnvironment(p3);
 
         mockPlayerList.add(p1);
         mockPlayerList.add(p2);
@@ -74,6 +85,10 @@ public class SleepWorldTest
         Player p1 = mock( Player.class );
         Player p2 = mock( Player.class );
         Player p3 = mock( Player.class );
+
+        mockGetEnvironment(p1);
+        mockGetEnvironment(p2);
+        mockGetEnvironment(p3);
 
         mockPlayerList.add(p1);
         mockPlayerList.add(p2);

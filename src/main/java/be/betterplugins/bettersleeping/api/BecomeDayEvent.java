@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BecomeDayEvent extends Event {
+public class BecomeDayEvent extends Event
+{
 
     private static final HandlerList HANDLERS = new HandlerList();
 

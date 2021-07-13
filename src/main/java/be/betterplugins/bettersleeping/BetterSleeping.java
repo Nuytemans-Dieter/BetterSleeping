@@ -2,6 +2,7 @@ package be.betterplugins.bettersleeping;
 
 import be.betterplugins.bettersleeping.api.BetterSleepingAPI;
 import be.betterplugins.bettersleeping.guice.BetterSleepingModule;
+import be.betterplugins.bettersleeping.guice.HooksModule;
 import be.betterplugins.bettersleeping.guice.StaticModule;
 import be.betterplugins.bettersleeping.guice.UtilModule;
 import be.betterplugins.bettersleeping.hooks.GSitListener;
@@ -69,7 +70,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         Injector injector = Guice.createInjector(
                 new BetterSleepingModule(this, logLevel),
                 new UtilModule(),
-                new StaticModule()
+                new StaticModule(),
+                new HooksModule()
         );
 
         this.logger = injector.getInstance(BPLogger.class);
