@@ -68,7 +68,8 @@ public class ShoutCommand extends PlayerBPCommand
         messenger.sendMessage(world.getPlayers(), "command_shout",
                 new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
                 new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
-                new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()));
+                new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()),
+                new MsgEntry("<player>", player.getName()));
         return true;
     }
 

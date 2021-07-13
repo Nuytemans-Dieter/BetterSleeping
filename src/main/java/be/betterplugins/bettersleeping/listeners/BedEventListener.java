@@ -100,7 +100,7 @@ public class BedEventListener implements Listener
         if (!canPlayerSleep(player))
         {
             messenger.sendMessage(player, "sleep_spam",
-                    new MsgEntry("<time>", calcRemainingCooldown(player)));
+                    new MsgEntry("<time>", Math.round(calcRemainingCooldown(player) / 1000.0)));
             event.setUseBed(Event.Result.DENY);
             return;
         }
@@ -108,7 +108,7 @@ public class BedEventListener implements Listener
         // Notify bypassed players
         if ( bypassChecker.isPlayerBypassed( player ) )
         {
-            messenger.sendMessage(player, "bypass_message");
+            messenger.sendMessage(player, "bypass_message", new MsgEntry("<player>", player.getName()));
         }
 
         logger.log(Level.FINE, "Player " + event.getPlayer().getName() + " entered their bed");
@@ -120,7 +120,8 @@ public class BedEventListener implements Listener
             messenger.sendMessage(player, "bed_enter_message",
                     new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
                     new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
-                    new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()));
+                    new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()),
+                    new MsgEntry("<player>", player.getName()));
     }
 
     private long calcRemainingCooldown(Player player)

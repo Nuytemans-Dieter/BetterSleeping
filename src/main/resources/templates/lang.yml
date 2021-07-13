@@ -41,32 +41,26 @@
 #     Replaced by:      The player who receives the message
 #     Can be used in:   All messages support this
 #     Example:          When user Freddy_Krueger receives any message, <user> is replaced by Freddy_Krueger
-#
 # <player>
 #     Replaced by:      The player who did an action
 #     Can be used in:   bed_enter_broadcast, enough_sleeping
 #     Example:          When user Freddy_Krueger goes to bed, <player> is replaced by Freddy_Krueger
-#
 # <num_sleeping>
 #     Replaced by:      The amount of sleeping players
 #     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
 #     Example:          When 10 people are online and 4 are sleeping, <num_sleeping> is replaced by 4
-#
 # <needed_sleeping>
 #     Replaced by:      The amount of sleeping players that have to sleep in order to skip the night
 #     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping
 #     Example:          When 4 players need to sleep, <needed_sleeping> is replaced by 4
-#
 # <remaining_sleeping>
 #     Replaced by:      The amount of extra sleeping players that are needed
 #     Can be used in:   bed_enter_message, bed_enter_broadcast, enough_sleeping, skipping_canceled
 #     Example:          When 4 players are sleeping but 6 are needed, <remaining_sleeping> is replaced by 2
-#
 # <time>
 #     Replaced by:      The amount of time in a context
 #     Can be used in:   sleep_spam
 #     Example:          When a player has just left their bed and has to wait 4 seconds before they can enter it again, <time> is replaced by 4
-#
 # <var>
 #     Replaced by:      No_permission: the used command, buff_received: the amount of received buffs, debuff_received: the amount of received debuffs
 #     Can be used in:   no_permission, buff_received, debuff_received, some commands
