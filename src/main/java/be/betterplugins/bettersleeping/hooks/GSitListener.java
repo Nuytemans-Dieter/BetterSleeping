@@ -2,8 +2,8 @@ package be.betterplugins.bettersleeping.hooks;
 
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
-import me.gsit.api.events.PlayerGetUpLayEvent;
-import me.gsit.api.events.PlayerLayEvent;
+import me.gsit.api.events.PlayerGetUpPoseEvent;
+import me.gsit.api.events.PlayerPoseEvent;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
@@ -24,9 +24,9 @@ public class GSitListener implements Listener {
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
-    public void onPlayerLay (PlayerLayEvent playerLayEvent)
+    public void onPlayerLay (PlayerPoseEvent layOrCrawlEvent)
     {
-        Player player = playerLayEvent.getPlayer();
+        Player player = layOrCrawlEvent.getPlayer();
         World world = player.getWorld();
 
         // If time for sleeping has not come yet, don't count the event
@@ -41,16 +41,16 @@ public class GSitListener implements Listener {
             return;
         }
 
-        if (playerLayEvent.getPose() == Pose.SLEEPING)
+        if (layOrCrawlEvent.getPose() == Pose.SLEEPING)
         {
             sleepWorldManager.addSleeper(player);
         }
     }
 
     @EventHandler(priority=EventPriority.HIGHEST)
-    public void onPlayerGetUp(PlayerGetUpLayEvent playerStandUpLayEvent)
+    public void onPlayerGetUp(PlayerGetUpPoseEvent playerGetUpFromCrawlOrLayEvent)
     {
-        Player player = playerStandUpLayEvent.getPlayer();
+        Player player = playerGetUpFromCrawlOrLayEvent.getPlayer();
 
         // Don't handle disabled worlds
         if ( ! sleepWorldManager.isWorldEnabled( player.getWorld() ))
