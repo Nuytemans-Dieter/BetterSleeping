@@ -217,7 +217,7 @@ public class SleepRunnable extends BukkitRunnable
         if (isNightSkipped)
         {
             messenger.sendMessage(
-                    new ArrayList<>(Bukkit.getOnlinePlayers()),
+                    new ArrayList<>(sleepWorld.getAllPlayersInWorld()),
                     "morning_message",
                     new MsgEntry("<num>", numSleepers)
             );

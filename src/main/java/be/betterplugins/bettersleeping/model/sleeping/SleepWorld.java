@@ -8,6 +8,7 @@ import be.betterplugins.bettersleeping.sleepersneeded.PercentageNeeded;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import org.bukkit.World;
+import org.bukkit.World.Environment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -42,7 +43,16 @@ public class SleepWorld
      */
     public List<Player> getAllPlayersInWorld()
     {
-        return world.getPlayers();
+        return world.getPlayers().stream()
+                .filter(this::isPlayerInValidEnvironment)
+                .collect(Collectors.toList());
+    }
+
+
+    private boolean isPlayerInValidEnvironment(Player player)
+    {
+        Environment playerEnv = player.getWorld().getEnvironment();
+        return playerEnv == Environment.NORMAL || playerEnv == Environment.CUSTOM;
     }
 
 
@@ -54,7 +64,7 @@ public class SleepWorld
      */
     public List<Player> getValidPlayersInWorld()
     {
-        return world.getPlayers().stream()
+        return this.getAllPlayersInWorld().stream()
                 .filter(player -> !bypassChecker.isPlayerBypassed(player))
                 .collect(Collectors.toList());
     }
@@ -67,7 +77,7 @@ public class SleepWorld
      */
     public List<Player> getSleepingPlayersInWorld()
     {
-        return world.getPlayers().stream()
+        return this.getAllPlayersInWorld().stream()
                 .filter(LivingEntity::isSleeping)
                 .collect(Collectors.toList());
     }
