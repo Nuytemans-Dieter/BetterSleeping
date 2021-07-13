@@ -83,7 +83,7 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );
 
         // Disable daylightcycle in all worlds
-        this.worldStateHandler.setWorldStates( new WorldState( false ));
+        this.worldStateHandler.setWorldStates( new WorldState( false, 200 ));
 
         // Handle commands
         BPCommandHandler commandHandler = injector.getInstance(BPCommandHandler.class);

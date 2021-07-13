@@ -1,5 +1,6 @@
 package be.betterplugins.bettersleeping.model.world;
 
+import be.betterplugins.core.messaging.logging.BPLogger;
 import org.bukkit.World;
 
 import javax.inject.Inject;
@@ -13,12 +14,12 @@ public class WorldStateHandler
     private final Map<World, WorldState> worldWorldStateMap;
 
     @Inject
-    public WorldStateHandler(List<World> worlds)
+    public WorldStateHandler(List<World> worlds, BPLogger logger)
     {
         this.worldWorldStateMap = new HashMap<>();
         for (World world : worlds)
         {
-            this.worldWorldStateMap.put(world, new WorldState( world ));
+            this.worldWorldStateMap.put(world, new WorldState( world, logger ));
         }
     }
 
