@@ -42,9 +42,9 @@ public class BossBarRunnable extends BukkitRunnable
         if (sleepStatus == null)
             return;
 
-        bossBar.setProgress(
-                (double) sleepStatus.getNumSleepers() / (double) sleepStatus.getNumNeeded()
-        );
+        final double percentage = (double) sleepStatus.getNumSleepers() / (double) sleepStatus.getNumNeeded();
+        double progress = Math.max(0, Math.min(1, percentage));
+        bossBar.setProgress( progress );
 
         bossBar.setTitle(
             messenger.composeMessage(
@@ -80,7 +80,8 @@ public class BossBarRunnable extends BukkitRunnable
             }
 
             // Only enable the bossbar during the night
-            bossBar.setVisible(!TimeUtil.isDayTime( world ));
+            SleepStatus status = sleepWorldManager.getSleepStatus( world );
+            bossBar.setVisible(status != null && status.getNumSleepers() > 0);
         }
 
         // Update players bossbar visualisation
