@@ -82,13 +82,14 @@ public class SleepRunnable extends BukkitRunnable
 
         SleepStatus sleepStatus = getSleepStatus();
 
+        if (!sleeper.isSleeping())
+            sleepers.add( sleeper.getUniqueId() );
+
         this.messenger.sendMessage(players,"bed_enter_broadcast",
                 new MsgEntry("<num_sleeping>", sleepStatus.getNumSleepers()),
                 new MsgEntry("<needed_sleeping>", sleepStatus.getNumNeeded()),
                 new MsgEntry("<remaining_sleeping>", sleepStatus.getNumMissing()),
                 new MsgEntry("<player>", sleeper.getName()));
-        if (!sleeper.isSleeping())
-            sleepers.add( sleeper.getUniqueId() );
     }
 
 
