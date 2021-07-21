@@ -65,18 +65,20 @@ public class BetterSleepingModule extends AbstractModule
     public Messenger provideMessenger(@Named("has_spigot") boolean hasSpigot, @Named("prefix") String prefix, JavaPlugin plugin, BetterLang lang, ConfigContainer configContainer, BPLogger logger)
     {
         logger.log(Level.CONFIG, hasSpigot ? "This server is running on Spigot" : "This server is NOT running on Spigot");
+
+        BPLogger messengerLogger = new BPLogger(Level.OFF, "BetterSleeping4");
         boolean sendOnScreen = configContainer.getConfig().getBoolean("action_bar_messages");
 
         Messenger messenger;
         if (hasSpigot && sendOnScreen)
         {
             logger.log(Level.CONFIG, "Using on screen messaging");
-            messenger = new ScreenMessenger(plugin, lang.getMessages(), prefix, logger);
+            messenger = new ScreenMessenger(plugin, lang.getMessages(), prefix, messengerLogger);
         }
         else
         {
             logger.log(Level.CONFIG, "Using chat messaging");
-            messenger = new Messenger(lang.getMessages(), logger, prefix);
+            messenger = new Messenger(lang.getMessages(), messengerLogger, prefix);
         }
 
         return messenger;

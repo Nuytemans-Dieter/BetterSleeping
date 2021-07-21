@@ -4,6 +4,7 @@ import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.BypassChecker;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
+import be.betterplugins.bettersleeping.util.TimeUtil;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.core.messaging.messenger.MsgEntry;
@@ -101,6 +102,13 @@ public class BedEventListener implements Listener
         {
             messenger.sendMessage(player, "sleep_spam",
                     new MsgEntry("<time>", Math.round(calcRemainingCooldown(player) / 1000.0)));
+            event.setUseBed(Event.Result.DENY);
+            return;
+        }
+
+        // Don't allow sleeping once the night should be skipped already
+        if ( player.getWorld().getTime() >= (TimeUtil.TIME_NIGHT_END + 500) )
+        {
             event.setUseBed(Event.Result.DENY);
             return;
         }

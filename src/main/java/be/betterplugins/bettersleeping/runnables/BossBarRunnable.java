@@ -81,7 +81,8 @@ public class BossBarRunnable extends BukkitRunnable
 
             // Only enable the bossbar during the night
             SleepStatus status = sleepWorldManager.getSleepStatus( world );
-            bossBar.setVisible(status != null && status.getNumSleepers() > 0);
+            boolean isTimeOkay = !TimeUtil.isDayTime( world );
+            bossBar.setVisible(status != null && status.getNumSleepers() > 0 && isTimeOkay);
         }
 
         // Update players bossbar visualisation
@@ -92,7 +93,7 @@ public class BossBarRunnable extends BukkitRunnable
             // Skip players in disabled worlds
             SleepStatus sleepStatus = this.sleepWorldManager.getSleepStatus( world );
             if ( sleepStatus == null )
-                continue;;
+                continue;
 
             BossBar bossBar;
             if (!bossBarMap.containsKey( world ))

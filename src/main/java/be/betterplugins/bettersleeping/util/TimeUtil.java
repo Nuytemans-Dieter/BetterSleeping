@@ -21,7 +21,7 @@ public class TimeUtil
         boolean isOverworld = world.getEnvironment() == World.Environment.NORMAL;
         boolean isThundering = world.isThundering();
         long startSleepTime = world.hasStorm() ? 12010 : 12542;
-        boolean isNight = world.getTime() >= startSleepTime;
+        boolean isNight = world.getTime() >= startSleepTime && world.getTime() <= TIME_NIGHT_END;
 
         return isOverworld && (isThundering || isNight);
     }
