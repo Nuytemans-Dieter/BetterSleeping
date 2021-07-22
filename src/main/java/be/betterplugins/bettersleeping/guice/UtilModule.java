@@ -3,8 +3,7 @@ package be.betterplugins.bettersleeping.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
-
-import javax.inject.Named;
+import com.google.inject.name.Named;
 
 public class UtilModule extends AbstractModule
 {
