@@ -5,6 +5,8 @@ import be.betterplugins.bettersleeping.animation.location.PlayerSleepLocation;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.core.interfaces.IReloadable;
 import be.betterplugins.core.messaging.logging.BPLogger;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +15,6 @@ import org.bukkit.event.player.PlayerBedLeaveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;

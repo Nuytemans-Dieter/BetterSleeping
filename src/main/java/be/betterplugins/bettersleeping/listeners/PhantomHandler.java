@@ -1,13 +1,12 @@
 package be.betterplugins.bettersleeping.listeners;
 
 import be.betterplugins.bettersleeping.model.ConfigContainer;
+import com.google.inject.Inject;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntitySpawnEvent;
-
-import javax.inject.Inject;
 
 public class PhantomHandler implements Listener
 {

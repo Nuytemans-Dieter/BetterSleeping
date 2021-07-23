@@ -7,13 +7,13 @@ import be.dezijwegel.betteryaml.validation.validator.ChainedValidator;
 import be.dezijwegel.betteryaml.validation.validator.numeric.Min;
 import be.dezijwegel.betteryaml.validation.validator.string.StringWhiteList;
 import be.dezijwegel.betteryaml.validation.validator.string.ToLowerCase;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 
@@ -28,7 +28,6 @@ public class ConfigContainer
     private YamlConfiguration sleeping_settings;
 
     @Inject
-    @Singleton
     public ConfigContainer(JavaPlugin plugin, BPLogger logger)
     {
         ValidationHandler configValidation = new ValidationHandler()

@@ -3,11 +3,10 @@ package be.betterplugins.bettersleeping.api;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
+import com.google.inject.Inject;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
-
-import javax.inject.Inject;
 
 public class BetterSleepingAPI
 {

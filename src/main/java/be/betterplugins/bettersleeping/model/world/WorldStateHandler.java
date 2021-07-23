@@ -1,9 +1,9 @@
 package be.betterplugins.bettersleeping.model.world;
 
 import be.betterplugins.core.messaging.logging.BPLogger;
+import com.google.inject.Inject;
 import org.bukkit.World;
 
-import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

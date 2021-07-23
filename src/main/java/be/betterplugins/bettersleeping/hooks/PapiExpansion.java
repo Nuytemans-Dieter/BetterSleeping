@@ -4,11 +4,10 @@ import be.betterplugins.bettersleeping.BetterSleeping;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
+import com.google.inject.Inject;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import javax.inject.Inject;
 
 public class PapiExpansion extends PlaceholderExpansion
 {

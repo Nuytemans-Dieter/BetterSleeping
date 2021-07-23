@@ -7,7 +7,10 @@ import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ZZZAnimation extends Animation implements PreComputeable<Double>
 {

@@ -4,6 +4,7 @@ import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.listeners.TimeSetToDayCounter;
+import com.google.inject.Inject;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.AdvancedPie;
 import org.bstats.charts.DrilldownPie;
@@ -15,7 +16,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
-import javax.inject.Inject;
 import java.util.*;
 
 public class BStatsHandler {

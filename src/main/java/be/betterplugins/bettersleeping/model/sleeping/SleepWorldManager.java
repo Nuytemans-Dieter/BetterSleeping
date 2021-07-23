@@ -2,12 +2,14 @@ package be.betterplugins.bettersleeping.model.sleeping;
 
 import be.betterplugins.bettersleeping.listeners.AnimationHandler;
 import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.runnables.SleepRunnable;
 import be.betterplugins.core.collections.DoubleMap;
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.messaging.messenger.Messenger;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,8 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -28,7 +28,6 @@ public class SleepWorldManager
     private final AnimationHandler animationHandler;
 
     @Inject
-    @Singleton
     public SleepWorldManager(List<World> allWorlds, ConfigContainer config, BypassChecker bypassChecker, Messenger messenger, AnimationHandler animationHandler, JavaPlugin plugin, BPLogger logger)
     {
         YamlConfiguration sleepingSettings = config.getSleeping_settings();

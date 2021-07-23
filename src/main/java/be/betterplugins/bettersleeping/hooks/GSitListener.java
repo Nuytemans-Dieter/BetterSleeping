@@ -2,6 +2,7 @@ package be.betterplugins.bettersleeping.hooks;
 
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
+import com.google.inject.Inject;
 import me.gsit.api.events.PlayerGetUpPoseEvent;
 import me.gsit.api.events.PlayerPoseEvent;
 import org.bukkit.World;
@@ -10,8 +11,6 @@ import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-
-import javax.inject.Inject;
 
 public class GSitListener implements Listener {
 

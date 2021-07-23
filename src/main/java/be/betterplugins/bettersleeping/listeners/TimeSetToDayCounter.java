@@ -2,11 +2,10 @@ package be.betterplugins.bettersleeping.listeners;
 
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent.Cause;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 @Singleton
 public class TimeSetToDayCounter implements Listener {
@@ -14,7 +13,6 @@ public class TimeSetToDayCounter implements Listener {
     private int counter = 0;
 
     @Inject
-    @Singleton
     public TimeSetToDayCounter() {}
 
     @EventHandler

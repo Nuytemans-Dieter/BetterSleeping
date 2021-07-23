@@ -3,11 +3,11 @@ package be.betterplugins.bettersleeping.util.migration;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.dezijwegel.betteryaml.OptionalBetterYaml;
 import be.dezijwegel.betteryaml.validation.ValidationHandler;
+import com.google.inject.Inject;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.util.logging.Level;
 

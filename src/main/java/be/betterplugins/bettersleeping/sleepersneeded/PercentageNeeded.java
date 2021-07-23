@@ -1,10 +1,10 @@
 package be.betterplugins.bettersleeping.sleepersneeded;
 
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.bettersleeping.model.ConfigContainer;
+import com.google.inject.Inject;
 
-import javax.inject.Inject;
 import java.util.logging.Level;
 
 public class PercentageNeeded implements ISleepersCalculator
@@ -13,7 +13,7 @@ public class PercentageNeeded implements ISleepersCalculator
     private final int percentage;
 
     @Inject
-    public PercentageNeeded (ConfigContainer config, BPLogger logger)
+    public PercentageNeeded(ConfigContainer config, BPLogger logger)
     {
         int percentage = config.getSleeping_settings().getInt("needed");
 

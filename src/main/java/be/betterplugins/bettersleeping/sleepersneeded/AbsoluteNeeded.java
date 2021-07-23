@@ -1,10 +1,10 @@
 package be.betterplugins.bettersleeping.sleepersneeded;
 
-import be.betterplugins.core.messaging.logging.BPLogger;
-import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
+import be.betterplugins.bettersleeping.model.sleeping.SleepWorld;
+import be.betterplugins.core.messaging.logging.BPLogger;
+import com.google.inject.Inject;
 
-import javax.inject.Inject;
 import java.util.logging.Level;
 
 public class AbsoluteNeeded implements ISleepersCalculator

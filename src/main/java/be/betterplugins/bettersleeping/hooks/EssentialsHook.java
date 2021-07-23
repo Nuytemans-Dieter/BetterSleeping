@@ -3,13 +3,13 @@ package be.betterplugins.bettersleeping.hooks;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import com.earth2me.essentials.Essentials;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.logging.Level;
 
 @Singleton

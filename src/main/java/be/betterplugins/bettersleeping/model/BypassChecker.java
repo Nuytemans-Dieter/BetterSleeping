@@ -1,13 +1,13 @@
 package be.betterplugins.bettersleeping.model;
 
-import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
+import be.betterplugins.core.messaging.logging.BPLogger;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
