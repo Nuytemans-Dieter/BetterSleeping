@@ -22,6 +22,7 @@ import be.betterplugins.core.messaging.logging.BPLogger;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -115,7 +116,15 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         boolean hasGSit = getServer().getPluginManager().getPlugin("GSit") != null;
         if (doSupportGSit && hasGSit)
         {
-            this.getServer().getPluginManager().registerEvents( injector.getInstance(GSitListener.class), this );
+            try
+            {
+                Class.forName("me.gsit.api.events.PlayerPoseEvent");
+                this.getServer().getPluginManager().registerEvents(injector.getInstance(GSitListener.class), this);
+            }
+            catch (ClassNotFoundException ignored)
+            {
+                logger.log(Level.WARNING, ChatColor.RED + "Your GSit version is incompatible with this version of BetterSleeping, GSit support cannot enable");
+            }
         }
         else if (hasGSit)
         {
