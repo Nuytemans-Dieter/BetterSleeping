@@ -15,6 +15,7 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | German    | de-DE |
 | Italian   | it-IT |
 | Japanese  | ja-JP |
+| Polish    | pl-PL |
 | Portuguese| pt-PT |
 | Russian   | ru-RU |
 | Spanish   | es-ES |
