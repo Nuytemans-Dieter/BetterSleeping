@@ -12,11 +12,11 @@ buff_received: "你昨晚睡得很好，並獲得了 <var> 種增益效果。"
 debuff_received: "你沒有睡覺，非常疲憊，故獲得了 <var> 種減益效果。"
 # Permissions
 unknown_command: "&c<var> 為未知的指令！請使用 /bs4 help 來查看指令列表"
-no_permission: "&c你没有執行 <var> 的權限！"
+no_permission: "&c你沒有執行 <var> 的權限！"
 wrong_executor: "&c你無法執行 '<var>'！"
 bypass_message: "&c嗨！<user>，你已經被略過了，所以你不需要睡覺，也不會獲得減益效果。"
 # Commands
-command_shout: "有人希望你能睡覺，加速夜晚時間"
+command_shout: "有人希望你能睡覺，加速夜晚時間 (<num_sleeping>/<needed_sleeping>)"
 command_shout_cooldown: "最近已經有人在此世界廣播過了，請等待 <time> 秒後再廣播！"
 command_sleep_notnight: "&c你還不睏，等到晚上再睡吧。"
 world_disabled: "&cBetterSleeping 尚未在你的世界中啟用。"
