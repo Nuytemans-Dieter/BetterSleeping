@@ -9,8 +9,9 @@
 
 # To reset a BetterSleeping config file, you can simply delete it and perform /bs reload or restart the server
 
-# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/sleeping_settings.yml
-# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
+# Default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/sleeping_settings.yml
+# Config template:      https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/templates/sleeping_settings.yml
+# All default config files can be found here:  https://github.com/Nuytemans-Dieter/BetterSleeping/tree/BetterSleeping-v4/src/main/resources
 
 # Choose an option from below (percentage or absolute)
 # With percentage, a relative amount of players needs to sleep (eg. needed: 30 -> 13 online players, 30% of 13 is 3,9. Will be rounded to the nearest number -> 4 sleeping players needed)

@@ -9,8 +9,9 @@
 
 # To reset a BetterSleeping config file, you can simply delete it and perform /bs reload or restart the server
 
-# Default config values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/hooks.yml
-# All default config values:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
+# Default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/hooks.yml
+# Config template:      https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/templates/hooks.yml
+# All default config files can be found here:  https://github.com/Nuytemans-Dieter/BetterSleeping/tree/BetterSleeping-v4/src/main/resources
 
 
 # Whether or not essentials afk players will be ignored by the required sleeping count
