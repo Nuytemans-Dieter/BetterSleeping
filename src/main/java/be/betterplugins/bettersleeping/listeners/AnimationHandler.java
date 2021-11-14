@@ -40,6 +40,8 @@ public class AnimationHandler implements Listener, IReloadable
 
         this.isEnabled = configContainer.getConfig().getBoolean("enable_animations");
 
+        this.logger.log(Level.FINE, "Are animations enabled? " + this.isEnabled);
+
         this.sleepingAnimations = new HashMap<>();
     }
 
