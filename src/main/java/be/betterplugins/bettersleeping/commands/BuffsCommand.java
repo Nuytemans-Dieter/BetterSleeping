@@ -1,7 +1,7 @@
 package be.betterplugins.bettersleeping.commands;
 
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.commands.shortcuts.PlayerBPCommand;
 import be.betterplugins.core.messaging.messenger.Messenger;

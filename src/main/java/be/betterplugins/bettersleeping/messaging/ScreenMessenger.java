@@ -1,7 +1,5 @@
 package be.betterplugins.bettersleeping.messaging;
 
-import be.betterplugins.bettersleeping.model.BypassChecker;
-import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import org.bukkit.command.CommandSender;
@@ -29,10 +27,7 @@ public class ScreenMessenger extends Messenger
         // Register creation and deletion of messengers for every player
         plugin.getServer().getPluginManager().registerEvents(new PlayerQueueEventListener(), plugin);
         // Create messenger for every player online (e.g. in case of reload)
-        plugin.getServer().getOnlinePlayers().forEach(player ->
-        {
-            playerMessengerMap.put(player, new ScreenMessageSender(plugin, player));
-        });
+        plugin.getServer().getOnlinePlayers().forEach(player -> playerMessengerMap.put(player, new ScreenMessageSender(plugin, player)));
     }
 
     @Override

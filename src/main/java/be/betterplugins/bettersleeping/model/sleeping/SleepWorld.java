@@ -1,6 +1,6 @@
 package be.betterplugins.bettersleeping.model.sleeping;
 
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.bettersleeping.sleepersneeded.AbsoluteNeeded;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.bettersleeping.sleepersneeded.ISleepersCalculator;
