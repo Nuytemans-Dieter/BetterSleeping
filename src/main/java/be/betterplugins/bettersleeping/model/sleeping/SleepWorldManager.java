@@ -1,7 +1,7 @@
 package be.betterplugins.bettersleeping.model.sleeping;
 
 import be.betterplugins.bettersleeping.listeners.AnimationHandler;
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.model.SleepStatus;
 import be.betterplugins.bettersleeping.runnables.SleepRunnable;

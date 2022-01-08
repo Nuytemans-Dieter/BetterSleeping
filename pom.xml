@@ -62,7 +62,6 @@
             <version>5.0.1</version>
         </dependency>
 
-
         <!-- SPIGOT -->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -84,22 +83,6 @@
             <artifactId>betteryaml</artifactId>
             <version>1.1.0</version>
         </dependency>
-
-        <!-- BUNGEECORD -->
-<!--        <dependency>-->
-<!--            <groupId>net.md-5</groupId>-->
-<!--            <artifactId>bungeecord-api</artifactId>-->
-<!--            <version>1.14-SNAPSHOT</version>-->
-<!--            <type>jar</type>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>net.md-5</groupId>-->
-<!--            <artifactId>bungeecord-api</artifactId>-->
-<!--            <version>1.14-SNAPSHOT</version>-->
-<!--            <type>javadoc</type>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
 
         <!-- ESSENTIALS -->
         <dependency>
@@ -190,6 +173,7 @@
                             <include>org.bstats:*</include>
                             <include>com.github.BetterPluginsSpigot:*</include>
                             <include>com.google.inject:*</include>
+                            <include>javax.inject:*</include>
                             <include>aopalliance:aopalliance:*</include>
                         </includes>
                     </artifactSet>

@@ -6,7 +6,7 @@ import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.listeners.BuffsHandler;
 import be.betterplugins.bettersleeping.messaging.ScreenMessenger;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.bettersleeping.util.FileLogger;
 import be.betterplugins.bettersleeping.util.Theme;
 import be.betterplugins.core.CoreFactory;

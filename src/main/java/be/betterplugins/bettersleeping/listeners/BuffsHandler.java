@@ -2,7 +2,7 @@ package be.betterplugins.bettersleeping.listeners;
 
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
 import be.betterplugins.bettersleeping.model.ConfigContainer;
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.core.messaging.messenger.MsgEntry;
@@ -130,7 +130,7 @@ public class BuffsHandler implements Listener {
      */
     private Set<PotionEffect> readPotions(FileConfiguration config, String section)
     {
-        Set<PotionEffect> potions = new HashSet<PotionEffect>();
+        Set<PotionEffect> potions = new HashSet<>();
 
         // Prevent reading faulty config
         if ( ! config.isConfigurationSection(section) )

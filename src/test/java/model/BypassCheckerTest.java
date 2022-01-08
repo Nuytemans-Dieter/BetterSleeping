@@ -1,9 +1,10 @@
 package model;
 
-import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
-import be.betterplugins.bettersleeping.model.BypassChecker;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
+import be.betterplugins.bettersleeping.model.permissions.BypassChecker;
 import be.betterplugins.core.messaging.logging.BPLogger;
+import mock.MockPermissionsCache;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class BypassCheckerTest
 {
 
-    private BypassChecker setupBypassChecker(boolean hasEssentials, Set<GameMode> bypassedModes, boolean isAfk, boolean isVanished)
+    private BypassChecker setupBypassChecker(boolean hasEssentials, Set<GameMode> bypassedModes, HashSet<Player> playersWithBypassPermission, boolean isAfk, boolean isVanished)
     {
         // Setup the desired configuration
         ConfigContainer container = mock(ConfigContainer.class);
@@ -28,7 +29,7 @@ public class BypassCheckerTest
         for (GameMode mode : GameMode.values())
         {
             String lowerCaseGameMode = mode.toString().toLowerCase();
-            when(config.getBoolean("ignore_" + lowerCaseGameMode)).thenReturn( bypassedModes.contains( mode ) );
+            when(config.getBoolean("ignore_" + lowerCaseGameMode)).thenReturn(bypassedModes.contains(mode));
         }
         when(container.getBypassing()).thenReturn(config);
 
@@ -38,13 +39,13 @@ public class BypassCheckerTest
         when(essentialsHook.isAfk(any())).thenReturn(isAfk);
         when(essentialsHook.isVanished(any())).thenReturn(isVanished);
 
-        return new BypassChecker(container, essentialsHook, mock(BPLogger.class));
+        return new BypassChecker(container, new MockPermissionsCache(null, playersWithBypassPermission), essentialsHook, mock(BPLogger.class));
     }
 
     private Player setupPlayer(boolean isSleepingIgnored, boolean hasBSBypass, boolean hasEssentialsBypass)
     {
         Player player = mock(Player.class);
-        when(player.isSleepingIgnored()).thenReturn( isSleepingIgnored );
+        when(player.isSleepingIgnored()).thenReturn(isSleepingIgnored);
         when(player.hasPermission("bettersleeping.bypass")).thenReturn(hasBSBypass);
         when(player.hasPermission("essentials.sleepingignored")).thenReturn(hasEssentialsBypass);
         return player;
@@ -56,9 +57,9 @@ public class BypassCheckerTest
     @Test
     public void testNotBypassed()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), false, false);
         Player player = setupPlayer(false, false, false);
-        assert !bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<>(), false, false);
+        assert !bypassChecker.isPlayerBypassed(player);
     }
 
     /**
@@ -67,9 +68,9 @@ public class BypassCheckerTest
     @Test
     public void testSleepingIgnored()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), false, false);
         Player player = setupPlayer(true, false, false);
-        assert !bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<>(), false, false);
+        assert !bypassChecker.isPlayerBypassed(player);
     }
 
     /**
@@ -78,9 +79,12 @@ public class BypassCheckerTest
     @Test
     public void testBSBypass()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), false, false);
         Player player = setupPlayer(false, true, false);
-        assert bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<Player>()
+        {{
+            add(player);
+        }}, false, false);
+        assert bypassChecker.isPlayerBypassed(player);
     }
 
     /**
@@ -89,9 +93,9 @@ public class BypassCheckerTest
     @Test
     public void testEssentialsBypass()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), false, false);
         Player player = setupPlayer(false, false, true);
-        assert !bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<>(), false, false);
+        assert !bypassChecker.isPlayerBypassed(player);
     }
 
     /**
@@ -100,9 +104,9 @@ public class BypassCheckerTest
     @Test
     public void testAfk()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), true, false);
         Player player = setupPlayer(false, false, false);
-        assert bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<>(), true, false);
+        assert bypassChecker.isPlayerBypassed(player);
     }
 
     /**
@@ -111,27 +115,27 @@ public class BypassCheckerTest
     @Test
     public void testVanished()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), false, true);
         Player player = setupPlayer(false, false, false);
-        assert bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(), new HashSet<>(), false, true);
+        assert bypassChecker.isPlayerBypassed(player);
     }
 
     @Test
     public void testGamemodeBypassed()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(Collections.singleton(GameMode.CREATIVE)), false, false);
         Player player = setupPlayer(false, false, false);
         when(player.getGameMode()).thenReturn(GameMode.CREATIVE);
-        assert bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(Collections.singleton(GameMode.CREATIVE)), new HashSet<>(), false, false);
+        assert bypassChecker.isPlayerBypassed(player);
     }
 
     @Test
     public void testGamemodeNotBypassed()
     {
-        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(Collections.singleton(GameMode.CREATIVE)), false, false);
         Player player = setupPlayer(false, false, false);
         when(player.getGameMode()).thenReturn(GameMode.SURVIVAL);
-        assert !bypassChecker.isPlayerBypassed( player );
+        BypassChecker bypassChecker = setupBypassChecker(true, new HashSet<>(Collections.singleton(GameMode.CREATIVE)), new HashSet<>(), false, false);
+        assert !bypassChecker.isPlayerBypassed(player);
     }
 
 }

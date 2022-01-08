@@ -1,6 +1,7 @@
-package be.betterplugins.bettersleeping.model;
+package be.betterplugins.bettersleeping.model.permissions;
 
 import be.betterplugins.bettersleeping.hooks.EssentialsHook;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -18,11 +19,13 @@ public class BypassChecker
 {
 
     private final EssentialsHook essentialsHook;
+    private final PermissionsCache permissionsCache;
     private final Set<GameMode> bypassedGameModes;
 
     @Inject
-    public BypassChecker(ConfigContainer config, EssentialsHook essentialsHook, BPLogger logger)
+    public BypassChecker(ConfigContainer config, PermissionsCache permissionsCache, EssentialsHook essentialsHook, BPLogger logger)
     {
+        this.permissionsCache = permissionsCache;
         YamlConfiguration bypassConfig = config.getBypassing();
 
         // Get all bypassed gamemodes from the config file
@@ -64,7 +67,7 @@ public class BypassChecker
     public boolean isPlayerBypassed(Player player)
     {
         // Permission based bypassing
-        boolean hasBSBypass         = player.hasPermission("bettersleeping.bypass");
+        boolean hasBSBypass         = permissionsCache.hasPermission(player, "bettersleeping.bypass");
 
         // Gamemode based bypassing
         boolean gamemodeBypass      = bypassedGameModes.contains( player.getGameMode() );

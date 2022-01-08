@@ -3,6 +3,7 @@ package be.betterplugins.bettersleeping.listeners;
 import be.betterplugins.bettersleeping.animation.ZZZAnimation;
 import be.betterplugins.bettersleeping.animation.location.PlayerSleepLocation;
 import be.betterplugins.bettersleeping.api.BecomeDayEvent;
+import be.betterplugins.bettersleeping.model.ConfigContainer;
 import be.betterplugins.core.interfaces.IReloadable;
 import be.betterplugins.core.messaging.logging.BPLogger;
 import com.google.inject.Inject;
@@ -24,22 +25,33 @@ import java.util.logging.Level;
 public class AnimationHandler implements Listener, IReloadable
 {
 
+    private final boolean isEnabled;
+
     private final Map<UUID, ZZZAnimation> sleepingAnimations;
     private final JavaPlugin plugin;
 
     private final BPLogger logger;
 
     @Inject
-    public AnimationHandler(JavaPlugin plugin, BPLogger logger)
+    public AnimationHandler(JavaPlugin plugin, ConfigContainer configContainer, BPLogger logger)
     {
         this.plugin = plugin;
         this.logger = logger;
+
+        this.isEnabled = configContainer.getConfig().getBoolean("enable_animations");
+
+        this.logger.log(Level.FINE, "Are animations enabled? " + this.isEnabled);
 
         this.sleepingAnimations = new HashMap<>();
     }
 
     public void startSleepingAnimation(Player player)
     {
+        if (!isEnabled) {
+            this.logger.log(Level.FINEST,"Attempted to start a sleeping animation but they were disabled");
+            return;
+        }
+
         this.logger.log(Level.FINEST, "Starting animation for player " + player.getName());
 
         // Start animations

@@ -9,8 +9,9 @@
 
 # To reset a BetterSleeping config file, you can simply delete it and perform /bs reload or restart the server
 
-# Configuration guide and default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources/buffs.yml
-# All default config files can be found here:   https://github.com/Nuytemans-Dieter/BetterSleeping/blob/v3.0.0/src/main/resources
+# Default values:       https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/buffs.yml
+# Config template:      https://github.com/Nuytemans-Dieter/BetterSleeping/blob/BetterSleeping-v4/src/main/resources/templates/buffs.yml
+# All default config files can be found here:  https://github.com/Nuytemans-Dieter/BetterSleeping/tree/BetterSleeping-v4/src/main/resources
 
 # These are effects that will be applied after sleeping, only on the players that have slept
 # The idea is to give a well rested bonus so sleeping is encouraged and more people will try to sleep
