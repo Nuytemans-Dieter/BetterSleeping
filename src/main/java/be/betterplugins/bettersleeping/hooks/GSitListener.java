@@ -3,8 +3,8 @@ package be.betterplugins.bettersleeping.hooks;
 import be.betterplugins.bettersleeping.model.sleeping.SleepWorldManager;
 import be.betterplugins.bettersleeping.util.TimeUtil;
 import com.google.inject.Inject;
-import me.gsit.api.events.PlayerGetUpPoseEvent;
-import me.gsit.api.events.PlayerPoseEvent;
+import dev.geco.gsit.api.event.PlayerGetUpPoseEvent;
+import dev.geco.gsit.api.event.PlayerPoseEvent;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
@@ -40,7 +40,7 @@ public class GSitListener implements Listener {
             return;
         }
 
-        if (layOrCrawlEvent.getPose() == Pose.SLEEPING)
+        if (layOrCrawlEvent.getPoseSeat().getPose() == Pose.SLEEPING)
         {
             sleepWorldManager.addSleeper(player);
         }
