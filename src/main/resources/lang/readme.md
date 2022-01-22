@@ -7,9 +7,9 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | Language  | Code  | Credits |
 | :-------: | :---: | :-----: |
 | English   | en-US |         |
-| Chinese (Hong Kong Cantonese) | zh-HK |         |
-| Chinese (Simplified)          | zh-CN |         |
-| Chinese (Traditional)         | zh-TW |         |
+| Chinese (Hong Kong Cantonese)| zh-HK ||
+| Chinese (Simplified)| zh-CN ||
+| Chinese (Taiwan)  | zh-TW | |
 | Dutch     | nl-BE |         |
 | French    | fr-FR |         |
 | German    | de-DE |         |
