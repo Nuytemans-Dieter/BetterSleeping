@@ -36,6 +36,9 @@ public class ConfigContainer
                 "en-US",
                 true,
                 "de-DE", "en-US", "es-ES", "fr-FR", "it-IT", "ja-JP", "nl-BE", "pt-PT", "ru-RU", "silent", "zh-CN", "zh-HK", "zh-TW")
+            )
+            .addValidator(
+                "logging_level", new StringWhiteList("Default", true, "Default", "Config", "All")
             );
 
         ValidationHandler buffsValidation = new ValidationHandler()

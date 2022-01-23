@@ -46,5 +46,9 @@ disable_phantoms: {disable_phantoms}
 # These are precomputed to save on processing time
 enable_animations: {enable_animations}
 
+# Determines which messages are logged to the console, the settings are:
+# Default (shows warnings only), config (shows info when reading your configuration), all (shows all logs ~ will spam your console, great for debugging)
+logging_level: {logging_level}
+
 # Whether you want to save BetterSleeping output to log files
 save_logs: {save_logs}

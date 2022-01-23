@@ -4,4 +4,5 @@ enable_bossbar: true
 update_notifier: true
 disable_phantoms: false
 enable_animations: true
+logging_level: "Default"
 save_logs: false
