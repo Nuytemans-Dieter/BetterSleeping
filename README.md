@@ -1,4 +1,4 @@
-# BetterSleeping (100.000+ downloads) ![Build status](https://github.com/Nuytemans-Dieter/BetterSleeping/workflows/Java%20CI%20with%20Maven/badge.svg?branch=v3.0.0)
+# BetterSleeping (150.000+ downloads) ![Build status](https://github.com/Nuytemans-Dieter/BetterSleeping/workflows/Java%20CI%20with%20Maven/badge.svg?branch=v3.0.0)
 This repository contains the source code of the **free** version of BetterSleeping. It is a Spigot plugin that will make sleeping on servers less of a hassle. Useful links: 
 
 - More information can be found on the [(free) Spigot plugin page](https://www.spigotmc.org/resources/bettersleeping-1-12-1-13.60837/ "BetterSleeping's plugin page"). Additional places to download the free version are the [PaperMC forums](https://papermc.io/forums/t/1-13-1-15-bettersleeping/3675), [GitHub releases](https://github.com/Nuytemans-Dieter/BetterSleeping/releases) and [Bukkit](https://dev.bukkit.org/projects/bettersleeping-1-13-1-15).
@@ -36,7 +36,7 @@ Previous versions of BetterSleeping can be found under [Releases](https://github
 | 1.15   | 3.0.4          |
 | 1.16   | 3.0.6          |
 | 1.17   | 4.0.0          |
-| 1.18   | 4.0.1 (or newer) |
+| 1.18   | 4.0.2 (or latest) |
 
 ## How to contribute
 Sometimes people ask how they can help, there is a lot you can do.
