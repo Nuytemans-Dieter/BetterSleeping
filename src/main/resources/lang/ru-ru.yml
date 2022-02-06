@@ -43,3 +43,4 @@ command_buffs_nodebuffs: "&cНет включённых дебаффов сна!
 command_buffs_bypassed: "У тебя включён обход, ты не будешь получать дебаффы"
 command_buffs_debuffs: "Если ты не поспишь, то получишь"
 command_buffs_footer: "&3---==<>==---"
+selected_language: "ru-ru"

@@ -19,6 +19,8 @@ import be.betterplugins.bettersleeping.util.migration.SettingsMigrator;
 import be.betterplugins.core.commands.BPCommandHandler;
 import be.betterplugins.core.interfaces.IReloadable;
 import be.betterplugins.core.messaging.logging.BPLogger;
+import be.dezijwegel.betteryaml.BetterLang;
+import be.dezijwegel.betteryaml.logging.BetterYamlLogger;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.bukkit.Bukkit;
@@ -34,7 +36,7 @@ import java.util.logging.Level;
 public class BetterSleeping extends JavaPlugin implements IReloadable
 {
 
-    private static Level logLevel = Level.WARNING;
+    private static Level logLevel = Level.FINEST;
 
     private BPLogger logger;
     private SleepWorldManager sleepWorldManager;
@@ -68,6 +70,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
     private void startPlugin()
     {
+        BetterYamlLogger.setLogLevel(Level.FINEST);
+
         Injector injector = Guice.createInjector(
                 new BetterSleepingModule(this, logLevel),
                 new UtilModule(),
@@ -83,6 +87,8 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
         logLevel =  logLevelSetting.equalsIgnoreCase("Default") ? Level.WARNING :
                     logLevelSetting.equalsIgnoreCase("Config") ? Level.CONFIG :
                     logLevelSetting.equalsIgnoreCase("All") ? Level.ALL : Level.WARNING;
+
+        BetterLang betterLang = injector.getInstance(BetterLang.class);
 
         // Capture the state of all worlds
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );

@@ -16,16 +16,20 @@ import be.betterplugins.core.messaging.logging.BPLogger;
 import be.betterplugins.core.messaging.messenger.Messenger;
 import be.betterplugins.bettersleeping.BetterSleeping;
 import be.dezijwegel.betteryaml.BetterLang;
+import be.dezijwegel.betteryaml.BetterYaml;
+import be.dezijwegel.betteryaml.OptionalBetterYaml;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -144,11 +148,50 @@ public class BetterSleepingModule extends AbstractModule
     @Singleton
     public BetterLang provideBetterLang(ConfigContainer config, BPLogger logger)
     {
-        String configValue = config.getConfig().getString("language");
-        String language = configValue != null ? configValue.toLowerCase() : "en-us";
+        logger.log(Level.FINER, "Providing BetterLang...");
 
-        logger.log(Level.CONFIG, "Loading language: " + language);
-        BetterLang betterLang = new BetterLang("lang.yml", language + ".yml", plugin);
+        // Get the desired language code
+        String configLanguage = config.getConfig().getString("language", "en-us").toLowerCase();
+        logger.log(Level.FINER, "The selected language is: " + configLanguage);
+
+//        // Delete the current file if the selected language is not active
+//        try {
+//            File langFile = new File(plugin.getDataFolder(), "lang.yml");
+//
+//            if (langFile.isFile())
+//            {
+//                logger.log(Level.FINER, "Loading current language configuration...");
+//                YamlConfiguration langConfig = new YamlConfiguration();
+//                langConfig.load(langFile);
+//                final String currentLanguage = langConfig.getString("selected_language");
+//                logger.log(Level.FINER, "The current language is: " + currentLanguage);
+//
+//                if (currentLanguage != null && !configLanguage.equalsIgnoreCase(currentLanguage))
+//                {
+//                    logger.log(Level.INFO, "Deleting the current language configuration");
+////                File newLangLocation = new File(plugin.getDataFolder(), "old-lang-" + System.currentTimeMillis() + ".yml");
+////                langFile.renameTo(newLangLocation);
+////                langFile.delete();
+//                }
+//                else
+//                {
+//                    logger.log(Level.FINER, "No lang.yml deletion is required as no new language has been selected");
+//                }
+//            }
+//            else
+//            {
+//                logger.log(Level.FINER, "No current language configuration found");
+//            }
+//        }
+//        catch (IOException | InvalidConfigurationException e)
+//        {
+//            logger.log(Level.WARNING, "Something went wrong while deleting your old language file");
+//            logger.log(Level.WARNING, "Please delete lang.yml manually and restart BetterSleeping");
+//        }
+
+        // Load language configuration
+        logger.log(Level.CONFIG, "Loading language: " + configLanguage);
+        BetterLang betterLang = new BetterLang("lang.yml", configLanguage + ".yml", plugin);
 
         if (!betterLang.getYamlConfiguration().isPresent())
         {
@@ -157,6 +200,7 @@ public class BetterSleepingModule extends AbstractModule
             Bukkit.getPluginManager().disablePlugin(plugin);
         }
 
+        logger.log(Level.FINER, "Providing BetterLang complete!");
         return betterLang;
     }
 

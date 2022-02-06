@@ -176,3 +176,10 @@ command_buffs_nodebuffs: {command_buffs_nodebuffs}
 command_buffs_bypassed: {command_buffs_bypassed}
 command_buffs_debuffs: {command_buffs_debuffs}
 command_buffs_footer: {command_buffs_footer}
+
+# ------------- #
+# Do NOT edit   |
+# ------------- #
+
+# Editing this value will RESET your language file, do NOT edit!!
+selected_language: {selected_language}

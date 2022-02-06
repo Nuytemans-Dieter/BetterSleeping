@@ -43,3 +43,4 @@ command_buffs_nodebuffs: {command_buffs_nodebuffs}
 command_buffs_bypassed: {command_buffs_bypassed}
 command_buffs_debuffs: {command_buffs_debuffs}
 command_buffs_footer: {command_buffs_footer}
+selected_language: {selected_language}
