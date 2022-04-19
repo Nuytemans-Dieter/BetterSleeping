@@ -11,7 +11,7 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | Chinese (Simplified)          | zh-CN |         |
 | Chinese (Traditional)         | zh-TW |         |
 | Dutch     | nl-BE |         |
-| French    | fr-FR |         |
+| French    | fr-FR | lucas-luchack |
 | German    | de-DE |         |
 | Italian   | it-IT |         |
 | Japanese  | ja-JP |         |
