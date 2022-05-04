@@ -18,6 +18,7 @@ Most of these are created by other server owners that are using BetterSleeping. 
 | Polish    | pl-PL |         |
 | Portuguese| pt-PT |         |
 | Russian   | ru-RU |         |
+| Ukrainian | ua-UA | MrOilMan, Hawiuri |
 | Spanish   | es-ES | Ant4rez |
 
 | Special mode | Code   |
