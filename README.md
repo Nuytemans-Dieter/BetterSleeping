@@ -35,8 +35,9 @@ Previous versions of BetterSleeping can be found under [Releases](https://github
 | 1.14   | 3.0.4          |
 | 1.15   | 3.0.4          |
 | 1.16   | 3.0.6          |
-| 1.17   | 4.0.0          |
-| 1.18   | 4.0.2 (or latest) |
+| 1.17   | 4.0.2          |
+| 1.18   | 4.0.2          |
+| 1.19   | 4.0.2 (or newer) |
 
 ## How to contribute
 Sometimes people ask how they can help, there is a lot you can do.
