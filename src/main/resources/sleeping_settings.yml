@@ -1,4 +1,4 @@
-sleeper_counter: "percentage"
+sleeper_calculator: "percentage"
 needed: 30
 night_skip_length: 10
 day_length: 700

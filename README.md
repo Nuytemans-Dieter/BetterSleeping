@@ -23,7 +23,10 @@ Quite extensive configuration is included to suit your needs. The configuration 
  - ... And **so much more**! Check the [wiki](https://github.com/Nuytemans-Dieter/BetterSleeping/wiki) to see all options. 
 
 ## Tested Spigot versions
-This plugin is functional and has been tested on several Spigot versions. Bukkit should be compatible too but no extensive testing has been done. You can see the **latest** and **tested** BetterSleeping version for every supported Spigot version in the table below. Newer updates than the mentioned BetterSleeping versions may still be fully compatible but have not been tested (yet). Previous versions of BetterSleeping can be found under [Releases](https://github.com/Nuytemans-Dieter/BetterSleeping/releases).
+This plugin is functional and has been tested on several Spigot versions. Bukkit should be compatible too but no extensive testing has been done. 
+You can see the **latest** and **tested** BetterSleeping version for every supported Spigot version in the table below. 
+Newer updates than the mentioned BetterSleeping versions will probably be fully compatible but have not been tested (yet). 
+Previous versions of BetterSleeping can be found under [Releases](https://github.com/Nuytemans-Dieter/BetterSleeping/releases).
 
 | Spigot | BetterSleeping |
 | :----: | :------------: |

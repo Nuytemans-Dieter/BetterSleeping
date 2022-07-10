@@ -25,19 +25,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.util.logging.Level;
 
 public class BetterSleeping extends JavaPlugin implements IReloadable
 {
 
-    private final static Level logLevel = Level.CONFIG;
+    private static Level logLevel = Level.WARNING;
 
     private BPLogger logger;
     private SleepWorldManager sleepWorldManager;
@@ -82,6 +79,10 @@ public class BetterSleeping extends JavaPlugin implements IReloadable
 
         // Get all configuration
         ConfigContainer config = injector.getInstance(ConfigContainer.class);
+        String logLevelSetting = config.getConfig().getString("logging_level", "Default");
+        logLevel =  logLevelSetting.equalsIgnoreCase("Default") ? Level.WARNING :
+                    logLevelSetting.equalsIgnoreCase("Config") ? Level.CONFIG :
+                    logLevelSetting.equalsIgnoreCase("All") ? Level.ALL : Level.WARNING;
 
         // Capture the state of all worlds
         this.worldStateHandler = injector.getInstance( WorldStateHandler.class );

@@ -6,7 +6,7 @@
 
     <groupId>be.betterplugins.bettersleeping</groupId>
     <artifactId>bettersleeping</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -81,7 +81,7 @@
         <dependency>
             <groupId>com.github.BetterPluginsSpigot</groupId>
             <artifactId>betteryaml</artifactId>
-            <version>1.1.0</version>
+            <version>1.1.1</version>
         </dependency>
 
         <!-- ESSENTIALS -->

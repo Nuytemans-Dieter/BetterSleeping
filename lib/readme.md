@@ -6,8 +6,13 @@ Libraries in this folder are solely used as dependencies to ensure compatibility
 For each file, an official download location can be found in the table below.
 
 If you are the owner of any library in this folder and want your artifact removed, give me a notice through an issue and I will remove them at once.
-Keep in mind that support for your plugin may be dropped, until it can be included as a Maven dependency to keep cloning the project simple.
+Keep in mind that support for your plugin may be dropped until it can be included as a Maven dependency, to keep cloning the project simple.
 
-| Library | Download location |
-| ------- | ----------------- |
-| GSit.jar| [Spigot](https://www.spigotmc.org/resources/gsit-sit-on-nice-seats-and-chairs-or-lay-down-wherever-you-want-1-13-x-1-16-x.62325/) |
+# For server admins
+
+The mentioned version is the latest version that definitely works with the newest BetterSleeping version. 
+Newer versions may work fine as well, but this is not guaranteed and depends on breaking changes on their end.
+
+| Library | Version | Download location |
+| ------- | ------- | ----------------- |
+| GSit.jar| 1.0.5   | [Spigot](https://www.spigotmc.org/resources/gsit-sit-on-nice-seats-and-chairs-or-lay-down-wherever-you-want-1-13-x-1-16-x.62325/) |
