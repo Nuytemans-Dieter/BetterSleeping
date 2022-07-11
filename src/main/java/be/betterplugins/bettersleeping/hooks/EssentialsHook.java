@@ -42,7 +42,7 @@ public class EssentialsHook {
 
         this.isAfkIgnored = isAfkIgnored && minAfkSeconds >= 0;
         this.isVanishedIgnored = isVanishedIgnored;
-        this.minAfkMilliseconds = minAfkSeconds * 1000;
+        this.minAfkMilliseconds = minAfkSeconds * 1000L;
 
         logger.log(Level.CONFIG, "Is Essentials hooked? " + isHooked);
         logger.log(Level.CONFIG, "Are afk players ignored? " + isAfkIgnored + ", with a min afk time of " + minAfkMilliseconds);

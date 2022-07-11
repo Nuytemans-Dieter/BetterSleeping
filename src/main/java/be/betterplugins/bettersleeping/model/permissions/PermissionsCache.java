@@ -1,6 +1,5 @@
 package be.betterplugins.bettersleeping.model.permissions;
 
-import be.betterplugins.bettersleeping.messaging.ScreenMessenger;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.bukkit.entity.Player;
