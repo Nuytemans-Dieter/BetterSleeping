@@ -62,7 +62,7 @@ public class BedEventListener implements Listener
     /**
      * Highest priority to call this method as late as possible, this gives other plugins the chance to cancel the event
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onSleep(PlayerBedEnterEvent event)
     {
         // Only handle sleeping in enabled worlds
