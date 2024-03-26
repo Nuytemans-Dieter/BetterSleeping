@@ -28,10 +28,18 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
 
+
+        <repository>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+
+
         <!-- ESSENTIALS -->
         <repository>
-            <id>essentialsx</id>
-            <url>https://repo.essentialsx.net/releases/</url>
+            <id>essentialsx-releases</id>
+            <name>EssentialsX API Repository</name>
+            <url>https://repo.essentialsx.net/releases</url>
         </repository>
 
         <!-- PAPI -->

@@ -15,13 +15,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 @Singleton
@@ -37,6 +36,9 @@ public class BuffsHandler implements Listener {
 
     private final List<String> sleepingCommands;
     private final List<String> nonSleepingCommands;
+
+    private final HashMap<UUID,Integer> lastDisconnects;
+    private int timesSlept = 0;
 
 
     /**
@@ -55,6 +57,8 @@ public class BuffsHandler implements Listener {
 
         this.sleepingCommands    = buffsConfig.getStringList( "sleeper_commands" );
         this.nonSleepingCommands = buffsConfig.getStringList( "non_sleeper_commands" );
+
+        this.lastDisconnects = new HashMap<>();
     }
 
 
@@ -68,6 +72,28 @@ public class BuffsHandler implements Listener {
         return sleepingDebuffs;
     }
 
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event){
+        this.lastDisconnects.put(event.getPlayer().getUniqueId(),this.timesSlept);
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event){
+        // apply debuffs if needed
+        // check if in map
+        if(!this.lastDisconnects.containsKey(event.getPlayer().getUniqueId()))
+            return;
+
+        // check if player joined the next day
+        if(this.timesSlept == 1 + this.lastDisconnects.get(event.getPlayer().getUniqueId())){
+            // apply debuffs
+            if (bypassChecker.isPlayerBypassed( event.getPlayer()))
+                return;
+
+            giveEffects(Collections.singletonList(event.getPlayer()),sleepingDebuffs,nonSleepingCommands);
+        }
+    }
+
 
     @EventHandler
     public void onSetToDay(BecomeDayEvent event)
@@ -75,6 +101,8 @@ public class BuffsHandler implements Listener {
         // Only handle buffs if players (possibly) slept
         if (event.getCause() == BecomeDayEvent.Cause.OTHER)
             return;
+
+        timesSlept++;
 
         if (sleepingBuffs.size() > 0)
         {
@@ -86,6 +114,9 @@ public class BuffsHandler implements Listener {
             giveEffects(event.getPlayersWhoSlept(), sleepingBuffs, sleepingCommands);
         }
 
+        // TODO Apply debuffs to players that tried to disconnect to avoid sleeping
+        // A player is thought to disconnect to avoid sleeping if he does this:
+        // He disconnected before sleeping and returned at the next day (timesSlept + 1)
         if (sleepingDebuffs.size() > 0)
         {
             List<Player> nonSleepers = new ArrayList<>();
