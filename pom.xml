@@ -16,6 +16,12 @@
 
     <repositories>
 
+        <!-- PAPERMC -->
+        <repository>
+            <id>papermc-repo</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+
         <!-- SPIGOT -->
         <repository>
             <id>spigot-repo</id>
@@ -37,7 +43,7 @@
         <!-- PAPI -->
         <repository>
             <id>placeholderapi</id>
-            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+            <url>https://mvnrepository.com/artifact/com.github.placeholderapi/placeholderapi</url>
         </repository>
 
         <!-- bStats -->
@@ -94,7 +100,7 @@
 
         <!-- PAPI -->
         <dependency>
-            <groupId>me.clip</groupId>
+            <groupId>com.github.placeholderapi</groupId>
             <artifactId>placeholderapi</artifactId>
             <version>2.11.2</version>
             <scope>provided</scope>
